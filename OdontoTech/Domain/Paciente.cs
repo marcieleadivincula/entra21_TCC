@@ -8,6 +8,18 @@ namespace Domain
 {
     class Paciente
     {
+        public Paciente(int idPaciente, string nome, string sobrenome, string rg, string cpf, string dtNascimento, string obs, int idEndereco)
+        {
+            this.idPaciente = idPaciente;
+            Nome = nome;
+            Sobrenome = sobrenome;
+            Rg = rg;
+            Cpf = cpf;
+            this.dtNascimento = dtNascimento;
+            this.obs = obs;
+            this.idEndereco = idEndereco;
+        }
+
         public int idPaciente { get; set; }
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
