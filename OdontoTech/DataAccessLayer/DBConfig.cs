@@ -10,7 +10,7 @@ namespace DataAccessLayer
     public class DBConfig
     {
         public const string CONNECTION_STRING = @"server=localhost;user id=root;database=sorrisempre";
-        public SqlCommand Cmd;
-        public SqlDataReader Reader;
+        public static SqlCommand Cmd;
+        public static SqlDataReader Reader;
     }
 }
