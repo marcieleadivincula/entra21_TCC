@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Pais
+    public class Pais
     {
-        public int idPais { get; set; }
-        public string nomePais { get; set; }
+        public int Id { get; set; }
+        public string Nome { get; set; }
+
+        public Pais(int id, string nome)
+        {
+            Id = id;
+            Nome = nome;
+        }
+
     }
 }

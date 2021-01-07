@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Pagamento
+    public class Pagamento
     {
-        public Pagamento(int idPagamento, DateTime dtPagamento, int idTipoPagamento)
+        public int Id { get; set; }
+        public DateTime DataPagamento { get; set; } //TEMPORÁRIO, VER COMO VAI FICAR AINDA
+        public TipoPagamento TipoPagamento { get; set; }
+
+        public Pagamento(int id, DateTime dataPagamento, TipoPagamento tipoPagamento)
         {
-            this.idPagamento = idPagamento;
-            this.dtPagamento = dtPagamento;
-            this.idTipoPagamento = idTipoPagamento;
+            Id = id;
+            DataPagamento = dataPagamento;
+            TipoPagamento = tipoPagamento;
         }
 
-        public int idPagamento { get; set; }
-        public DateTime dtPagamento { get; set; }
-        public int idTipoPagamento { get; set; }
     }
 }

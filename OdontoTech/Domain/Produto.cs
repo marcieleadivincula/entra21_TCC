@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Produto
+    public class Produto
     {
-        public Produto(int idProduto, string nomeProduto, int idTipoEmbalagem, double precoProduto, DateTime dtCompra)
-        {
-            this.idProduto = idProduto;
-            this.nomeProduto = nomeProduto;
-            this.idTipoEmbalagem = idTipoEmbalagem;
-            this.precoProduto = precoProduto;
-            this.dtCompra = dtCompra;
-        }
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public TipoEmbalagem TipoEmbalagem { get; set; }
+        public double Preco { get; set; }
+        public DateTime DataCompra { get; set; } //TEMPORÁRIO, ver como vai ficar
 
-        public int idProduto { get; set; }
-        public string nomeProduto { get; set; }
-        public int idTipoEmbalagem { get; set; }
-        public double precoProduto { get; set; }
-        public DateTime dtCompra { get; set; }
+        public Produto(int id, string nome, TipoEmbalagem tipoEmbalagem, double preco, DateTime dataCompra)
+        {
+            Id = id;
+            Nome = nome;
+            TipoEmbalagem = tipoEmbalagem;
+            Preco = preco;
+            DataCompra = dataCompra;
+        }
     }
 }
