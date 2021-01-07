@@ -47,5 +47,33 @@ namespace DataAccessLayer
             }
         }
 
+        /// <summary>
+        /// Tenta deletar, caso der certo retorna (Atendimento deletado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
+        /// </summary>
+        /// <param name="Atendimento"></param>
+        /// <returns></returns>
+        public string Deletar(Atendimento Atendimento)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM atendimento WHERE idAtendimento = @ID";
+            cmd.Parameters.AddWithValue("@ID", Atendimento.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Atendimento deletado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
