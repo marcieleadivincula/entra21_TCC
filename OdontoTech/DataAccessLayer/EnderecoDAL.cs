@@ -91,7 +91,7 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE endereco SET idlogradouro = @idlogradouro, SET numeroCasa = @numeroCasa SET, cep = @cep WHERE idEndereco = @idEndereco";
+            cmd.CommandText = "UPDATE endereco SET idlogradouro = @idlogradouro, SET numeroCasa = @numeroCasa, SET cep = @cep WHERE idEndereco = @idEndereco";
             cmd.Parameters.AddWithValue("@idEndereco", endereco.Id);
             cmd.Parameters.AddWithValue("@idlogradouro", endereco.Logradouro.Id);
             cmd.Parameters.AddWithValue("@numeroCasa", endereco.NumeroCasa);
@@ -122,7 +122,7 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand command = new SqlCommand();
             command.Connection = conn;
-            command.CommandText = "SELECT * FROM MARCA";
+            command.CommandText = "SELECT * FROM endereco";
             try
             {
                 conn.Open();
