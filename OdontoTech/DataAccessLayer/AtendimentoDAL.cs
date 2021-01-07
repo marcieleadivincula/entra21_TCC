@@ -88,7 +88,7 @@ namespace DataAccessLayer
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE atendimento SET idPaciente = @idPacientem, SET idColaborador = @idColaborador WHERE idAtendimento = @idAtendimento";
             cmd.Parameters.AddWithValue("@idPacientem", Atendimento.Paciente.Id);
-            cmd.Parameters.AddWithValue("@idColaborador", Atendimento.Paciente.Id);
+            cmd.Parameters.AddWithValue("@idColaborador", Atendimento.Colaborador.Id);
             cmd.Parameters.AddWithValue("@idAtendimento", Atendimento.Id );
 
             try
