@@ -106,6 +106,10 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        /// <summary>
+        /// retorna lista com todos os atendimentos 
+        /// </summary>
+        /// <returns></returns>
         public List<Atendimento> SelecionaTodos()
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
