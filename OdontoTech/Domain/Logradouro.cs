@@ -6,10 +6,18 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Logradouro
+    public class Logradouro
     {
-        public int idLogradouro { get; set; }
-        public int idBairro { get; set; }
-        public string nomeLogradouro { get; set; }
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public Bairro Bairro { get; set; }
+
+        public Logradouro(int id, string nome, Bairro bairro)
+        {
+            Id = id;
+            Nome = nome;
+            Bairro = bairro;
+        }
+
     }
 }

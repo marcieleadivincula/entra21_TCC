@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Tipoprocedimento
+    public class TipoProcedimento
     {
-        public int idTipoProcedimento { get; set; }
-        public string nomeTipoProcedimento { get; set; }
-        public double valorProcedimento { get; set; }
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public double Valor { get; set; }
+
+        public TipoProcedimento(int id, string nome, double valor)
+        {
+            Id = id;
+            Nome = nome;
+            Valor = valor;
+        }
     }
 }

@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Tipopagamento
+    public class TipoPagamento
     {
-        public int idTipoPagamento { get; set; }
-        public string tipoPagamento { get; set; }
+        public int Id { get; set; }
+        public string Tipo { get; set; }
+
+        public TipoPagamento(int id, string tipoPagamento)
+        {
+            Id = id;
+            Tipo = tipoPagamento;
+        }
     }
 }

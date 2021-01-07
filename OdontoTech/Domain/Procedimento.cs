@@ -6,11 +6,21 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Procedimento
+    public class Procedimento
     {
-        public int idProcedimento { get; set; }
-        public string nomeProcedimento { get; set; }
-        public string dsProcedimento { get; set; }
-        public int idTipoProcedimento { get; set; }
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public TipoProcedimento TipoProcedimento { get; set; }
+        public string DescricaoProcedimento { get; set; }
+        public List<Atendimento> Atendimentos = new List<Atendimento>();
+
+        public Procedimento(int id, string nome, TipoProcedimento tipoProcedimento, string descricaoProcedimento, List<Atendimento> atendimentos)
+        {
+            Id = id;
+            Nome = nome;
+            TipoProcedimento = tipoProcedimento;
+            DescricaoProcedimento = descricaoProcedimento;
+            Atendimentos = atendimentos;
+        }
     }
 }
