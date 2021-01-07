@@ -23,5 +23,13 @@ namespace Domain
             this.Paciente = paciente;
             this.Colaborador = colaborador;
         }
+
+        /// <summary>
+        /// construtor para desenvolvimento DAL
+        /// </summary>
+        public Atendimento()
+        {
+
+        }
     }
 }

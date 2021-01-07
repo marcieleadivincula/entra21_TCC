@@ -75,5 +75,68 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+
+        /// <summary>
+        /// Tenta atualizar, caso der certo retorna (Atendimento atualizado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
+        /// </summary>
+        /// <param name="endereco"></param>
+        /// <returns></returns>
+        public string Atualizar(Atendimento Atendimento)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "UPDATE atendimento SET idPaciente = @idPacientem, SET idColaborador = @idColaborador WHERE idAtendimento = @idAtendimento";
+            cmd.Parameters.AddWithValue("@idPacientem", Atendimento.Paciente.Id);
+            cmd.Parameters.AddWithValue("@idColaborador", Atendimento.Paciente.Id);
+            cmd.Parameters.AddWithValue("@idAtendimento", Atendimento.Id );
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Atendimento atualizado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public List<Atendimento> SelecionaTodos()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM atendimento";
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                List<Atendimento> Atendimentos = new List<Atendimento>();
+                while (reader.Read())
+                {
+                    Atendimento temp = new Atendimento();
+
+                    temp.Id = Convert.ToInt32(reader["idAtendimento"]);
+                    temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
+                    temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+
+                    Atendimentos.Add(temp);
+                }
+                return Atendimentos;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
