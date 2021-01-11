@@ -21,5 +21,13 @@ namespace Domain
             Cep = cep;
         }
 
+        /// <summary>
+        /// Construtor para DAL
+        /// </summary>
+        public Endereco()
+        {
+
+        }
+
     }
 }
