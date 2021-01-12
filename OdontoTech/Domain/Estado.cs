@@ -18,5 +18,12 @@ namespace Domain
             Nome = nome;
             Pais = pais;
         }
+        /// <summary>
+        /// construtor para DAL.
+        /// </summary>
+        public Estado()
+        {
+
+        }
     }
 }

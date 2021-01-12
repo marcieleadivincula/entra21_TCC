@@ -22,5 +22,13 @@ namespace Domain
             Preco = preco;
             DataCompra = dataCompra;
         }
+
+        /// <summary>
+        /// construtor dedicado para DAL.
+        /// </summary>
+        public Produto()
+        {
+
+        }
     }
 }

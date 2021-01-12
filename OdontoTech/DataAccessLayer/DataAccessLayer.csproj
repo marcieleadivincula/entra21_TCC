@@ -46,6 +46,8 @@
     <Compile Include="AtendimentoDAL.cs" />
     <Compile Include="DBConfig.cs" />
     <Compile Include="EnderecoDAL.cs" />
+    <Compile Include="EstadoDAL.cs" />
+    <Compile Include="ProdutoDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
