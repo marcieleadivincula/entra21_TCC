@@ -11,6 +11,10 @@ namespace DataAccessLayer
 {
     class EstadoDAL
     {
+        /// <summary>
+        /// Insere o  Estado no BD. Caso houver erro a função informa.
+        /// </summary>
+        /// <param name="estado"></param>
         public void Inserir(Estado estado)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
@@ -43,6 +47,32 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
 
+        }
+        public string Atualizar(Estado estado)
+        {
+
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "UPDATE estado SET nomeProduto = @nomeProduto, SET idPais = @idPais WHERE idProduto = @idProduto";
+            cmd.Parameters.AddWithValue("@nomeEstado", estado.Nome);
+            cmd.Parameters.AddWithValue("@idPais", estado.Pais.Id);
+            cmd.Parameters.AddWithValue("@idEstado", estado.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Estado atualizado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
         }
     }
 }
