@@ -48,6 +48,42 @@ namespace DataAccessLayer
             }
 
         }
+
+
+        /// <summary>
+        ///  Tenta deletar, caso der certo retorna (Estado deletado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
+        /// </summary>
+        /// <param name="estado"></param>
+        /// <returns></returns>
+        public string Deletar(Estado estado)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM estado WHERE idEstado = @ID";
+            cmd.Parameters.AddWithValue("@ID", estado.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Estado deletado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Tenta atualizar, caso der certo retorna (Estado atualizado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
+        /// </summary>
+        /// <param name="estado"></param>
+        /// <returns></returns>
         public string Atualizar(Estado estado)
         {
 
