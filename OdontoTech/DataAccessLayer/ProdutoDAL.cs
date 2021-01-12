@@ -16,7 +16,7 @@ namespace DataAccessLayer
         /// Insere o  Produto no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="produto"></param>
-        public void inserir(Produto produto)
+        public void Inserir(Produto produto)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
@@ -49,6 +49,29 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
 
+        }
+        public string Deletar(Produto produto)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM produto WHERE idProduto = @ID";
+            cmd.Parameters.AddWithValue("@ID", produto.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Produto deletado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
         }
 
     }
