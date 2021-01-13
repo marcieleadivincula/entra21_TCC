@@ -117,7 +117,7 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand command = new SqlCommand();
             command.Connection = conn;
-            command.CommandText = "SELECT * FROM endereco";
+            command.CommandText = "SELECT * FROM tipoembalagem";
             try
             {
                 conn.Open();
