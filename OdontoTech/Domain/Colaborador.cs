@@ -44,5 +44,13 @@ namespace Domain
             Ferias = ferias;
             Demitido = demitido;
         }
+
+        /// <summary>
+        /// construtor Dal.
+        /// </summary>
+        public Colaborador()
+        {
+
+        }
     }
 }
