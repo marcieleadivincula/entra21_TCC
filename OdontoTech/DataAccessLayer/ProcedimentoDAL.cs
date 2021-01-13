@@ -109,6 +109,10 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        /// <summary>
+        /// retorna lista com todos os Procedimentos 
+        /// </summary>
+        /// <returns></returns>
         public List<Procedimento> SelecionaTodos()
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
