@@ -9,7 +9,7 @@ using Domain;
 
 namespace DataAccessLayer
 {
-    class UsuarioDAL
+    public class UsuarioDAL
     {
         /// <summary>
         /// Insere o  Usuario no BD. Caso houver erro a função informa.

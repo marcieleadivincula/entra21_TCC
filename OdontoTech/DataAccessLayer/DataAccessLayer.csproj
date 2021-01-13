@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AtendimentoDAL.cs" />
     <Compile Include="ClinicaDAL.cs" />
+    <Compile Include="ColaboradorDAL.cs" />
     <Compile Include="DBConfig.cs" />
     <Compile Include="EnderecoDAL.cs" />
     <Compile Include="EstadoDAL.cs" />
