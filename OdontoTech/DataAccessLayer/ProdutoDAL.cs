@@ -10,7 +10,7 @@ using Domain;
 
 namespace DataAccessLayer
 {
-    class ProdutoDAL
+    public class ProdutoDAL
     {
         /// <summary>
         /// Insere o  Produto no BD. Caso houver erro a função informa.
@@ -21,8 +21,8 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO produto (idProduto,nomeProduto,idTipoEmbalagem,precoProduto,dtCompra) values (@idProduto,@nomeProduto,@idTipoEmbalagem,@precoProduto,@dtCompra)";
-            cmd.Parameters.AddWithValue("@idProduto", produto.Id);
+            cmd.CommandText = $"INSERT INTO produto (nomeProduto,idTipoEmbalagem,precoProduto,dtCompra) values (@nomeProduto,@idTipoEmbalagem,@precoProduto,@dtCompra)";
+           
             cmd.Parameters.AddWithValue("@nomeProduto", produto.Nome);
             cmd.Parameters.AddWithValue("@idTipoEmbalagem", produto.TipoEmbalagem.Id);
             cmd.Parameters.AddWithValue("@precoProduto", produto.Preco);

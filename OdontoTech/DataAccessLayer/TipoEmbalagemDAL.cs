@@ -9,7 +9,7 @@ using Domain;
 
 namespace DataAccessLayer
 {
-    class TipoEmbalagemDAL
+    public class TipoEmbalagemDAL
     {
         /// <summary>
         /// Insere o  Tipo Embalagem no BD. Caso houver erro a função informa.
@@ -21,8 +21,8 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO tipoembalagem (idTipoEmbalagem,descricao) values (@idTipoEmbalagem,@descricao)";
-            cmd.Parameters.AddWithValue("@idTipoEmbalagem", TipoEmbalagem.Id);
+            cmd.CommandText = $"INSERT INTO tipoembalagem (descricao) values (@descricao)";
+           
             cmd.Parameters.AddWithValue("@descricao", TipoEmbalagem.Descricao);
 
             try

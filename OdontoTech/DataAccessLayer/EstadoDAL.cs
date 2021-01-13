@@ -9,7 +9,7 @@ using Domain;
 
 namespace DataAccessLayer
 {
-    class EstadoDAL
+    public class EstadoDAL
     {
         /// <summary>
         /// Insere o  Estado no BD. Caso houver erro a função informa.
@@ -20,8 +20,8 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO estado (idEstado,nomeEstado,idPais) values (@idEstado,@nomeEstado,@idPais)";
-            cmd.Parameters.AddWithValue("@idEstado", estado.Id);
+            cmd.CommandText = $"INSERT INTO estado (nomeEstado,idPais) values (@nomeEstado,@idPais)";
+      
             cmd.Parameters.AddWithValue("@nomeEstado", estado.Nome);
             cmd.Parameters.AddWithValue("@idPais", estado.Pais.Id);
 

@@ -9,7 +9,7 @@ using Domain;
 
 namespace DataAccessLayer
 {
-    class ProcedimentoDAL
+    public class ProcedimentoDAL
     {
         /// <summary>
         /// Inserir procedimento
@@ -20,8 +20,8 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO procedimento (idProcedimento,nomeProcedimento,dsProcedimento,idTipoProcedimento) values (@idProcedimento,@nomeProcedimento,@dsProcedimento,@idTipoProcedimento)";
-            cmd.Parameters.AddWithValue("@idProcedimento", procedimento.Id);
+            cmd.CommandText = $"INSERT INTO procedimento (nomeProcedimento,dsProcedimento,idTipoProcedimento) values (@nomeProcedimento,@dsProcedimento,@idTipoProcedimento)";
+            
             cmd.Parameters.AddWithValue("@nomeProcedimento", procedimento.Nome);
             cmd.Parameters.AddWithValue("@dsProcedimento", procedimento.DescricaoProcedimento);
             cmd.Parameters.AddWithValue("@idTipoProcedimento", procedimento.TipoProcedimento.Id);

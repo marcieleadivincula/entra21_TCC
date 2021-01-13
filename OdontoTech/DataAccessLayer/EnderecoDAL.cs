@@ -9,7 +9,7 @@ using Domain;
 
 namespace DataAccessLayer
 {
-    class EnderecoDAL
+    public class EnderecoDAL
     {
         /// <summary>
         /// Insere o Endereço no BD. Caso houver erro a função informa.
@@ -21,8 +21,8 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO endereco (idEndereco,numeroCasa,cep) values (@idEndereco,@numeroCasa,@cep)";
-            cmd.Parameters.AddWithValue("@idEndereco", endereco.Id);
+            cmd.CommandText = $"INSERT INTO endereco (numeroCasa,cep) values (@numeroCasa,@cep)";
+         
             cmd.Parameters.AddWithValue("@numeroCasa", endereco.NumeroCasa);
             cmd.Parameters.AddWithValue("@cep", endereco.Cep);
 

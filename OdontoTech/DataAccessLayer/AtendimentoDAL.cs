@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 using Domain;
 namespace DataAccessLayer
 {
-    class AtendimentoDAL
+    public class AtendimentoDAL
     {
 
         /// <summary>
@@ -20,8 +20,8 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO atendimento (idAtendimento,idPaciente,idColaborador) values (@idAtendimento,@idPaciente,@idColaborador)";
-            cmd.Parameters.AddWithValue("@idAtendimento", Atendimento.Id);
+            cmd.CommandText = "INSERT INTO atendimento (idPaciente,idColaborador) values (@idPaciente,@idColaborador)";
+  
             cmd.Parameters.AddWithValue("@idPaciente", Atendimento.Paciente.Id);
             cmd.Parameters.AddWithValue("@idColaborador", Atendimento.Colaborador.Id);
 

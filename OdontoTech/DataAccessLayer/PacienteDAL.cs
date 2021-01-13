@@ -9,15 +9,15 @@ using Domain;
 
 namespace DataAccessLayer
 {
-    class PacienteDAL
+    public class PacienteDAL
     {
         public void Inserir(Paciente paciente)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO paciente (idPaciente,nome,sobrenome,rg,cpf,dtNascimento,obs,idEndereco) values (@idPaciente,@nome,@sobrenome,@rg,@cpf,@dtNascimento,@obs,@idEndereco)";
-            cmd.Parameters.AddWithValue("@idPaciente", paciente.Id);
+            cmd.CommandText = $"INSERT INTO paciente (nome,sobrenome,rg,cpf,dtNascimento,obs,idEndereco) values (@nome,@sobrenome,@rg,@cpf,@dtNascimento,@obs,@idEndereco)";
+         
             cmd.Parameters.AddWithValue("@nome", paciente.Nome);
             cmd.Parameters.AddWithValue("@sobrenome",paciente.Sobrenome );
             cmd.Parameters.AddWithValue("@rg", paciente.Rg);

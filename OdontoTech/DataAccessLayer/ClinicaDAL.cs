@@ -9,7 +9,7 @@ using Domain;
 
 namespace DataAccessLayer
 {
-    class ClinicaDAL
+    public class ClinicaDAL
     {
         /// <summary>
         /// Insere a Clinica no BD. Caso houver erro a função informa.
@@ -20,8 +20,8 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO clinica (idClinica,nomeClinica,dtInauguracao,idEndereco) values (@idClinica,@nomeClinica,@dtInauguracao,@idEndereco)";
-            cmd.Parameters.AddWithValue("@idClinica", clinica.Id);
+            cmd.CommandText = "INSERT INTO clinica (nomeClinica,dtInauguracao,idEndereco) values (@nomeClinica,@dtInauguracao,@idEndereco)";
+    
             cmd.Parameters.AddWithValue("@nomeClinica", clinica.nNome);
             cmd.Parameters.AddWithValue("@dtInauguracao", Convert.ToString(clinica.DataInauguracao));
             cmd.Parameters.AddWithValue("@idEndereco", clinica.Endereco.Id);

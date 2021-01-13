@@ -9,7 +9,7 @@ using Domain;
 
 namespace DataAccessLayer
 {
-    class TipoProcedimentoDAL
+    public class TipoProcedimentoDAL
     {
         /// <summary>
         /// Insere o  TipoProcedimento no BD. Caso houver erro a função informa.
@@ -20,8 +20,8 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO tipoprocedimento (idTipoProcedimento,nomeTipoProcedimento,valorProcedimento) values (@idTipoProcedimento,@nomeTipoProcedimento,@valorProcedimento)";
-            cmd.Parameters.AddWithValue("@idTipoProcedimento", TipoProcedimento.Id);
+            cmd.CommandText = $"INSERT INTO tipoprocedimento (nomeTipoProcedimento,valorProcedimento) values (@idTipoProcedimento,@nomeTipoProcedimento,@valorProcedimento)";
+          
             cmd.Parameters.AddWithValue("@nomeTipoProcedimento", TipoProcedimento.Nome);
             cmd.Parameters.AddWithValue("@valorProcedimento", TipoProcedimento.Valor);
 
