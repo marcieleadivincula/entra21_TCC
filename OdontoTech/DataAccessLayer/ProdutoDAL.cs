@@ -51,7 +51,7 @@ namespace DataAccessLayer
 
         }
         /// <summary>
-        ///Tenta deletar, caso der certo retorna (Produto deletado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
+        /// Tenta deletar, caso der certo retorna (Produto deletado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
         /// </summary>
         /// <param name="produto"></param>
         /// <returns></returns>

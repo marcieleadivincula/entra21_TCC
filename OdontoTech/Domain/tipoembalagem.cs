@@ -16,5 +16,9 @@ namespace Domain
             Id= id;
             Descricao = descricao;
         }
+        public TipoEmbalagem()
+        {
+
+        }
     }
 }
