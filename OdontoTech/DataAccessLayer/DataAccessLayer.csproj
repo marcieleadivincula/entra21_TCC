@@ -50,6 +50,7 @@
     <Compile Include="EnderecoDAL.cs" />
     <Compile Include="EstadoDAL.cs" />
     <Compile Include="FuncaoDAL.cs" />
+    <Compile Include="LogradouroDAL.cs" />
     <Compile Include="PacienteDAL.cs" />
     <Compile Include="ProcedimentoDAL.cs" />
     <Compile Include="ProdutoDAL.cs" />
