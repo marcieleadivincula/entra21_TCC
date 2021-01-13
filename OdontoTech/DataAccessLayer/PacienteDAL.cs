@@ -125,7 +125,7 @@ namespace DataAccessLayer
                     temp.Sobrenome = Convert.ToString(reader["sobrenome"]);
                     temp.Rg = Convert.ToString(reader["rg"]);
                     temp.Cpf = Convert.ToString(reader["cpf"]);
-                    temp.DataNascimento = Convert.ToString(reader["dtNascimento"]);
+                    temp.DataNascimento = Convert.ToDateTime(reader["dtNascimento"]);
                     temp.Observacao = Convert.ToString(reader["obs"]);
                     temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
 
