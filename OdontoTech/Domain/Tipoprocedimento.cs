@@ -18,5 +18,9 @@ namespace Domain
             Nome = nome;
             Valor = valor;
         }
+        public TipoProcedimento()
+        {
+
+        }
     }
 }

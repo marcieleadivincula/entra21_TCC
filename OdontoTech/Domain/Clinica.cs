@@ -16,5 +16,12 @@ namespace Domain
             DataInauguracao = dataInauguracao;
             Endereco = endereco;
         }
+        /// <summary>
+        /// construtor DAL.
+        /// </summary>
+        public Clinica()
+        {
+            
+        }
     }
 }
