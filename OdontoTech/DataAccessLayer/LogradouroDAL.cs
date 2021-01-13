@@ -99,7 +99,7 @@ namespace DataAccessLayer
 
         }
 
-        public List<Funcao> SelecionaTodos()
+        public List<Logradouro> SelecionaTodos()
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand command = new SqlCommand();
