@@ -43,5 +43,28 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public string Deletar(Usuario usuario)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM usuario WHERE idUsuario = @ID";
+            cmd.Parameters.AddWithValue("@ID", usuario.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Tipo Usuario deletado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
