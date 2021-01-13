@@ -28,6 +28,9 @@ namespace Domain
             Colaborador = colaborador;
         }
 
+        /// <summary>
+        /// Construtor DAL
+        /// </summary>
         public Usuario()
         {
 
