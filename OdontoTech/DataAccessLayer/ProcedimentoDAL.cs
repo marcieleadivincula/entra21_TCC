@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
+﻿using Domain;
+using System;
 using System.Data.SqlClient;
-using Domain;
 
 namespace DataAccessLayer
 {
@@ -49,6 +44,35 @@ namespace DataAccessLayer
             }
 
         }
+        /// <summary>
+        /// Tenta deletar, caso der certo retorna (Procedimento deletado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
+        /// </summary>
+        /// <param name="procedimento"></param>
+        /// <returns></returns>
+        public string Deletar(Procedimento procedimento)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM procedimento WHERE idProcedimento = @ID";
+            cmd.Parameters.AddWithValue("@ID", procedimento.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Procedimento deletado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+
 
     }
 }
