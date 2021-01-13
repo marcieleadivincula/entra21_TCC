@@ -18,6 +18,10 @@ namespace Domain
             Nome = nome;
             Bairro = bairro;
         }
+       
+        public Logradouro()
+        {
 
+        }
     }
 }
