@@ -109,5 +109,43 @@ namespace DataAccessLayer
             }
 
         }
+
+
+        /// <summary>
+        /// retorna lista de tiposprocedimentos
+        /// </summary>
+        /// <returns></returns>
+        public List<TipoProcedimento> SelecionaTodos()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM tipoprocedimento";
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                List<TipoProcedimento> TipoProcedimentos = new List<TipoProcedimento>();
+                while (reader.Read())
+                {
+                    TipoProcedimento temp = new TipoProcedimento();
+
+                    temp.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
+                    temp.Nome = Convert.ToString(reader["nomeTipoProcedimento"]);
+                    temp.Valor = Convert.ToInt32(reader["valorProcedimento"]);
+
+                    TipoProcedimentos.Add(temp);
+                }
+                return TipoProcedimentos;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
