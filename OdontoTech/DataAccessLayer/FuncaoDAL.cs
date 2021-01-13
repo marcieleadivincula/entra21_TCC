@@ -72,5 +72,35 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public string Atualizar(Funcao funcao)
+        {
+
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "UPDATE funcao SET nomeEstado = @nomeEstado, SET salario = @salario, SET comissao = @comissao WHERE idProduto = @idProduto";
+
+
+            cmd.Parameters.AddWithValue("@nomeEstado", funcao.Nome);
+            cmd.Parameters.AddWithValue("@salario", funcao.Salario);
+            cmd.Parameters.AddWithValue("@comissao", funcao.Comissao);
+            cmd.Parameters.AddWithValue("@idFuncao", funcao.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Funcao atualizado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+
+        }
     }
 }
