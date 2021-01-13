@@ -27,5 +27,10 @@ namespace Domain
             Senha = senha;
             Colaborador = colaborador;
         }
+
+        public Usuario()
+        {
+
+        }
     }
 }
