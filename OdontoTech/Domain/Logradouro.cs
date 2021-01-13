@@ -19,6 +19,9 @@ namespace Domain
             Bairro = bairro;
         }
        
+        /// <summary>
+        /// CostrutorDAL.
+        /// </summary>
         public Logradouro()
         {
 
