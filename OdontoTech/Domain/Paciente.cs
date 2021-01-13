@@ -22,5 +22,9 @@
             Observacao = observacao;
             Endereco = endereco;
         }
+        public Paciente()
+        {
+           
+        }
     }
 }

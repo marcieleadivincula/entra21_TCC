@@ -89,6 +89,7 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@idEndereco", paciente.Endereco.Id);
 
 
+
             try
             {
                 conn.Open();
@@ -98,6 +99,43 @@ namespace DataAccessLayer
             catch (Exception)
             {
                 return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public List<Paciente> SelecionaTodos()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM paciente";
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                List<Paciente> Pacientes = new List<Paciente>();
+                while (reader.Read())
+                {
+                    Paciente temp = new Paciente();
+
+                    temp.Id = Convert.ToInt32(reader["idPaciente"]);
+                    temp.Nome = Convert.ToString(reader["nome"]);
+                    temp.Sobrenome = Convert.ToString(reader["sobrenome"]);
+                    temp.Rg = Convert.ToString(reader["rg"]);
+                    temp.Cpf = Convert.ToString(reader["cpf"]);
+                    temp.DataNascimento = Convert.ToString(reader["dtNascimento"]);
+                    temp.Observacao = Convert.ToString(reader["obs"]);
+                    temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
+
+                    Pacientes.Add(temp);
+                }
+                return Pacientes;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
             }
             finally
             {
