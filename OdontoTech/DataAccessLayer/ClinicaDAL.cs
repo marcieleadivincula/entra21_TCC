@@ -23,7 +23,7 @@ namespace DataAccessLayer
             cmd.CommandText = "INSERT INTO clinica (nomeClinica,dtInauguracao,idEndereco) values (@nomeClinica,@dtInauguracao,@idEndereco)";
     
             cmd.Parameters.AddWithValue("@nomeClinica", clinica.nNome);
-            cmd.Parameters.AddWithValue("@dtInauguracao", Convert.ToString(clinica.DataInauguracao));
+            cmd.Parameters.AddWithValue("@dtInauguracao", clinica.DataInauguracao);
             cmd.Parameters.AddWithValue("@idEndereco", clinica.Endereco.Id);
 
             try
@@ -89,7 +89,7 @@ namespace DataAccessLayer
             cmd.CommandText = "UPDATE clinica SET nomeClinica = @nomeClinica, SET dtInauguracao = @dtInauguracao, SET idEndereco = @idEndereco WHERE idClinica = @idClinica";
             cmd.Parameters.AddWithValue("@idClinica", clinica.Id);
             cmd.Parameters.AddWithValue("@nomeClinica", clinica.nNome);
-            cmd.Parameters.AddWithValue("@dtInauguracao", Convert.ToString(clinica.DataInauguracao));
+            cmd.Parameters.AddWithValue("@dtInauguracao", clinica.DataInauguracao);
             cmd.Parameters.AddWithValue("@idEndereco", clinica.Endereco.Id);
 
             try
