@@ -11,6 +11,10 @@ namespace DataAccessLayer
 {
     class UsuarioDAL
     {
+        /// <summary>
+        /// Insere o  Usuario no BD. Caso houver erro a função informa.
+        /// </summary>
+        /// <param name="usuario"></param>
         public void Inserir(Usuario usuario)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
@@ -43,6 +47,11 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        /// <summary>
+        /// Tenta deletar, caso der certo retorna (Usuario deletado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
         public string Deletar(Usuario usuario)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
@@ -66,6 +75,11 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        /// <summary>
+        /// Tenta atualizar, caso der certo retorna (Usuario atualizado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
         public string Atualizar(Usuario usuario)
         {
 
@@ -94,6 +108,10 @@ namespace DataAccessLayer
             }
 
         }
+        /// <summary>
+        /// Retorna Lista Com Todos os usuarios do BD.
+        /// </summary>
+        /// <returns></returns>
         public List<Usuario> SelecionaTodos()
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
