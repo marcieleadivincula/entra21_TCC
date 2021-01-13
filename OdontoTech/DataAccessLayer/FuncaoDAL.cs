@@ -49,5 +49,28 @@ namespace DataAccessLayer
             }
 
         }
+        public string Deletar(Funcao funcao)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM funcao WHERE idFuncao = @ID";
+            cmd.Parameters.AddWithValue("@ID", funcao.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Funcao deletado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
