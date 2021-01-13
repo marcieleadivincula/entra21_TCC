@@ -72,7 +72,33 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public string Atualizar(Procedimento procedimento)
+        {
 
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "UPDATE procedimento SET nomeProcedimento = @nomeProcedimento, SET dsProcedimento = @dsProcedimento, SET idTipoProcedimento = @idTipoProcedimento WHERE idProcedimento = @idProcedimento";
+            cmd.Parameters.AddWithValue("@idProcedimento", procedimento.Id);
+            cmd.Parameters.AddWithValue("@nomeProcedimento", procedimento.Nome);
+            cmd.Parameters.AddWithValue("@dsProcedimento", procedimento.DescricaoProcedimento);
+            cmd.Parameters.AddWithValue("@idTipoProcedimento", procedimento.TipoProcedimento.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Procedimento atualizado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
 
     }
 }
