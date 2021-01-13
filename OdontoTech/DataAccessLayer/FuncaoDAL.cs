@@ -102,5 +102,39 @@ namespace DataAccessLayer
             }
 
         }
+        public List<Funcao> SelecionaTodos()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM funcao";
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                List<Funcao> Funcaos = new List<Funcao>();
+                while (reader.Read())
+                {
+                    Funcao temp = new Funcao();
+
+                    temp.Id = Convert.ToInt32(reader["idFuncao"]);
+                    temp.Nome = Convert.ToString(reader["nomeFuncao"]);
+                    temp.Salario = Convert.ToDouble(reader["salario"]);
+                    temp.Comissao = Convert.ToDouble(reader["comissao"]);
+;
+
+                    Funcaos.Add(temp);
+                }
+                return Funcaos;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
