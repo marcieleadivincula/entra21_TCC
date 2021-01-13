@@ -11,6 +11,10 @@ namespace DataAccessLayer
 {
     public class ColaboradorDAL
     {
+        /// <summary>
+        ///  Insere a Colaborador no BD. Caso houver erro a função informa.
+        /// </summary>
+        /// <param name="colaborador"></param>
         public void Inserir(Colaborador colaborador)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
@@ -50,6 +54,11 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        /// <summary>
+        ///  Tenta deletar, caso der certo retorna (Colaborador deletads com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
+        /// </summary>
+        /// <param name="colaborador"></param>
+        /// <returns></returns>
         public string Deletar(Colaborador colaborador)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
@@ -73,6 +82,12 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        /// <summary>
+        /// Tenta atualizar, caso der certo retorna (Colaborador atualizada com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
+        /// </summary>
+        /// </summary>
+        /// <param name="colaborador"></param>
+        /// <returns></returns>
         public string Atualizar(Colaborador colaborador)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
@@ -107,6 +122,10 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        /// <summary>
+        /// Retorna Lista Com Colaboradores !
+        /// </summary>
+        /// <returns></returns>
         public List<Colaborador> SelecionaTodos()
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
