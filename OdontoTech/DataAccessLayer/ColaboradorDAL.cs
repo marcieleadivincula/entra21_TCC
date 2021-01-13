@@ -38,12 +38,35 @@ namespace DataAccessLayer
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Colaborador já cadastrada.");
+                    throw new Exception("Colaborador já cadastrado.");
                 }
                 else
                 {
                     throw new Exception("Erro no Banco de dados. Contate o administrador.");
                 }
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public string Deletar(Colaborador colaborador)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM colaborador WHERE idColaborador = @ID";
+            cmd.Parameters.AddWithValue("@ID", colaborador.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Colaborador deletada com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
             }
             finally
             {
