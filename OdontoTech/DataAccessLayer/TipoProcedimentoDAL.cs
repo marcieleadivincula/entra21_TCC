@@ -49,6 +49,33 @@ namespace DataAccessLayer
 
         }
 
+        /// <summary>
+        ///  Tenta deletar, caso der certo retorna (Tipo Procedimento deletado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
+        /// </summary>
+        /// <param name="TipoProcedimento"></param>
+        /// <returns></returns>
+        public string Deletar(TipoProcedimento TipoProcedimento)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM tipoprocedimento WHERE idTipoProcedimento = @ID";
+            cmd.Parameters.AddWithValue("@ID", TipoProcedimento.Id);
 
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Tipo Procedimento deletado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
