@@ -1,6 +1,11 @@
-﻿using Domain;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DataAccessLayer;
 using System.Data.SqlClient;
+using Domain;
 
 namespace DataAccessLayer
 {
@@ -72,6 +77,11 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        /// <summary>
+        /// Tenta atualizar, caso der certo retorna (Procedimento atualizado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
+        /// </summary>
+        /// <param name="procedimento"></param>
+        /// <returns></returns>
         public string Atualizar(Procedimento procedimento)
         {
 
@@ -99,6 +109,40 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public List<Procedimento> SelecionaTodos()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM procedimento";
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                List<Procedimento> Procedimentos = new List<Procedimento>();
+                while (reader.Read())
+                {
+                    Procedimento temp = new Procedimento();
 
+                    temp.Id = Convert.ToInt32(reader["idProcedimento"]);
+                    temp.Nome = Convert.ToString(reader["nomeProcedimento"]);
+                    temp.DescricaoProcedimento = Convert.ToString(reader["dsProcedimento"]);
+                    temp.TipoProcedimento.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
+                 
+
+
+                    Procedimentos.Add(temp);
+                }
+                return Procedimentos;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
