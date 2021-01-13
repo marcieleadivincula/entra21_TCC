@@ -48,6 +48,7 @@
     <Compile Include="DBConfig.cs" />
     <Compile Include="EnderecoDAL.cs" />
     <Compile Include="EstadoDAL.cs" />
+    <Compile Include="PacienteDAL.cs" />
     <Compile Include="ProcedimentoDAL.cs" />
     <Compile Include="ProdutoDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
