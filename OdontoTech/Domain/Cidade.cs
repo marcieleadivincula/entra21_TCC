@@ -12,5 +12,12 @@
             Nome = nome;
             Estado = estado;
         }
+        /// <summary>
+        /// Create CidadeDAL.
+        /// </summary>
+        public Cidade()
+        {
+
+        }
     }
 }
