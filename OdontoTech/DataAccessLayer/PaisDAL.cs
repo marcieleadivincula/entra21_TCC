@@ -90,5 +90,37 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public List<Pais> SelecionaTodos()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM pais";
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                List<Pais> Paiss = new List<Pais>();
+                while (reader.Read())
+                {
+                    Pais temp = new Pais();
+
+                    temp.Id = Convert.ToInt32(reader["idPais"]);
+                    temp.Nome = Convert.ToString(reader["nomePais"]);
+          
+
+                    Paiss.Add(temp);
+                }
+                return Paiss;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
