@@ -42,6 +42,29 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public string Deletar(TipoPagamento tipoPagamento)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM tipopagamento WHERE idTipoPagamento = @ID";
+            cmd.Parameters.AddWithValue("@ID", tipoPagamento.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Tipo Procedimento deletado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
 
     }
 }
