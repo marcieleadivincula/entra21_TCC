@@ -20,7 +20,7 @@ namespace DataAccessLayer
             cmd.CommandText = $"INSERT INTO bairro (nomeCidade,idEstado) values (@nomeCidade,@idEstado)";
 
             cmd.Parameters.AddWithValue("@nomeCidade", cidade.Nome);
-            cmd.Parameters.AddWithValue("@idEstado", cidade.Estado.Id;
+            cmd.Parameters.AddWithValue("@idEstado", cidade.Estado.Id);
 
             try
             {
@@ -37,6 +37,29 @@ namespace DataAccessLayer
                 {
                     throw new Exception("Erro no Banco de dados. Contate o administrador.");
                 }
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public string Deletar(Cidade cidade)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM cidade WHERE idCidade = @ID";
+            cmd.Parameters.AddWithValue("@ID", cidade.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Cidade deletada com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
             }
             finally
             {
