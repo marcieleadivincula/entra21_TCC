@@ -31,12 +31,35 @@ namespace DataAccessLayer
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Endereço já cadastrado.");
+                    throw new Exception("Bairro já cadastrado.");
                 }
                 else
                 {
                     throw new Exception("Erro no Banco de dados. Contate o administrador.");
                 }
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public string Deletar(Bairro bairro)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM bairro WHERE idBairro = @ID";
+            cmd.Parameters.AddWithValue("@ID", bairro.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Bairro deletado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
             }
             finally
             {
