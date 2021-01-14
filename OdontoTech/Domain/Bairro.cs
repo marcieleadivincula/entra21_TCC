@@ -21,5 +21,13 @@ namespace Domain
             this.cidade = cidade;
         }
 
+        /// <summary>
+        /// contrutor dal.
+        /// </summary>
+        public Bairro()
+        {
+
+        }
+
     }
 }
