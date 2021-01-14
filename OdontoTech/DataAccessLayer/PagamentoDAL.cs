@@ -44,5 +44,55 @@ namespace DataAccessLayer
             }
 
         }
+        public string Deletar(Pagamento Pagamento)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM pagamento WHERE idPagamento = @ID";
+            cmd.Parameters.AddWithValue("@ID", Pagamento.Id);
+                
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Pagamento deletado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public string Atualizar(Pagamento Pagamento)
+        {
+
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "UPDATE procedimento SET dtPagamento = @dtPagamento, SET idTipoPagamento = @idTipoPagamento WHERE idPagamento = @idPagamento";
+            cmd.Parameters.AddWithValue("@idPagamento", Pagamento.Id);
+            cmd.Parameters.AddWithValue("@dtPagamento", Pagamento.DataPagamento);
+            cmd.Parameters.AddWithValue("@idTipoPagamento", Pagamento.TipoPagamento.Id);
+
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Pais atualizado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
