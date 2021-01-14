@@ -94,5 +94,38 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public List<Pagamento> SelecionaTodos()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM pagamento";
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                List<Pagamento> Pagamentos = new List<Pagamento>();
+                while (reader.Read())
+                {
+                    Pagamento temp = new Pagamento();
+
+                    temp.Id = Convert.ToInt32(reader["idPagamento"]);
+                    temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
+                    temp.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
+
+
+                    Pagamentos.Add(temp);
+                }
+                return Pagamentos;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
