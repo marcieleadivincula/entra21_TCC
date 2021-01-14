@@ -22,5 +22,12 @@ namespace Domain
             DataEntrada = dataEntrada;
             DataSaida = dataSaida;
         }
+        /// <summary>
+        /// construtor DAL
+        /// </summary>
+        public Estoque()
+        {
+
+        }
     }
 }

@@ -16,5 +16,12 @@ namespace Domain
             Id = id;
             Tipo = tipoPagamento;
         }
+        /// <summary>
+        /// construtor DAL
+        /// </summary>
+        public TipoPagamento()
+        {
+
+        }
     }
 }
