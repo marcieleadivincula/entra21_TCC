@@ -54,6 +54,7 @@
     <Compile Include="FuncaoDAL.cs" />
     <Compile Include="LogradouroDAL.cs" />
     <Compile Include="PacienteDAL.cs" />
+    <Compile Include="PaisDAL.cs" />
     <Compile Include="ProcedimentoDAL.cs" />
     <Compile Include="ProdutoDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
