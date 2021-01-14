@@ -45,15 +45,19 @@
   <ItemGroup>
     <Compile Include="AtendimentoDAL.cs" />
     <Compile Include="ClinicaDAL.cs" />
+    <Compile Include="ColaboradorDAL.cs" />
     <Compile Include="DBConfig.cs" />
     <Compile Include="EnderecoDAL.cs" />
     <Compile Include="EstadoDAL.cs" />
+    <Compile Include="FuncaoDAL.cs" />
+    <Compile Include="LogradouroDAL.cs" />
     <Compile Include="PacienteDAL.cs" />
     <Compile Include="ProcedimentoDAL.cs" />
     <Compile Include="ProdutoDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TipoEmbalagemDAL.cs" />
     <Compile Include="TipoProcedimentoDAL.cs" />
+    <Compile Include="UsuarioDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -27,5 +27,13 @@ namespace Domain
             Senha = senha;
             Colaborador = colaborador;
         }
+
+        /// <summary>
+        /// Construtor DAL
+        /// </summary>
+        public Usuario()
+        {
+
+        }
     }
 }

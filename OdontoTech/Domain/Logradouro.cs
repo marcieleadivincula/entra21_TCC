@@ -18,6 +18,13 @@ namespace Domain
             Nome = nome;
             Bairro = bairro;
         }
+       
+        /// <summary>
+        /// CostrutorDAL.
+        /// </summary>
+        public Logradouro()
+        {
 
+        }
     }
 }
