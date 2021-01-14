@@ -66,5 +66,31 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public string Atualizar(Bairro bairro)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "UPDATE bairro SET nomeBairro = @nomeBairro, SET idCidade = @idCidade WHERE idBairro = @idBairro";
+            cmd.Parameters.AddWithValue("@idBairro", bairro.Id );
+            cmd.Parameters.AddWithValue("@nomeBairro", bairro.Nome );
+            cmd.Parameters.AddWithValue("@idCidade",bairro.cidade.Id );
+
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Bairro atualizada com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
