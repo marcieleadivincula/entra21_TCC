@@ -92,5 +92,38 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public List<Bairro> SelecionaTodos()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM bairro";
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                List<Bairro> Bairros = new List<Bairro>();
+                while (reader.Read())
+                {
+                    Bairro temp = new Bairro();
+
+                    temp.Id = Convert.ToInt32(reader["idBairro"]);
+                    temp.Nome = Convert.ToString(reader["nomeBairro"]);
+                    temp.cidade.Id = Convert.ToInt32(reader["idCidade"]);
+    
+
+                    Bairros.Add(temp);
+                }
+                return Bairros;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
