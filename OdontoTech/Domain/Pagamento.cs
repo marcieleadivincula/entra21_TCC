@@ -19,5 +19,13 @@ namespace Domain
             TipoPagamento = tipoPagamento;
         }
 
+        /// <summary>
+        /// construtor DAL.
+        /// </summary>
+        public Pagamento()
+        {
+
+        }
+
     }
 }
