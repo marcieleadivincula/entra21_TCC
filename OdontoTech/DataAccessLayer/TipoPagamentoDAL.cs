@@ -72,7 +72,7 @@ namespace DataAccessLayer
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE tipopagamento SET tipoPagamento = @tipoPagamento WHERE idTipoPagamento = @idTipoPagamento";
-            cmd.Parameters.AddWithValue("@ID", tipoPagamento.Id)
+            cmd.Parameters.AddWithValue("@ID", tipoPagamento.Id);
             cmd.Parameters.AddWithValue("@tipoPagamento", tipoPagamento.Tipo);
 
             try
