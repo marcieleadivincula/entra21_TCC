@@ -64,5 +64,31 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public string Atualizar(Pais pais)
+        {
+
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "UPDATE procedimento SET nomePais = @nomePais WHERE idPais = @idPais";
+            cmd.Parameters.AddWithValue("@nomePais", pais.Nome);
+            cmd.Parameters.AddWithValue("@idPais", pais.Id);
+
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Pais atualizado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
