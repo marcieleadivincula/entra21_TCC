@@ -9,7 +9,7 @@ using Domain;
 
 namespace DataAccessLayer
 {
-    class BairroDAL
+    public class BairroDAL
     {
         public void Inserir(Bairro bairro)
         {
