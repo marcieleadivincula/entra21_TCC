@@ -11,6 +11,37 @@ namespace DataAccessLayer
 {
     public class CidadeDAL
     {
+        public void Inserir(Cidade cidade)
+        {
 
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = $"INSERT INTO bairro (nomeCidade,idEstado) values (@nomeCidade,@idEstado)";
+
+            cmd.Parameters.AddWithValue("@nomeCidade", cidade.Nome);
+            cmd.Parameters.AddWithValue("@idEstado", cidade.Estado.Id;
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("UNIQUE"))
+                {
+                    throw new Exception("Cidade já cadastrado.");
+                }
+                else
+                {
+                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                }
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
