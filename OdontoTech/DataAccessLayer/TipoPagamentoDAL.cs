@@ -19,7 +19,7 @@ namespace DataAccessLayer
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO tipopagamento (tipoPagamento) values (@tipoPagamento)";
 
-            cmd.Parameters.AddWithValue("@tipoPagamento", tipoPagamento);
+            cmd.Parameters.AddWithValue("@tipoPagamento", tipoPagamento.Tipo);
 
             try
             {
@@ -64,6 +64,32 @@ namespace DataAccessLayer
             {
                 conn.Dispose();
             }
+        }
+        public string Atualizar(TipoPagamento tipoPagamento)
+        {
+
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "UPDATE tipopagamento SET tipoPagamento = @tipoPagamento WHERE idTipoPagamento = @idTipoPagamento";
+            cmd.Parameters.AddWithValue("@ID", tipoPagamento.Id)
+            cmd.Parameters.AddWithValue("@tipoPagamento", tipoPagamento.Tipo);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "TipoProcedimento atualizado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+
         }
 
     }
