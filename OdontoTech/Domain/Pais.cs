@@ -17,5 +17,12 @@ namespace Domain
             Nome = nome;
         }
 
+        /// <summary>
+        /// Pais DAL
+        /// </summary>
+        public Pais()
+        {
+
+        }
     }
 }
