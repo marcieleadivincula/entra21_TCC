@@ -15,7 +15,7 @@ namespace DataAccessLayer
         ///  Insere a Colaborador no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="colaborador"></param>
-        public void Inserir(Colaborador colaborador)
+        public string Inserir(Colaborador colaborador)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
