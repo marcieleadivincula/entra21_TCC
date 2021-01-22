@@ -11,7 +11,7 @@ namespace DataAccessLayer
 {
     class EstoqueDAL
     {
-        public void Inserir(Estoque Estoque)
+        public string Inserir(Estoque Estoque)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
@@ -28,16 +28,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                return "Estoque inserido com sucesso";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Estoque já cadastrado.");
+                    return ("Estoque já cadastrado.");
                 }
                 else
                 {
-                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                    return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally
