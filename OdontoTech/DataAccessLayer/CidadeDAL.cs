@@ -32,11 +32,11 @@ namespace DataAccessLayer
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Cidade já cadastrado.");
+                    return ("Cidade já cadastrado.");
                 }
                 else
                 {
-                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                    return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally

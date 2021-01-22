@@ -15,7 +15,7 @@ namespace DataAccessLayer
         /// Insere a Clinica no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="clinica"></param>
-        public void Inserir(Clinica clinica)
+        public string Inserir(Clinica clinica)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
@@ -30,16 +30,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                return "Clinica inserida com sucesso";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Clinica já cadastrada.");
+                    return ("Clinica já cadastrada.");
                 }
                 else
                 {
-                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                    return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally
