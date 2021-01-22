@@ -28,7 +28,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Estoque inserido com sucesso";
+                return "Estoque cadastrado com sucesso";
             }
             catch (Exception ex)
             {

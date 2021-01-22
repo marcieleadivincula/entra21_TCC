@@ -26,7 +26,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Bairro inserido com sucesso";
+                return "Bairro cadastrado com sucesso";
             }
             catch (Exception ex)
             {

@@ -30,7 +30,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Clinica inserida com sucesso";
+                return "Clinica cadastrado com sucesso";
             }
             catch (Exception ex)
             {

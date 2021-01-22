@@ -29,7 +29,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Atendimento inserido com sucesso";
+                return "Atendimento cadastrado com sucesso";
             }
             catch (Exception ex)
             {
