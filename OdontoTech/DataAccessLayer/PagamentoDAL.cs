@@ -11,7 +11,7 @@ namespace DataAccessLayer
 {
     class PagamentoDAL
     {
-        public void Inserir(Pagamento Pagamento)
+        public string Inserir(Pagamento Pagamento)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
@@ -26,16 +26,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                return "Pagamento cadastrado com sucesso !";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Pagamento já cadastrado.");
+                    return ("Pagamento já cadastrado.");
                 }
                 else
                 {
-                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                    return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally
