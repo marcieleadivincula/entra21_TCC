@@ -11,7 +11,7 @@ namespace DataAccessLayer
 {
     public class CidadeDAL
     {
-        public void Inserir(Cidade cidade)
+        public string Inserir(Cidade cidade)
         {
 
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
@@ -26,6 +26,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                return "Cidade cadastrada com sucesso";
             }
             catch (Exception ex)
             {
