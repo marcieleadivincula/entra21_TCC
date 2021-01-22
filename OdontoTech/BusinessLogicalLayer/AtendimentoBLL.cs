@@ -70,7 +70,7 @@ namespace BusinessLogicalLayer
             return respostaDB;
         }
 
-        public List<Bairro> GetAll()
+        public List<Atendimento> GetAll()
         {
             return dal.SelecionaTodos();
         }
