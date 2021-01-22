@@ -11,7 +11,7 @@ namespace DataAccessLayer
 {
     public class CidadeDAL
     {
-        public void Inserir(Cidade cidade)
+        public string Inserir(Cidade cidade)
         {
 
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
@@ -26,16 +26,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                return "Cidade cadastrada com sucesso";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Cidade já cadastrado.");
+                    return ("Cidade já cadastrado.");
                 }
                 else
                 {
-                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                    return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally

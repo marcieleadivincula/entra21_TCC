@@ -15,7 +15,7 @@ namespace DataAccessLayer
         /// Insere o Endereço no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="Atendimento"></param>
-        public void Inserir(Atendimento Atendimento)
+        public string Inserir(Atendimento Atendimento)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
@@ -29,16 +29,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                return "Atendimento cadastrado com sucesso";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Atendimento já cadastrado.");
+                    return ("Atendimento já cadastrado.");
                 }
                 else
                 {
-                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                    return("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally

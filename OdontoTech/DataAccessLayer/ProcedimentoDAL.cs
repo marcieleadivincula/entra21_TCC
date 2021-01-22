@@ -15,7 +15,7 @@ namespace DataAccessLayer
         /// Inserir procedimento
         /// </summary>
         /// <param name="procedimento"></param>
-        public void Inserir(Procedimento procedimento)
+        public string Inserir(Procedimento procedimento)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
@@ -31,16 +31,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                return "Procedimento cadastrado com sucesso";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Procedimento já cadastrado.");
+                    return ("Procedimento já cadastrado.");
                 }
                 else
                 {
-                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                    return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally
