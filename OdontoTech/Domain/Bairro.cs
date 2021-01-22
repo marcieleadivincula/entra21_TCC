@@ -12,13 +12,13 @@ namespace Domain
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public Cidade cidade { get; set; }
+        public Cidade Cidade { get; set; }
 
         public Bairro(int id, string nome, Cidade cidade)
         {
             Id = id;
             Nome = nome;
-            this.cidade = cidade;
+            Cidade = cidade;
         }
 
         /// <summary>
