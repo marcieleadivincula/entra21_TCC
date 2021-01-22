@@ -15,7 +15,7 @@ namespace DataAccessLayer
         /// Insere o  Estado no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="estado"></param>
-        public void Inserir(Estado estado)
+        public string Inserir(Estado estado)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
@@ -30,16 +30,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                return "Estado cadastrado com sucesso";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Estado já cadastrado.");
+                    return ("Estado já cadastrado.");
                 }
                 else
                 {
-                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                    return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally

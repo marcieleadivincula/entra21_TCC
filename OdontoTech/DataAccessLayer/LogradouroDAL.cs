@@ -11,7 +11,7 @@ namespace DataAccessLayer
 {
     public class LogradouroDAL
     {
-        public void Inserir(Logradouro logradouro)
+        public string Inserir(Logradouro logradouro)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
@@ -27,16 +27,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                return "Logradouro cadastrado com sucesso";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Logradouro já cadastrado.");
+                    return ("Logradouro já cadastrado.");
                 }
                 else
                 {
-                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                    return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally

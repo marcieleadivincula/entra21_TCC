@@ -15,7 +15,7 @@ namespace DataAccessLayer
         /// Insere o  Usuario no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="usuario"></param>
-        public void Inserir(Usuario usuario)
+        public string Inserir(Usuario usuario)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
@@ -30,16 +30,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                return "Usuario cadastrado com sucesso";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Usuario já cadastrado.");
+                    return ("Usuario já cadastrado.");
                 }
                 else
                 {
-                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                    return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally

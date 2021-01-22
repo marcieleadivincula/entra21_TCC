@@ -37,16 +37,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                return "Colaborador cadastrado com sucesso";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Colaborador já cadastrado.");
+                    return ("Colaborador já cadastrado.");
                 }
                 else
                 {
-                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                    return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally
