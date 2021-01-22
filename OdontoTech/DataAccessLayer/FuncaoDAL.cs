@@ -15,7 +15,7 @@ namespace DataAccessLayer
         /// Insere Funcao caso der erro informa.
         /// </summary>
         /// <param name="funcao"></param>
-        public void Inserir(Funcao funcao)
+        public string Inserir(Funcao funcao)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
@@ -31,16 +31,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                return "Funcao cadastrada com sucesso";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Funcao já cadastrado.");
+                    return ("Funcao já cadastrada.");
                 }
                 else
                 {
-                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                    return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally
