@@ -22,7 +22,7 @@ namespace DataAccessLayer
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO clinica (nomeClinica,dtInauguracao,idEndereco) values (@nomeClinica,@dtInauguracao,@idEndereco)";
     
-            cmd.Parameters.AddWithValue("@nomeClinica", clinica.nNome);
+            cmd.Parameters.AddWithValue("@nomeClinica", clinica.Nome);
             cmd.Parameters.AddWithValue("@dtInauguracao", clinica.DataInauguracao);
             cmd.Parameters.AddWithValue("@idEndereco", clinica.Endereco.Id);
 
@@ -36,11 +36,11 @@ namespace DataAccessLayer
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    return ("Clinica já cadastrada.");
+                    return "Clinica já cadastrada.";
                 }
                 else
                 {
-                    return ("Erro no Banco de dados. Contate o administrador.");
+                    return  "Erro no Banco de dados. Contate o administrador.";
                 }
             }
             finally
