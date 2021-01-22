@@ -15,7 +15,7 @@ namespace DataAccessLayer
         /// Insere o  Tipo Embalagem no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="TipoEmbalagem"></param>
-        public void Inserir(TipoEmbalagem TipoEmbalagem)
+        public string Inserir(TipoEmbalagem TipoEmbalagem)
         {
 
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
@@ -29,16 +29,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                return "Tipo de embalagem cadastrado com sucesso";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception("Tipo Embalagem já cadastrada.");
+                    return ("Tipo Embalagem já cadastrada.");
                 }
                 else
                 {
-                    throw new Exception("Erro no Banco de dados. Contate o administrador.");
+                    return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally
