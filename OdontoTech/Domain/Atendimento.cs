@@ -11,17 +11,25 @@ namespace Domain
 
         public Atendimento(int id, Paciente paciente, Colaborador colaborador, List<Procedimento> procedimentos)
         {
-            this.Id = id;
-            this.Paciente = paciente;
-            this.Colaborador = colaborador;
-            this.Procedimentos = procedimentos;
+            Id = id;
+            Paciente = paciente;
+            Colaborador = colaborador;
+            Procedimentos = procedimentos;
         }
 
         public Atendimento(int id, Paciente paciente, Colaborador colaborador)
         {
-            this.Id = id;
-            this.Paciente = paciente;
-            this.Colaborador = colaborador;
+            Id = id;
+            Paciente = paciente;
+            Colaborador = colaborador;
+        }
+
+        /// <summary>
+        /// construtor para desenvolvimento DAL
+        /// </summary>
+        public Atendimento()
+        {
+
         }
     }
 }

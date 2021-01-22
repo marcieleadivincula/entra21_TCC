@@ -19,5 +19,13 @@ namespace Domain
             Salario = salario;
             Comissao = comissao;
         }
+
+        /// <summary>
+        /// construtor DAL
+        /// </summary>
+        public Funcao()
+        {
+
+        }
     }
 }

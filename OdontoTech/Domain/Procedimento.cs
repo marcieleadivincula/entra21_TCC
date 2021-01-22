@@ -22,5 +22,13 @@ namespace Domain
             DescricaoProcedimento = descricaoProcedimento;
             Atendimentos = atendimentos;
         }
+
+        /// <summary>
+        /// construtor para DAL.
+        /// </summary>
+        public Procedimento()
+        {
+
+        }
     }
 }

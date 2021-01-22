@@ -1,4 +1,10 @@
-﻿namespace Domain
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Domain
 {
     public class Paciente
     {
@@ -7,11 +13,11 @@
         public string Sobrenome { get; set; }
         public string Rg { get; set; }
         public string Cpf { get; set; }
-        public string DataNascimento { get; set; } // Data esta como string ! (TEMPORARIO)
+        public DateTime DataNascimento { get; set; } // Data esta como string ! (TEMPORARIO)
         public string Observacao { get; set; }
         public Endereco Endereco { get; set; }
 
-        public Paciente(int id, string nome, string sobrenome, string rg, string cpf, string dataNascimento, string observacao, Endereco endereco)
+        public Paciente(int id, string nome, string sobrenome, string rg, string cpf, DateTime dataNascimento, string observacao, Endereco endereco)
         {
             Id = id;
             Nome = nome;
@@ -21,6 +27,10 @@
             DataNascimento = dataNascimento;
             Observacao = observacao;
             Endereco = endereco;
+        }
+        public Paciente()
+        {
+           
         }
     }
 }
