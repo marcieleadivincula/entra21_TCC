@@ -72,7 +72,7 @@ namespace BusinessLogicalLayer
             {
                 erros.AppendLine("A ID da cidade deve ser informada.");
             }
-            string respostaDB = dal.Inserir(cidade);
+            string respostaDB = dal.Atualizar(cidade);
             return respostaDB;
         }
 
