@@ -16,15 +16,15 @@ namespace BusinessLogicalLayer
         {
             StringBuilder erros = new StringBuilder();
 
-            if (atendimento.Id == 0)
+            if (atendimento.Id == 0 || atendimento.Id < 0)
             {
                 erros.AppendLine("O ID de atendimento deve ser informado.");
             }
-            if (atendimento.Paciente.Id == 0)
+            if (atendimento.Paciente.Id == 0 || atendimento.Paciente.Id < 0 )
             {
                 erros.AppendLine("O ID de Paciente deve ser informado.");
             }
-            if (atendimento.Colaborador.Id == 0)
+            if (atendimento.Colaborador.Id == 0 || atendimento.Colaborador.Id < 0)
             {
                 erros.AppendLine("O ID de Colaborador deve ser informado.");
             }
@@ -49,15 +49,15 @@ namespace BusinessLogicalLayer
             StringBuilder erros = new StringBuilder();
 
 
-            if (atendimento.Id == 0)
+            if (atendimento.Id == 0 || atendimento.Id < 0)
             {
                 erros.AppendLine("O ID de atendimento deve ser informado.");
             }
-            if (atendimento.Paciente.Id == 0)
+            if (atendimento.Paciente.Id == 0 || atendimento.Paciente.Id < 0)
             {
                 erros.AppendLine("O ID de Paciente deve ser informado.");
             }
-            if (atendimento.Colaborador.Id == 0)
+            if (atendimento.Colaborador.Id == 0 || atendimento.Colaborador.Id < 0)
             {
                 erros.AppendLine("O ID de Colaborador deve ser informado.");
             }

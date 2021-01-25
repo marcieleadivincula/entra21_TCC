@@ -26,12 +26,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 20 caracteres.");
             }
 
-            if (estado.Pais.Id == 0)
+            if (estado.Pais.Id == 0 || estado.Pais.Id < 0)
             {
                 erros.AppendLine("A ID do pais deve ser informado.");
             }
 
-            if (estado.Id == 0)
+            if (estado.Id == 0 || estado.Id < 0)
             {
                 erros.AppendLine("A ID do estado deve ser informado.");
             }
@@ -63,12 +63,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 20 caracteres.");
             }
 
-            if (estado.Pais.Id == 0)
+            if (estado.Pais.Id == 0 || estado.Pais.Id < 0)
             {
                 erros.AppendLine("A ID do pais deve ser informado.");
             }
 
-            if (estado.Id == 0)
+            if (estado.Id == 0 || estado.Id < 0)
             {
                 erros.AppendLine("A ID do estado deve ser informado.");
             }

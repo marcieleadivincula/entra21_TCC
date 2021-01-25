@@ -16,17 +16,17 @@ namespace BusinessLogicalLayer
         {
             StringBuilder erros = new StringBuilder();
 
-            if (Endereco.Id == 0)
+            if (Endereco.Id == 0  || Endereco.Id < 0)
             {
                 erros.AppendLine("O ID de endereco deve ser informado.");
             }
 
-            if (Endereco.Logradouro.Id == 0)
+            if (Endereco.Logradouro.Id == 0 || Endereco.Logradouro.Id < 0)
             {
                 erros.AppendLine("O ID de Logradouro deve ser informado.");
             }
 
-            if (Endereco.NumeroCasa == 0)
+            if (Endereco.NumeroCasa == 0 || 0 < Endereco.NumeroCasa)
             {
                 erros.AppendLine("O Numero da casa do endereco deve ser informado.");
             }
@@ -57,17 +57,17 @@ namespace BusinessLogicalLayer
         public string Update(Endereco Endereco)
         {
             StringBuilder erros = new StringBuilder();
-            if (Endereco.Id == 0)
+            if (Endereco.Id == 0 || Endereco.Id < 0)
             {
                 erros.AppendLine("O ID de endereco deve ser informado.");
             }
 
-            if (Endereco.Logradouro.Id == 0)
+            if (Endereco.Logradouro.Id == 0 || Endereco.Logradouro.Id < 0)
             {
                 erros.AppendLine("O ID de Logradouro deve ser informado.");
             }
 
-            if (Endereco.NumeroCasa == 0)
+            if (Endereco.NumeroCasa == 0 || 0 < Endereco.NumeroCasa)
             {
                 erros.AppendLine("O Numero da casa do endereco deve ser informado.");
             }

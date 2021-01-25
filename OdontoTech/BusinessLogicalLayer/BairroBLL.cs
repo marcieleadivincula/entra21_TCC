@@ -26,12 +26,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 50 caracteres.");
             }
 
-            if (bairro.Cidade.Id == 0)
+            if (bairro.Cidade.Id == 0 || bairro.Cidade.Id < 0)
             {
                 erros.AppendLine("A cidade deve ser informada.");
             }
 
-            if (bairro.Id == 0)
+            if (bairro.Id == 0 || bairro.Id < 0)
             {
                 erros.AppendLine("A cidade deve ser informada.");
             }
@@ -65,12 +65,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 50 caracteres.");
             }
 
-            if (bairro.Cidade.Id == 0)
+            if (bairro.Cidade.Id == 0 || bairro.Cidade.Id < 0)
             {
                 erros.AppendLine("A cidade deve ser informada.");
             }
 
-            if (bairro.Id == 0)
+            if (bairro.Id == 0 || bairro.Id < 0)
             {
                 erros.AppendLine("A cidade deve ser informada.");
             }
