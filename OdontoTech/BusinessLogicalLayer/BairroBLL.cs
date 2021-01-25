@@ -26,12 +26,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 50 caracteres.");
             }
 
-            if (string.IsNullOrWhiteSpace(Convert.ToString(bairro.Cidade.Id)))
+            if (bairro.Cidade.Id == 0)
             {
                 erros.AppendLine("A cidade deve ser informada.");
             }
 
-            if (string.IsNullOrWhiteSpace(Convert.ToString(bairro.Id)))
+            if (bairro.Id == 0)
             {
                 erros.AppendLine("A cidade deve ser informada.");
             }
