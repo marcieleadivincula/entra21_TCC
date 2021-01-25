@@ -20,7 +20,7 @@ namespace DataAccessLayer
             cmd.CommandText = $"INSERT INTO bairro (nomeBairro,idCidade) values (@nomeBairro,@idCidade)";
 
             cmd.Parameters.AddWithValue("@nomeBairro", bairro.Nome);
-            cmd.Parameters.AddWithValue("@idCidade", bairro.cidade.Id);
+            cmd.Parameters.AddWithValue("@idCidade", bairro.Cidade.Id);
 
             try
             {
@@ -75,7 +75,7 @@ namespace DataAccessLayer
             cmd.CommandText = "UPDATE bairro SET nomeBairro = @nomeBairro, SET idCidade = @idCidade WHERE idBairro = @idBairro";
             cmd.Parameters.AddWithValue("@idBairro", bairro.Id );
             cmd.Parameters.AddWithValue("@nomeBairro", bairro.Nome );
-            cmd.Parameters.AddWithValue("@idCidade",bairro.cidade.Id );
+            cmd.Parameters.AddWithValue("@idCidade",bairro.Cidade.Id );
 
 
             try
@@ -110,7 +110,7 @@ namespace DataAccessLayer
 
                     temp.Id = Convert.ToInt32(reader["idBairro"]);
                     temp.Nome = Convert.ToString(reader["nomeBairro"]);
-                    temp.cidade.Id = Convert.ToInt32(reader["idCidade"]);
+                    temp.Cidade.Id = Convert.ToInt32(reader["idCidade"]);
     
 
                     Bairros.Add(temp);

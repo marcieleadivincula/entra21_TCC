@@ -9,7 +9,7 @@ using Domain;
 
 namespace DataAccessLayer
 {
-    class PagamentoDAL
+    public class PagamentoDAL
     {
         public string Inserir(Pagamento Pagamento)
         {

@@ -146,5 +146,28 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+
+        public bool EhFuncionarioCadastrado(string login, string senha)
+        {
+            long? usuarioId = null;
+            using (SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING))
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = conn;
+                    command.CommandText = "SELECT idUsuario FROM usuario where login = @login AND senha = @senha";
+                    command.Parameters.AddWithValue("@login", login);
+                    command.Parameters.AddWithValue("@senha", senha);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        usuarioId = Convert.ToInt32(reader["idUsuario"]);
+                    }
+                }
+            }
+                
+            return usuarioId != null;
+        }
     }
 }

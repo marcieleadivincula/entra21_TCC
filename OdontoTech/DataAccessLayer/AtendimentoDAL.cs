@@ -14,16 +14,16 @@ namespace DataAccessLayer
         /// <summary>
         /// Insere o Endereço no BD. Caso houver erro a função informa.
         /// </summary>
-        /// <param name="Atendimento"></param>
-        public string Inserir(Atendimento Atendimento)
+        /// <param name="atendimento"></param>
+        public string Inserir(Atendimento atendimento)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO atendimento (idPaciente,idColaborador) values (@idPaciente,@idColaborador)";
   
-            cmd.Parameters.AddWithValue("@idPaciente", Atendimento.Paciente.Id);
-            cmd.Parameters.AddWithValue("@idColaborador", Atendimento.Colaborador.Id);
+            cmd.Parameters.AddWithValue("@idPaciente", atendimento.Paciente.Id);
+            cmd.Parameters.AddWithValue("@idColaborador", atendimento.Colaborador.Id);
 
             try
             {
