@@ -1,10 +1,7 @@
 ﻿using DataAccessLayer;
 using Domain;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
@@ -16,16 +13,10 @@ namespace BusinessLogicalLayer
         {
             StringBuilder erros = new StringBuilder();
 
-            //TODO
-            /*if (string.IsNullOrWhiteSpace(Convert.ToString(cidade.Estado.Id)))
+            if (clinica.Id == 0 || clinica.Id < 0)
             {
-                erros.AppendLine("A ID do Estado deve ser informado.");
+                erros.AppendLine("O ID da clínica deve ser informado.");
             }
-
-            if (string.IsNullOrWhiteSpace(Convert.ToString(cidade.Id)))
-            {
-                erros.AppendLine("A ID da cidade deve ser informada.");
-            }*/
 
             if (string.IsNullOrWhiteSpace(clinica.Nome))
             {
@@ -35,6 +26,11 @@ namespace BusinessLogicalLayer
             if (clinica.Nome.Length > 60)
             {
                 erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+            }
+
+            if (clinica.Endereco.Id == 0 || clinica.Id < 0)
+            {
+                erros.AppendLine("O ID do endereço deve ser informado.");
             }
 
             if (clinica.DataInauguracao == null) // rever a data
@@ -59,6 +55,11 @@ namespace BusinessLogicalLayer
         {
             StringBuilder erros = new StringBuilder();
 
+            if (clinica.Id == 0 || clinica.Id < 0)
+            {
+                erros.AppendLine("O ID da clínica deve ser informado.");
+            }
+
             if (string.IsNullOrWhiteSpace(clinica.Nome))
             {
                 erros.AppendLine("O nome da clínica deve ser informado.");
@@ -67,6 +68,11 @@ namespace BusinessLogicalLayer
             if (clinica.Nome.Length > 60)
             {
                 erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+            }
+
+            if (clinica.Endereco.Id == 0 || clinica.Id < 0)
+            {
+                erros.AppendLine("O ID do endereço deve ser informado.");
             }
 
             if (clinica.DataInauguracao == null) // rever a data
