@@ -89,7 +89,7 @@ namespace DataAccessLayer
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE clinica SET nomeClinica = @nomeClinica, SET dtInauguracao = @dtInauguracao, SET idEndereco = @idEndereco WHERE idClinica = @idClinica";
             cmd.Parameters.AddWithValue("@idClinica", clinica.Id);
-            cmd.Parameters.AddWithValue("@nomeClinica", clinica.nNome);
+            cmd.Parameters.AddWithValue("@nomeClinica", clinica.Nome);
             cmd.Parameters.AddWithValue("@dtInauguracao", clinica.DataInauguracao);
             cmd.Parameters.AddWithValue("@idEndereco", clinica.Endereco.Id);
 
@@ -128,7 +128,7 @@ namespace DataAccessLayer
                     Clinica temp = new Clinica();
 
                     temp.Id = Convert.ToInt32(reader["idClinica"]);
-                    temp.nNome = Convert.ToString(reader["nomeClinica"]);
+                    temp.Nome = Convert.ToString(reader["nomeClinica"]);
                     temp.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
                     temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
 

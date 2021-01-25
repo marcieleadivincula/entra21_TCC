@@ -16,6 +16,17 @@ namespace BusinessLogicalLayer
         {
             StringBuilder erros = new StringBuilder();
 
+            //TODO
+            /*if (string.IsNullOrWhiteSpace(Convert.ToString(cidade.Estado.Id)))
+            {
+                erros.AppendLine("A ID do Estado deve ser informado.");
+            }
+
+            if (string.IsNullOrWhiteSpace(Convert.ToString(cidade.Id)))
+            {
+                erros.AppendLine("A ID da cidade deve ser informada.");
+            }*/
+
             if (string.IsNullOrWhiteSpace(clinica.Nome))
             {
                 erros.AppendLine("O nome da clínica deve ser informado.");
