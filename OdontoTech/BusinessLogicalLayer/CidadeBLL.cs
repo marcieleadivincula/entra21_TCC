@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
-    class CidadeBLL
+    public class CidadeBLL
     {
         CidadeDAL dal = new CidadeDAL();
 
@@ -26,12 +26,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 50 caracteres.");
             }
 
-            if (string.IsNullOrWhiteSpace(Convert.ToString(cidade.Estado.Id)))
+            if (cidade.Estado.Id == 0)
             {
                 erros.AppendLine("A ID do Estado deve ser informado.");
             }
 
-            if (string.IsNullOrWhiteSpace(Convert.ToString(cidade.Id)))
+            if (cidade.Id == 0)
             {
                 erros.AppendLine("A ID da cidade deve ser informada.");
             }
