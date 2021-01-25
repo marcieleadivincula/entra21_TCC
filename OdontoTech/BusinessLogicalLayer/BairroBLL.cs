@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
-    class BairroBLL
+    public class BairroBLL
     {
         BairroDAL dal = new BairroDAL();
         public string Insert(Bairro bairro)
