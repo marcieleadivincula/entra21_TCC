@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
-    class EstadoBLL
+    public class EstadoBLL
     {
         EstadoDAL dal = new EstadoDAL();
 
@@ -26,12 +26,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 20 caracteres.");
             }
 
-            if (string.IsNullOrWhiteSpace(Convert.ToString(estado.Pais.Id)))
+            if (estado.Pais.Id == 0 || estado.Pais.Id < 0)
             {
                 erros.AppendLine("A ID do pais deve ser informado.");
             }
 
-            if (string.IsNullOrWhiteSpace(Convert.ToString(estado.Id)))
+            if (estado.Id == 0 || estado.Id < 0)
             {
                 erros.AppendLine("A ID do estado deve ser informado.");
             }
@@ -52,6 +52,7 @@ namespace BusinessLogicalLayer
         public string Update(Estado estado)
         {
             StringBuilder erros = new StringBuilder();
+
             if (string.IsNullOrWhiteSpace(estado.Nome))
             {
                 erros.AppendLine("O nome deve ser informado.");
@@ -62,12 +63,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 20 caracteres.");
             }
 
-            if (string.IsNullOrWhiteSpace(Convert.ToString(estado.Pais.Id)))
+            if (estado.Pais.Id == 0 || estado.Pais.Id < 0)
             {
                 erros.AppendLine("A ID do pais deve ser informado.");
             }
 
-            if (string.IsNullOrWhiteSpace(Convert.ToString(estado.Id)))
+            if (estado.Id == 0 || estado.Id < 0)
             {
                 erros.AppendLine("A ID do estado deve ser informado.");
             }
