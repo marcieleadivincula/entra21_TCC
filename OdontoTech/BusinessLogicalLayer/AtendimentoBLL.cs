@@ -48,15 +48,16 @@ namespace BusinessLogicalLayer
         {
             StringBuilder erros = new StringBuilder();
 
-            if (string.IsNullOrWhiteSpace(Convert.ToString(atendimento.Id)))
+
+            if (atendimento.Id == 0)
             {
                 erros.AppendLine("O ID de atendimento deve ser informado.");
             }
-            if (string.IsNullOrWhiteSpace(Convert.ToString(atendimento.Paciente.Id)))
+            if (atendimento.Paciente.Id == 0)
             {
                 erros.AppendLine("O ID de Paciente deve ser informado.");
             }
-            if (string.IsNullOrWhiteSpace(Convert.ToString(atendimento.Colaborador.Id)))
+            if (atendimento.Colaborador.Id == 0)
             {
                 erros.AppendLine("O ID de Colaborador deve ser informado.");
             }
