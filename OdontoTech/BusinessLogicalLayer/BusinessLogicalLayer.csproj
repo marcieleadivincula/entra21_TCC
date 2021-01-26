@@ -57,6 +57,7 @@
     <Compile Include="PagamentoBLL.cs" />
     <Compile Include="ProcedimentoBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TipoProcedimentoBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

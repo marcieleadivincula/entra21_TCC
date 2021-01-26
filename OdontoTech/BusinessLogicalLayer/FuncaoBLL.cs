@@ -31,7 +31,7 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O salário não pode ser negativo.");
             }
              
-            if (funcao.Comissao < 0) //rever tmb
+            if (funcao.Comissao < 0) //rever tmb. 
             {
                 erros.AppendLine("A comissão não pode ser negativa.");
             }
