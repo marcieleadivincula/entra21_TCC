@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
-    class BairroBLL
+    public class BairroBLL
     {
         BairroDAL dal = new BairroDAL();
         public string Insert(Bairro bairro)
@@ -26,7 +26,7 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 50 caracteres.");
             }
 
-            if (string.IsNullOrWhiteSpace(Convert.ToString(bairro.cidade.Id)))
+            if (string.IsNullOrWhiteSpace(Convert.ToString(bairro.Cidade.Id)))
             {
                 erros.AppendLine("A cidade deve ser informada.");
             }
@@ -64,7 +64,7 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 50 caracteres.");
             }
 
-            if (string.IsNullOrWhiteSpace(Convert.ToString(bairro.cidade.Id)))
+            if (string.IsNullOrWhiteSpace(Convert.ToString(bairro.Cidade.Id)))
             {
                 erros.AppendLine("A cidade deve ser informada.");
             }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
-    class EnderecoBLL
+    public class EnderecoBLL
     {
         EnderecoDAL dal = new EnderecoDAL();
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
-    class CidadeBLL
+    public class CidadeBLL
     {
         CidadeDAL dal = new CidadeDAL();
 

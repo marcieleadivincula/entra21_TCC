@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
-    class AtendimentoBLL
+    public class AtendimentoBLL
     {
         AtendimentoDAL dal = new AtendimentoDAL();
 

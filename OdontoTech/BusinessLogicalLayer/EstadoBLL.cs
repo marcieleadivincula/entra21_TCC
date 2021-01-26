@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
-    class EstadoBLL
+    public class EstadoBLL
     {
         EstadoDAL dal = new EstadoDAL();
 
