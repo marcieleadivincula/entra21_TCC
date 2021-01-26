@@ -58,7 +58,7 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O ID do estoque deve ser informado.");
             }
 
-            if (estoque.QtdProduto == 0 || estoque.QtdProduto < 0)
+            if (estoque.QtdProduto < 0)
             {
                 erros.AppendLine("A quantidade de produto deve ser informado");
             }
