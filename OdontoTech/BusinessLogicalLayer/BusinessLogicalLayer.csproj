@@ -46,9 +46,15 @@
     <Compile Include="AtendimentoBLL.cs" />
     <Compile Include="BairroBLL.cs" />
     <Compile Include="CidadeBLL.cs" />
+    <Compile Include="ClinicaBLL.cs" />
     <Compile Include="ColaboradorBLL.cs" />
     <Compile Include="EnderecoBLL.cs" />
     <Compile Include="EstadoBLL.cs" />
+    <Compile Include="LogradouroBLL.cs" />
+    <Compile Include="PacienteBLL.cs" />
+    <Compile Include="PagamentoBLL.cs" />
+    <Compile Include="PaisBLL.cs" />
+    <Compile Include="ProdutoBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
