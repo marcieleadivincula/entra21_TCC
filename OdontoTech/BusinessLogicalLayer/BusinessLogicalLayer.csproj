@@ -54,6 +54,7 @@
     <Compile Include="EnderecoBLL.cs" />
     <Compile Include="EstadoBLL.cs" />
     <Compile Include="PagamentoBLL.cs" />
+    <Compile Include="ProcedimentoBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
