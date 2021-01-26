@@ -21,6 +21,11 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O ID do procedimento deve ser informado.");
             }
 
+            if (string.IsNullOrWhiteSpace(procedimento.DescricaoProcedimento))
+            {
+                erros.AppendLine("Uma descrição deve ser informada.");
+            }
+
             if (procedimento.DescricaoProcedimento.Length > 60)
             {
                 erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
