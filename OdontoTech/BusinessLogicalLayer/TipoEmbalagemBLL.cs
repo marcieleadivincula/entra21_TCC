@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
-    class TipoEmbalagemBLL
+    public class TipoEmbalagemBLL
     {
         TipoEmbalagemDAL dal = new TipoEmbalagemDAL();
 
