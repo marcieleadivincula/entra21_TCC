@@ -22,6 +22,11 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O ID do tipo procedimento deve ser informado.");
             }
 
+            if (string.IsNullOrWhiteSpace(tipoProcedimento.Nome))
+            {
+                erros.AppendLine("Uma descrição deve ser informada.");
+            }
+
             if (tipoProcedimento.Nome.Length > 60)
             {
                 erros.AppendLine("O nome do tipo de procedimento não pode conter mais que 60 caracteres.");

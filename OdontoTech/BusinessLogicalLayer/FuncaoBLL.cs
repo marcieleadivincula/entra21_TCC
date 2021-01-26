@@ -63,6 +63,11 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O ID da função deve ser informado.");
             }
 
+            if (string.IsNullOrWhiteSpace(funcao.Nome))
+            {
+                erros.AppendLine("Um nome deve ser informado.");
+            }
+
             if (funcao.Nome.Length > 100)
             {
                 erros.AppendLine("O nome da função não pode conter mais que 100 caracteres.");
