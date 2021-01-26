@@ -50,6 +50,9 @@
     <Compile Include="ColaboradorBLL.cs" />
     <Compile Include="EnderecoBLL.cs" />
     <Compile Include="EstadoBLL.cs" />
+    <Compile Include="FuncaoBLL.cs" />    
+    <Compile Include="ProcedimentoBLL.cs" />    
+    <Compile Include="TipoProcedimentoBLL.cs" />
     <Compile Include="LogradouroBLL.cs" />
     <Compile Include="PacienteBLL.cs" />
     <Compile Include="PagamentoBLL.cs" />
