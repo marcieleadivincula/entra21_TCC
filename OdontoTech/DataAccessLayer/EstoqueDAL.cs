@@ -9,7 +9,7 @@ using Domain;
 
 namespace DataAccessLayer
 {
-    class EstoqueDAL
+    public class EstoqueDAL
     {
         public string Inserir(Estoque Estoque)
         {
