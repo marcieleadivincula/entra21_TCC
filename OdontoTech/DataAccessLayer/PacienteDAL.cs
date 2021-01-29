@@ -143,5 +143,48 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        /// <summary>
+        /// Retorna Paciente.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Paciente GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM paciente WHERE idPaciente = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Paciente temp = new Paciente();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idPaciente"]);
+                    temp.Nome = Convert.ToString(reader["nome"]);
+                    temp.Sobrenome = Convert.ToString(reader["sobrenome"]);
+                    temp.Rg = Convert.ToString(reader["rg"]);
+                    temp.Cpf = Convert.ToString(reader["cpf"]);
+                    temp.DataNascimento = Convert.ToDateTime(reader["dtNascimento"]);
+                    temp.Observacao = Convert.ToString(reader["obs"]);
+                    temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
+
+                }
+                return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
