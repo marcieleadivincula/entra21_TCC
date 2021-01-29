@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataAccessLayer;
 using System.Data.SqlClient;
 using Domain;
+
 namespace DataAccessLayer
 {
     public class AtendimentoDAL
@@ -21,7 +22,7 @@ namespace DataAccessLayer
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO atendimento (idPaciente,idColaborador) values (@idPaciente,@idColaborador)";
-  
+
             cmd.Parameters.AddWithValue("@idPaciente", atendimento.Paciente.Id);
             cmd.Parameters.AddWithValue("@idColaborador", atendimento.Colaborador.Id);
 
@@ -39,7 +40,7 @@ namespace DataAccessLayer
                 }
                 else
                 {
-                    return("Erro no Banco de dados. Contate o administrador.");
+                    return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
             finally
@@ -90,7 +91,7 @@ namespace DataAccessLayer
             cmd.CommandText = "UPDATE atendimento SET idPaciente = @idPacientem, SET idColaborador = @idColaborador WHERE idAtendimento = @idAtendimento";
             cmd.Parameters.AddWithValue("@idPacientem", Atendimento.Paciente.Id);
             cmd.Parameters.AddWithValue("@idColaborador", Atendimento.Colaborador.Id);
-            cmd.Parameters.AddWithValue("@idAtendimento", Atendimento.Id );
+            cmd.Parameters.AddWithValue("@idAtendimento", Atendimento.Id);
 
             try
             {
@@ -133,6 +134,43 @@ namespace DataAccessLayer
                     Atendimentos.Add(temp);
                 }
                 return Atendimentos;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+
+        public Atendimento GetAtendimentoById(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM atendimento WHERE Id = @Id";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                //List<Atendimento> Atendimentos = new List<Atendimento>();
+                Atendimento atendimento = new Atendimento();
+
+                while (reader.Read())
+                {
+                    Atendimento temp = new Atendimento();
+
+                    temp.Id = Convert.ToInt32(reader["idAtendimento"]);
+                    temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
+                    temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+
+                    atendimento = temp;
+                }
+
+                return atendimento;
             }
             catch (Exception)
             {
