@@ -143,38 +143,5 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Atendimento GetByID(Atendimento Atendimento)
-        {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM atendimento WHERE idAtendimento = @ID";
-            cmd.Parameters.AddWithValue("@ID", Atendimento.Id);
-
-            try
-            {
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                Atendimento temp = new Atendimento();
-
-                while (reader.Read())
-                {
-
-                    temp.Id = Convert.ToInt32(reader["idAtendimento"]);
-                    temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
-                    temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
-
-                }
-                return temp;
-            }
-            catch (Exception)
-            {
-                throw new Exception ("Erro no Banco de dados.Contate o administrador.");
-            }
-            finally
-            {
-                conn.Dispose();
-            }
-        }
     }
 }
