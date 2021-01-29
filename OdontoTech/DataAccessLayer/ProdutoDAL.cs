@@ -147,6 +147,41 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Produto GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM produto WHERE idProduto = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Produto temp = new Produto();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idProduto"]);
+                    temp.Nome = Convert.ToString(reader["nomeProduto"]);
+                    temp.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
+                    temp.Preco = Convert.ToDouble(reader["precoProduto"]);
+                    temp.DataCompra = Convert.ToDateTime(reader["dtCompra"]);
+
+                }
+                return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 
     
