@@ -75,5 +75,25 @@ namespace BusinessLogicalLayer
         {
             return dal.SelecionaTodos();
         }
+
+        //Obter um registro
+        public Atendimento GetAtendimentoById(Atendimento atendimento)
+        {
+            StringBuilder erros = new StringBuilder();
+
+            if (atendimento.Id < 0)
+            {
+                erros.AppendLine("O ID do atendimento deve ser informado.");
+            }
+
+            return dal.GetAtendimentoById(atendimento.Id);
+        }
+
+        //Obter último registro
+        //public Atendimento getLastRegister()
+        //{
+        //return dal.getLastRegister();
+
+        //}
     }
 }
