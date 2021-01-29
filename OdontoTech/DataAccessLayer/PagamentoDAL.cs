@@ -128,5 +128,38 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Pagamento GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM pagamento WHERE idPagamento = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Pagamento temp = new Pagamento();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idPagamento"]);
+                    temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
+                    temp.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
+
+                }
+                return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
