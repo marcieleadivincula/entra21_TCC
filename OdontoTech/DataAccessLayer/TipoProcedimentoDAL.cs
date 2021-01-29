@@ -148,5 +148,37 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public TipoProcedimento GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM tipoprocedimento WHERE idTipoProcedimento = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                TipoProcedimento temp = new TipoProcedimento();
+
+                while (reader.Read())
+                {
+                    temp.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
+                    temp.Nome = Convert.ToString(reader["nomeTipoProcedimento"]);
+                    temp.Valor = Convert.ToInt32(reader["valorProcedimento"]);
+
+                }
+                return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
