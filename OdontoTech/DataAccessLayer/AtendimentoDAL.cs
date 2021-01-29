@@ -114,12 +114,13 @@ namespace DataAccessLayer
         /// <returns></returns>
         public List<Atendimento> SelecionaTodos()
         {
+
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand command = new SqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM atendimento";
-            try
-            {
+            //try
+            //{
                 conn.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 List<Atendimento> Atendimentos = new List<Atendimento>();
@@ -134,15 +135,15 @@ namespace DataAccessLayer
                     Atendimentos.Add(temp);
                 }
                 return Atendimentos;
-            }
-            catch (Exception)
-            {
-                throw new Exception("Erro no Banco de dados.Contate o administrador.");
-            }
-            finally
-            {
+            //}
+            //catch (Exception)
+            //{
+            //    throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            //}
+            //finally
+            //{
                 conn.Dispose();
-            }
+            //}
         }
 
         public Atendimento GetAtendimentoById(int id)
