@@ -126,5 +126,39 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Bairro GetByID(Bairro Bairro)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM bairro WHERE idBairro = @ID";
+            cmd.Parameters.AddWithValue("@ID", Bairro.Id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Bairro temp = new Bairro();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idBairro"]);
+                    temp.Nome = Convert.ToString(reader["nomeBairro"]);
+                    temp.Cidade.Id = Convert.ToInt32(reader["idCidade"]);
+
+
+                }
+                return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
