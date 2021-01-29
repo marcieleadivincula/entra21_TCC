@@ -169,7 +169,6 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
 
-
                     temp.Id = Convert.ToInt32(reader["idEndereco"]);
                     temp.Logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
                     temp.NumeroCasa = Convert.ToInt32(reader["numeroCasa"]);
