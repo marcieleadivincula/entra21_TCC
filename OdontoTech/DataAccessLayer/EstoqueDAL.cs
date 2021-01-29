@@ -133,5 +133,40 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Estoque GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM estoque WHERE idEstoque = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Estoque temp = new Estoque();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idEstoque"]);
+                    temp.Produto.Id = Convert.ToInt32(reader["idProduto"]);
+                    temp.QtdProduto = Convert.ToInt32(reader["qtdProduto"]);
+                    temp.DataEntrada = Convert.ToDateTime(reader["dtEntrada"]);
+                    temp.DataSaida = Convert.ToDateTime(reader["dtEntrada"]);
+
+                }
+                return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

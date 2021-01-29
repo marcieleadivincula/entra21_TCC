@@ -171,6 +171,48 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Colaborador GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM colaborador WHERE idColaborador = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Colaborador temp = new Colaborador();
+
+                while (reader.Read())
+                {
+
+
+                    temp.Id = Convert.ToInt32(reader["idColaborador"]);
+                    temp.Nome = Convert.ToString(reader["nome"]);
+                    temp.Funcao.Id = Convert.ToInt32(reader["idFuncao"]);
+                    temp.Cro = Convert.ToString(reader["cro"]);
+                    temp.CroEstado = Convert.ToString(reader["croEstado"]);
+                    temp.DataAdmissao = Convert.ToDateTime(reader["dtAdmissao"]);
+                    temp.DataDemissao = Convert.ToDateTime(reader["dtDemissao"]);
+                    temp.Endereco.Id = Convert.ToInt32(reader["idColaborador"]);
+                    temp.Clinica.Id = Convert.ToInt32(reader["idClinica"]);
+                    temp.Ferias = Convert.ToBoolean(reader["ferias"]);
+                    temp.Ferias = Convert.ToBoolean(reader["demitido"]);
+
+                }
+                return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
     
 }

@@ -152,5 +152,39 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Endereco GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM endereco WHERE idEndereco = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Endereco temp = new Endereco();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idEndereco"]);
+                    temp.Logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
+                    temp.NumeroCasa = Convert.ToInt32(reader["numeroCasa"]);
+                    temp.Cep = Convert.ToString(reader["cep"]);
+
+                }
+                return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

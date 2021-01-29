@@ -169,5 +169,37 @@ namespace DataAccessLayer
                 
             return usuarioId != null;
         }
+        public Usuario GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM usuario WHERE idUsuario = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Usuario temp = new Usuario();
+
+                while (reader.Read())
+                {
+                    temp.Id = Convert.ToInt32(reader["idUsuario"]);
+                    temp.Login = Convert.ToString(reader["login"]);
+                    temp.Senha = Convert.ToString(reader["senha"]);
+                    temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+                }
+                return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

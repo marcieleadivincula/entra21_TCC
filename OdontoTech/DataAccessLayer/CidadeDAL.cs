@@ -125,5 +125,40 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Cidade GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM cidade WHERE idCidade = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Cidade temp = new Cidade();
+
+                while (reader.Read())
+                {
+
+
+                    temp.Id = Convert.ToInt32(reader["idCidade"]);
+                    temp.Nome = Convert.ToString(reader["nomeCidade"]);
+                    temp.Estado.Id = Convert.ToInt32(reader["idEstado"]);
+
+
+                }
+                return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

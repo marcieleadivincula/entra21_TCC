@@ -144,6 +144,35 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-     
+        public TipoEmbalagem GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM tipoembalagem WHERE idTipoEmbalagem = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                TipoEmbalagem temp = new TipoEmbalagem();
+
+                while (reader.Read())
+                {
+                    temp.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
+                    temp.Descricao = Convert.ToString(reader["descricao"]);
+                }
+                return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
