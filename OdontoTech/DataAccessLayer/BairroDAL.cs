@@ -126,13 +126,13 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Bairro GetByID(Bairro Bairro)
+        public Bairro GetByID(int id)
         {
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM bairro WHERE idBairro = @ID";
-            cmd.Parameters.AddWithValue("@ID", Bairro.Id);
+            cmd.Parameters.AddWithValue("@ID", id);
 
             try
             {
