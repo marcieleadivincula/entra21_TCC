@@ -74,11 +74,9 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE procedimento SET dtPagamento = @dtPagamento, SET idTipoPagamento = @idTipoPagamento WHERE idPagamento = @idPagamento";
+            cmd.CommandText = "UPDATE procedimento SET dtPagamento = @dtPagamento WHERE idPagamento = @idPagamento";
             cmd.Parameters.AddWithValue("@idPagamento", Pagamento.Id);
             cmd.Parameters.AddWithValue("@dtPagamento", Pagamento.DataPagamento);
-            cmd.Parameters.AddWithValue("@idTipoPagamento", Pagamento.TipoPagamento.Id);
-
 
             try
             {

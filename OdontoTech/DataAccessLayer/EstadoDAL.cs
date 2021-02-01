@@ -91,9 +91,8 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE estado SET nomeProduto = @nomeProduto, SET idPais = @idPais WHERE idProduto = @idProduto";
+            cmd.CommandText = "UPDATE estado SET nomeProduto = @nomeProduto,  WHERE idProduto = @idProduto";
             cmd.Parameters.AddWithValue("@nomeEstado", estado.Nome);
-            cmd.Parameters.AddWithValue("@idPais", estado.Pais.Id);
             cmd.Parameters.AddWithValue("@idEstado", estado.Id);
 
             try

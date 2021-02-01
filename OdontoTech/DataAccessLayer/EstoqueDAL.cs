@@ -76,7 +76,7 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE estoque SET idProduto = @idProduto, SET qtdProduto = @qtdProduto, SET dtEntrada = @dtEntrada, SET dtSaida = @dtSaida WHERE idEstoque = @idEstoque";
+            cmd.CommandText = "UPDATE estoque SET idProduto = @idProduto,  qtdProduto = @qtdProduto,  dtEntrada = @dtEntrada,  dtSaida = @dtSaida WHERE idEstoque = @idEstoque";
 
             cmd.Parameters.AddWithValue("@idProduto", Estoque.Produto.Id);
             cmd.Parameters.AddWithValue("@qtdProduto", Estoque.QtdProduto);

@@ -94,15 +94,12 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE colaborador SET nome = @nome, SET idFuncao = @idFuncao, SET cro = @cro, SET croEstado = @croEstado, SET dtAdmissao = @dtAdmissao, SET dtDemissao = @dtDemissao, SET idEndereco = @idEndereco, SET idClinica = @idClinica, SET ferias = @ferias, SET demitido = @demitido  WHERE idColaborador = @id";
+            cmd.CommandText = "UPDATE colaborador SET nome = @nome, cro = @cro,  croEstado = @croEstado,  dtAdmissao = @dtAdmissao,  dtDemissao = @dtDemissao,  ferias = @ferias,  demitido = @demitido  WHERE idColaborador = @id";
             cmd.Parameters.AddWithValue("@nome", colaborador.Nome);
-            cmd.Parameters.AddWithValue("@idFuncao", colaborador.Funcao.Id);
             cmd.Parameters.AddWithValue("@cro", colaborador.Cro);
             cmd.Parameters.AddWithValue("@croEstado", colaborador.CroEstado);
             cmd.Parameters.AddWithValue("@dtAdmissao", colaborador.DataAdmissao);
             cmd.Parameters.AddWithValue("@dtDemissao", colaborador.DataDemissao);
-            cmd.Parameters.AddWithValue("@idEndereco", colaborador.Endereco.Id);
-            cmd.Parameters.AddWithValue("@idClinica", colaborador.Clinica.Id);
             cmd.Parameters.AddWithValue("@ferias", colaborador.Ferias); // !
             cmd.Parameters.AddWithValue("@demitido", colaborador.Demitido); // !
             cmd.Parameters.AddWithValue("@id", colaborador.Id);
