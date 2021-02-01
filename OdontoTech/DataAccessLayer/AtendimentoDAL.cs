@@ -151,6 +151,7 @@ namespace DataAccessLayer
             SqlCommand command = new SqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM atendimento WHERE Id = @Id";
+            command.Parameters.AddWithValue("@Id", id);
 
             try
             {
