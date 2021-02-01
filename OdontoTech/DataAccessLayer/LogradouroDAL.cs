@@ -75,12 +75,12 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE logradouro SET nomeLogradouro = @nomeLogradouro, SET idBairro = @idBairro WHERE idLogradouro = @idLogradouro";
+            cmd.CommandText = "UPDATE logradouro SET nomeLogradouro = @nomeLogradouro WHERE idLogradouro = @idLogradouro";
 
 
             cmd.Parameters.AddWithValue("@idLogradouro", logradouro.Nome);
             cmd.Parameters.AddWithValue("@nomeLogradouro", logradouro.Nome);
-            cmd.Parameters.AddWithValue("@idBairro", logradouro.Bairro.Id);
+
 
 
             try

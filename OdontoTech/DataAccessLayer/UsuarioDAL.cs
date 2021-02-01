@@ -87,11 +87,11 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE usuario SET login = @login, SET senha = @senha, SET idColaborador = @idColaborador WHERE idUsuario = @idUsuario";
+            cmd.CommandText = "UPDATE usuario SET login = @login,  senha = @senha WHERE idUsuario = @idUsuario";
             cmd.Parameters.AddWithValue("@idUsuario", usuario.Id);
             cmd.Parameters.AddWithValue("@login", usuario.Login);
             cmd.Parameters.AddWithValue("@senha", usuario.Senha);
-            cmd.Parameters.AddWithValue("@idColaborador", usuario.Colaborador.Id);
+
 
             try
             {

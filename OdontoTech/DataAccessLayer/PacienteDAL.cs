@@ -79,7 +79,7 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE paciente SET nome = @nome, SET sobrenome = @sobrenome, SET rg = @rg, SET cpf = @cpf, SET dtNascimento = @dtNascimento, SET obs = @obs, SET idEndereco = @idEndereco WHERE idPaciente = @idPaciente";
+            cmd.CommandText = "UPDATE paciente SET nome = @nome,  sobrenome = @sobrenome,  rg = @rg,  cpf = @cpf,  dtNascimento = @dtNascimento,  obs = @obs WHERE idPaciente = @idPaciente";
             cmd.Parameters.AddWithValue("@idPaciente", paciente.Id);
             cmd.Parameters.AddWithValue("@nome", paciente.Nome);
             cmd.Parameters.AddWithValue("@sobrenome", paciente.Sobrenome);
@@ -87,7 +87,7 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@cpf", paciente.Cpf);
             cmd.Parameters.AddWithValue("@dtNascimento", paciente.DataNascimento);
             cmd.Parameters.AddWithValue("@obs", paciente.Observacao);
-            cmd.Parameters.AddWithValue("@idEndereco", paciente.Endereco.Id);
+  
 
 
 

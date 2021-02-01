@@ -79,7 +79,7 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE funcao SET nomeEstado = @nomeEstado, SET salario = @salario, SET comissao = @comissao WHERE idProduto = @idProduto";
+            cmd.CommandText = "UPDATE funcao SET nomeEstado = @nomeEstado,  salario = @salario,  comissao = @comissao WHERE idProduto = @idProduto";
 
 
             cmd.Parameters.AddWithValue("@nomeEstado", funcao.Nome);

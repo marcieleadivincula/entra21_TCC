@@ -90,10 +90,9 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE produto SET nomeProduto = @nomeProduto, SET idTipoEmbalagem = @idTipoEmbalagem, SET precoProduto = @precoProduto, SET dtCompra = @dtCompra WHERE idProduto = @idProduto";
+            cmd.CommandText = "UPDATE produto SET nomeProduto = @nomeProduto, precoProduto = @precoProduto,  dtCompra = @dtCompra WHERE idProduto = @idProduto";
             cmd.Parameters.AddWithValue("@idProduto", produto.Id);
             cmd.Parameters.AddWithValue("@nomeProduto", produto.Nome);
-            cmd.Parameters.AddWithValue("@idTipoEmbalagem", produto.TipoEmbalagem.Id);
             cmd.Parameters.AddWithValue("@precoProduto", produto.Preco);
             cmd.Parameters.AddWithValue("@dtCompra", Convert.ToString(produto.DataCompra));
 

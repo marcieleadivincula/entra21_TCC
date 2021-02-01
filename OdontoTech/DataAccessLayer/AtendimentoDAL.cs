@@ -88,7 +88,7 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE atendimento SET idPaciente = @idPacientem, SET idColaborador = @idColaborador WHERE idAtendimento = @idAtendimento";
+            cmd.CommandText = "UPDATE atendimento SET idPaciente = @idPacientem, idColaborador = @idColaborador WHERE idAtendimento = @idAtendimento";
             cmd.Parameters.AddWithValue("@idPacientem", Atendimento.Paciente.Id);
             cmd.Parameters.AddWithValue("@idColaborador", Atendimento.Colaborador.Id);
             cmd.Parameters.AddWithValue("@idAtendimento", Atendimento.Id);
@@ -150,7 +150,44 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand command = new SqlCommand();
             command.Connection = conn;
-            command.CommandText = "SELECT * FROM atendimento WHERE Id = @Id";
+            command.CommandText = "SELECT * FROM atendimento WHERE idAtendimento = @Id";
+            command.Parameters.AddWithValue("@Id", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                //List<Atendimento> Atendimentos = new List<Atendimento>();
+                Atendimento atendimento = new Atendimento();
+
+                while (reader.Read())
+                {
+                    Atendimento temp = new Atendimento();
+
+                    temp.Id = Convert.ToInt32(reader["idAtendimento"]);
+                    temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
+                    temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+
+                    atendimento = temp;
+                }
+
+                return atendimento;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Atendimento GetLastRegister()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM atendimento ORDER BY idAtendimento DESC limit 1";
 
             try
             {
