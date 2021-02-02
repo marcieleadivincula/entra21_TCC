@@ -1,10 +1,7 @@
 ﻿using DataAccessLayer;
 using Domain;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
@@ -18,7 +15,7 @@ namespace BusinessLogicalLayer
 
             if (string.IsNullOrWhiteSpace(pais.Nome))
             {
-                erros.AppendLine("O nome deve ser informado.");
+                erros.Append("O nome deve ser informado.");
             }
 
             if (pais.Nome.Length > 20)

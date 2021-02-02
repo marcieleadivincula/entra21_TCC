@@ -140,7 +140,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+                throw new Exception("Erro no Banco de dados. Contate o administrador.");
             }
             finally
             {

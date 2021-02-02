@@ -36,22 +36,33 @@ namespace Testes
         }
 
         [Test]
-        public void TestarInsertPais2()
+        public void TestarInsertPaisVazio()
         {
             PaisDAL dal = new PaisDAL();
             PaisBLL bll = new PaisBLL();
             List<Pais> paises = new List<Pais>();
-            Pais test = new Pais(0, "Coreia do Norte");
-            Pais test2 = new Pais();
-
-            test2 = dal.SelecionarUltimoID();
-            string str = bll.Delete(test2); 
-
-            str = bll.Insert(test);
+            Pais test = new Pais(0, ""); 
+            
+            string str = bll.Insert(test);
 
             Console.WriteLine($"O texto ficou ->  {str}");
 
-            Assert.AreEqual(str, "Pais cadastrado com sucesso");
+            Assert.AreEqual(str, "O nome deve ser informado.");
+        } 
+        
+        [Test]
+        public void TestarInsertPaisTamanhoExcedido()
+        {
+            PaisDAL dal = new PaisDAL();
+            PaisBLL bll = new PaisBLL();
+            List<Pais> paises = new List<Pais>();
+            Pais test = new Pais(0, ""); 
+            
+            string str = bll.Insert(test);
+
+            Console.WriteLine($"O texto ficou ->  {str}");
+
+            Assert.AreEqual(str, "O nome deve ser informado.");
         }
     }
 }
