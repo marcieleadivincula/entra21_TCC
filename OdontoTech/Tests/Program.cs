@@ -82,8 +82,8 @@ namespace Tests
                 //procedimentodal.insert(new Procedimento(0, "Procedimento Teste", tipoProcedimento, "Descricao Procedimento Teste"));
                 //procedimento = procedimentodal.getLastRegister();
 
-                atendimentodal.insert(new Atendimento(0, paciente, colaborador));
-                atendimento = atendimentodal.getLastRegister();
+                //atendimentodal.insert(new Atendimento(0, paciente, colaborador));
+                //atendimento = atendimentodal.getLastRegister();
 
                 //contatodal.insert(new Contato(0, "33362222", foneTipo, "ContatoColaborador@teste.com", colaborador));
                 //colaboradorContato = contatodal.getLastRegister();
