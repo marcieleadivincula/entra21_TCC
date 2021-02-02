@@ -67,6 +67,7 @@ namespace DataAccessLayer
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM colaborador WHERE idColaborador = @ID";
             cmd.Parameters.AddWithValue("@ID", colaborador.Id);
+           
 
             try
             {
