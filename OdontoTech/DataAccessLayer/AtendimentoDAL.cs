@@ -134,7 +134,8 @@ namespace DataAccessLayer
 
                     Atendimentos.Add(temp);
                 }
-                return Atendimentos;
+            conn.Dispose();
+            return Atendimentos;
             //}
             //catch (Exception)
             //{
@@ -142,7 +143,7 @@ namespace DataAccessLayer
             //}
             //finally
             //{
-                conn.Dispose();
+               
             //}
         }
 

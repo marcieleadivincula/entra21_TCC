@@ -24,5 +24,12 @@ namespace Domain
         {
 
         }
+
+        public override string ToString()
+        {
+            return $"{Id} - {Nome}";
+        }
+
+
     }
 }

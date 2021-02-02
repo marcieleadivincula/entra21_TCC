@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace DataAccessLayer
 {
@@ -12,7 +13,7 @@ namespace DataAccessLayer
         //public const string CONNECTION_STRING = @"server=localhost;user id=root;database=sorrisempre";
 
         public const string CONNECTION_STRING = @"server=localhost;user id=root;persistsecurityinfo=True;database=sorrisempre;pwd=entra21c#";
-        public static SqlCommand Cmd;
-        public static SqlDataReader Reader;
+        public static MySqlCommand Cmd;
+        public static MySqlDataReader Reader;
     }
 }

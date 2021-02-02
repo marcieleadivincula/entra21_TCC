@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using DataAccessLayer;
 using System.Data.SqlClient;
 using Domain;
-
-
+using BusinessLogicalLayer;
 
 namespace Tests
 {
@@ -120,26 +119,37 @@ namespace Tests
                     */
                 }
 
-            AtendimentoDAL dal = new AtendimentoDAL();
+            PaisDAL dal = new PaisDAL();
 
-            Atendimento atendimentoTest = new Atendimento();
+            PaisBLL bll = new PaisBLL();
 
-            List<Atendimento> atendimentos = new List<Atendimento>();
+            List<Pais> paises = new List<Pais>();
+
+            Pais test = new Pais(0,"123245679879frwfwf84621212123165121321212");
+
+
+
+            string str = bll.Insert(test);
 
             
-            atendimentos = dal.SelecionaTodos();
+            
+            //string str = dal.Atualizar(test);
 
-            foreach (var item in atendimentos)
+
+            paises = dal.SelecionaTodos();
+
+            Console.WriteLine(str);
+
+            Console.WriteLine("----------------------------");
+            foreach (var item in paises)
             {
-                Console.WriteLine();
-                Console.WriteLine(item.Id);
-                Console.WriteLine();
+                Console.WriteLine(item.ToString());
             }
            
 
-            //atendimentoTest = dal.GetAtendimentoById(0);
+            
 
-            Console.WriteLine(atendimentoTest.Id);
+            
 
 
 
