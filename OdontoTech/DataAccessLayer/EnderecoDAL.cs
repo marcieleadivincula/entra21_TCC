@@ -185,5 +185,44 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Endereco GetLastRegister()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM endereco ORDER BY idEndereco DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                Endereco Endereco = new Endereco();
+
+                while (reader.Read())
+                {
+                    Endereco temp = new Endereco();
+
+
+                    temp.Id = Convert.ToInt32(reader["idEndereco"]);
+                    temp.Logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
+                    temp.NumeroCasa = Convert.ToInt32(reader["numeroCasa"]);
+                    temp.Cep = Convert.ToString(reader["cep"]);
+
+
+
+                    Endereco = temp;
+                }
+
+                return Endereco;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

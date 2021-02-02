@@ -193,7 +193,6 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 SqlDataReader reader = command.ExecuteReader();
-                //List<Atendimento> Atendimentos = new List<Atendimento>();
                 Atendimento atendimento = new Atendimento();
 
                 while (reader.Read())
