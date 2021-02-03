@@ -9,7 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicalLayer", "Bus
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{63ED4DBC-7CA0-4CEB-98E8-0C637FF2D21E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.IntegrationTests", "Domain.IntegrationTests\Domain.IntegrationTests.csproj", "{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.IntegrationTests", "Domain.IntegrationTests\Domain.IntegrationTests.csproj", "{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OdontoTech.WebApp", "OdontoTech.WebApp\OdontoTech.WebApp.csproj", "{7F3C5388-2144-4E47-9E99-2F3A51FB63A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OdontoTechWebApp", "OdontoTechWebApp\OdontoTechWebApp.csproj", "{CEFE738E-4EFD-496D-A9CF-0F247188ED69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F3C5388-2144-4E47-9E99-2F3A51FB63A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F3C5388-2144-4E47-9E99-2F3A51FB63A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F3C5388-2144-4E47-9E99-2F3A51FB63A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F3C5388-2144-4E47-9E99-2F3A51FB63A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEFE738E-4EFD-496D-A9CF-0F247188ED69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEFE738E-4EFD-496D-A9CF-0F247188ED69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEFE738E-4EFD-496D-A9CF-0F247188ED69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEFE738E-4EFD-496D-A9CF-0F247188ED69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
