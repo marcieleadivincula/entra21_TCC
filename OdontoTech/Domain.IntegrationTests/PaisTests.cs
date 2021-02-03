@@ -1,32 +1,37 @@
+﻿using BusinessLogicalLayer;
+using DataAccessLayer;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using DataAccessLayer;
-using Domain;
-using MySql.Data.MySqlClient;
-using BusinessLogicalLayer;
+using System.Text;
 
-namespace Testes
+namespace Domain.IntegrationTests
 {
-    public class Tests
+    public class PaisTests
     {
+        private PaisDAL dal;
+        private PaisBLL bll;
+
         [SetUp]
         public void Setup()
         {
-            
+            dal = new PaisDAL();
+            bll = new PaisBLL();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+
         }
 
         [Test]
         public void TestarInsertPais()
         {
-            PaisDAL dal = new PaisDAL();
-            PaisBLL bll = new PaisBLL();
             List<Pais> paises = new List<Pais>();
             Pais test = new Pais(0, "Coreia do Norte");
             Pais test2 = new Pais();
-
-            test2 = dal.SelecionarUltimoID();
-            string str = bll.Delete(test2); 
+            string str = string.Empty;            
 
             str = bll.Insert(test);
 
@@ -38,26 +43,22 @@ namespace Testes
         [Test]
         public void TestarInsertPaisVazio()
         {
-            PaisDAL dal = new PaisDAL();
-            PaisBLL bll = new PaisBLL();
             List<Pais> paises = new List<Pais>();
-            Pais test = new Pais(0, ""); 
-            
+            Pais test = new Pais(0, "");
+
             string str = bll.Insert(test);
 
             Console.WriteLine($"O texto ficou ->  {str}");
 
             Assert.AreEqual(str, "O nome deve ser informado.");
-        } 
-        
+        }
+
         [Test]
         public void TestarInsertPaisTamanhoExcedido()
         {
-            PaisDAL dal = new PaisDAL();
-            PaisBLL bll = new PaisBLL();
             List<Pais> paises = new List<Pais>();
-            Pais test = new Pais(0, ""); 
-            
+            Pais test = new Pais(0, "");
+
             string str = bll.Insert(test);
 
             Console.WriteLine($"O texto ficou ->  {str}");

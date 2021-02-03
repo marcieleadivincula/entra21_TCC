@@ -9,12 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicalLayer", "Bus
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{63ED4DBC-7CA0-4CEB-98E8-0C637FF2D21E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testes", "Testes\Testes.csproj", "{D9DF25AD-E445-4F5A-A7B8-A29B521FADCA}"
-	ProjectSection(ProjectDependencies) = postProject
-		{5705580F-EBF7-4BD4-B974-F2E4B1F1CCA9} = {5705580F-EBF7-4BD4-B974-F2E4B1F1CCA9}
-		{64088395-30FB-45BD-AA4D-C32E494595E7} = {64088395-30FB-45BD-AA4D-C32E494595E7}
-		{63ED4DBC-7CA0-4CEB-98E8-0C637FF2D21E} = {63ED4DBC-7CA0-4CEB-98E8-0C637FF2D21E}
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.IntegrationTests", "Domain.IntegrationTests\Domain.IntegrationTests.csproj", "{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +29,10 @@ Global
 		{63ED4DBC-7CA0-4CEB-98E8-0C637FF2D21E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63ED4DBC-7CA0-4CEB-98E8-0C637FF2D21E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63ED4DBC-7CA0-4CEB-98E8-0C637FF2D21E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9DF25AD-E445-4F5A-A7B8-A29B521FADCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9DF25AD-E445-4F5A-A7B8-A29B521FADCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9DF25AD-E445-4F5A-A7B8-A29B521FADCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9DF25AD-E445-4F5A-A7B8-A29B521FADCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
