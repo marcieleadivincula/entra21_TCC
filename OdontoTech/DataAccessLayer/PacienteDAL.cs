@@ -191,7 +191,7 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand command = new SqlCommand();
             command.Connection = conn;
-            command.CommandText = "SELECT * FROM paciente ORDER BY idLogradouro DESC idPaciente 1";
+            command.CommandText = "SELECT * FROM paciente ORDER BY idPaciente DESC limit 1";
 
             try
             {
