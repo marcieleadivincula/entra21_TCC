@@ -146,6 +146,40 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Pais GetLastRegister()
+        {
+           
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM pais ORDER BY idPais DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                Pais Pais = new Pais();
+
+                while (reader.Read())
+                {
+                    Pais temp = new Pais();
+
+
+                    temp.Id = Convert.ToInt32(reader["idPais"]);
+                    temp.Nome = Convert.ToString(reader["nomePais"]);
+
+                    Pais = temp;
+                }
+
+                return Pais;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
 
 
     }
