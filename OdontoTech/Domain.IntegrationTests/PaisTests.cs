@@ -11,12 +11,13 @@ namespace Domain.IntegrationTests
     {
         private PaisDAL dal;
         private PaisBLL bll;
+        private string str;
 
         [SetUp]
         public void Setup()
         {
-            dal = new PaisDAL();
             bll = new PaisBLL();
+            str = string.Empty;
         }
 
         [TearDown]
@@ -28,14 +29,9 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarInsertPais()
         {
-            List<Pais> paises = new List<Pais>();
-            Pais test = new Pais(0, "Coreia do Norte");
-            Pais test2 = new Pais();
-            string str = string.Empty;            
+            Pais test = new Pais(0, "Coreia do Sul");                    
 
             str = bll.Insert(test);
-
-            Console.WriteLine($"O texto ficou ->  {str}");
 
             Assert.AreEqual(str, "Pais cadastrado com sucesso");
         }
@@ -43,12 +39,9 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarInsertPaisVazio()
         {
-            List<Pais> paises = new List<Pais>();
             Pais test = new Pais(0, "");
 
-            string str = bll.Insert(test);
-
-            Console.WriteLine($"O texto ficou ->  {str}");
+            str = bll.Insert(test);
 
             Assert.AreEqual(str, "O nome deve ser informado.");
         }
@@ -56,14 +49,46 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarInsertPaisTamanhoExcedido()
         {
-            List<Pais> paises = new List<Pais>();
-            Pais test = new Pais(0, "");
+            Pais test = new Pais(0, "123123132131214567891011121314");
 
-            string str = bll.Insert(test);
+            str = bll.Insert(test);
 
-            Console.WriteLine($"O texto ficou ->  {str}");
+            Assert.AreEqual(str, "O nome não pode conter mais que 20 caracteres.");
+        }
+        
+        
+        [Test]
+        public void TestarAtualizarPais()
+        {
+            Pais test = new Pais(1, "Brazil");
+
+            str = bll.Update(test);
+
+            Assert.AreEqual(str, "Pais atualizado com êxito!");
+        }
+
+        [Test]
+        public void TestarAtualizarPaisVazio()
+        {
+            Pais test = new Pais(1, "");
+           
+
+            str = bll.Update(test);
 
             Assert.AreEqual(str, "O nome deve ser informado.");
-        }
+        }     
+
+        [Test]
+        public void TestarAtualizarPaisTamanhoExcedido()
+        {
+            Pais test = new Pais(1, "");
+
+            str = bll.Delete(test);
+
+            Assert.AreEqual(str, "Pais deletado com êxito!");
+        }     
+
+
+
     }
 }

@@ -138,10 +138,8 @@ namespace DataAccessLayer
                 return pais;
             }
             catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-                //throw new Exception("Erro no Banco de dados. Contate o administrador.");
+            {                
+                throw new Exception("Erro no Banco de dados. Contate o administrador.");
             }
             finally
             {

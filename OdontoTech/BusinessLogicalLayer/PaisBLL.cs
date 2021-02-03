@@ -20,7 +20,7 @@ namespace BusinessLogicalLayer
 
             if (pais.Nome.Length > 20)
             {
-                erros.AppendLine("O nome não pode conter mais que 20 caracteres.");
+                erros.Append("O nome não pode conter mais que 20 caracteres.");
             }
 
             if (erros.Length != 0)
@@ -42,19 +42,19 @@ namespace BusinessLogicalLayer
 
             if (string.IsNullOrWhiteSpace(pais.Nome))
             {
-                erros.AppendLine("O nome deve ser informado.");
+                erros.Append("O nome deve ser informado.");
             }
 
             if (pais.Nome.Length > 20)
             {
-                erros.AppendLine("O nome não pode conter mais que 20 caracteres.");
+                erros.Append("O nome não pode conter mais que 20 caracteres.");
             }
 
             if (erros.Length != 0)
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(pais);
+            string respostaDB = dal.Atualizar(pais);
             return respostaDB;
         }
 
@@ -63,5 +63,7 @@ namespace BusinessLogicalLayer
             string respostaDB = dal.Deletar(pais);
             return respostaDB;
         }
+
+        
     }
 }
