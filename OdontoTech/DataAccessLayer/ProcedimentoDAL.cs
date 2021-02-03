@@ -89,11 +89,11 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE procedimento SET nomeProcedimento = @nomeProcedimento, SET dsProcedimento = @dsProcedimento, SET idTipoProcedimento = @idTipoProcedimento WHERE idProcedimento = @idProcedimento";
+            cmd.CommandText = "UPDATE procedimento SET nomeProcedimento = @nomeProcedimento, dsProcedimento = @dsProcedimento WHERE idProcedimento = @idProcedimento";
             cmd.Parameters.AddWithValue("@idProcedimento", procedimento.Id);
             cmd.Parameters.AddWithValue("@nomeProcedimento", procedimento.Nome);
             cmd.Parameters.AddWithValue("@dsProcedimento", procedimento.DescricaoProcedimento);
-            cmd.Parameters.AddWithValue("@idTipoProcedimento", procedimento.TipoProcedimento.Id);
+
 
             try
             {
@@ -139,6 +139,40 @@ namespace DataAccessLayer
                     Procedimentos.Add(temp);
                 }
                 return Procedimentos;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Procedimento GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM procedimento WHERE idProcedimento = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Procedimento temp = new Procedimento();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idProcedimento"]);
+                    temp.Nome = Convert.ToString(reader["nomeProcedimento"]);
+                    temp.DescricaoProcedimento = Convert.ToString(reader["dsProcedimento"]);
+                    temp.TipoProcedimento.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
+
+                }
+                return temp;
             }
             catch (Exception)
             {

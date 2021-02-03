@@ -75,12 +75,12 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE logradouro SET nomeLogradouro = @nomeLogradouro, SET idBairro = @idBairro WHERE idLogradouro = @idLogradouro";
+            cmd.CommandText = "UPDATE logradouro SET nomeLogradouro = @nomeLogradouro WHERE idLogradouro = @idLogradouro";
 
 
             cmd.Parameters.AddWithValue("@idLogradouro", logradouro.Nome);
             cmd.Parameters.AddWithValue("@nomeLogradouro", logradouro.Nome);
-            cmd.Parameters.AddWithValue("@idBairro", logradouro.Bairro.Id);
+
 
 
             try
@@ -124,6 +124,39 @@ namespace DataAccessLayer
                     Logradouros.Add(temp);
                 }
                 return Logradouros;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Logradouro GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM logradouro WHERE idLogradouro = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Logradouro temp = new Logradouro();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idLogradouro"]);
+                    temp.Nome = Convert.ToString(reader["nomeLogradouro"]);
+                    temp.Bairro.Id = Convert.ToInt32(reader["idBairro"]);
+
+                }
+                return temp;
             }
             catch (Exception)
             {

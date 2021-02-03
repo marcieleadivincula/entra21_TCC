@@ -87,11 +87,11 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE clinica SET nomeClinica = @nomeClinica, SET dtInauguracao = @dtInauguracao, SET idEndereco = @idEndereco WHERE idClinica = @idClinica";
+            cmd.CommandText = "UPDATE clinica SET nomeClinica = @nomeClinica, dtInauguracao = @dtInauguracao WHERE idClinica = @idClinica";
             cmd.Parameters.AddWithValue("@idClinica", clinica.Id);
             cmd.Parameters.AddWithValue("@nomeClinica", clinica.Nome);
             cmd.Parameters.AddWithValue("@dtInauguracao", clinica.DataInauguracao);
-            cmd.Parameters.AddWithValue("@idEndereco", clinica.Endereco.Id);
+    
 
             try
             {
@@ -135,6 +135,42 @@ namespace DataAccessLayer
                     Clinicas.Add(temp);
                 }
                 return Clinicas;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Clinica GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM clinica WHERE idClinica = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Clinica temp = new Clinica();
+
+                while (reader.Read())
+                {
+
+
+                    temp.Id = Convert.ToInt32(reader["idClinica"]);
+                    temp.Nome = Convert.ToString(reader["nomeClinica"]);
+                    temp.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
+                    temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
+
+
+                }
+                return temp;
             }
             catch (Exception)
             {

@@ -92,9 +92,8 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE endereco SET idlogradouro = @idlogradouro, SET numeroCasa = @numeroCasa, SET cep = @cep WHERE idEndereco = @idEndereco";
+            cmd.CommandText = "UPDATE endereco  SET numeroCasa = @numeroCasa,  cep = @cep WHERE idEndereco = @idEndereco";
             cmd.Parameters.AddWithValue("@idEndereco", endereco.Id);
-            cmd.Parameters.AddWithValue("@idlogradouro", endereco.Logradouro.Id);
             cmd.Parameters.AddWithValue("@numeroCasa", endereco.NumeroCasa);
             cmd.Parameters.AddWithValue("@cep", endereco.Cep);
 
@@ -142,6 +141,40 @@ namespace DataAccessLayer
                     enderecos.Add(temp);
                 }
                 return enderecos;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Endereco GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM endereco WHERE idEndereco = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Endereco temp = new Endereco();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idEndereco"]);
+                    temp.Logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
+                    temp.NumeroCasa = Convert.ToInt32(reader["numeroCasa"]);
+                    temp.Cep = Convert.ToString(reader["cep"]);
+
+                }
+                return temp;
             }
             catch (Exception)
             {

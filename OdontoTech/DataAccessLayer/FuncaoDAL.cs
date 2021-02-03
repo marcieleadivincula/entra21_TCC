@@ -79,7 +79,7 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE funcao SET nomeEstado = @nomeEstado, SET salario = @salario, SET comissao = @comissao WHERE idProduto = @idProduto";
+            cmd.CommandText = "UPDATE funcao SET nomeEstado = @nomeEstado,  salario = @salario,  comissao = @comissao WHERE idProduto = @idProduto";
 
 
             cmd.Parameters.AddWithValue("@nomeEstado", funcao.Nome);
@@ -127,6 +127,40 @@ namespace DataAccessLayer
                     Funcaos.Add(temp);
                 }
                 return Funcaos;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Funcao GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM funcao WHERE idFuncao = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Funcao temp = new Funcao();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idFuncao"]);
+                    temp.Nome = Convert.ToString(reader["nomeFuncao"]);
+                    temp.Salario = Convert.ToDouble(reader["salario"]);
+                    temp.Comissao = Convert.ToDouble(reader["comissao"]);
+
+                }
+                return temp;
             }
             catch (Exception)
             {

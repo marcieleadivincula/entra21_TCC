@@ -72,10 +72,10 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE bairro SET nomeBairro = @nomeBairro, SET idCidade = @idCidade WHERE idBairro = @idBairro";
+            cmd.CommandText = "UPDATE bairro SET nomeBairro = @nomeBairro WHERE idBairro = @idBairro";
             cmd.Parameters.AddWithValue("@idBairro", bairro.Id );
             cmd.Parameters.AddWithValue("@nomeBairro", bairro.Nome );
-            cmd.Parameters.AddWithValue("@idCidade",bairro.Cidade.Id );
+
 
 
             try
@@ -116,6 +116,40 @@ namespace DataAccessLayer
                     Bairros.Add(temp);
                 }
                 return Bairros;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Bairro GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM bairro WHERE idBairro = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Bairro temp = new Bairro();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idBairro"]);
+                    temp.Nome = Convert.ToString(reader["nomeBairro"]);
+                    temp.Cidade.Id = Convert.ToInt32(reader["idCidade"]);
+
+
+                }
+                return temp;
             }
             catch (Exception)
             {

@@ -91,9 +91,8 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE estado SET nomeProduto = @nomeProduto, SET idPais = @idPais WHERE idProduto = @idProduto";
+            cmd.CommandText = "UPDATE estado SET nomeEstado = @nomeEstado WHERE idEstado = @idEstado";
             cmd.Parameters.AddWithValue("@nomeEstado", estado.Nome);
-            cmd.Parameters.AddWithValue("@idPais", estado.Pais.Id);
             cmd.Parameters.AddWithValue("@idEstado", estado.Id);
 
             try
@@ -134,6 +133,39 @@ namespace DataAccessLayer
                     Estados.Add(temp);
                 }
                 return Estados;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Estado GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM estado WHERE idEstado = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Estado temp = new Estado();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idEstado"]);
+                    temp.Nome = Convert.ToString(reader["nomeEstado"]);
+                    temp.Pais.Id = Convert.ToInt32(reader["idPais"]);
+
+                }
+                return temp;
             }
             catch (Exception)
             {

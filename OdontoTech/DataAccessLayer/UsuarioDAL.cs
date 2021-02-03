@@ -87,11 +87,11 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE usuario SET login = @login, SET senha = @senha, SET idColaborador = @idColaborador WHERE idUsuario = @idUsuario";
+            cmd.CommandText = "UPDATE usuario SET login = @login,  senha = @senha WHERE idUsuario = @idUsuario";
             cmd.Parameters.AddWithValue("@idUsuario", usuario.Id);
             cmd.Parameters.AddWithValue("@login", usuario.Login);
             cmd.Parameters.AddWithValue("@senha", usuario.Senha);
-            cmd.Parameters.AddWithValue("@idColaborador", usuario.Colaborador.Id);
+
 
             try
             {
@@ -168,6 +168,38 @@ namespace DataAccessLayer
             }
                 
             return usuarioId != null;
+        }
+        public Usuario GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM usuario WHERE idUsuario = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Usuario temp = new Usuario();
+
+                while (reader.Read())
+                {
+                    temp.Id = Convert.ToInt32(reader["idUsuario"]);
+                    temp.Login = Convert.ToString(reader["login"]);
+                    temp.Senha = Convert.ToString(reader["senha"]);
+                    temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+                }
+                return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
         }
     }
 }

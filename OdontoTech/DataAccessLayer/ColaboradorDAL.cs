@@ -94,15 +94,12 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE colaborador SET nome = @nome, SET idFuncao = @idFuncao, SET cro = @cro, SET croEstado = @croEstado, SET dtAdmissao = @dtAdmissao, SET dtDemissao = @dtDemissao, SET idEndereco = @idEndereco, SET idClinica = @idClinica, SET ferias = @ferias, SET demitido = @demitido  WHERE idColaborador = @id";
+            cmd.CommandText = "UPDATE colaborador SET nome = @nome, cro = @cro,  croEstado = @croEstado,  dtAdmissao = @dtAdmissao,  dtDemissao = @dtDemissao,  ferias = @ferias,  demitido = @demitido  WHERE idColaborador = @id";
             cmd.Parameters.AddWithValue("@nome", colaborador.Nome);
-            cmd.Parameters.AddWithValue("@idFuncao", colaborador.Funcao.Id);
             cmd.Parameters.AddWithValue("@cro", colaborador.Cro);
             cmd.Parameters.AddWithValue("@croEstado", colaborador.CroEstado);
             cmd.Parameters.AddWithValue("@dtAdmissao", colaborador.DataAdmissao);
             cmd.Parameters.AddWithValue("@dtDemissao", colaborador.DataDemissao);
-            cmd.Parameters.AddWithValue("@idEndereco", colaborador.Endereco.Id);
-            cmd.Parameters.AddWithValue("@idClinica", colaborador.Clinica.Id);
             cmd.Parameters.AddWithValue("@ferias", colaborador.Ferias); // !
             cmd.Parameters.AddWithValue("@demitido", colaborador.Demitido); // !
             cmd.Parameters.AddWithValue("@id", colaborador.Id);
@@ -161,6 +158,48 @@ namespace DataAccessLayer
                     Colaboradors.Add(temp);
                 }
                 return Colaboradors;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Colaborador GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM colaborador WHERE idColaborador = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Colaborador temp = new Colaborador();
+
+                while (reader.Read())
+                {
+
+
+                    temp.Id = Convert.ToInt32(reader["idColaborador"]);
+                    temp.Nome = Convert.ToString(reader["nome"]);
+                    temp.Funcao.Id = Convert.ToInt32(reader["idFuncao"]);
+                    temp.Cro = Convert.ToString(reader["cro"]);
+                    temp.CroEstado = Convert.ToString(reader["croEstado"]);
+                    temp.DataAdmissao = Convert.ToDateTime(reader["dtAdmissao"]);
+                    temp.DataDemissao = Convert.ToDateTime(reader["dtDemissao"]);
+                    temp.Endereco.Id = Convert.ToInt32(reader["idColaborador"]);
+                    temp.Clinica.Id = Convert.ToInt32(reader["idClinica"]);
+                    temp.Ferias = Convert.ToBoolean(reader["ferias"]);
+                    temp.Ferias = Convert.ToBoolean(reader["demitido"]);
+
+                }
+                return temp;
             }
             catch (Exception)
             {

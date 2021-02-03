@@ -79,7 +79,7 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE paciente SET nome = @nome, SET sobrenome = @sobrenome, SET rg = @rg, SET cpf = @cpf, SET dtNascimento = @dtNascimento, SET obs = @obs, SET idEndereco = @idEndereco WHERE idPaciente = @idPaciente";
+            cmd.CommandText = "UPDATE paciente SET nome = @nome,  sobrenome = @sobrenome,  rg = @rg,  cpf = @cpf,  dtNascimento = @dtNascimento,  obs = @obs WHERE idPaciente = @idPaciente";
             cmd.Parameters.AddWithValue("@idPaciente", paciente.Id);
             cmd.Parameters.AddWithValue("@nome", paciente.Nome);
             cmd.Parameters.AddWithValue("@sobrenome", paciente.Sobrenome);
@@ -87,7 +87,7 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@cpf", paciente.Cpf);
             cmd.Parameters.AddWithValue("@dtNascimento", paciente.DataNascimento);
             cmd.Parameters.AddWithValue("@obs", paciente.Observacao);
-            cmd.Parameters.AddWithValue("@idEndereco", paciente.Endereco.Id);
+  
 
 
 
@@ -133,6 +133,49 @@ namespace DataAccessLayer
                     Pacientes.Add(temp);
                 }
                 return Pacientes;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        /// <summary>
+        /// Retorna Paciente.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Paciente GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM paciente WHERE idPaciente = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Paciente temp = new Paciente();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idPaciente"]);
+                    temp.Nome = Convert.ToString(reader["nome"]);
+                    temp.Sobrenome = Convert.ToString(reader["sobrenome"]);
+                    temp.Rg = Convert.ToString(reader["rg"]);
+                    temp.Cpf = Convert.ToString(reader["cpf"]);
+                    temp.DataNascimento = Convert.ToDateTime(reader["dtNascimento"]);
+                    temp.Observacao = Convert.ToString(reader["obs"]);
+                    temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
+
+                }
+                return temp;
             }
             catch (Exception)
             {

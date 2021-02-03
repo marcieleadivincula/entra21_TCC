@@ -90,10 +90,9 @@ namespace DataAccessLayer
             SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE produto SET nomeProduto = @nomeProduto, SET idTipoEmbalagem = @idTipoEmbalagem, SET precoProduto = @precoProduto, SET dtCompra = @dtCompra WHERE idProduto = @idProduto";
+            cmd.CommandText = "UPDATE produto SET nomeProduto = @nomeProduto, precoProduto = @precoProduto,  dtCompra = @dtCompra WHERE idProduto = @idProduto";
             cmd.Parameters.AddWithValue("@idProduto", produto.Id);
             cmd.Parameters.AddWithValue("@nomeProduto", produto.Nome);
-            cmd.Parameters.AddWithValue("@idTipoEmbalagem", produto.TipoEmbalagem.Id);
             cmd.Parameters.AddWithValue("@precoProduto", produto.Preco);
             cmd.Parameters.AddWithValue("@dtCompra", Convert.ToString(produto.DataCompra));
 
@@ -137,6 +136,41 @@ namespace DataAccessLayer
                     Produtos.Add(temp);
                 }
                 return Produtos;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Produto GetByID(int id)
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM produto WHERE idProduto = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                Produto temp = new Produto();
+
+                while (reader.Read())
+                {
+
+                    temp.Id = Convert.ToInt32(reader["idProduto"]);
+                    temp.Nome = Convert.ToString(reader["nomeProduto"]);
+                    temp.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
+                    temp.Preco = Convert.ToDouble(reader["precoProduto"]);
+                    temp.DataCompra = Convert.ToDateTime(reader["dtCompra"]);
+
+                }
+                return temp;
             }
             catch (Exception)
             {
