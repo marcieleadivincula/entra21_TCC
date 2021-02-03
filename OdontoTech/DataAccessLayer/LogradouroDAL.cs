@@ -167,5 +167,40 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Logradouro GetLastRegister()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM logradouro ORDER BY idLogradouro DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                Logradouro Logradouro = new Logradouro();
+
+                while (reader.Read())
+                {
+                    Logradouro temp = new Logradouro();
+
+                    temp.Id = Convert.ToInt32(reader["idLogradouro"]);
+                    temp.Nome = Convert.ToString(reader["nomeLogradouro"]);
+                    temp.Bairro.Id = Convert.ToInt32(reader["idBairro"]);
+
+                    Logradouro = temp;
+                }
+
+                return Logradouro;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
