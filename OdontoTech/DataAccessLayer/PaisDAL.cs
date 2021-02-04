@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
-using System.Data.SqlClient;
 using Domain;
+using MySql.Data.MySqlClient;
 
 namespace DataAccessLayer
 {
     public class PaisDAL
     {
+        MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+        MySqlCommand cmd = new MySqlCommand();
+
         public string Inserir(Pais pais)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO pais (nomePais) values (@nomePais)";
             cmd.Parameters.AddWithValue("@nomePais", pais.Nome);
@@ -26,8 +23,8 @@ namespace DataAccessLayer
                 return "Pais cadastrado com sucesso";
             }
             catch (Exception ex)
-            {
-                if (ex.Message.Contains("UNIQUE"))
+            {                
+                if (ex.Message.Contains("Duplicate"))
                 {
                     return ("Pais já cadastrado.");
                 }
@@ -44,8 +41,7 @@ namespace DataAccessLayer
         }
         public string Deletar(Pais pais)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM pais WHERE idPais = @ID";
             cmd.Parameters.AddWithValue("@ID", pais.Id);
@@ -67,14 +63,10 @@ namespace DataAccessLayer
         }
         public string Atualizar(Pais pais)
         {
-
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE procedimento SET nomePais = @nomePais WHERE idPais = @idPais";
+            cmd.CommandText = "UPDATE pais SET nomePais = @nomePais WHERE idPais = @idPais";
             cmd.Parameters.AddWithValue("@nomePais", pais.Nome);
             cmd.Parameters.AddWithValue("@idPais", pais.Id);
-
 
             try
             {
@@ -84,7 +76,7 @@ namespace DataAccessLayer
             }
             catch (Exception)
             {
-                return "Erro no Banco de dados.Contate o administrador.";
+                return "Erro no Banco de dados. Contate o administrador.";
             }
             finally
             {
@@ -92,16 +84,14 @@ namespace DataAccessLayer
             }
         }
         public List<Pais> SelecionaTodos()
-        {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM pais";
+        {            
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM pais";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                List<Pais> Paiss = new List<Pais>();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Pais> Pais = new List<Pais>();
                 while (reader.Read())
                 {
                     Pais temp = new Pais();
@@ -110,12 +100,15 @@ namespace DataAccessLayer
                     temp.Nome = Convert.ToString(reader["nomePais"]);
           
 
-                    Paiss.Add(temp);
+                    Pais.Add(temp);
                 }
-                return Paiss;
+                return Pais;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+
+                Console.WriteLine(ex.Message);
+
                 throw new Exception("Erro no Banco de dados.Contate o administrador.");
             }
             finally
@@ -123,38 +116,37 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Pais GetByID(int id)
-        {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+        public Pais SelecionarUltimoID()
+        {            
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM pais WHERE idPais = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
-
+            cmd.CommandText = "SELECT * FROM pais order by idPais DESC limit 1";
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                Pais temp = new Pais();
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                Pais pais = new Pais();
 
                 while (reader.Read())
                 {
+                    Pais temp = new Pais();
 
                     temp.Id = Convert.ToInt32(reader["idPais"]);
-                    temp.Nome = Convert.ToString(reader["nomePais"]);
 
-
+                    pais = temp;
                 }
-                return temp;
+                return pais;
             }
-            catch (Exception)
-            {
-                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            catch (Exception ex)
+            {                
+                throw new Exception("Erro no Banco de dados. Contate o administrador.");
             }
             finally
             {
                 conn.Dispose();
             }
         }
+
+
     }
 }
