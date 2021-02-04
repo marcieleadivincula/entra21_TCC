@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using Domain;
 
 namespace DataAccessLayer
 {
     public class BairroDAL
     {
+        MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+        MySqlCommand cmd = new MySqlCommand();
+
         public string Inserir(Bairro bairro)
         {
-
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO bairro (nomeBairro,idCidade) values (@nomeBairro,@idCidade)";
 
@@ -46,8 +46,7 @@ namespace DataAccessLayer
         }
         public string Deletar(Bairro bairro)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM bairro WHERE idBairro = @ID";
             cmd.Parameters.AddWithValue("@ID", bairro.Id);
@@ -69,20 +68,16 @@ namespace DataAccessLayer
         }
         public string Atualizar(Bairro bairro)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE bairro SET nomeBairro = @nomeBairro WHERE idBairro = @idBairro";
             cmd.Parameters.AddWithValue("@idBairro", bairro.Id );
             cmd.Parameters.AddWithValue("@nomeBairro", bairro.Nome );
 
-
-
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Bairro atualizada com êxito!";
+                return "Bairro atualizado com êxito!";
             }
             catch (Exception)
             {
@@ -94,15 +89,13 @@ namespace DataAccessLayer
             }
         }
         public List<Bairro> SelecionaTodos()
-        {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM bairro";
+        {           
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM bairro";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 List<Bairro> Bairros = new List<Bairro>();
                 while (reader.Read())
                 {
@@ -128,8 +121,6 @@ namespace DataAccessLayer
         }
         public Bairro GetByID(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM bairro WHERE idBairro = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -137,7 +128,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Bairro temp = new Bairro();
 
                 while (reader.Read())

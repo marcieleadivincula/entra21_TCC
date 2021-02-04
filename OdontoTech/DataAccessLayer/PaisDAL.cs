@@ -41,9 +41,9 @@ namespace DataAccessLayer
         }
         public string Deletar(Pais pais)
         {
-            
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM pais WHERE idPais = @ID";
+
             cmd.Parameters.AddWithValue("@ID", pais.Id);
 
             try

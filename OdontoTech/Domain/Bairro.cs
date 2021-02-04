@@ -18,10 +18,10 @@ namespace Domain
             Id = id;
             Nome = nome;
             Cidade = cidade;
-        }
+        }       
 
         /// <summary>
-        /// contrutor dal.
+        /// construtor dal.
         /// </summary>
         public Bairro()
         {

@@ -9,7 +9,6 @@ namespace Domain.IntegrationTests
 {
     public class PaisTests
     {
-        private PaisDAL dal;
         private PaisBLL bll;
         private string str;
 
@@ -56,7 +55,6 @@ namespace Domain.IntegrationTests
             Assert.AreEqual(str, "O nome não pode conter mais que 20 caracteres.");
         }
         
-        
         [Test]
         public void TestarAtualizarPais()
         {
@@ -81,8 +79,18 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarAtualizarPaisTamanhoExcedido()
         {
-            Pais test = new Pais(1, "");
+            Pais test = new Pais(1, "321546789546123654879");
+            Console.WriteLine(str);
+            str = bll.Update(test);
 
+            Assert.AreEqual(str, "O nome não pode conter mais que 20 caracteres.");
+        }     
+
+        [Test]
+        public void TestarDeletarPais()
+        {
+            Pais test = new Pais(49, "");
+            Console.WriteLine(str);
             str = bll.Delete(test);
 
             Assert.AreEqual(str, "Pais deletado com êxito!");
