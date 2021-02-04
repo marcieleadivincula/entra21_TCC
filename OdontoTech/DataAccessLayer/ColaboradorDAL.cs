@@ -67,6 +67,7 @@ namespace DataAccessLayer
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM colaborador WHERE idColaborador = @ID";
             cmd.Parameters.AddWithValue("@ID", colaborador.Id);
+           
 
             try
             {
@@ -200,6 +201,51 @@ namespace DataAccessLayer
 
                 }
                 return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Colaborador GetLastRegister()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM colaborador ORDER BY idColaborador DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                Colaborador Colaborador = new Colaborador();
+
+                while (reader.Read())
+                {
+                    Colaborador temp = new Colaborador();
+
+                    temp.Id = Convert.ToInt32(reader["idColaborador"]);
+                    temp.Nome = Convert.ToString(reader["nome"]);
+                    temp.Funcao.Id = Convert.ToInt32(reader["idFuncao"]);
+                    temp.Cro = Convert.ToString(reader["cro"]);
+                    temp.CroEstado = Convert.ToString(reader["croEstado"]);
+                    temp.DataAdmissao = Convert.ToDateTime(reader["dtAdmissao"]);
+                    temp.DataDemissao = Convert.ToDateTime(reader["dtDemissao"]);
+                    temp.Endereco.Id = Convert.ToInt32(reader["idColaborador"]);
+                    temp.Clinica.Id = Convert.ToInt32(reader["idClinica"]);
+                    temp.Ferias = Convert.ToBoolean(reader["ferias"]);
+                    temp.Ferias = Convert.ToBoolean(reader["demitido"]);
+
+
+
+                    Colaborador = temp;
+                }
+
+                return Colaborador;
             }
             catch (Exception)
             {

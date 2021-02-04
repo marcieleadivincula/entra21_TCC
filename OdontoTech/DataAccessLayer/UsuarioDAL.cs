@@ -34,7 +34,7 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
                     return ("Usuario já cadastrado.");
                 }
@@ -191,6 +191,42 @@ namespace DataAccessLayer
                     temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
                 }
                 return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Usuario GetLastRegister()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM usuario ORDER BY idUsuario DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                Usuario Usuario = new Usuario();
+
+                while (reader.Read())
+                {
+                    Usuario temp = new Usuario();
+
+                    temp.Id = Convert.ToInt32(reader["idUsuario"]);
+                    temp.Login = Convert.ToString(reader["login"]);
+                    temp.Senha = Convert.ToString(reader["senha"]);
+                    temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+
+                    Usuario = temp;
+                }
+
+                return Usuario;
             }
             catch (Exception)
             {

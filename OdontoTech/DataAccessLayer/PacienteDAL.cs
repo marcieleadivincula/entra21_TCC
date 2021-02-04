@@ -186,5 +186,46 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Paciente GetLastRegister()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM paciente ORDER BY idPaciente DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                Paciente Paciente = new Paciente();
+
+                while (reader.Read())
+                {
+                    Paciente temp = new Paciente();
+
+
+                    temp.Id = Convert.ToInt32(reader["idPaciente"]);
+                    temp.Nome = Convert.ToString(reader["nome"]);
+                    temp.Sobrenome = Convert.ToString(reader["sobrenome"]);
+                    temp.Rg = Convert.ToString(reader["rg"]);
+                    temp.Cpf = Convert.ToString(reader["cpf"]);
+                    temp.DataNascimento = Convert.ToDateTime(reader["dtNascimento"]);
+                    temp.Observacao = Convert.ToString(reader["obs"]);
+                    temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
+
+                    Paciente = temp;
+                }
+
+                return Paciente;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

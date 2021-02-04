@@ -171,5 +171,41 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Funcao GetLastRegister()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM funcao ORDER BY idFuncao DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                Funcao Funcao = new Funcao();
+
+                while (reader.Read())
+                {
+                    Funcao temp = new Funcao();
+
+                    temp.Id = Convert.ToInt32(reader["idFuncao"]);
+                    temp.Nome = Convert.ToString(reader["nomeFuncao"]);
+                    temp.Salario = Convert.ToDouble(reader["salario"]);
+                    temp.Comissao = Convert.ToDouble(reader["comissao"]);
+
+                    Funcao = temp;
+                }
+
+                return Funcao;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

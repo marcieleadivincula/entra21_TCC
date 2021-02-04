@@ -180,5 +180,40 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public TipoProcedimento GetLastRegister()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM tipoprocedimento ORDER BY idTipoProcedimento DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                TipoProcedimento TipoProcedimento = new TipoProcedimento();
+
+                while (reader.Read())
+                {
+                    TipoProcedimento temp = new TipoProcedimento();
+
+                    temp.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
+                    temp.Nome = Convert.ToString(reader["nomeTipoProcedimento"]);
+                    temp.Valor = Convert.ToInt32(reader["valorProcedimento"]);
+
+                    TipoProcedimento = temp;
+                }
+
+                return TipoProcedimento;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

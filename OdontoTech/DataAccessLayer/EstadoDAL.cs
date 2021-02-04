@@ -176,5 +176,43 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Estado GetLastRegister()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM estado ORDER BY idEstado DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                Estado Estado = new Estado();
+
+                while (reader.Read())
+                {
+                    Estado temp = new Estado();
+
+
+                    temp.Id = Convert.ToInt32(reader["idEstado"]);
+                    temp.Nome = Convert.ToString(reader["nomeEstado"]);
+                    temp.Pais.Id = Convert.ToInt32(reader["idPais"]);
+
+
+
+                    Estado = temp;
+                }
+
+                return Estado;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     } 
 }

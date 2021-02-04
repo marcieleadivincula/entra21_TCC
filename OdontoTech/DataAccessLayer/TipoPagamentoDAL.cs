@@ -156,5 +156,40 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public TipoPagamento GetLastRegister()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM tipopagamento ORDER BY idTipoPagamento DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                TipoPagamento TipoPagamento = new TipoPagamento();
+
+                while (reader.Read())
+                {
+                    TipoPagamento temp = new TipoPagamento();
+
+                    temp.Id = Convert.ToInt32(reader["idTipoPagamento"]);
+                    temp.Tipo = Convert.ToString(reader["tipoPagamento"]);
+
+                    TipoPagamento = temp;
+                }
+
+                return TipoPagamento;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
+
 }
