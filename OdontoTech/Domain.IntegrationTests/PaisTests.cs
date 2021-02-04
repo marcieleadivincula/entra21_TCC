@@ -42,7 +42,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "O nome deve ser informado.");
+            Assert.AreEqual(str, "O nome deve ser informado.\r\n");
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "O nome não pode conter mais que 20 caracteres.");
+            Assert.AreEqual(str, "O nome não pode conter mais que 20 caracteres.\r\n");
         }
         
         [Test]
@@ -73,7 +73,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Update(test);
 
-            Assert.AreEqual(str, "O nome deve ser informado.");
+            Assert.AreEqual(str, "O nome deve ser informado.\r\n");
         }     
 
         [Test]
@@ -83,7 +83,7 @@ namespace Domain.IntegrationTests
             Console.WriteLine(str);
             str = bll.Update(test);
 
-            Assert.AreEqual(str, "O nome não pode conter mais que 20 caracteres.");
+            Assert.AreEqual(str, "O nome não pode conter mais que 20 caracteres.\r\n");
         }     
 
         [Test]
