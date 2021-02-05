@@ -40,6 +40,16 @@ namespace Domain.IntegrationTests
         }
 
         [Test]
+        public void TestarInsertCidadeDuplicado()
+        {
+            Cidade test = new Cidade(1, "Blumenau", estado);
+
+            str = bll.Insert(test);
+
+            Assert.AreEqual(str, "Cidade já cadastrada.");
+        }
+
+        [Test]
         public void TestarInsertCidadeVazio()
         {
             Cidade test = new Cidade(1, "", estado);

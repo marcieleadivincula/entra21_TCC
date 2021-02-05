@@ -36,6 +36,16 @@ namespace Domain.IntegrationTests
         }
 
         [Test]
+        public void TestarInsertPaisDuplicado()
+        {
+            Pais test = new Pais(1, "Alemanha");
+
+            str = bll.Insert(test);
+
+            Assert.AreEqual(str, "Pais já cadastrado.");
+        }
+
+        [Test]
         public void TestarInsertPaisVazio()
         {
             Pais test = new Pais(0, "");
@@ -44,6 +54,8 @@ namespace Domain.IntegrationTests
 
             Assert.AreEqual(str, "O nome deve ser informado.\r\n");
         }
+
+        
 
         [Test]
         public void TestarInsertPaisTamanhoExcedido()

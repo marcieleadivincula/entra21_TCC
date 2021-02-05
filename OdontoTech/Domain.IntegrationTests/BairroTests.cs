@@ -37,7 +37,18 @@ namespace Domain.IntegrationTests
 
             Assert.AreEqual(str, "Bairro cadastrado com sucesso");
         }
-        
+
+        [Test]
+        public void TestarInsertBairroDuplicado()
+        {
+            Bairro test = new Bairro(1, "Guanabara", cidade);
+
+            str = bll.Insert(test);
+
+            Assert.AreEqual(str, "Bairro já cadastrado.");
+        }       
+
+
         [Test]
         public void TestarInsertBairroVazio()
         {

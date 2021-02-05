@@ -26,9 +26,9 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
-                    return ("Cidade já cadastrado.");
+                    return ("Cidade já cadastrada.");
                 }
                 else
                 {
