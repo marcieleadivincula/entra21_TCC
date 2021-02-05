@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DataAccessLayer;
 using System.Data.SqlClient;
 using Domain;
-
+using MySql.Data.MySqlClient;
 namespace DataAccessLayer
 {
     public class TipoEmbalagemDAL
@@ -18,8 +18,8 @@ namespace DataAccessLayer
         public string Inserir(TipoEmbalagem TipoEmbalagem)
         {
 
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO tipoembalagem (descricao) values (@descricao)";
            
@@ -54,9 +54,8 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(TipoEmbalagem TipoEmbalagem)
         {
-
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM tipoembalagem WHERE idTipoEmbalagem = @ID";
             cmd.Parameters.AddWithValue("@ID", TipoEmbalagem.Id);
@@ -85,8 +84,8 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Atualizar(TipoEmbalagem TipoEmbalagem)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE tipoembalagem SET descricao = @descricao WHERE idTipoEmbalagem = @idTipoEmbalagem";
             cmd.Parameters.AddWithValue("@idTipoEmbalagem", TipoEmbalagem.Id);
@@ -115,14 +114,14 @@ namespace DataAccessLayer
 /// <returns></returns>
         public List<TipoEmbalagem> SelecionaTodos()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM tipoembalagem";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 List<TipoEmbalagem> TipoEmbalagems = new List<TipoEmbalagem>();
                 while (reader.Read())
                 {
@@ -146,8 +145,8 @@ namespace DataAccessLayer
         }
         public TipoEmbalagem GetByID(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM tipoembalagem WHERE idTipoEmbalagem = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -155,7 +154,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 TipoEmbalagem temp = new TipoEmbalagem();
 
                 while (reader.Read())
@@ -176,15 +175,15 @@ namespace DataAccessLayer
         }
         public TipoEmbalagem GetLastRegister()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM tipoembalagem ORDER BY idTipoEmbalagem DESC limit 1";
 
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 TipoEmbalagem TipoEmbalagem = new TipoEmbalagem();
 
                 while (reader.Read())

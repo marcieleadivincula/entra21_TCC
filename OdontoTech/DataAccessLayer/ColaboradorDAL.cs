@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,8 +18,8 @@ namespace DataAccessLayer
         /// <param name="colaborador"></param>
         public string Inserir(Colaborador colaborador)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO colaborador (nome,idFuncao,cro,croEstado,dtAdmissao,dtDemissao,idEndereco,idClinica,demitido) values (@nome,@idFuncao,@cro,@croEstado,@dtAdmissao,@dtDemissao,@idEndereco,@idClinica,@ferias,@demitido)";
 
@@ -62,8 +63,8 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(Colaborador colaborador)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand(); ;
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM colaborador WHERE idColaborador = @ID";
             cmd.Parameters.AddWithValue("@ID", colaborador.Id);
@@ -92,8 +93,8 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Atualizar(Colaborador colaborador)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE colaborador SET nome = @nome, cro = @cro,  croEstado = @croEstado,  dtAdmissao = @dtAdmissao,  dtDemissao = @dtDemissao,  ferias = @ferias,  demitido = @demitido  WHERE idColaborador = @id";
             cmd.Parameters.AddWithValue("@nome", colaborador.Nome);
@@ -127,14 +128,14 @@ namespace DataAccessLayer
         /// <returns></returns>
         public List<Colaborador> SelecionaTodos()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM endereco";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 List<Colaborador> Colaboradors = new List<Colaborador>();
                 while (reader.Read())
                 {
@@ -171,8 +172,8 @@ namespace DataAccessLayer
         }
         public Colaborador GetByID(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM colaborador WHERE idColaborador = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -180,7 +181,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Colaborador temp = new Colaborador();
 
                 while (reader.Read())
@@ -213,15 +214,15 @@ namespace DataAccessLayer
         }
         public Colaborador GetLastRegister()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command  = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM colaborador ORDER BY idColaborador DESC limit 1";
 
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 Colaborador Colaborador = new Colaborador();
 
                 while (reader.Read())

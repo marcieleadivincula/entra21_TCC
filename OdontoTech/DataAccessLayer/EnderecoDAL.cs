@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,8 +19,8 @@ namespace DataAccessLayer
         public string Inserir(Endereco endereco)
         {
 
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO endereco (numeroCasa,cep) values (@numeroCasa,@cep)";
          
@@ -58,8 +59,8 @@ namespace DataAccessLayer
         public string Deletar(Endereco endereco)
         {
 
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM endereco WHERE idEndereco = @ID";
             cmd.Parameters.AddWithValue("@ID", endereco.Id);
@@ -89,8 +90,8 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Atualizar(Endereco endereco)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE endereco  SET numeroCasa = @numeroCasa,  cep = @cep WHERE idEndereco = @idEndereco";
             cmd.Parameters.AddWithValue("@idEndereco", endereco.Id);
@@ -119,14 +120,14 @@ namespace DataAccessLayer
         /// <returns></returns>
         public List<Endereco> SelecionaTodos()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM endereco";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 List<Endereco> enderecos = new List<Endereco>();
                 while (reader.Read())
                 {
@@ -153,8 +154,8 @@ namespace DataAccessLayer
         }
         public Endereco GetByID(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM endereco WHERE idEndereco = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -162,7 +163,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Endereco temp = new Endereco();
 
                 while (reader.Read())
@@ -187,15 +188,15 @@ namespace DataAccessLayer
         }
         public Endereco GetLastRegister()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM endereco ORDER BY idEndereco DESC limit 1";
 
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 Endereco Endereco = new Endereco();
 
                 while (reader.Read())

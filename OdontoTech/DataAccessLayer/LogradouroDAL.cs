@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,9 +14,8 @@ namespace DataAccessLayer
     {
         public string Inserir(Logradouro logradouro)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = conn;
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand(); cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO logradouro (nomeLogradouro,idBairro) values (@nomeLogradouro,@idBairro)";
 
             cmd.Parameters.AddWithValue("@nomeLogradouro", logradouro.Nome);
@@ -48,8 +48,8 @@ namespace DataAccessLayer
         }
         public string Deletar(Logradouro logradouro)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM logradouro WHERE idLogradouro = @ID";
             cmd.Parameters.AddWithValue("@ID", logradouro.Id);
@@ -72,8 +72,8 @@ namespace DataAccessLayer
         public string Atualizar(Logradouro logradouro)
         {
 
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand(); 
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE logradouro SET nomeLogradouro = @nomeLogradouro WHERE idLogradouro = @idLogradouro";
 
@@ -102,14 +102,14 @@ namespace DataAccessLayer
 
         public List<Logradouro> SelecionaTodos()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM logradouro";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 List<Logradouro> Logradouros = new List<Logradouro>();
                 while (reader.Read())
                 {
@@ -136,8 +136,8 @@ namespace DataAccessLayer
         }
         public Logradouro GetByID(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM logradouro WHERE idLogradouro = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -145,7 +145,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Logradouro temp = new Logradouro();
 
                 while (reader.Read())
@@ -169,15 +169,16 @@ namespace DataAccessLayer
         }
         public Logradouro GetLastRegister()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand(); 
+
             command.Connection = conn;
             command.CommandText = "SELECT * FROM logradouro ORDER BY idLogradouro DESC limit 1";
 
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 Logradouro Logradouro = new Logradouro();
 
                 while (reader.Read())
