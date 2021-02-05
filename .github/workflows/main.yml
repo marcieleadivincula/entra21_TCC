@@ -23,11 +23,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: Azure/pipelines@v1
-
       # Runs a single command using the runners shell
       - name: Azure Pipelines Action
+        
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: Azure/pipelines@v1
         with:
             azure-devops-project-url: https://dev.azure.com/marcieleadivincula/odontotech
             azure-pipeline-name: 'My Pipeline'
