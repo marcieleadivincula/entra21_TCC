@@ -9,7 +9,6 @@ namespace Domain.IntegrationTests
 {
     public class CidadeTests
     {
-
         private CidadeBLL bll;
         private string str;
         private Estado estado;
@@ -39,15 +38,15 @@ namespace Domain.IntegrationTests
             Assert.AreEqual(str, "Cidade cadastrada com sucesso");
         }
 
-        [Test]
-        public void TestarInsertCidadeDuplicado()
-        {
-            Cidade test = new Cidade(1, "Blumenau", estado);
+        //[Test]
+        //public void TestarInsertCidadeDuplicado()
+        //{
+        //    Cidade test = new Cidade(1, "Blumenau", estado);
 
-            str = bll.Insert(test);
+        //    str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Cidade já cadastrada.");
-        }
+        //    Assert.AreEqual(str, "Cidade já cadastrada.");
+        //}
 
         [Test]
         public void TestarInsertCidadeVazio()

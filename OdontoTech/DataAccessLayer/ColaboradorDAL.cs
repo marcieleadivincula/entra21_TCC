@@ -1,26 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using Domain;
 
 namespace DataAccessLayer
 {
     public class ColaboradorDAL
     {
+
+        MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+        MySqlCommand cmd = new MySqlCommand();
+
         /// <summary>
         ///  Insere a Colaborador no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="colaborador"></param>
         public string Inserir(Colaborador colaborador)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO colaborador (nome,idFuncao,cro,croEstado,dtAdmissao,dtDemissao,idEndereco,idClinica,demitido) values (@nome,@idFuncao,@cro,@croEstado,@dtAdmissao,@dtDemissao,@idEndereco,@idClinica,@ferias,@demitido)";
+            cmd.CommandText = "INSERT INTO colaborador (nome,idFuncao,cro,croEstado,dtAdmissao,dtDemissao,idEndereco,idClinica, ferias, demitido) values (@nome,@idFuncao,@cro,@croEstado,@dtAdmissao,@dtDemissao,@idEndereco,@idClinica,@ferias,@demitido)";
 
             cmd.Parameters.AddWithValue("@nome", colaborador.Nome);
             cmd.Parameters.AddWithValue("@idFuncao",colaborador.Funcao.Id);
@@ -41,12 +39,14 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
+                    
                     return ("Colaborador já cadastrado.");
                 }
                 else
                 {
+                    Console.WriteLine(ex);
                     return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
@@ -62,8 +62,6 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(Colaborador colaborador)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM colaborador WHERE idColaborador = @ID";
             cmd.Parameters.AddWithValue("@ID", colaborador.Id);
@@ -91,8 +89,6 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Atualizar(Colaborador colaborador)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE colaborador SET nome = @nome, cro = @cro,  croEstado = @croEstado,  dtAdmissao = @dtAdmissao,  dtDemissao = @dtDemissao,  ferias = @ferias,  demitido = @demitido  WHERE idColaborador = @id";
             cmd.Parameters.AddWithValue("@nome", colaborador.Nome);
@@ -109,7 +105,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Colaborador atualizada com êxito!";
+                return "Colaborador atualizado com êxito!";
             }
             catch (Exception)
             {
@@ -126,14 +122,12 @@ namespace DataAccessLayer
         /// <returns></returns>
         public List<Colaborador> SelecionaTodos()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM endereco";
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM endereco";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 List<Colaborador> Colaboradors = new List<Colaborador>();
                 while (reader.Read())
                 {
@@ -170,8 +164,6 @@ namespace DataAccessLayer
         }
         public Colaborador GetByID(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM colaborador WHERE idColaborador = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -179,7 +171,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Colaborador temp = new Colaborador();
 
                 while (reader.Read())
