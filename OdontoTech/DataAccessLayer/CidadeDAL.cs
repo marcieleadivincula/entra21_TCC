@@ -159,5 +159,42 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Cidade GetLastRegister()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM cidade ORDER BY idCidade DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                Cidade Cidade = new Cidade();
+
+                while (reader.Read())
+                {
+                    Cidade temp = new Cidade();
+
+
+
+                    temp.Id = Convert.ToInt32(reader["idCidade"]);
+                    temp.Nome = Convert.ToString(reader["nomeCidade"]);
+                    temp.Estado.Id = Convert.ToInt32(reader["idEstado"]);
+
+                    Cidade = temp;
+                }
+
+                return Cidade;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

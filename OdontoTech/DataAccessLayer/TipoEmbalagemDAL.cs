@@ -174,5 +174,39 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public TipoEmbalagem GetLastRegister()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM tipoembalagem ORDER BY idTipoEmbalagem DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                TipoEmbalagem TipoEmbalagem = new TipoEmbalagem();
+
+                while (reader.Read())
+                {
+                    TipoEmbalagem temp = new TipoEmbalagem();
+
+                    temp.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
+                    temp.Descricao = Convert.ToString(reader["descricao"]);
+
+                    TipoEmbalagem = temp;
+                }
+
+                return TipoEmbalagem;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

@@ -181,6 +181,44 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Produto GetLastRegister()
+        {
+            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
+            SqlCommand command = new SqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM produto ORDER BY idProduto DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                Produto Produto = new Produto();
+
+                while (reader.Read())
+                {
+                    Produto temp = new Produto();
+
+                    temp.Id = Convert.ToInt32(reader["idProduto"]);
+                    temp.Nome = Convert.ToString(reader["nomeProduto"]);
+                    temp.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
+                    temp.Preco = Convert.ToDouble(reader["precoProduto"]);
+                    temp.DataCompra = Convert.ToDateTime(reader["dtCompra"]);
+
+
+                    Produto = temp;
+                }
+
+                return Produto;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 
     
