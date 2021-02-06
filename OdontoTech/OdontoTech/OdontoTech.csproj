@@ -214,9 +214,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Documents\GitHub\entra21_TCC\OdontoTech\BusinessLogicalLayer\BusinessLogicalLayer.csproj" />
-    <ProjectReference Include="..\..\..\Documents\GitHub\entra21_TCC\OdontoTech\DataAccessLayer\DataAccessLayer.csproj" />
-    <ProjectReference Include="..\..\..\Documents\GitHub\entra21_TCC\OdontoTech\Domain\Domain.csproj" />
+    <ProjectReference Include="..\BusinessLogicalLayer\BusinessLogicalLayer.csproj" />
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>
