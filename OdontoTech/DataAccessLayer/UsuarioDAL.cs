@@ -170,6 +170,40 @@ namespace DataAccessLayer
                 
             return usuarioId != null;
         }
+
+        public bool VerificaLogin(string login, string senha)
+        {
+
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
+
+
+            command.Connection = conn;
+            command.CommandText = "SELECT idUsuario FROM usuario where login = @login AND senha = @senha";
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@senha", senha);
+
+            try
+            {
+                conn.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+                
+        }
+
         public Usuario GetByID(int id)
         {
             MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
@@ -239,4 +273,5 @@ namespace DataAccessLayer
             }
         }
     }
+    
 }
