@@ -45,7 +45,7 @@ namespace OdontoTech.Controllers
             }
             else
             {
-                TempData.Add("Mensagem", "Login falhou, verifique seus dados.");
+                TempData.Add("Mensagem", "Email ou Senha incorretos, verifique seus dados.");
 
                 return RedirectToAction("Index","Home");
             }
