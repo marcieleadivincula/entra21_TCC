@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DataAccessLayer;
 using System.Data.SqlClient;
 using Domain;
-
+using MySql.Data.MySqlClient;
 namespace DataAccessLayer
 {
     public class ProcedimentoDAL
@@ -17,8 +17,8 @@ namespace DataAccessLayer
         /// <param name="procedimento"></param>
         public string Inserir(Procedimento procedimento)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO procedimento (nomeProcedimento,dsProcedimento,idTipoProcedimento) values (@nomeProcedimento,@dsProcedimento,@idTipoProcedimento)";
             
@@ -57,8 +57,8 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(Procedimento procedimento)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM procedimento WHERE idProcedimento = @ID";
             cmd.Parameters.AddWithValue("@ID", procedimento.Id);
@@ -86,8 +86,8 @@ namespace DataAccessLayer
         public string Atualizar(Procedimento procedimento)
         {
 
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE procedimento SET nomeProcedimento = @nomeProcedimento, dsProcedimento = @dsProcedimento WHERE idProcedimento = @idProcedimento";
             cmd.Parameters.AddWithValue("@idProcedimento", procedimento.Id);
@@ -116,14 +116,14 @@ namespace DataAccessLayer
         /// <returns></returns>
         public List<Procedimento> SelecionaTodos()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM procedimento";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 List<Procedimento> Procedimentos = new List<Procedimento>();
                 while (reader.Read())
                 {
@@ -151,8 +151,8 @@ namespace DataAccessLayer
         }
         public Procedimento GetByID(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM procedimento WHERE idProcedimento = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -160,7 +160,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Procedimento temp = new Procedimento();
 
                 while (reader.Read())
@@ -185,15 +185,15 @@ namespace DataAccessLayer
         }
         public Procedimento GetLastRegister()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM procedimento ORDER BY idProcedimento DESC limit 1";
 
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 Procedimento Procedimento = new Procedimento();
 
                 while (reader.Read())

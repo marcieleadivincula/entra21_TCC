@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,8 +14,8 @@ namespace DataAccessLayer
     {
         public string Inserir(Estoque Estoque)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO estoque (idProduto,qtdProduto,dtEntrada,dtSaida) values (@idProduto,@qtdProduto,@dtEntrada@dtSaida)";
 
@@ -49,8 +50,8 @@ namespace DataAccessLayer
         }
         public string Deletar(Estoque estoque)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM estoque WHERE idEstoque = @ID";
             cmd.Parameters.AddWithValue("@ID", estoque.Id);
@@ -72,9 +73,8 @@ namespace DataAccessLayer
         }
         public string Atualizar(Estoque Estoque)
         {
-
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand(); 
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE estoque SET idProduto = @idProduto,  qtdProduto = @qtdProduto,  dtEntrada = @dtEntrada,  dtSaida = @dtSaida WHERE idEstoque = @idEstoque";
 
@@ -101,14 +101,14 @@ namespace DataAccessLayer
         }
         public List<Estoque> SelecionaTodos()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM estoque";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 List<Estoque> Estoques = new List<Estoque>();
                 while (reader.Read())
                 {
@@ -135,8 +135,8 @@ namespace DataAccessLayer
         }
         public Estoque GetByID(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM estoque WHERE idEstoque = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -144,7 +144,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Estoque temp = new Estoque();
 
                 while (reader.Read())
@@ -170,15 +170,15 @@ namespace DataAccessLayer
         }
         public Estoque GetLastRegister()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command     = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM estoque ORDER BY idEstoque DESC limit 1";
 
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 Estoque Estoque = new Estoque();
 
                 while (reader.Read())
