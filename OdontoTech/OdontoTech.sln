@@ -11,6 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.IntegrationTests", "Domain.IntegrationTests\Domain.IntegrationTests.csproj", "{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationLayer", "PresentationLayer\PresentationLayer.csproj", "{4EE11905-695C-49FB-AEE5-F5E682466609}"
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OdontoTech", "OdontoTech\OdontoTech.csproj", "{29B8D24A-B867-4910-B443-00DFE440DEB1}"
 EndProject
 Global
@@ -35,6 +36,10 @@ Global
 		{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B297FAA-D3A1-4C4C-BE02-92909B94EBEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EE11905-695C-49FB-AEE5-F5E682466609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EE11905-695C-49FB-AEE5-F5E682466609}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EE11905-695C-49FB-AEE5-F5E682466609}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EE11905-695C-49FB-AEE5-F5E682466609}.Release|Any CPU.Build.0 = Release|Any CPU
 		{29B8D24A-B867-4910-B443-00DFE440DEB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{29B8D24A-B867-4910-B443-00DFE440DEB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29B8D24A-B867-4910-B443-00DFE440DEB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
