@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer;
-using MySql.Data.MySqlClient;
 using Domain;
 
 namespace DataAccessLayer
@@ -37,6 +36,7 @@ namespace DataAccessLayer
                 }
                 else
                 {
+                    Console.WriteLine(ex);
                     return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
@@ -70,8 +70,8 @@ namespace DataAccessLayer
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE bairro SET nomeBairro = @nomeBairro WHERE idBairro = @idBairro";
-            cmd.Parameters.AddWithValue("@idBairro", bairro.Id );
-            cmd.Parameters.AddWithValue("@nomeBairro", bairro.Nome );
+            cmd.Parameters.AddWithValue("@idBairro", bairro.Id);
+            cmd.Parameters.AddWithValue("@nomeBairro", bairro.Nome);
 
             try
             {
@@ -79,8 +79,9 @@ namespace DataAccessLayer
                 cmd.ExecuteNonQuery();
                 return "Bairro atualizado com êxito!";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return "Erro no Banco de dados.Contate o administrador.";
             }
             finally
@@ -89,7 +90,7 @@ namespace DataAccessLayer
             }
         }
         public List<Bairro> SelecionaTodos()
-        {           
+        {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM bairro";
             try
