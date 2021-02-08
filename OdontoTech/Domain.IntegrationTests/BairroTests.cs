@@ -18,7 +18,9 @@ namespace Domain.IntegrationTests
         {
             bll = new BairroBLL();
             cidade = new Cidade();
+
             cidade.Id = 1;
+
             str = string.Empty;
         }
 
@@ -31,7 +33,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarInsertBairro()
         {
-            Bairro test = new Bairro(1, "Água Verde", cidade);
+            Bairro test = new Bairro(1, "Água Branca", cidade);
 
             str = bll.Insert(test);
 
