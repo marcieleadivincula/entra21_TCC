@@ -15,12 +15,12 @@ namespace BusinessLogicalLayer
 
             if (string.IsNullOrWhiteSpace(pais.Nome))
             {
-                erros.Append("O nome deve ser informado.");
+                erros.AppendLine("O nome deve ser informado.");
             }
 
             if (pais.Nome.Length > 20)
             {
-                erros.Append("O nome não pode conter mais que 20 caracteres.");
+                erros.AppendLine("O nome não pode conter mais que 20 caracteres.");
             }
 
             if (erros.Length != 0)
@@ -42,12 +42,12 @@ namespace BusinessLogicalLayer
 
             if (string.IsNullOrWhiteSpace(pais.Nome))
             {
-                erros.Append("O nome deve ser informado.");
+                erros.AppendLine("O nome deve ser informado.");
             }
 
             if (pais.Nome.Length > 20)
             {
-                erros.Append("O nome não pode conter mais que 20 caracteres.");
+                erros.AppendLine("O nome não pode conter mais que 20 caracteres.");
             }
 
             if (erros.Length != 0)

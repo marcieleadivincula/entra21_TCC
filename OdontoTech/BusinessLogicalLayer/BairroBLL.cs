@@ -33,7 +33,7 @@ namespace BusinessLogicalLayer
 
             if (bairro.Id == 0 || bairro.Id < 0)
             {
-                erros.AppendLine("A cidade deve ser informada.");
+                erros.AppendLine("O bairro deve ser informada.");
             }
 
             if (erros.Length != 0)
@@ -72,7 +72,7 @@ namespace BusinessLogicalLayer
 
             if (bairro.Id == 0 || bairro.Id < 0)
             {
-                erros.AppendLine("A cidade deve ser informada.");
+                erros.AppendLine("O bairro deve ser informada.");
             }
 
             if (erros.Length != 0)

@@ -1,29 +1,26 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using Domain;
 
 namespace DataAccessLayer
 {
     public class EnderecoDAL
     {
+        MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+        MySqlCommand cmd = new MySqlCommand();
+
         /// <summary>
         /// Insere o Endereço no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="endereco"></param>
         public string Inserir(Endereco endereco)
         {
-
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO endereco (numeroCasa,cep) values (@numeroCasa,@cep)";
+            cmd.CommandText = $"INSERT INTO endereco (idLogradouro,numeroCasa,cep) values (@idLogradouro,@numeroCasa,@cep)";
          
+            cmd.Parameters.AddWithValue("@idLogradouro", endereco.Logradouro.Id);
             cmd.Parameters.AddWithValue("@numeroCasa", endereco.NumeroCasa);
             cmd.Parameters.AddWithValue("@cep", endereco.Cep);
 
@@ -31,16 +28,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Endedreco cadastrado com sucesso ";
+                return "Endereço cadastrado com sucesso";
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
                     return ("Endereço já cadastrado.");
                 }
                 else
                 {
+                    Console.WriteLine(ex);
                     return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
@@ -58,9 +56,6 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(Endereco endereco)
         {
-
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM endereco WHERE idEndereco = @ID";
             cmd.Parameters.AddWithValue("@ID", endereco.Id);
@@ -90,8 +85,6 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Atualizar(Endereco endereco)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE endereco  SET numeroCasa = @numeroCasa,  cep = @cep WHERE idEndereco = @idEndereco";
             cmd.Parameters.AddWithValue("@idEndereco", endereco.Id);
@@ -120,14 +113,12 @@ namespace DataAccessLayer
         /// <returns></returns>
         public List<Endereco> SelecionaTodos()
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM endereco";
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM endereco";
             try
             {
                 conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 List<Endereco> enderecos = new List<Endereco>();
                 while (reader.Read())
                 {
@@ -154,8 +145,6 @@ namespace DataAccessLayer
         }
         public Endereco GetByID(int id)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM endereco WHERE idEndereco = @ID";
             cmd.Parameters.AddWithValue("@ID", id);

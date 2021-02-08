@@ -1,15 +1,11 @@
 ﻿using BusinessLogicalLayer;
-using DataAccessLayer;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Domain.IntegrationTests
 {
     public class PaisTests
     {
-        private PaisDAL dal;
         private PaisBLL bll;
         private string str;
 
@@ -37,14 +33,26 @@ namespace Domain.IntegrationTests
         }
 
         [Test]
+        public void TestarInsertPaisDuplicado()
+        {
+            Pais test = new Pais(1, "Alemanha");
+
+            str = bll.Insert(test);
+
+            Assert.AreEqual(str, "Pais já cadastrado.");
+        }
+
+        [Test]
         public void TestarInsertPaisVazio()
         {
             Pais test = new Pais(0, "");
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "O nome deve ser informado.");
+            Assert.AreEqual(str, "O nome deve ser informado.\r\n");
         }
+
+        
 
         [Test]
         public void TestarInsertPaisTamanhoExcedido()
@@ -53,9 +61,8 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "O nome não pode conter mais que 20 caracteres.");
+            Assert.AreEqual(str, "O nome não pode conter mais que 20 caracteres.\r\n");
         }
-        
         
         [Test]
         public void TestarAtualizarPais()
@@ -75,14 +82,24 @@ namespace Domain.IntegrationTests
 
             str = bll.Update(test);
 
-            Assert.AreEqual(str, "O nome deve ser informado.");
+            Assert.AreEqual(str, "O nome deve ser informado.\r\n");
         }     
 
         [Test]
         public void TestarAtualizarPaisTamanhoExcedido()
         {
-            Pais test = new Pais(1, "");
+            Pais test = new Pais(1, "321546789546123654879");
+            Console.WriteLine(str);
+            str = bll.Update(test);
 
+            Assert.AreEqual(str, "O nome não pode conter mais que 20 caracteres.\r\n");
+        }     
+
+        [Test]
+        public void TestarDeletarPais()
+        {
+            Pais test = new Pais(49, "");
+            Console.WriteLine(str);
             str = bll.Delete(test);
 
             Assert.AreEqual(str, "Pais deletado com êxito!");

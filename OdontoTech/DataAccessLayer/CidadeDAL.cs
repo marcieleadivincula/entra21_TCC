@@ -1,24 +1,20 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using Domain;
 
 namespace DataAccessLayer
 {
     public class CidadeDAL
     {
+        MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+        MySqlCommand cmd = new MySqlCommand();
+
         public string Inserir(Cidade cidade)
         {
-
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO bairro (nomeCidade,idEstado) values (@nomeCidade,@idEstado)";
+            cmd.CommandText = $"INSERT INTO cidade (nomeCidade,idEstado) values (@nomeCidade,@idEstado)";
 
             cmd.Parameters.AddWithValue("@nomeCidade", cidade.Nome);
             cmd.Parameters.AddWithValue("@idEstado", cidade.Estado.Id);
@@ -31,12 +27,13 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
-                    return ("Cidade já cadastrado.");
+                    return ("Cidade já cadastrada.");
                 }
                 else
                 {
+                    Console.WriteLine(ex);
                     return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
@@ -47,8 +44,6 @@ namespace DataAccessLayer
         }
         public string Deletar(Cidade cidade)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM cidade WHERE idCidade = @ID";
             cmd.Parameters.AddWithValue("@ID", cidade.Id);
@@ -70,8 +65,6 @@ namespace DataAccessLayer
         }
         public string Atualizar(Cidade cidade)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE cidade SET nomeCidade = @nomeCidade WHERE idCidade = @idCidade";
             cmd.Parameters.AddWithValue("@nomeCidade", cidade.Nome);
@@ -94,14 +87,12 @@ namespace DataAccessLayer
         }
         public List<Cidade> SelecionaTodos()
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM cidade";
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM cidade";
             try
             {
                 conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 List<Cidade> Cidades = new List<Cidade>();
                 while (reader.Read())
                 {
@@ -127,8 +118,6 @@ namespace DataAccessLayer
         }
         public Cidade GetByID(int id)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM cidade WHERE idCidade = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
