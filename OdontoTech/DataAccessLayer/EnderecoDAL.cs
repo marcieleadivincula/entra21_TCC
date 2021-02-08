@@ -66,9 +66,8 @@ namespace DataAccessLayer
                 cmd.ExecuteNonQuery();
                 return "Endereço deletado com êxito!";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex);
                 return "Erro no Banco de dados.Contate o administrador.";
             }
             finally
