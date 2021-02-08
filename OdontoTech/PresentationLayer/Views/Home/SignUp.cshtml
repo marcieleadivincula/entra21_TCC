@@ -40,7 +40,7 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
-                <form class="login100-form validate-form">
+                <form class="login100-form validate-form" action="/Home/" method="post">
                     <span class="login100-form-title p-b-26">
                         Cadastro
                     </span>
@@ -48,6 +48,7 @@
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
                         <input class="input100" type="text" name="colaborador">
                         <span class="focus-input100" data-placeholder="Colaborador"></span>
+                       
                         @* Trazer a lista de colaborador *@
                     </div>
 
@@ -86,7 +87,7 @@
                             Já tem uma conta?
                         </span>
 
-                        <a class="txt2" href="#">
+                        <a class="txt2" href="/Home/Index">
                             Login
                         </a>
                     </div>
