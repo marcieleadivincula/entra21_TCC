@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataAccessLayer;
 using System.Data.SqlClient;
 using Domain;
+using MySql.Data.MySqlClient;
 
 
 namespace DataAccessLayer
@@ -18,8 +19,8 @@ namespace DataAccessLayer
         /// <param name="produto"></param>
         public string Inserir(Produto produto)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO produto (nomeProduto,idTipoEmbalagem,precoProduto,dtCompra) values (@nomeProduto,@idTipoEmbalagem,@precoProduto,@dtCompra)";
            
@@ -58,8 +59,8 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(Produto produto)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM produto WHERE idProduto = @ID";
             cmd.Parameters.AddWithValue("@ID", produto.Id);
@@ -87,8 +88,8 @@ namespace DataAccessLayer
         public string Atualizar(Produto produto)
         {
 
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE produto SET nomeProduto = @nomeProduto, precoProduto = @precoProduto,  dtCompra = @dtCompra WHERE idProduto = @idProduto";
             cmd.Parameters.AddWithValue("@idProduto", produto.Id);
@@ -113,14 +114,14 @@ namespace DataAccessLayer
         }
         public List<Produto> SelecionaTodos()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM produto";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 List<Produto> Produtos = new List<Produto>();
                 while (reader.Read())
                 {
@@ -148,8 +149,8 @@ namespace DataAccessLayer
         }
         public Produto GetByID(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM produto WHERE idProduto = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -157,7 +158,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Produto temp = new Produto();
 
                 while (reader.Read())
@@ -171,6 +172,44 @@ namespace DataAccessLayer
 
                 }
                 return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Produto GetLastRegister()
+        {
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM produto ORDER BY idProduto DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                Produto Produto = new Produto();
+
+                while (reader.Read())
+                {
+                    Produto temp = new Produto();
+
+                    temp.Id = Convert.ToInt32(reader["idProduto"]);
+                    temp.Nome = Convert.ToString(reader["nomeProduto"]);
+                    temp.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
+                    temp.Preco = Convert.ToDouble(reader["precoProduto"]);
+                    temp.DataCompra = Convert.ToDateTime(reader["dtCompra"]);
+
+
+                    Produto = temp;
+                }
+
+                return Produto;
             }
             catch (Exception)
             {

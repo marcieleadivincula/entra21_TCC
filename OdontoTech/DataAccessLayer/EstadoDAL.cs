@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,8 +18,8 @@ namespace DataAccessLayer
         /// <param name="estado"></param>
         public string Inserir(Estado estado)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO estado (nomeEstado,idPais) values (@nomeEstado,@idPais)";
       
@@ -58,8 +59,8 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(Estado estado)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM estado WHERE idEstado = @ID";
             cmd.Parameters.AddWithValue("@ID", estado.Id);
@@ -88,8 +89,8 @@ namespace DataAccessLayer
         public string Atualizar(Estado estado)
         {
 
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE estado SET nomeEstado = @nomeEstado WHERE idEstado = @idEstado";
             cmd.Parameters.AddWithValue("@nomeEstado", estado.Nome);
@@ -113,14 +114,14 @@ namespace DataAccessLayer
         }
         public List<Estado> SelecionaTodos()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM estado";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 List<Estado> Estados = new List<Estado>();
                 while (reader.Read())
                 {
@@ -145,8 +146,8 @@ namespace DataAccessLayer
         }
         public Estado GetByID(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM estado WHERE idEstado = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -154,7 +155,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Estado temp = new Estado();
 
                 while (reader.Read())
@@ -166,6 +167,44 @@ namespace DataAccessLayer
 
                 }
                 return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Estado GetLastRegister()
+        {
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand(); ;
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM estado ORDER BY idEstado DESC limit 1";
+
+            try
+            {
+                conn.Open();
+               MySqlDataReader reader = command.ExecuteReader();
+                Estado Estado = new Estado();
+
+                while (reader.Read())
+                {
+                    Estado temp = new Estado();
+
+
+                    temp.Id = Convert.ToInt32(reader["idEstado"]);
+                    temp.Nome = Convert.ToString(reader["nomeEstado"]);
+                    temp.Pais.Id = Convert.ToInt32(reader["idPais"]);
+
+
+
+                    Estado = temp;
+                }
+
+                return Estado;
             }
             catch (Exception)
             {

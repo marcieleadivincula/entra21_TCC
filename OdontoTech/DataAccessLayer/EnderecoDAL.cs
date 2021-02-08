@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using Domain;
@@ -55,7 +56,6 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(Endereco endereco)
         {
-
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM endereco WHERE idEndereco = @ID";
             cmd.Parameters.AddWithValue("@ID", endereco.Id);
@@ -165,6 +165,45 @@ namespace DataAccessLayer
 
                 }
                 return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Endereco GetLastRegister()
+        {
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM endereco ORDER BY idEndereco DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                Endereco Endereco = new Endereco();
+
+                while (reader.Read())
+                {
+                    Endereco temp = new Endereco();
+
+
+                    temp.Id = Convert.ToInt32(reader["idEndereco"]);
+                    temp.Logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
+                    temp.NumeroCasa = Convert.ToInt32(reader["numeroCasa"]);
+                    temp.Cep = Convert.ToString(reader["cep"]);
+
+
+
+                    Endereco = temp;
+                }
+
+                return Endereco;
             }
             catch (Exception)
             {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataAccessLayer;
 using System.Data.SqlClient;
 using Domain;
+using MySql.Data.MySqlClient;
 
 namespace DataAccessLayer
 {
@@ -13,8 +14,8 @@ namespace DataAccessLayer
     {
         public string Inserir(Pagamento Pagamento)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO pagamento (dtPagamento,idTipoPagamento) values (@dtPagamento,@idTipoPagamento)";
 
@@ -47,8 +48,8 @@ namespace DataAccessLayer
         }
         public string Deletar(Pagamento Pagamento)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM pagamento WHERE idPagamento = @ID";
             cmd.Parameters.AddWithValue("@ID", Pagamento.Id);
@@ -71,8 +72,8 @@ namespace DataAccessLayer
         public string Atualizar(Pagamento Pagamento)
         {
 
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE procedimento SET dtPagamento = @dtPagamento WHERE idPagamento = @idPagamento";
             cmd.Parameters.AddWithValue("@idPagamento", Pagamento.Id);
@@ -95,14 +96,14 @@ namespace DataAccessLayer
         }
         public List<Pagamento> SelecionaTodos()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM pagamento";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 List<Pagamento> Pagamentos = new List<Pagamento>();
                 while (reader.Read())
                 {
@@ -128,8 +129,8 @@ namespace DataAccessLayer
         }
         public Pagamento GetByID(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM pagamento WHERE idPagamento = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -137,7 +138,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Pagamento temp = new Pagamento();
 
                 while (reader.Read())
@@ -149,6 +150,41 @@ namespace DataAccessLayer
 
                 }
                 return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Pagamento GetLastRegister()
+        {
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM pagamento ORDER BY idPagamento DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                Pagamento Pagamento = new Pagamento();
+
+                while (reader.Read())
+                {
+                    Pagamento temp = new Pagamento();
+
+                    temp.Id = Convert.ToInt32(reader["idPagamento"]);
+                    temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
+                    temp.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
+
+                    Pagamento = temp;
+                }
+
+                return Pagamento;
             }
             catch (Exception)
             {

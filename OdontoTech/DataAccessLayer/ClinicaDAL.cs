@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using Domain;
@@ -85,7 +86,6 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@nomeClinica", clinica.Nome);
             cmd.Parameters.AddWithValue("@dtInauguracao", clinica.DataInauguracao);
 
-
             try
             {
                 conn.Open();
@@ -160,6 +160,44 @@ namespace DataAccessLayer
 
                 }
                 return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Clinica GetLastRegister()
+        {
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM clinica ORDER BY idClinica DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                Clinica Clinica = new Clinica();
+
+                while (reader.Read())
+                {
+                    Clinica temp = new Clinica();
+
+
+                    temp.Id = Convert.ToInt32(reader["idClinica"]);
+                    temp.Nome = Convert.ToString(reader["nomeClinica"]);
+                    temp.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
+                    temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
+
+
+                    Clinica = temp;
+                }
+
+                return Clinica;
             }
             catch (Exception)
             {

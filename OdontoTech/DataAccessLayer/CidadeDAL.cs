@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using Domain;
@@ -138,6 +139,43 @@ namespace DataAccessLayer
 
                 }
                 return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Cidade GetLastRegister()
+        {
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM cidade ORDER BY idCidade DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                Cidade Cidade = new Cidade();
+
+                while (reader.Read())
+                {
+                    Cidade temp = new Cidade();
+
+
+
+                    temp.Id = Convert.ToInt32(reader["idCidade"]);
+                    temp.Nome = Convert.ToString(reader["nomeCidade"]);
+                    temp.Estado.Id = Convert.ToInt32(reader["idEstado"]);
+
+                    Cidade = temp;
+                }
+
+                return Cidade;
             }
             catch (Exception)
             {

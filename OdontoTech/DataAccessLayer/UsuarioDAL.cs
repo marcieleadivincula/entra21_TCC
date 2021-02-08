@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataAccessLayer;
 using System.Data.SqlClient;
 using Domain;
+using MySql.Data.MySqlClient;
 
 namespace DataAccessLayer
 {
@@ -17,8 +18,8 @@ namespace DataAccessLayer
         /// <param name="usuario"></param>
         public string Inserir(Usuario usuario)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection  conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO usuario (login,senha,idColaborador) values (@login,@senha,@idColaborador)";
 
@@ -34,7 +35,7 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
                     return ("Usuario já cadastrado.");
                 }
@@ -55,8 +56,8 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(Usuario usuario)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM usuario WHERE idUsuario = @ID";
             cmd.Parameters.AddWithValue("@ID", usuario.Id);
@@ -84,8 +85,8 @@ namespace DataAccessLayer
         public string Atualizar(Usuario usuario)
         {
 
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE usuario SET login = @login,  senha = @senha WHERE idUsuario = @idUsuario";
             cmd.Parameters.AddWithValue("@idUsuario", usuario.Id);
@@ -115,14 +116,14 @@ namespace DataAccessLayer
         /// <returns></returns>
         public List<Usuario> SelecionaTodos()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM usuario";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 List<Usuario> Usuarios = new List<Usuario>();
                 while (reader.Read())
                 {
@@ -150,17 +151,17 @@ namespace DataAccessLayer
         public bool EhFuncionarioCadastrado(string login, string senha)
         {
             long? usuarioId = null;
-            using (SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING))
+            using (MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING))
             {
                 conn.Open();
-                using (SqlCommand command = new SqlCommand())
+                using (MySqlCommand command = new MySqlCommand())
                 {
                     command.Connection = conn;
                     command.CommandText = "SELECT idUsuario FROM usuario where login = @login AND senha = @senha";
                     command.Parameters.AddWithValue("@login", login);
                     command.Parameters.AddWithValue("@senha", senha);
 
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
                         usuarioId = Convert.ToInt32(reader["idUsuario"]);
                     }
@@ -169,10 +170,44 @@ namespace DataAccessLayer
                 
             return usuarioId != null;
         }
+
+        public bool VerificaLogin(string login, string senha)
+        {
+
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
+
+
+            command.Connection = conn;
+            command.CommandText = "SELECT idUsuario FROM usuario where login = @login AND senha = @senha";
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@senha", senha);
+
+            try
+            {
+                conn.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+                
+        }
+
         public Usuario GetByID(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM usuario WHERE idUsuario = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -180,7 +215,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Usuario temp = new Usuario();
 
                 while (reader.Read())
@@ -201,5 +236,42 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public Usuario GetLastRegister()
+        {
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM usuario ORDER BY idUsuario DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                Usuario Usuario = new Usuario();
+
+                while (reader.Read())
+                {
+                    Usuario temp = new Usuario();
+
+                    temp.Id = Convert.ToInt32(reader["idUsuario"]);
+                    temp.Login = Convert.ToString(reader["login"]);
+                    temp.Senha = Convert.ToString(reader["senha"]);
+                    temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+
+                    Usuario = temp;
+                }
+
+                return Usuario;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
+    
 }

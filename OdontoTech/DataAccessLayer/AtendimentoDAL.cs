@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,8 +19,8 @@ namespace DataAccessLayer
         /// <param name="atendimento"></param>
         public string Inserir(Atendimento atendimento)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO atendimento (idPaciente,idColaborador) values (@idPaciente,@idColaborador)";
 
@@ -56,8 +57,8 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(Atendimento Atendimento)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM atendimento WHERE idAtendimento = @ID";
             cmd.Parameters.AddWithValue("@ID", Atendimento.Id);
@@ -85,8 +86,8 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Atualizar(Atendimento Atendimento)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE atendimento SET idPaciente = @idPacientem, idColaborador = @idColaborador WHERE idAtendimento = @idAtendimento";
             cmd.Parameters.AddWithValue("@idPacientem", Atendimento.Paciente.Id);
@@ -114,15 +115,14 @@ namespace DataAccessLayer
         /// <returns></returns>
         public List<Atendimento> SelecionaTodos()
         {
-
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM atendimento";
             //try
             //{
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 List<Atendimento> Atendimentos = new List<Atendimento>();
                 while (reader.Read())
                 {
@@ -149,8 +149,8 @@ namespace DataAccessLayer
 
         public Atendimento GetAtendimentoById(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM atendimento WHERE idAtendimento = @Id";
             command.Parameters.AddWithValue("@Id", id);
@@ -158,7 +158,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 //List<Atendimento> Atendimentos = new List<Atendimento>();
                 Atendimento atendimento = new Atendimento();
 
@@ -186,16 +186,15 @@ namespace DataAccessLayer
         }
         public Atendimento GetLastRegister()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM atendimento ORDER BY idAtendimento DESC limit 1";
 
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                //List<Atendimento> Atendimentos = new List<Atendimento>();
+                MySqlDataReader reader = command.ExecuteReader();
                 Atendimento atendimento = new Atendimento();
 
                 while (reader.Read())

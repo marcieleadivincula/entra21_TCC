@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using DataAccessLayer;
 using System.Data.SqlClient;
 using Domain;
+using MySql.Data.MySqlClient;
+
 
 namespace DataAccessLayer
 {
@@ -17,8 +19,8 @@ namespace DataAccessLayer
         /// <param name="TipoProcedimento"></param>
         public string Inserir(TipoProcedimento TipoProcedimento)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO tipoprocedimento (nomeTipoProcedimento,valorProcedimento) values (@idTipoProcedimento,@nomeTipoProcedimento,@valorProcedimento)";
           
@@ -57,8 +59,8 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(TipoProcedimento TipoProcedimento)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM tipoprocedimento WHERE idTipoProcedimento = @ID";
             cmd.Parameters.AddWithValue("@ID", TipoProcedimento.Id);
@@ -118,14 +120,14 @@ namespace DataAccessLayer
         /// <returns></returns>
         public List<TipoProcedimento> SelecionaTodos()
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand command = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
             command.Connection = conn;
             command.CommandText = "SELECT * FROM tipoprocedimento";
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
                 List<TipoProcedimento> TipoProcedimentos = new List<TipoProcedimento>();
                 while (reader.Read())
                 {
@@ -150,8 +152,8 @@ namespace DataAccessLayer
         }
         public TipoProcedimento GetByID(int id)
         {
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM tipoprocedimento WHERE idTipoProcedimento = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -159,7 +161,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 TipoProcedimento temp = new TipoProcedimento();
 
                 while (reader.Read())
@@ -170,6 +172,41 @@ namespace DataAccessLayer
 
                 }
                 return temp;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public TipoProcedimento GetLastRegister()
+        {
+            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT * FROM tipoprocedimento ORDER BY idTipoProcedimento DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                TipoProcedimento TipoProcedimento = new TipoProcedimento();
+
+                while (reader.Read())
+                {
+                    TipoProcedimento temp = new TipoProcedimento();
+
+                    temp.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
+                    temp.Nome = Convert.ToString(reader["nomeTipoProcedimento"]);
+                    temp.Valor = Convert.ToInt32(reader["valorProcedimento"]);
+
+                    TipoProcedimento = temp;
+                }
+
+                return TipoProcedimento;
             }
             catch (Exception)
             {
