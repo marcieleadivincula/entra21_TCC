@@ -659,25 +659,6 @@ sketch
 
 # Ionide (cross platform F# VS Code tools) working folder
 
-### vscode ###
-!.vscode/settings.json
-!.vscode/extensions.json
-
-### Web ###
-*.asp
-*.cer
-*.csr
-*.css
-*.htm
-*.html
-*.js
-*.jsp
-*.php
-*.rss
-*.wasm
-*.wat
-*.xhtml
-
 ### VisualStudio ###
 
 # User-specific files
