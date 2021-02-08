@@ -17,7 +17,7 @@ namespace DataAccessLayer
             MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO estoque (idProduto,qtdProduto,dtEntrada,dtSaida) values (@idProduto,@qtdProduto,@dtEntrada@dtSaida)";
+            cmd.CommandText = $"INSERT INTO estoque (idProduto,qtdProduto,dtEntrada,dtSaida) values (@idProduto,@qtdProduto,@dtEntrada,@dtSaida)";
 
             cmd.Parameters.AddWithValue("@idProduto", Estoque.Produto.Id);
             cmd.Parameters.AddWithValue("@qtdProduto", Estoque.QtdProduto);
@@ -33,12 +33,13 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
                     return ("Estoque já cadastrado.");
                 }
                 else
                 {
+                    Console.WriteLine(ex);
                     return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }

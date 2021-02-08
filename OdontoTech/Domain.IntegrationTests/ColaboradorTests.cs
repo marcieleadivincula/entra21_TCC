@@ -103,7 +103,6 @@ namespace Domain.IntegrationTests
         public void TestarAtualizarColaboradorTamanhoExcedido()
         {
             Colaborador test = new Colaborador(1, "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789", "12", "12", dataAdmissao, dataDemissao, endereco, funcao, clinica, ferias, demitido);
-            Console.WriteLine(str);
             str = bll.Update(test);
 
             Assert.AreEqual(str, "O nome não pode conter mais que 100 caracteres.\r\n");
@@ -113,9 +112,7 @@ namespace Domain.IntegrationTests
         public void TestarDeletarColaborador()
         {
             Colaborador test = new Colaborador(150, "Alan Domingo", "12", "12", dataAdmissao, dataDemissao, endereco, funcao, clinica, ferias, demitido);
-            Console.WriteLine(str);
             str = bll.Delete(test);
-
             Assert.AreEqual(str, "Colaborador deletada com êxito!");
         }
 

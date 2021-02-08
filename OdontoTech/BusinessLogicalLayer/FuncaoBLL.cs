@@ -82,7 +82,7 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(funcao);
+            string respostaDB = dal.Atualizar(funcao);
             return respostaDB;
         }
 

@@ -89,7 +89,6 @@ namespace Domain.IntegrationTests
         public void TestarAtualizarPaisTamanhoExcedido()
         {
             Pais test = new Pais(1, "321546789546123654879");
-            Console.WriteLine(str);
             str = bll.Update(test);
 
             Assert.AreEqual(str, "O nome não pode conter mais que 20 caracteres.\r\n");
@@ -99,7 +98,6 @@ namespace Domain.IntegrationTests
         public void TestarDeletarPais()
         {
             Pais test = new Pais(49, "");
-            Console.WriteLine(str);
             str = bll.Delete(test);
 
             Assert.AreEqual(str, "Pais deletado com êxito!");
