@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Domain.IntegrationTests
 {
-    class EstadoTests
+    public class EstadoTests
     {
+
+
+
     }
 }

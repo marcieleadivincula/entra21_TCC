@@ -18,7 +18,7 @@ namespace Domain.IntegrationTests
         {
             bll = new CidadeBLL();
             estado = new Estado();
-            estado.Id = 1;
+            estado.Id = 2;
             str = string.Empty;
         }
 
