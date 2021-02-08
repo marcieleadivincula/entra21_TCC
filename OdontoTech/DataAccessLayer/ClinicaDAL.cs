@@ -1,28 +1,25 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using Domain;
 
 namespace DataAccessLayer
 {
     public class ClinicaDAL
     {
+
+        MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+        MySqlCommand cmd = new MySqlCommand();
         /// <summary>
         /// Insere a Clinica no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="clinica"></param>
         public string Inserir(Clinica clinica)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO clinica (nomeClinica,dtInauguracao,idEndereco) values (@nomeClinica,@dtInauguracao,@idEndereco)";
-    
+
             cmd.Parameters.AddWithValue("@nomeClinica", clinica.Nome);
             cmd.Parameters.AddWithValue("@dtInauguracao", clinica.DataInauguracao);
             cmd.Parameters.AddWithValue("@idEndereco", clinica.Endereco.Id);
@@ -31,17 +28,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Clinica cadastrado com sucesso";
+                return "Clinica cadastrada com sucesso";
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
-                    return "Clinica já cadastrada.";
+                    return "Clínica já cadastrada.";
                 }
                 else
                 {
-                    return  "Erro no Banco de dados. Contate o administrador.";
+                    return "Erro no Banco de dados. Contate o administrador.";
                 }
             }
             finally
@@ -55,8 +52,7 @@ namespace DataAccessLayer
         /// <param name="clinica"></param>
         /// <returns></returns>
         public string Deletar(Clinica clinica)
-        {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+        {            
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM clinica WHERE idClinica = @ID";
@@ -77,7 +73,6 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-
         /// <summary>
         /// Tenta atualizar, caso der certo retorna (Clinica atualizada com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
         /// </summary>
@@ -85,14 +80,11 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Atualizar(Clinica clinica)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE clinica SET nomeClinica = @nomeClinica, dtInauguracao = @dtInauguracao WHERE idClinica = @idClinica";
             cmd.Parameters.AddWithValue("@idClinica", clinica.Id);
             cmd.Parameters.AddWithValue("@nomeClinica", clinica.Nome);
             cmd.Parameters.AddWithValue("@dtInauguracao", clinica.DataInauguracao);
-    
 
             try
             {
@@ -115,14 +107,12 @@ namespace DataAccessLayer
         /// <returns></returns>
         public List<Clinica> SelecionaTodos()
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM clinica";
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM clinica";
             try
             {
                 conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 List<Clinica> Clinicas = new List<Clinica>();
                 while (reader.Read())
                 {
@@ -148,8 +138,6 @@ namespace DataAccessLayer
         }
         public Clinica GetByID(int id)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM clinica WHERE idClinica = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
