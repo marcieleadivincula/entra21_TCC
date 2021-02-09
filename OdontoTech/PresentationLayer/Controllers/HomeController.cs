@@ -118,9 +118,9 @@ namespace PresentationLayer.Controllers
             ViewBag.embalagem = "";
             ViewBag.dtcompra = "";
             ViewBag.preco = "";
+            //TempData["Lista"] = bll.GetAll();
 
-
-            return View();
+            return View(bll.GetAll());
         }
 
         public IActionResult Procedimento()
