@@ -1,10 +1,7 @@
 ﻿using DataAccessLayer;
 using Domain;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
@@ -21,9 +18,9 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O ID do estoque deve ser informado.");
             }
 
-            if (estoque.QtdProduto < 0)
+            if (estoque.QtdProduto <= 0)
             {
-                erros.AppendLine("A quantidade de produto deve ser informado");
+                erros.AppendLine("A quantidade de produto deve ser informada.");
             }
 
             if (estoque.DataEntrada == null)
@@ -58,9 +55,9 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O ID do estoque deve ser informado.");
             }
 
-            if (estoque.QtdProduto < 0)
+            if (estoque.QtdProduto <= 0)
             {
-                erros.AppendLine("A quantidade de produto deve ser informado");
+                erros.AppendLine("A quantidade de produto deve ser informada.");
             }
 
             if (estoque.DataEntrada == null)
@@ -77,7 +74,7 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(estoque);
+            string respostaDB = dal.Atualizar(estoque);
             return respostaDB;
         }
 

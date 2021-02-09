@@ -1,27 +1,23 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
-using System.Data.SqlClient;
 using Domain;
 
 namespace DataAccessLayer
 {
     public class LogradouroDAL
     {
+
+        MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+        MySqlCommand cmd = new MySqlCommand();
+
         public string Inserir(Logradouro logradouro)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand(); cmd.Connection = conn;
+            cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO logradouro (nomeLogradouro,idBairro) values (@nomeLogradouro,@idBairro)";
 
             cmd.Parameters.AddWithValue("@nomeLogradouro", logradouro.Nome);
             cmd.Parameters.AddWithValue("@idBairro", logradouro.Bairro.Id);
-
-
 
             try
             {
@@ -31,12 +27,13 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
                     return ("Logradouro já cadastrado.");
                 }
                 else
                 {
+                    Console.WriteLine(ex);
                     return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
@@ -48,8 +45,6 @@ namespace DataAccessLayer
         }
         public string Deletar(Logradouro logradouro)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM logradouro WHERE idLogradouro = @ID";
             cmd.Parameters.AddWithValue("@ID", logradouro.Id);
@@ -60,9 +55,10 @@ namespace DataAccessLayer
                 cmd.ExecuteNonQuery();
                 return "Logradouro deletado com êxito!";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return "Erro no Banco de dados.Contate o administrador.";
+                Console.WriteLine(ex);
+                return "Erro no Banco de dados. Contate o administrador.";
             }
             finally
             {
@@ -72,16 +68,12 @@ namespace DataAccessLayer
         public string Atualizar(Logradouro logradouro)
         {
 
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand(); 
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE logradouro SET nomeLogradouro = @nomeLogradouro WHERE idLogradouro = @idLogradouro";
 
-
-            cmd.Parameters.AddWithValue("@idLogradouro", logradouro.Nome);
+            cmd.Parameters.AddWithValue("@idLogradouro", logradouro.Id);
+            cmd.Parameters.AddWithValue("@idBairro", logradouro.Bairro.Id);
             cmd.Parameters.AddWithValue("@nomeLogradouro", logradouro.Nome);
-
-
 
             try
             {
@@ -89,9 +81,10 @@ namespace DataAccessLayer
                 cmd.ExecuteNonQuery();
                 return "Logradouro atualizado com êxito!";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return "Erro no Banco de dados.Contate o administrador.";
+                Console.WriteLine(ex);
+                return "Erro no Banco de dados. Contate o administrador.";
             }
             finally
             {
@@ -102,14 +95,12 @@ namespace DataAccessLayer
 
         public List<Logradouro> SelecionaTodos()
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM logradouro";
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM logradouro";
             try
             {
                 conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 List<Logradouro> Logradouros = new List<Logradouro>();
                 while (reader.Read())
                 {
@@ -127,7 +118,7 @@ namespace DataAccessLayer
             }
             catch (Exception)
             {
-                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+                throw new Exception("Erro no Banco de dados. Contate o administrador.");
             }
             finally
             {
@@ -136,8 +127,6 @@ namespace DataAccessLayer
         }
         public Logradouro GetByID(int id)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM logradouro WHERE idLogradouro = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -160,7 +149,7 @@ namespace DataAccessLayer
             }
             catch (Exception)
             {
-                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+                throw new Exception("Erro no Banco de dados. Contate o administrador.");
             }
             finally
             {
@@ -169,16 +158,13 @@ namespace DataAccessLayer
         }
         public Logradouro GetLastRegister()
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand(); 
-
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM logradouro ORDER BY idLogradouro DESC limit 1";
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM logradouro ORDER BY idLogradouro DESC limit 1";
 
             try
             {
                 conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Logradouro Logradouro = new Logradouro();
 
                 while (reader.Read())
@@ -196,7 +182,7 @@ namespace DataAccessLayer
             }
             catch (Exception)
             {
-                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+                throw new Exception("Erro no Banco de dados. Contate o administrador.");
             }
             finally
             {

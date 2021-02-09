@@ -1,10 +1,7 @@
 ﻿using DataAccessLayer;
 using Domain;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
@@ -33,7 +30,7 @@ namespace BusinessLogicalLayer
 
             if (paciente.Sobrenome.Length > 60)
             {
-                erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+                erros.AppendLine("O sobrenome não pode conter mais que 60 caracteres.");
             }
 
             if (string.IsNullOrWhiteSpace(paciente.Rg))
@@ -56,17 +53,11 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O cpf não pode conter mais que 14 caracteres.");
             }
 
-            // - VER OQUE PODE SER COLOCADO AQUI!!!
-            //if (string.IsNullOrWhiteSpace(paciente.DataNascimento))
-            //{
-            //    erros.AppendLine("A data de nacimento deve ser informada.");
-            //}
-
-            //if (paciente.DataNascimento)
-            //{
-            //    erros.AppendLine(" ");
-            //}
-            // - VER OQUE PODE SER COLOCADO AQUI!!!
+           
+            if (paciente.DataNascimento == null)
+            {
+                erros.AppendLine("A data de nacimento deve ser informada.");
+            }     
 
             if (string.IsNullOrWhiteSpace(paciente.Observacao))
             {
@@ -135,17 +126,10 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O cpf não pode conter mais que 14 caracteres.");
             }
 
-            // - VER OQUE PODE SER COLOCADO AQUI!!!
-            //if (string.IsNullOrWhiteSpace(paciente.DataNascimento))
-            //{
-            //    erros.AppendLine("A data de nacimento deve ser informada.");
-            //}
-
-            //if (paciente.DataNascimento)
-            //{
-            //    erros.AppendLine(" ");
-            //}
-            // - VER OQUE PODE SER COLOCADO AQUI!!!
+            if (paciente.DataNascimento == null)
+            {
+                erros.AppendLine("A data de nacimento deve ser informada.");
+            }
 
             if (string.IsNullOrWhiteSpace(paciente.Observacao))
             {
@@ -161,7 +145,7 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(paciente);
+            string respostaDB = dal.Atualizar(paciente);
             return respostaDB;
         }
 

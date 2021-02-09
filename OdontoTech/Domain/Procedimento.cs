@@ -12,6 +12,7 @@ namespace Domain
         public string Nome { get; set; }
         public TipoProcedimento TipoProcedimento { get; set; }
         public string DescricaoProcedimento { get; set; }
+
         public List<Atendimento> Atendimentos = new List<Atendimento>();
 
         public Procedimento(int id, string nome, TipoProcedimento tipoProcedimento, string descricaoProcedimento, List<Atendimento> atendimentos)

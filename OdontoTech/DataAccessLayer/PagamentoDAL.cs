@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
-using System.Data.SqlClient;
 using Domain;
 using MySql.Data.MySqlClient;
 
@@ -12,10 +7,11 @@ namespace DataAccessLayer
 {
     public class PagamentoDAL
     {
+        MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+        MySqlCommand cmd = new MySqlCommand();
+
         public string Inserir(Pagamento Pagamento)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO pagamento (dtPagamento,idTipoPagamento) values (@dtPagamento,@idTipoPagamento)";
 
@@ -48,8 +44,6 @@ namespace DataAccessLayer
         }
         public string Deletar(Pagamento Pagamento)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM pagamento WHERE idPagamento = @ID";
             cmd.Parameters.AddWithValue("@ID", Pagamento.Id);
@@ -71,11 +65,8 @@ namespace DataAccessLayer
         }
         public string Atualizar(Pagamento Pagamento)
         {
-
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE procedimento SET dtPagamento = @dtPagamento WHERE idPagamento = @idPagamento";
+            cmd.CommandText = "UPDATE pagamento SET dtPagamento = @dtPagamento WHERE idPagamento = @idPagamento";
             cmd.Parameters.AddWithValue("@idPagamento", Pagamento.Id);
             cmd.Parameters.AddWithValue("@dtPagamento", Pagamento.DataPagamento);
 
@@ -83,7 +74,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Pais atualizado com êxito!";
+                return "Pagamento atualizado com êxito!";
             }
             catch (Exception)
             {
@@ -96,14 +87,12 @@ namespace DataAccessLayer
         }
         public List<Pagamento> SelecionaTodos()
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM pagamento";
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM pagamento";
             try
             {
                 conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 List<Pagamento> Pagamentos = new List<Pagamento>();
                 while (reader.Read())
                 {
@@ -129,8 +118,6 @@ namespace DataAccessLayer
         }
         public Pagamento GetByID(int id)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM pagamento WHERE idPagamento = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -164,13 +151,13 @@ namespace DataAccessLayer
         {
             MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
             MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM pagamento ORDER BY idPagamento DESC limit 1";
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM pagamento ORDER BY idPagamento DESC limit 1";
 
             try
             {
                 conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Pagamento Pagamento = new Pagamento();
 
                 while (reader.Read())

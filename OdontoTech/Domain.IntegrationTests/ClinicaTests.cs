@@ -87,7 +87,6 @@ namespace Domain.IntegrationTests
         public void TestarAtualizarClinicaTamanhoExcedido()
         {
             Clinica test = new Clinica(1, "101234567891012345678910123456789101234567891012345678989101234567898910123456789", dataInauguracao, endereco);
-            Console.WriteLine(str);
             str = bll.Update(test);
 
             Assert.AreEqual(str, "O nome não pode conter mais que 60 caracteres.\r\n");
@@ -97,7 +96,6 @@ namespace Domain.IntegrationTests
         public void TestarDeletarClinica()
         {
             Clinica test = new Clinica(150, "", dataInauguracao, endereco);
-            Console.WriteLine(str);
             str = bll.Delete(test);
 
             Assert.AreEqual(str, "Clinica deletada com êxito!");

@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using BusinessLogicalLayer;
 using NUnit.Framework;
+
 namespace Domain.IntegrationTests
 {
     public class EnderecoTests
@@ -86,9 +85,7 @@ namespace Domain.IntegrationTests
         public void TestarAtualizarEnderecoCepTamanhoExcedido()
         {
             Endereco test = new Endereco(1, logradouro, 123, "012345678910");
-            Console.WriteLine(str);
             str = bll.Update(test);
-
             Assert.AreEqual(str, "O CEP não pode conter mais que 10 caracteres.\r\n");
         }
 
