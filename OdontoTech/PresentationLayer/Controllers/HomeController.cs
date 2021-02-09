@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain;
+using DataAccessLayer;
 
 namespace PresentationLayer.Controllers
 {
@@ -192,6 +193,25 @@ namespace PresentationLayer.Controllers
         public IActionResult RecuperarSenha()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult VerificadorLogin(string email, string pass)
+        {
+
+            UsuarioDAL dal = new UsuarioDAL();
+
+            if (dal.VerificaLogin(email, pass))
+            {
+                return View();
+            }
+            else
+            {
+                TempData.Add("Mensagem", "Login falhou, verifique seus dados.");
+
+                return RedirectToAction("Index", "Home");
+            }
+
         }
 
 
