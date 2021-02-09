@@ -119,6 +119,7 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Produto temp = new Produto();
+                    temp.TipoEmbalagem = new TipoEmbalagem();
 
                     temp.Id = Convert.ToInt32(reader["idProduto"]);
                     temp.Nome = Convert.ToString(reader["nomeProduto"]);
