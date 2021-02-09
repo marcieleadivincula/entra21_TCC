@@ -3,6 +3,12 @@ using Microsoft.Extensions.Logging;
 using PresentationLayer.Models;
 using System.Diagnostics;
 using BusinessLogicalLayer;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Domain;
 
 namespace PresentationLayer.Controllers
 {
@@ -108,19 +114,54 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Produto()
+        public IActionResult Produto(string produto, int embalagem, DateTime dtCompra,double preco, int idProduto, string funcao)
+        
         {
+
             ProdutoBLL bll = new ProdutoBLL();
 
-            ViewData["listaembalagem"] = bll.GetAll();
+            ViewBag.produto = produto;
+            ViewBag.embalagem = embalagem;
+            ViewBag.dtCompra = dtCompra;
+            ViewBag.preco = preco;
+            ViewBag.idProduto = idProduto;
+            ViewData["btn"] = funcao;
 
-            ViewBag.produto = "";
-            ViewBag.embalagem = "";
-            ViewBag.dtcompra = "";
-            ViewBag.preco = "";
-            //TempData["Lista"] = bll.GetAll();
 
-            return View(bll.GetAll());
+            TipoEmbalagem tipoEmbalagem = new TipoEmbalagem(embalagem,"");
+
+            Produto temp = new Produto(idProduto,produto,tipoEmbalagem,preco,dtCompra);
+
+
+            //if (Convert.ToString(ViewBag.btn) == "Atualizar" )
+            //{
+            //    bll.Update(temp);
+            //}
+            //else if (Convert.ToString(ViewBag.btn) == "Deletar")
+            //{
+            //    bll.Delete(temp);
+            //}
+            //else if (Convert.ToString(ViewBag.btn) == "Salvar")
+            //{
+            //    bll.Insert(temp);
+            //}
+
+            ViewData["result"] = "";
+            if (funcao == "Atualizar")
+            {
+                ViewData["result"] = bll.Update(temp);
+            }
+            else if (funcao == "Deletar")
+            {
+                ViewData["result"] = bll.Delete(temp);
+            }
+            else if (funcao == "Salvar")
+            {
+                ViewData["result"] = bll.Insert(temp);
+            }
+
+
+            return View();
         }
 
         public IActionResult Procedimento()

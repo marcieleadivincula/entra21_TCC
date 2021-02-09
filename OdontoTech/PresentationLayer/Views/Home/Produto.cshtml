@@ -1,6 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
 @{
     ViewData["Title"] = "Produto";
 }
@@ -49,17 +50,28 @@
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
 
-                        <input class="input100" type="text" name="produto" value="">
+                        <input class="input100" type="text" name="produto" value="@ViewBag.produto">
 
                         <span class="focus-input100" data-placeholder="Nome do produto"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
 
-                        <input class="input100" type="text" name="embalagem">
+                        <input class="input100" type="text" name="embalagem" value="@ViewBag.embalagem">
 
                         <span class="focus-input100" data-placeholder="Embalagem"></span>
 
+                        @*@{
+
+
+               for (int i = 0; i < Model.GetAll().Count; i++)
+               {
+                   <select>
+                             <option value="">@Model.GetAll()[i].TipoEmbalagem.Descricao</option>
+                   </select>
+
+               }
+            }*@
 
 
                         @* Trazer a lista de embalagem *@
@@ -68,22 +80,40 @@
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
 
-                        <input class="input100" type="datetime" name="dtCompra">
+                        <input class="input100" type="datetime-local" name="dtCompra" value="@ViewBag.dtCompra">
 
                         <span class="focus-input100" data-placeholder="Data de compra"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
 
-                        <input class="input100" type="number" name="preco">
+                        <input class="input100" type="number" name="preco" value="@ViewBag.preco">
 
                         <span class="focus-input100" data-placeholder="Preço"></span>
                     </div>
 
+                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+
+                        <input class="input100" type="number" name="idProduto" value="@ViewBag.idProduto">
+
+                        <span class="focus-input100" data-placeholder="Produto"></span>
+                    </div>
+                    @{ if (ViewData["result"] != "")
+                        {
+                           <label style="color:aqua"> @ViewData["result"] </label>
+
+                        }
+                        
+                        }
+
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" name="funcao" type="submit" value="Salvar" onclick=" @{
+
+                                ViewData["btn"] = "Salvar";
+
+                            }">
                                 Salvar
                             </button>
                         </div>
@@ -92,7 +122,11 @@
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" name="funcao" type="submit" value="Atualizar" onclick=" @{
+
+                                ViewData["btn"] = "Atualizar";
+
+                            }">
                                 Atualizar
                             </button>
                         </div>
@@ -101,7 +135,11 @@
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" name="funcao" type="submit" value="Deletar" onclick=" @{
+
+                                ViewData["btn"] = "Deletar";
+
+                            }">
                                 Deletar
                             </button>
                         </div>

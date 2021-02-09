@@ -18,17 +18,30 @@ namespace BusinessLogicalLayer
 
             if (string.IsNullOrWhiteSpace(produto.Nome))
             {
-                erros.AppendLine("O nome deve ser informado.");
+                erros.Append("O nome deve ser informado. ");
             }
 
-            if (produto.Nome.Length > 60)
+            if (!string.IsNullOrWhiteSpace(produto.Nome))
             {
-                erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+                if (produto.Nome.Length > 60)
+                {
+                    erros.Append(" \nO nome não pode conter mais que 60 caracteres.");
+                }
+            }
+
+            if (produto.TipoEmbalagem.Id == 0)
+            {
+                erros.Append(" \nO Id da Embalagem deve ser informado.");
+            }
+
+            if (produto.DataCompra == null)
+            {
+                erros.Append(" \nA data deve ser indormada.");
             }
 
             if (produto.Preco == 0)
             {
-                erros.AppendLine("O preço deve ser informado.");
+                erros.Append(" \nO preço deve ser informado.");
             }
 
             // ADICIONAR O SISTEMA DA DATA!
@@ -71,7 +84,7 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(produto);
+            string respostaDB = dal.Atualizar(produto);
             return respostaDB;
         }
 
