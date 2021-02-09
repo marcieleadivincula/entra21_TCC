@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
 using System.Data.SqlClient;
 using Domain;
 using MySql.Data.MySqlClient;
@@ -13,20 +9,22 @@ namespace DataAccessLayer
 {
     public class TipoProcedimentoDAL
     {
+
+        MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+        MySqlCommand cmd = new MySqlCommand();
+
         /// <summary>
         /// Insere o  TipoProcedimento no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="TipoProcedimento"></param>
         public string Inserir(TipoProcedimento TipoProcedimento)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO tipoprocedimento (nomeTipoProcedimento,valorProcedimento) values (@idTipoProcedimento,@nomeTipoProcedimento,@valorProcedimento)";
+            cmd.CommandText = $"INSERT INTO tipoprocedimento (idTipoProcedimento,nomeTipoProcedimento,valorProcedimento) values (@idTipoProcedimento,@nomeTipoProcedimento,@valorProcedimento)";
           
+            cmd.Parameters.AddWithValue("@idTipoProcedimento", TipoProcedimento.Id);
             cmd.Parameters.AddWithValue("@nomeTipoProcedimento", TipoProcedimento.Nome);
             cmd.Parameters.AddWithValue("@valorProcedimento", TipoProcedimento.Valor);
-
 
             try
             {
@@ -36,12 +34,13 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
                     return ("Tipo Procedimento já cadastrado.");
                 }
                 else
                 {
+                    Console.WriteLine(ex);
                     return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
@@ -59,8 +58,6 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(TipoProcedimento TipoProcedimento)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM tipoprocedimento WHERE idTipoProcedimento = @ID";
             cmd.Parameters.AddWithValue("@ID", TipoProcedimento.Id);
@@ -71,8 +68,9 @@ namespace DataAccessLayer
                 cmd.ExecuteNonQuery();
                 return "Tipo Procedimento deletado com êxito!";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return "Erro no Banco de dados.Contate o administrador.";
             }
             finally
@@ -88,8 +86,6 @@ namespace DataAccessLayer
         public string Atualizar(TipoProcedimento TipoProcedimento)
         {
 
-            SqlConnection conn = new SqlConnection(DBConfig.CONNECTION_STRING);
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE tipoprocedimento SET nomeTipoProcedimento = @nomeTipoProcedimento,  valorProcedimento = @valorProcedimento WHERE idTipoProcedimento = @idTipoProcedimento";
             cmd.Parameters.AddWithValue("@nomeTipoProcedimento", TipoProcedimento.Nome);
@@ -100,7 +96,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "TipoProcedimento atualizado com êxito!";
+                return "Tipo de procedimento atualizado com êxito!";
             }
             catch (Exception)
             {
@@ -120,14 +116,12 @@ namespace DataAccessLayer
         /// <returns></returns>
         public List<TipoProcedimento> SelecionaTodos()
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM tipoprocedimento";
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM tipoprocedimento";
             try
             {
                 conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 List<TipoProcedimento> TipoProcedimentos = new List<TipoProcedimento>();
                 while (reader.Read())
                 {
@@ -152,8 +146,6 @@ namespace DataAccessLayer
         }
         public TipoProcedimento GetByID(int id)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM tipoprocedimento WHERE idTipoProcedimento = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -184,15 +176,13 @@ namespace DataAccessLayer
         }
         public TipoProcedimento GetLastRegister()
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM tipoprocedimento ORDER BY idTipoProcedimento DESC limit 1";
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM tipoprocedimento ORDER BY idTipoProcedimento DESC limit 1";
 
             try
             {
                 conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 TipoProcedimento TipoProcedimento = new TipoProcedimento();
 
                 while (reader.Read())

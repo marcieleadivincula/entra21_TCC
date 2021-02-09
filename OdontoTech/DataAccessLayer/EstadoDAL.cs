@@ -1,32 +1,26 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
-using System.Data.SqlClient;
 using Domain;
 
 namespace DataAccessLayer
 {
     public class EstadoDAL
     {
+        MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+        MySqlCommand cmd = new MySqlCommand();
+
         /// <summary>
         /// Insere o  Estado no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="estado"></param>
         public string Inserir(Estado estado)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO estado (nomeEstado,idPais) values (@nomeEstado,@idPais)";
       
             cmd.Parameters.AddWithValue("@nomeEstado", estado.Nome);
             cmd.Parameters.AddWithValue("@idPais", estado.Pais.Id);
-
-
             try
             {
                 conn.Open();
@@ -41,6 +35,7 @@ namespace DataAccessLayer
                 }
                 else
                 {
+                    Console.WriteLine(ex);
                     return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
@@ -59,8 +54,7 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(Estado estado)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
+           
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM estado WHERE idEstado = @ID";
             cmd.Parameters.AddWithValue("@ID", estado.Id);
@@ -89,8 +83,6 @@ namespace DataAccessLayer
         public string Atualizar(Estado estado)
         {
 
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE estado SET nomeEstado = @nomeEstado WHERE idEstado = @idEstado";
             cmd.Parameters.AddWithValue("@nomeEstado", estado.Nome);
@@ -114,14 +106,12 @@ namespace DataAccessLayer
         }
         public List<Estado> SelecionaTodos()
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM estado";
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM estado";
             try
             {
                 conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 List<Estado> Estados = new List<Estado>();
                 while (reader.Read())
                 {
@@ -146,8 +136,6 @@ namespace DataAccessLayer
         }
         public Estado GetByID(int id)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM estado WHERE idEstado = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
@@ -179,15 +167,13 @@ namespace DataAccessLayer
         }
         public Estado GetLastRegister()
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand(); ;
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM estado ORDER BY idEstado DESC limit 1";
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM estado ORDER BY idEstado DESC limit 1";
 
             try
             {
                 conn.Open();
-               MySqlDataReader reader = command.ExecuteReader();
+               MySqlDataReader reader = cmd.ExecuteReader();
                 Estado Estado = new Estado();
 
                 while (reader.Read())

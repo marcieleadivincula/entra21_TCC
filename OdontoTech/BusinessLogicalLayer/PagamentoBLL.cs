@@ -15,6 +15,7 @@ namespace BusinessLogicalLayer
         public string Insert(Pagamento pagamento)
         {
             StringBuilder erros = new StringBuilder();
+
             if (pagamento.Id == 0 || pagamento.Id < 0)
             {
                 erros.AppendLine("O ID do pagamento deve ser informado.");
@@ -26,7 +27,7 @@ namespace BusinessLogicalLayer
             }
 
             
-            if (pagamento.DataPagamento == null) // rever a data
+            if (pagamento.DataPagamento == null) 
             {
                 erros.AppendLine("A data do pagamento deve ser informado.");
             }
@@ -67,7 +68,7 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(pagamento);
+            string respostaDB = dal.Atualizar(pagamento);
             return respostaDB;
         }
 

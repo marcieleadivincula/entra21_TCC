@@ -39,7 +39,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Clinica cadastrada com sucesso");
+            Assert.AreEqual(str, "Clínica cadastrada com sucesso");
         }       
 
         [Test]
@@ -69,7 +69,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Update(test);
 
-            Assert.AreEqual(str, "Clinica atualizada com êxito!");
+            Assert.AreEqual(str, "Clínica atualizada com êxito!");
         }
 
         [Test]
@@ -87,7 +87,6 @@ namespace Domain.IntegrationTests
         public void TestarAtualizarClinicaTamanhoExcedido()
         {
             Clinica test = new Clinica(1, "101234567891012345678910123456789101234567891012345678989101234567898910123456789", dataInauguracao, endereco);
-            Console.WriteLine(str);
             str = bll.Update(test);
 
             Assert.AreEqual(str, "O nome não pode conter mais que 60 caracteres.\r\n");
@@ -97,10 +96,9 @@ namespace Domain.IntegrationTests
         public void TestarDeletarClinica()
         {
             Clinica test = new Clinica(150, "", dataInauguracao, endereco);
-            Console.WriteLine(str);
             str = bll.Delete(test);
 
-            Assert.AreEqual(str, "Clinica deletada com êxito!");
+            Assert.AreEqual(str, "Clínica deletada com êxito!");
         }
 
     }

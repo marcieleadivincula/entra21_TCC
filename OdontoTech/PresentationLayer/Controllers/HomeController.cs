@@ -134,9 +134,18 @@ namespace PresentationLayer.Controllers
 
         public IActionResult Dashboard()
         {
+        	
+        }
+
+        public IActionResult AlterarSenha()
+        {
             return View();
         }
 
+        public IActionResult RecuperarSenha()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

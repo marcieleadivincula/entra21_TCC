@@ -93,7 +93,6 @@ namespace Domain.IntegrationTests
         public void TestarAtualizarCidadeTamanhoExcedido()
         {
             Cidade test = new Cidade(1, "1012345678910123456789101234567891012345678910123456789", estado);
-            Console.WriteLine(str);
             str = bll.Update(test);
 
             Assert.AreEqual(str, "O nome não pode conter mais que 50 caracteres.\r\n");
@@ -103,7 +102,6 @@ namespace Domain.IntegrationTests
         public void TestarDeletarCidade()
         {
             Cidade test = new Cidade(150, "", estado);
-            Console.WriteLine(str);
             str = bll.Delete(test);
 
             Assert.AreEqual(str, "Cidade deletada com êxito!");

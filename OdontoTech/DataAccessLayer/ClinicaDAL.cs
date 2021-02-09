@@ -1,7 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using MySql.Data.MySqlClient;
 using Domain;
 
 namespace DataAccessLayer
@@ -28,7 +27,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Clinica cadastrada com sucesso";
+                return "Clínica cadastrada com sucesso";
             }
             catch (Exception ex)
             {
@@ -62,7 +61,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Clinica deletada com êxito!";
+                return "Clínica deletada com êxito!";
             }
             catch (Exception)
             {
@@ -90,7 +89,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Clinica atualizada com êxito!";
+                return "Clínica atualizada com êxito!";
             }
             catch (Exception)
             {

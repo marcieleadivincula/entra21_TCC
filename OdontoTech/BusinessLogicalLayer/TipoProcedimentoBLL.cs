@@ -24,7 +24,7 @@ namespace BusinessLogicalLayer
 
             if (string.IsNullOrWhiteSpace(tipoProcedimento.Nome))
             {
-                erros.AppendLine("Uma descrição deve ser informada.");
+                erros.AppendLine("O nome deve ser informado.");
             }
 
             if (tipoProcedimento.Nome.Length > 60)
@@ -61,7 +61,7 @@ namespace BusinessLogicalLayer
 
             if (string.IsNullOrWhiteSpace(tipoProcedimento.Nome))
             {
-                erros.AppendLine("Uma descrição deve ser informada.");
+                erros.AppendLine("O nome deve ser informado.");
             }
 
             if (tipoProcedimento.Nome.Length > 60)
@@ -79,7 +79,7 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(tipoProcedimento);
+            string respostaDB = dal.Atualizar(tipoProcedimento);
             return respostaDB;
         }
 

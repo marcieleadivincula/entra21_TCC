@@ -2,14 +2,13 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Endereco";
+    ViewData["Title"] = "Recuperar Senha";
 }
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>Endereço</title>
+    <title>Recuperar Senha</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -37,118 +36,57 @@
 </head>
 <body>
 
-
     <div class="limiter">
-
         <div class="container-login100">
             <div class="wrap-login100">
-                <form class="login100-form validate-form">
+                <form class="login100-form validate-form" action="/Home/VerificadorLogin" method="post">
                     <span class="login100-form-title p-b-26">
-                        Endereço
+                        Recuperar Senha
                     </span>
 
-                    <div>
-                        @* Trazer a lista de países *@
-                        <select class="form-select" aria-label="Default select example" name="pais">
-                            <option selected>Pais</option>
-                            <option value="1">Brasil</option>
-                            <option value="2">Alemanha</option>
-                        </select>
-
-                        @* Trazer a lista de estados *@
-                        <select class="form-select" aria-label="Default select example" name="estado">
-                            <option selected>Estado</option>
-                            <option value="1">Santa Catarina</option>
-                            <option value="2">Rondônia</option>
-                            <option value="3">São Paulo</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        @* Trazer a lista de estados *@
-                        <select class="form-select" aria-label="Default select example" name="estado">
-                            <option selected>Estado</option>
-                            <option value="1">Santa Catarina</option>
-                            <option value="2">Rondônia</option>
-                            <option value="3">São Paulo</option>
-                        </select>
-
-                        @* Trazer a lista de cidades *@
-                        <select class="form-select" aria-label="Default select example" name="cidade">
-                            <option selected>Cidade</option>
-                            <option value="1">Blumenau</option>
-                            <option value="2">Pomerode</option>
-                            <option value="3">Indaial</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        @* Trazer a lista de bairros *@
-                        <select class="form-select" aria-label="Default select example" name="bairro">
-                            <option selected>Bairro</option>
-                            <option value="1">Vila Nova</option>
-                            <option value="2">Victor Konder</option>
-                            <option value="3">Velha</option>
-                        </select>
-
-                        @* Trazer a lista de logradouros *@
-                        <select class="form-select" aria-label="Default select example" name="logradouro">
-                            <option selected>Logradouro</option>
-                            <option value="1">R. São Paulo</option>
-                            <option value="2">Av. 07 de Setembro</option>
-                            <option value="3">R. Teresópolis</option>
-                        </select>
-                    </div>
-
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="cep">
-                        <span class="focus-input100" data-placeholder="CEP"></span>
+                        <input class="input100" type="text" name="codSeguranca" value="@ViewBag.CodigoSeguranca" ">
+                        <span class="focus-input100" data-placeholder="Código de segurança"></span>
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="numeroCasa">
-                        <span class="focus-input100" data-placeholder="Número"></span>
+                    <div class="wrap-input100 validate-input" data-validate="Insira sua senha">
+                        <span class="btn-show-pass">
+                            <i class="zmdi zmdi-eye"></i>
+                        </span>
+                        <input class="input100" type="password" name="pass" value="@ViewBag.Senha">
+                        <span class="focus-input100" data-placeholder="Nova senha"></span>
                     </div>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Salvar
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Atualizar
-                            </button>
-                        </div>
+                    <div class="wrap-input100 validate-input" data-validate="Insira sua senha">
+                        <span class="btn-show-pass">
+                            <i class="zmdi zmdi-eye"></i>
+                        </span>
+                        <input class="input100" type="password" name="pass" value="@ViewBag.Senha">
+                        <span class="focus-input100" data-placeholder="Confirmar nova senha"></span>
                     </div>
 
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Deletar
+                            <button class="login100-form-btn" type="submit">
+                                Recuperar
                             </button>
                         </div>
                     </div>
 
                     <div class="text-center p-t-115">
-                        <span class="login100-form-title p-b-26">
-                            Lista de endereços
+                        <span class="txt1">
+                            Já tem uma conta?
                         </span>
-                        @* Trazer a lista de endereços com id, cep, número,nome do logradouro, bairro, cidade, estado e país *@
+                        <a class="txt2" href="/Home/Index">
+                            Login
+                        </a>
                     </div>
-
                 </form>
             </div>
         </div>
-
     </div>
+
 
     <div id="dropDownSelect1"></div>
 
@@ -167,7 +105,7 @@
     <!--===============================================================================================-->
     <script src="vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
-    <script src="./js/main.js"></script>
+    <script src="./js/site.js"></script>
 
 </body>
 </html>

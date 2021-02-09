@@ -12,7 +12,7 @@ namespace Domain
         public string Nome { get; set; }
         public TipoEmbalagem TipoEmbalagem { get; set; }
         public double Preco { get; set; }
-        public DateTime DataCompra { get; set; } //TEMPORÁRIO, ver como vai ficar
+        public DateTime DataCompra { get; set; }
 
         public Produto(int id, string nome, TipoEmbalagem tipoEmbalagem, double preco, DateTime dataCompra)
         {

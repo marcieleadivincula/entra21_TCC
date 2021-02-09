@@ -20,13 +20,13 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Pais cadastrado com sucesso";
+                return "País cadastrado com sucesso";
             }
             catch (Exception ex)
             {                
                 if (ex.Message.Contains("Duplicate"))
                 {
-                    return ("Pais já cadastrado.");
+                    return ("País já cadastrado.");
                 }
                 else
                 {
@@ -50,7 +50,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Pais deletado com êxito!";
+                return "País deletado com êxito!";
             }
             catch (Exception)
             {
@@ -72,7 +72,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Pais atualizado com êxito!";
+                return "País atualizado com êxito!";
             }
             catch (Exception)
             {
