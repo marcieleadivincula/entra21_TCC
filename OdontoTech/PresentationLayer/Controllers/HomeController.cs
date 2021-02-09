@@ -134,7 +134,7 @@ namespace PresentationLayer.Controllers
 
         public IActionResult Dashboard()
         {
-        	
+            return View();
         }
 
         public IActionResult AlterarSenha()
