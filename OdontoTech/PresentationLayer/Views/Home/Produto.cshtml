@@ -42,29 +42,41 @@
 
         <div class="container-login100">
             <div class="wrap-login100">
-                <form class="login100-form validate-form">
+                <form class="login100-form validate-form" action="/Home/Produto" method="post">
                     <span class="login100-form-title p-b-26">
                         Produto
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="produto">
+
+                        <input class="input100" type="text" name="produto" value=""> 
+
                         <span class="focus-input100" data-placeholder="Nome do produto"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                 
                         <input class="input100" type="text" name="embalagem">
+                    
                         <span class="focus-input100" data-placeholder="Embalagem"></span>
+
+
+                        
                         @* Trazer a lista de embalagem *@
                     </div>
 
+                   
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    
                         <input class="input100" type="datetime" name="dtCompra">
+                       
                         <span class="focus-input100" data-placeholder="Data de compra"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                        
                         <input class="input100" type="number" name="preco">
+                        
                         <span class="focus-input100" data-placeholder="Preço"></span>
                     </div>
 

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using PresentationLayer.Models;
 using System.Diagnostics;
+using BusinessLogicalLayer;
 
 namespace PresentationLayer.Controllers
 {
@@ -109,6 +110,16 @@ namespace PresentationLayer.Controllers
 
         public IActionResult Produto()
         {
+            ProdutoBLL bll = new ProdutoBLL();
+
+            ViewData["listaembalagem"] = bll.GetAll();
+
+            ViewBag.produto = "";
+            ViewBag.embalagem = "";
+            ViewBag.dtcompra = "";
+            ViewBag.preco = "";
+
+
             return View();
         }
 
