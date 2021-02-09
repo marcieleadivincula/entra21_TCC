@@ -2,13 +2,13 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "SignUp";
+    ViewData["Title"] = "Recuperar Senha";
 }
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>Cadastro</title>
+    <title>Recuperar Senha</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -36,55 +36,40 @@
 </head>
 <body>
 
-
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
-                <form class="login100-form validate-form" action="/Home/" method="post">
+                <form class="login100-form validate-form" action="/Home/VerificadorLogin" method="post">
                     <span class="login100-form-title p-b-26">
-                        Cadastro
+                        Recuperar Senha
                     </span>
 
-                    <!--<div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="colaborador">
-                        <span class="focus-input100" data-placeholder="Colaborador">
-                        </span>
-
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Nome</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>-->
-                        @* Trazer a lista de colaborador *@
-                    <!--</div>-->
-
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="email">
-                        <span class="focus-input100" data-placeholder="Email"></span>
+                        <input class="input100" type="text" name="codSeguranca" value="@ViewBag.CodigoSeguranca" ">
+                        <span class="focus-input100" data-placeholder="Código de segurança"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Insira sua senha">
                         <span class="btn-show-pass">
                             <i class="zmdi zmdi-eye"></i>
                         </span>
-                        <input class="input100" type="password" name="pass">
-                        <span class="focus-input100" data-placeholder="Senha"></span>
+                        <input class="input100" type="password" name="pass" value="@ViewBag.Senha">
+                        <span class="focus-input100" data-placeholder="Nova senha"></span>
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Confirme sua senha">
+                    <div class="wrap-input100 validate-input" data-validate="Insira sua senha">
                         <span class="btn-show-pass">
                             <i class="zmdi zmdi-eye"></i>
                         </span>
-                        <input class="input100" type="password" name="pass">
-                        <span class="focus-input100" data-placeholder="Confirmar Senha"></span>
+                        <input class="input100" type="password" name="pass" value="@ViewBag.Senha">
+                        <span class="focus-input100" data-placeholder="Confirmar nova senha"></span>
                     </div>
 
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Cadastrar
+                            <button class="login100-form-btn" type="submit">
+                                Recuperar
                             </button>
                         </div>
                     </div>
@@ -93,7 +78,6 @@
                         <span class="txt1">
                             Já tem uma conta?
                         </span>
-
                         <a class="txt2" href="/Home/Index">
                             Login
                         </a>
@@ -121,7 +105,7 @@
     <!--===============================================================================================-->
     <script src="vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
-    <script src="./js/main.js"></script>
+    <script src="./js/site.js"></script>
 
 </body>
 </html>
