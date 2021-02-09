@@ -2,6 +2,9 @@
 using Microsoft.Extensions.Logging;
 using PresentationLayer.Models;
 using System.Diagnostics;
+using Domain;
+using DataAccessLayer;
+using BusinessLogicalLayer;
 
 namespace PresentationLayer.Controllers
 {
@@ -145,6 +148,23 @@ namespace PresentationLayer.Controllers
         public IActionResult RecuperarSenha()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult VerificarLogin(string email, string pass)
+        {
+            UsuarioDAL dal = new UsuarioDAL();
+
+            if (dal.VerificaLogin(email, pass))
+            {
+                return View();
+            }
+            else
+            {
+                TempData.Add("Mensagem", "Login falhou, verifique seus dados.");
+
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
