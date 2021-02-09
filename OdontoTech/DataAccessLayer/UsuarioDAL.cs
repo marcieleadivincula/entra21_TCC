@@ -32,13 +32,13 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Usuario cadastrado com sucesso";
+                return "Usuário cadastrado com sucesso";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("Duplicate"))
                 {
-                    return ("Usuario já cadastrado.");
+                    return ("Usuário já cadastrado.");
                 }
                 else
                 {
@@ -67,7 +67,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Tipo Usuario deletado com êxito!";
+                return "Tipo Usuário deletado com êxito!";
             }
             catch (Exception)
             {
@@ -97,7 +97,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Usuario atualizado com êxito!";
+                return "Usuário atualizado com êxito!";
             }
             catch (Exception)
             {

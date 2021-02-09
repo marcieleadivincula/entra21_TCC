@@ -18,7 +18,7 @@ namespace BusinessLogicalLayer
 
             if (Endereco.Id == 0  || Endereco.Id < 0)
             {
-                erros.AppendLine("O ID de endereco deve ser informado.");
+                erros.AppendLine("O ID de endereço deve ser informado.");
             }
 
             if (Endereco.Logradouro.Id == 0 || Endereco.Logradouro.Id < 0)
@@ -28,7 +28,7 @@ namespace BusinessLogicalLayer
 
             if (Endereco.NumeroCasa == 0 || Endereco.NumeroCasa < 0)
             {
-                erros.AppendLine("O Numero da casa do endereco deve ser informado.");
+                erros.AppendLine("O Numero da casa do endereço deve ser informado.");
             }
 
             if (string.IsNullOrWhiteSpace(Endereco.Cep))
@@ -59,7 +59,7 @@ namespace BusinessLogicalLayer
             StringBuilder erros = new StringBuilder();
             if (Endereco.Id == 0 || Endereco.Id < 0)
             {
-                erros.AppendLine("O ID de endereco deve ser informado.");
+                erros.AppendLine("O ID de endereço deve ser informado.");
             }
 
             if (Endereco.Logradouro.Id == 0 || Endereco.Logradouro.Id < 0)
@@ -69,7 +69,7 @@ namespace BusinessLogicalLayer
 
             if (Endereco.NumeroCasa == 0 || Endereco.NumeroCasa < 0)
             {
-                erros.AppendLine("O Numero da casa do endereco deve ser informado.");
+                erros.AppendLine("O Numero da casa do endereço deve ser informado.");
             }
 
             if (string.IsNullOrWhiteSpace(Endereco.Cep))

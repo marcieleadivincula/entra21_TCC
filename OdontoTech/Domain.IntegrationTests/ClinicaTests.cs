@@ -39,7 +39,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Clinica cadastrada com sucesso");
+            Assert.AreEqual(str, "Clínica cadastrada com sucesso");
         }       
 
         [Test]
@@ -69,7 +69,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Update(test);
 
-            Assert.AreEqual(str, "Clinica atualizada com êxito!");
+            Assert.AreEqual(str, "Clínica atualizada com êxito!");
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Domain.IntegrationTests
             Clinica test = new Clinica(150, "", dataInauguracao, endereco);
             str = bll.Delete(test);
 
-            Assert.AreEqual(str, "Clinica deletada com êxito!");
+            Assert.AreEqual(str, "Clínica deletada com êxito!");
         }
 
     }

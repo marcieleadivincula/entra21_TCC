@@ -47,7 +47,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "O Numero da casa do endereco deve ser informado.\r\n");
+            Assert.AreEqual(str, "O Numero da casa do endereço deve ser informado.\r\n");
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Update(test);
 
-            Assert.AreEqual(str, "O Numero da casa do endereco deve ser informado.\r\n");
+            Assert.AreEqual(str, "O Numero da casa do endereço deve ser informado.\r\n");
         }
 
         [Test]
