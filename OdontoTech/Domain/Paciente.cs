@@ -13,7 +13,7 @@ namespace Domain
         public string Sobrenome { get; set; }
         public string Rg { get; set; }
         public string Cpf { get; set; }
-        public DateTime DataNascimento { get; set; } // Data esta como string ! (TEMPORARIO)
+        public DateTime DataNascimento { get; set; } 
         public string Observacao { get; set; }
         public Endereco Endereco { get; set; }
 

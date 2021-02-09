@@ -26,12 +26,15 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
             }
 
-            if (produto.Preco == 0)
+            if (produto.Preco == 0 || produto.Preco < 0)
             {
                 erros.AppendLine("O preço deve ser informado.");
             }
 
-            // ADICIONAR O SISTEMA DA DATA!
+            if (produto.DataCompra == null)
+            {
+                erros.AppendLine("A data deve ser informada.");
+            }
 
             if (erros.Length != 0)
             {
@@ -60,18 +63,21 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
             }
 
-            if (produto.Preco == 0)
+            if (produto.Preco == 0 || produto.Preco < 0)
             {
                 erros.AppendLine("O preço deve ser informado.");
             }
 
-            // ADICIONAR O SISTEMA DA DATA!
+            if (produto.DataCompra == null) 
+            {
+                erros.AppendLine("A data do produto deve ser informado.");
+            }
 
             if (erros.Length != 0)
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(produto);
+            string respostaDB = dal.Atualizar(produto);
             return respostaDB;
         }
 

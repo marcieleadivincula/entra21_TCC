@@ -26,7 +26,10 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 50 caracteres.");
             }
 
-            // ID BAIRRO!
+            if (logradouro.Bairro.Id == 0 || logradouro.Bairro.Id < 0)
+            {
+                erros.AppendLine("O ID do logradouro deve ser informado.");
+            }
 
             if (erros.Length != 0)
             {
@@ -55,13 +58,16 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 50 caracteres.");
             }
 
-            // ID BAIRRO!
+            if (logradouro.Bairro.Id == 0 || logradouro.Bairro.Id < 0)
+            {
+                erros.AppendLine("O ID do logradouro deve ser informado.");
+            }
 
             if (erros.Length != 0)
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(logradouro);
+            string respostaDB = dal.Atualizar(logradouro);
             return respostaDB;
         }
 

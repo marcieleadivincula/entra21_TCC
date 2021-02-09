@@ -9,7 +9,7 @@ namespace Domain
     public class Pagamento
     {
         public int Id { get; set; }
-        public DateTime DataPagamento { get; set; } //TEMPORÁRIO, VER COMO VAI FICAR AINDA
+        public DateTime DataPagamento { get; set; } 
         public TipoPagamento TipoPagamento { get; set; }
 
         public Pagamento(int id, DateTime dataPagamento, TipoPagamento tipoPagamento)

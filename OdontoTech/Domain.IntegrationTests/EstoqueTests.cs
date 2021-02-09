@@ -18,7 +18,7 @@ namespace Domain.IntegrationTests
         {
             bll = new EstoqueBLL();
             produto = new Produto();
-            produto.Id = 1;            
+            produto.Id = 1;
             DataEntrada = DateTime.Now;
             DataSaida = DateTime.Now;
             str = string.Empty;
@@ -33,7 +33,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarInsertEstoque()
         {
-            Estoque test = new Estoque(1, produto,1, DataEntrada, DataSaida);
+            Estoque test = new Estoque(1, produto, 1, DataEntrada, DataSaida);
 
             str = bll.Insert(test);
 
@@ -43,11 +43,11 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarInsertEstoqueQuantidadeNaoInformada()
         {
-            Estoque test = new Estoque(1, produto,1, DataEntrada, DataSaida);
+            Estoque test = new Estoque(1, produto, -1, DataEntrada, DataSaida);
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Estoque cadastrado com sucesso");
+            Assert.AreEqual(str, "A quantidade de produto deve ser informada.\r\n");
         }
 
         [Test]
@@ -61,26 +61,6 @@ namespace Domain.IntegrationTests
         }
 
         [Test]
-        public void TestarAtualizarEstoqueVazio()
-        {
-            Estoque test = new Estoque(1, produto, 1, DataEntrada, DataSaida);
-
-
-            str = bll.Update(test);
-
-            Assert.AreEqual(str, "Um nome deve ser informado.\r\n");
-        }
-
-        [Test]
-        public void TestarAtualizarEstoqueTamanhoExcedido()
-        {
-            Estoque test = new Estoque(1, produto, 1, DataEntrada, DataSaida);
-            str = bll.Update(test);
-
-            Assert.AreEqual(str, "O nome da Estoque não pode conter mais que 100 caracteres.\r\n");
-        }
-
-        [Test]
         public void TestarDeletarEstoque()
         {
             Estoque test2 = new Estoque(1, produto, 1, DataEntrada, DataSaida);
@@ -90,7 +70,7 @@ namespace Domain.IntegrationTests
             Estoque test = new Estoque(1, produto, 1, DataEntrada, DataSaida);
             str = bll.Delete(test);
 
-            Assert.AreEqual(str, "Estoque deletada com êxito!");
+            Assert.AreEqual(str, "Estoque deletado com êxito!");
         }
 
     }
