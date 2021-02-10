@@ -9,8 +9,7 @@ namespace DataAccessLayer
     {
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
-
-        public string Inserir(Pagamento pagamento)
+        public string Insert(Pagamento pagamento)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO pagamento(dtPagamento,idTipoPagamento) values(@dtPagamento, @idTipoPagamento)";
@@ -40,7 +39,7 @@ namespace DataAccessLayer
             }
 
         }
-        public string Deletar(Pagamento pagamento)
+        public string Delete(Pagamento pagamento)
         {
             if (pagamento.Id == 0)
             {
@@ -66,7 +65,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Atualizar(Pagamento pagamento)
+        public string Update(Pagamento pagamento)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE pagamento SET dtPagamento = @dtPagamento, idTipoPagamento = @idTipoPagamento WHERE idPagamento = @idPagamento";
@@ -89,7 +88,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public List<Pagamento> SelecionaTodos()
+        public List<Pagamento> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM pagamento";
@@ -121,7 +120,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Pagamento GetByID(int idPagamento)
+        public Pagamento GetById(int idPagamento)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM pagamento WHERE idPagamento = @idPagamento";
@@ -180,7 +179,6 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-
         public List<Pagamento> GetByTipoPagamento(TipoPagamento tipoPagamento)
         {
             cmd.Connection = conn;
