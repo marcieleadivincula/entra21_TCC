@@ -22,11 +22,12 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@obs", paciente.Observacao);
             cmd.Parameters.AddWithValue("@idEndereco", paciente.Endereco.Id);
 
+            conn.Open();
+            cmd.ExecuteNonQuery();
             try
             {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                return ("Paciente cadastrado com sucesso");
+  
+                return ("Paciente cadastrado com sucesso !");
             }
             catch (Exception ex)
             {
@@ -55,7 +56,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Paciente deletado com êxito!";
+                return "Paciente deletado com êxito !";
             }
             catch (Exception)
             {

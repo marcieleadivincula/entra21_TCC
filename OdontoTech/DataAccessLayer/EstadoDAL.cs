@@ -29,7 +29,7 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
                     return ("Estado já cadastrado.");
                 }
@@ -116,6 +116,9 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Estado temp = new Estado();
+                    
+                    temp.Pais = new Pais();
+
 
                     temp.Id = Convert.ToInt32(reader["idEstado"]);
                     temp.Nome = Convert.ToString(reader["nomeEstado"]);

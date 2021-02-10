@@ -47,88 +47,153 @@
                         Paciente
                     </span>
 
+                    <label style="color:dimgrey;font-size:13px"> Dados pessoais. </label>
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="firstName">
+
+                        <input class="input100" type="text" name="firstName" value="@ViewBag.firstName">
+
                         <span class="focus-input100" data-placeholder="Nome"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="lastName">
+
+                        <input class="input100" type="text" name="lastName" value="@ViewBag.lastName">
+
                         <span class="focus-input100" data-placeholder="Sobrenome"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="cpf">
+
+                        <input class="input100" type="text" name="cpf" value="@ViewBag.cpf">
+
                         <span class="focus-input100" data-placeholder="CPF"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="rg">
+
+                        <input class="input100" type="text" name="rg" value="@ViewBag.rg">
+
                         <span class="focus-input100" data-placeholder="RG"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="date" name="dtNascimento">
+
+                        <input class="input100" type="date" name="dtNascimento" value="@ViewBag.dtNascimento">
+
                         <span class="focus-input100" data-placeholder="Data de Nascimento"></span>
                     </div>
 
-
+                    <label style="color:dimgrey;font-size:13px"> Dados de moradia. </label>
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="pais">
+
+                        <input class="input100" type="text" name="pais" value="@ViewBag.pais">
+
                         <span class="focus-input100" data-placeholder="Pais"></span>
                         @* Trazer a lista de países *@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="estado">
+
+                        <input class="input100" type="text" name="estado" value="@ViewBag.estado">
+
                         <span class="focus-input100" data-placeholder="Estado"></span>
                         @* Trazer a lista de estados *@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="cidade">
+
+                        <input class="input100" type="text" name="cidade" value="@ViewBag.cidade">
+
                         <span class="focus-input100" data-placeholder="Cidade"></span>
                         @* Trazer a lista de cidades *@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="bairro">
+
+                        <input class="input100" type="text" name="bairro" value="@ViewBag.bairro">
+
                         <span class="focus-input100" data-placeholder="Bairro"></span>
                         @* Trazer a lista de bairros *@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="logradouro">
-                        <span class="focus-input100" data-placeholder="Logradouro"></span>
+
+                        <input class="input100" type="text" name="logradouro" value="@ViewBag.logradouro">
+
+                        <span class="focus-input100" data-placeholder="Logradouro">
+                        </span>
                         @* Trazer a lista de logradouros *@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="cep">
+
+                        <input class="input100" type="text" name="cep" value="@ViewBag.cep">
+
                         <span class="focus-input100" data-placeholder="CEP"></span>
                         @* Trazer a lista de CEP *@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="numeroCasa">
+
+                        <input class="input100" type="text" name="numeroCasa" value="@ViewBag.numeroCasa">
+
                         <span class="focus-input100" data-placeholder="Número"></span>
                         @* Trazer a lista de número *@
                     </div>
+                    <label style="color:dimgrey;font-size:13px"> Dados extras </label>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+
                         <input class="input100" type="button" name="contatos" value="Meus contatos">
-                        @* Criar um botão que leve para a página de contatos *@
+
+
+                        @*
+            <input class="input100" type="button" name="contatos" value="Meus contatos">
+
+                  Criar um botão que leve para a página de contatos *@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="observacoes">
+
+                        <input class="input100" type="text" name="observacoes" value="@ViewBag.observacoes">
+
                         <span class="focus-input100" data-placeholder="Observações"></span>
                     </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+
+                        <input class="input100" type="text" name="idPaciente" value="@ViewBag.idPaciente">
+
+                        <label style="color:dimgrey;font-size:13px"> Somente para deletar e atualizar. </label>
+
+                        <span class="focus-input100" data-placeholder="idPaciente"></span>
+                    </div>
+
+                    @{
+                        if (Convert.ToString(ViewData["result"]) != "")
+                        {
+                            if (Convert.ToString(ViewData["result"]).Contains("!"))
+                            {
+                                <label style="color:green;font-size:13px"> @ViewData["result"] </label>
+                            }
+                            else
+                            {
+
+                                <label style="color:red;font-size:13px"> @ViewData["result"] </label>
+                            }
+
+                        }
+
+                    }
 
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" name="funcao" type="submit" value="Salvar" onclick=" @{
+
+                                ViewData["btn"] = "Salvar";
+
+                            }">
                                 Salvar
                             </button>
                         </div>
@@ -137,7 +202,11 @@
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" name="funcao" type="submit" value="Atualizar" onclick=" @{
+
+                                ViewData["btn"] = "Atualizar";
+
+                            }">
                                 Atualizar
                             </button>
                         </div>
@@ -146,7 +215,11 @@
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" name="funcao" type="submit" value="Deletar" onclick=" @{
+
+                                ViewData["btn"] = "Deletar";
+
+                            }">
                                 Deletar
                             </button>
                         </div>

@@ -122,6 +122,7 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Endereco temp = new Endereco();
+                    temp.Logradouro = new Logradouro();
 
                     temp.Id = Convert.ToInt32(reader["idEndereco"]);
                     temp.Logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
@@ -156,6 +157,7 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    temp.Logradouro = new Logradouro();
 
                     temp.Id = Convert.ToInt32(reader["idEndereco"]);
                     temp.Logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
@@ -191,7 +193,7 @@ namespace DataAccessLayer
                 {
                     Endereco temp = new Endereco();
 
-
+                    temp.Logradouro = new Logradouro();
                     temp.Id = Convert.ToInt32(reader["idEndereco"]);
                     temp.Logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
                     temp.NumeroCasa = Convert.ToInt32(reader["numeroCasa"]);

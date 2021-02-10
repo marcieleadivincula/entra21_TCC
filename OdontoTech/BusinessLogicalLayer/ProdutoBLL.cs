@@ -18,30 +18,30 @@ namespace BusinessLogicalLayer
 
             if (string.IsNullOrWhiteSpace(produto.Nome))
             {
-                erros.Append("O nome deve ser informado. ");
+                erros.AppendLine("O nome deve ser informado. ");
             }
 
             if (!string.IsNullOrWhiteSpace(produto.Nome))
             {
                 if (produto.Nome.Length > 60)
                 {
-                    erros.Append(" \nO nome não pode conter mais que 60 caracteres.");
+                    erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
                 }
             }
 
             if (produto.TipoEmbalagem.Id == 0)
             {
-                erros.Append(" \nO Id da Embalagem deve ser informado.");
+                erros.AppendLine("O Id da Embalagem deve ser informado.");
             }
 
             if (produto.DataCompra == null)
             {
-                erros.Append(" \nA data deve ser indormada.");
+                erros.AppendLine("A data deve ser indormada.");
             }
 
             if (produto.Preco == 0 || produto.Preco < 0)
             {
-                erros.Append(" \nO preço deve ser informado.");
+                erros.AppendLine("O preço deve ser informado.");
             }
 
             if (produto.DataCompra == null)
