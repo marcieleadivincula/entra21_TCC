@@ -9,17 +9,14 @@ namespace DataAccessLayer
     {
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
-
-        public string Inserir(Estoque Estoque)
+        public string Inserir(Estoque estoque)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO estoque (idProduto,qtdProduto,dtEntrada,dtSaida) values (@idProduto,@qtdProduto,@dtEntrada,@dtSaida)";
-
-            cmd.Parameters.AddWithValue("@idProduto", Estoque.Produto.Id);
-            cmd.Parameters.AddWithValue("@qtdProduto", Estoque.QtdProduto);
-            cmd.Parameters.AddWithValue("@dtEntrada", Estoque.DataEntrada);
-            cmd.Parameters.AddWithValue("@dtSaida", Estoque.DataSaida); 
-
+            cmd.CommandText = "INSERT INTO estoque(idProduto, qtdProduto, dtEntrada, dtSaida) values(@idProduto, @qtdProduto, @dtEntrada, @dtSaida)";
+            cmd.Parameters.AddWithValue("@idProduto", estoque.Produto.Id);
+            cmd.Parameters.AddWithValue("@qtdProduto", estoque.QtdProduto);
+            cmd.Parameters.AddWithValue("@dtEntrada", estoque.DataEntrada);
+            cmd.Parameters.AddWithValue("@dtSaida", estoque.DataSaida); 
 
             try
             {
@@ -47,9 +44,14 @@ namespace DataAccessLayer
         }
         public string Deletar(Estoque estoque)
         {
+            if (estoque.Id == 0)
+            {
+                return "Estoque informado inválido!";
+            }
+
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM estoque WHERE idEstoque = @ID";
-            cmd.Parameters.AddWithValue("@ID", estoque.Id);
+            cmd.CommandText = "DELETE FROM estoque WHERE idEstoque = @idEstoque";
+            cmd.Parameters.AddWithValue("@idEstoque", estoque.Id);
 
             try
             {
@@ -66,16 +68,15 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Atualizar(Estoque Estoque)
+        public string Atualizar(Estoque estoque)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE estoque SET idProduto = @idProduto,  qtdProduto = @qtdProduto,  dtEntrada = @dtEntrada,  dtSaida = @dtSaida WHERE idEstoque = @idEstoque";
-
-            cmd.Parameters.AddWithValue("@idEstoque", Estoque.Id);
-            cmd.Parameters.AddWithValue("@idProduto", Estoque.Produto.Id);
-            cmd.Parameters.AddWithValue("@qtdProduto", Estoque.QtdProduto);
-            cmd.Parameters.AddWithValue("@dtEntrada", Estoque.DataEntrada);
-            cmd.Parameters.AddWithValue("@dtSaida", Estoque.DataSaida);
+            cmd.Parameters.AddWithValue("@idProduto", estoque.Produto.Id);
+            cmd.Parameters.AddWithValue("@qtdProduto", estoque.QtdProduto);
+            cmd.Parameters.AddWithValue("@dtEntrada", estoque.DataEntrada);
+            cmd.Parameters.AddWithValue("@dtSaida", estoque.DataSaida);
+            cmd.Parameters.AddWithValue("@idEstoque", estoque.Id);
 
             try
             {
@@ -102,20 +103,21 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<Estoque> Estoques = new List<Estoque>();
+                List<Estoque> estoques = new List<Estoque>();
+
                 while (reader.Read())
                 {
                     Estoque temp = new Estoque();
-
                     temp.Id = Convert.ToInt32(reader["idEstoque"]);
                     temp.Produto.Id = Convert.ToInt32(reader["idProduto"]);
                     temp.QtdProduto = Convert.ToInt32(reader["qtdProduto"]);
                     temp.DataEntrada = Convert.ToDateTime(reader["dtEntrada"]);
-                    temp.DataSaida = Convert.ToDateTime(reader["dtEntrada"]);
+                    temp.DataSaida = Convert.ToDateTime(reader["dtSaida"]);
 
-                    Estoques.Add(temp);
+                    estoques.Add(temp);
                 }
-                return Estoques;
+
+                return estoques;
             }
             catch (Exception)
             {
@@ -126,29 +128,28 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Estoque GetByID(int id)
+        public Estoque GetByID(int idEstoque)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM estoque WHERE idEstoque = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.CommandText = "SELECT * FROM estoque WHERE idEstoque = @idEstoque";
+            cmd.Parameters.AddWithValue("@idEstoque", idEstoque);
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Estoque temp = new Estoque();
+                Estoque estoque = new Estoque();
 
                 while (reader.Read())
                 {
-
-                    temp.Id = Convert.ToInt32(reader["idEstoque"]);
-                    temp.Produto.Id = Convert.ToInt32(reader["idProduto"]);
-                    temp.QtdProduto = Convert.ToInt32(reader["qtdProduto"]);
-                    temp.DataEntrada = Convert.ToDateTime(reader["dtEntrada"]);
-                    temp.DataSaida = Convert.ToDateTime(reader["dtEntrada"]);
-
+                    estoque.Id = Convert.ToInt32(reader["idEstoque"]);
+                    estoque.Produto.Id = Convert.ToInt32(reader["idProduto"]);
+                    estoque.QtdProduto = Convert.ToInt32(reader["qtdProduto"]);
+                    estoque.DataEntrada = Convert.ToDateTime(reader["dtEntrada"]);
+                    estoque.DataSaida = Convert.ToDateTime(reader["dtSaida"]);
                 }
-                return temp;
+
+                return estoque;
             }
             catch (Exception)
             {
@@ -168,23 +169,53 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Estoque Estoque = new Estoque();
+                Estoque estoque = new Estoque();
+
+                while (reader.Read())
+                {
+                    estoque.Id = Convert.ToInt32(reader["idEstoque"]);
+                    estoque.Produto.Id = Convert.ToInt32(reader["idProduto"]);
+                    estoque.QtdProduto = Convert.ToInt32(reader["qtdProduto"]);
+                    estoque.DataEntrada = Convert.ToDateTime(reader["dtEntrada"]);
+                    estoque.DataSaida = Convert.ToDateTime(reader["dtSaida"]);
+                }
+
+                return estoque;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados. Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public List<Estoque> GetByProduto(Produto produto)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM estoque WHERE idProduto = @idProduto";
+            cmd.Parameters.AddWithValue("@idProduto", produto.Id);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Estoque> estoques = new List<Estoque>();
 
                 while (reader.Read())
                 {
                     Estoque temp = new Estoque();
-
                     temp.Id = Convert.ToInt32(reader["idEstoque"]);
                     temp.Produto.Id = Convert.ToInt32(reader["idProduto"]);
                     temp.QtdProduto = Convert.ToInt32(reader["qtdProduto"]);
                     temp.DataEntrada = Convert.ToDateTime(reader["dtEntrada"]);
-                    temp.DataSaida = Convert.ToDateTime(reader["dtEntrada"]);
+                    temp.DataSaida = Convert.ToDateTime(reader["dtSaida"]);
 
-
-                    Estoque = temp;
+                    estoques.Add(temp);
                 }
 
-                return Estoque;
+                return estoques;
             }
             catch (Exception)
             {

@@ -19,5 +19,9 @@
         {
 
         }
+        public Cidade(int id)
+        {
+            Id = id;
+        }
     }
 }

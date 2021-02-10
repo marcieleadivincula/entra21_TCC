@@ -9,12 +9,10 @@ namespace DataAccessLayer
     {
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
-
-        public string Inserir(Cidade cidade)
+        public string Insert(Cidade cidade)
         {
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO cidade (nomeCidade,idEstado) values (@nomeCidade,@idEstado)";
-
             cmd.Parameters.AddWithValue("@nomeCidade", cidade.Nome);
             cmd.Parameters.AddWithValue("@idEstado", cidade.Estado.Id);
 
@@ -41,8 +39,13 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Deletar(Cidade cidade)
+        public string Delete(Cidade cidade)
         {
+            if (cidade.Id == 0)
+            {
+                return "Cidade informada inválido!";
+            }
+
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM cidade WHERE idCidade = @ID";
             cmd.Parameters.AddWithValue("@ID", cidade.Id);
@@ -62,13 +65,14 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Atualizar(Cidade cidade)
+        public string Update(Cidade cidade)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE cidade SET nomeCidade = @nomeCidade WHERE idCidade = @idCidade";
+            cmd.CommandText = "UPDATE cidade SET nomeCidade = @nomeCidade, idEstado = @idEstado WHERE idCidade = @idCidade";
             cmd.Parameters.AddWithValue("@nomeCidade", cidade.Nome);
+            cmd.Parameters.AddWithValue("@idEstado", cidade.Estado.Id);
             cmd.Parameters.AddWithValue("@idCidade", cidade.Id);
-    
+
             try
             {
                 conn.Open();
@@ -84,7 +88,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public List<Cidade> SelecionaTodos()
+        public List<Cidade> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM cidade";
@@ -92,19 +96,18 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<Cidade> Cidades = new List<Cidade>();
+                List<Cidade> cidades = new List<Cidade>();
+
                 while (reader.Read())
                 {
                     Cidade temp = new Cidade();
-                    temp.Estado = new Estado();
                     temp.Id = Convert.ToInt32(reader["idCidade"]);
                     temp.Nome = Convert.ToString(reader["nomeCidade"]);
                     temp.Estado.Id = Convert.ToInt32(reader["idEstado"]);
-           
 
-                    Cidades.Add(temp);
+                    cidades.Add(temp);
                 }
-                return Cidades;
+                return cidades;
             }
             catch (Exception)
             {
@@ -115,29 +118,25 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Cidade GetByID(int id)
+        public Cidade GetById(int idCidade)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM cidade WHERE idCidade = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.Parameters.AddWithValue("@ID", idCidade);
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Cidade temp = new Cidade();
+                Cidade cidade = new Cidade();
 
                 while (reader.Read())
                 {
-                    temp.Estado = new Estado();
-
-                    temp.Id = Convert.ToInt32(reader["idCidade"]);
-                    temp.Nome = Convert.ToString(reader["nomeCidade"]);
-                    temp.Estado.Id = Convert.ToInt32(reader["idEstado"]);
-
-
+                    cidade.Id = Convert.ToInt32(reader["idCidade"]);
+                    cidade.Nome = Convert.ToString(reader["nomeCidade"]);
+                    cidade.Estado.Id = Convert.ToInt32(reader["idEstado"]);
                 }
-                return temp;
+                return cidade;
             }
             catch (Exception)
             {
@@ -159,22 +158,48 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = command.ExecuteReader();
-                Cidade Cidade = new Cidade();
+                Cidade cidade = new Cidade();
+
+                while (reader.Read())
+                {
+                    cidade.Id = Convert.ToInt32(reader["idCidade"]);
+                    cidade.Nome = Convert.ToString(reader["nomeCidade"]);
+                    cidade.Estado.Id = Convert.ToInt32(reader["idEstado"]);
+                }
+                return cidade;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public List<Cidade> GetByEstado(Estado estado)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM cidade WHERE idEstado = @idEstado";
+            cmd.Parameters.AddWithValue("@ID", estado.Id);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Cidade> cidades = new List<Cidade>();
 
                 while (reader.Read())
                 {
                     Cidade temp = new Cidade();
-
-                    temp.Estado = new Estado();
-
                     temp.Id = Convert.ToInt32(reader["idCidade"]);
                     temp.Nome = Convert.ToString(reader["nomeCidade"]);
                     temp.Estado.Id = Convert.ToInt32(reader["idEstado"]);
 
-                    Cidade = temp;
+                    cidades.Add(temp);
                 }
 
-                return Cidade;
+                return cidades;
             }
             catch (Exception)
             {

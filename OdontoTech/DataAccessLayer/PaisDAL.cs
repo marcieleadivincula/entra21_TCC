@@ -41,9 +41,13 @@ namespace DataAccessLayer
         }
         public string Deletar(Pais pais)
         {
+            if (pais.Id == 0)
+            {
+                return "País informado inválido!";
+            }
+
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM pais WHERE idPais = @ID";
-
             cmd.Parameters.AddWithValue("@ID", pais.Id);
 
             try
@@ -91,18 +95,18 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<Pais> Pais = new List<Pais>();
+                List<Pais> pais = new List<Pais>();
+
                 while (reader.Read())
                 {
                     Pais temp = new Pais();
-
                     temp.Id = Convert.ToInt32(reader["idPais"]);
                     temp.Nome = Convert.ToString(reader["nomePais"]);
-          
 
-                    Pais.Add(temp);
+                    pais.Add(temp);
                 }
-                return Pais;
+
+                return pais;
             }
             catch (Exception ex)
             {
@@ -116,25 +120,24 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Pais SelecionarUltimoID()
+        public Pais GetById(int idPais)
         {            
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM pais order by idPais DESC limit 1";
+            cmd.CommandText = "SELECT * FROM pais WHERE idPais = @idPais";
+            cmd.Parameters.AddWithValue("@Id", idPais);
+
             try
             {
                 conn.Open();
-
                 MySqlDataReader reader = cmd.ExecuteReader();
                 Pais pais = new Pais();
 
                 while (reader.Read())
                 {
-                    Pais temp = new Pais();
-
-                    temp.Id = Convert.ToInt32(reader["idPais"]);
-
-                    pais = temp;
+                    pais.Id = Convert.ToInt32(reader["idPais"]);
+                    pais.Nome = Convert.ToString(reader["nomePais"]);
                 }
+
                 return pais;
             }
             catch (Exception)
@@ -156,20 +159,15 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Pais Pais = new Pais();
+                Pais pais = new Pais();
 
                 while (reader.Read())
                 {
-                    Pais temp = new Pais();
-
-
-                    temp.Id = Convert.ToInt32(reader["idPais"]);
-                    temp.Nome = Convert.ToString(reader["nomePais"]);
-
-                    Pais = temp;
+                    pais.Id = Convert.ToInt32(reader["idPais"]);
+                    pais.Nome = Convert.ToString(reader["nomePais"]);
                 }
 
-                return Pais;
+                return pais;
             }
             catch (Exception)
             {

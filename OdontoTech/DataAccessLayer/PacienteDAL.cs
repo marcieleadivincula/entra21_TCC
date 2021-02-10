@@ -13,7 +13,7 @@ namespace DataAccessLayer
         public string Inserir(Paciente paciente)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO paciente (nome,sobrenome,rg,cpf,dtNascimento,obs,idEndereco) values (@nome,@sobrenome,@rg,@cpf,@dtNascimento,@obs,@idEndereco)";
+            cmd.CommandText = "INSERT INTO paciente(nome,sobrenome,rg,cpf,dtNascimento,obs,idEndereco) values(@nome, @sobrenome, @rg, @cpf, @dtNascimento, @obs, @idEndereco)";
             cmd.Parameters.AddWithValue("@nome", paciente.Nome);
             cmd.Parameters.AddWithValue("@sobrenome",paciente.Sobrenome );
             cmd.Parameters.AddWithValue("@rg", paciente.Rg);
@@ -31,7 +31,7 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
                     return ("Paciente já cadastrado.");
                 }
@@ -48,9 +48,15 @@ namespace DataAccessLayer
         }
         public string Deletar(Paciente paciente)
         {
+            if (paciente.Id == 0)
+            {
+                return "Paciente informado inválido!";
+
+            }
+
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM paciente WHERE idPaciente = @ID";
-            cmd.Parameters.AddWithValue("@ID", paciente.Id);
+            cmd.CommandText = "DELETE FROM paciente WHERE idPaciente = @idPaciente";
+            cmd.Parameters.AddWithValue("@idPaciente", paciente.Id);
 
             try
             {
@@ -71,14 +77,15 @@ namespace DataAccessLayer
         {
 
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE paciente SET nome = @nome,  sobrenome = @sobrenome,  rg = @rg,  cpf = @cpf,  dtNascimento = @dtNascimento,  obs = @obs WHERE idPaciente = @idPaciente";
-            cmd.Parameters.AddWithValue("@idPaciente", paciente.Id);
+            cmd.CommandText = "UPDATE paciente SET nome = @nome,  sobrenome = @sobrenome,  rg = @rg,  cpf = @cpf,  dtNascimento = @dtNascimento,  obs = @obs, idEndereco = @idEndereco WHERE idPaciente = @idPaciente";
             cmd.Parameters.AddWithValue("@nome", paciente.Nome);
             cmd.Parameters.AddWithValue("@sobrenome", paciente.Sobrenome);
             cmd.Parameters.AddWithValue("@rg", paciente.Rg);
             cmd.Parameters.AddWithValue("@cpf", paciente.Cpf);
             cmd.Parameters.AddWithValue("@dtNascimento", paciente.DataNascimento);
             cmd.Parameters.AddWithValue("@obs", paciente.Observacao);
+            cmd.Parameters.AddWithValue("@idEndereco", paciente.Endereco.Id);
+            cmd.Parameters.AddWithValue("@idPaciente", paciente.Id);
   
             try
             {
@@ -99,15 +106,16 @@ namespace DataAccessLayer
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM paciente";
+
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<Paciente> Pacientes = new List<Paciente>();
+                List<Paciente> pacientes = new List<Paciente>();
+
                 while (reader.Read())
                 {
                     Paciente temp = new Paciente();
-
                     temp.Id = Convert.ToInt32(reader["idPaciente"]);
                     temp.Nome = Convert.ToString(reader["nome"]);
                     temp.Sobrenome = Convert.ToString(reader["sobrenome"]);
@@ -117,9 +125,10 @@ namespace DataAccessLayer
                     temp.Observacao = Convert.ToString(reader["obs"]);
                     temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
 
-                    Pacientes.Add(temp);
+                    pacientes.Add(temp);
                 }
-                return Pacientes;
+
+                return pacientes;
             }
             catch (Exception)
             {
@@ -135,32 +144,31 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Paciente GetByID(int id)
+        public Paciente GetByID(int idPaciente)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM paciente WHERE idPaciente = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.CommandText = "SELECT * FROM paciente WHERE idPaciente = @idPaciente";
+            cmd.Parameters.AddWithValue("@idPaciente", idPaciente);
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Paciente temp = new Paciente();
+                Paciente paciente = new Paciente();
 
                 while (reader.Read())
                 {
-
-                    temp.Id = Convert.ToInt32(reader["idPaciente"]);
-                    temp.Nome = Convert.ToString(reader["nome"]);
-                    temp.Sobrenome = Convert.ToString(reader["sobrenome"]);
-                    temp.Rg = Convert.ToString(reader["rg"]);
-                    temp.Cpf = Convert.ToString(reader["cpf"]);
-                    temp.DataNascimento = Convert.ToDateTime(reader["dtNascimento"]);
-                    temp.Observacao = Convert.ToString(reader["obs"]);
-                    temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
-
+                    paciente.Id = Convert.ToInt32(reader["idPaciente"]);
+                    paciente.Nome = Convert.ToString(reader["nome"]);
+                    paciente.Sobrenome = Convert.ToString(reader["sobrenome"]);
+                    paciente.Rg = Convert.ToString(reader["rg"]);
+                    paciente.Cpf = Convert.ToString(reader["cpf"]);
+                    paciente.DataNascimento = Convert.ToDateTime(reader["dtNascimento"]);
+                    paciente.Observacao = Convert.ToString(reader["obs"]);
+                    paciente.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
                 }
-                return temp;
+
+                return paciente;
             }
             catch (Exception)
             {
@@ -179,27 +187,22 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                Paciente Paciente = new Paciente();
-
                 MySqlDataReader reader = cmd.ExecuteReader();
+                Paciente paciente = new Paciente();
+
                 while (reader.Read())
                 {
-                    Paciente temp = new Paciente();
-
-
-                    temp.Id = Convert.ToInt32(reader["idPaciente"]);
-                    temp.Nome = Convert.ToString(reader["nome"]);
-                    temp.Sobrenome = Convert.ToString(reader["sobrenome"]);
-                    temp.Rg = Convert.ToString(reader["rg"]);
-                    temp.Cpf = Convert.ToString(reader["cpf"]);
-                    temp.DataNascimento = Convert.ToDateTime(reader["dtNascimento"]);
-                    temp.Observacao = Convert.ToString(reader["obs"]);
-                    temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
-
-                    Paciente = temp;
+                    paciente.Id = Convert.ToInt32(reader["idPaciente"]);
+                    paciente.Nome = Convert.ToString(reader["nome"]);
+                    paciente.Sobrenome = Convert.ToString(reader["sobrenome"]);
+                    paciente.Rg = Convert.ToString(reader["rg"]);
+                    paciente.Cpf = Convert.ToString(reader["cpf"]);
+                    paciente.DataNascimento = Convert.ToDateTime(reader["dtNascimento"]);
+                    paciente.Observacao = Convert.ToString(reader["obs"]);
+                    paciente.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
                 }
 
-                return Paciente;
+                return paciente;
             }
             catch (Exception)
             {

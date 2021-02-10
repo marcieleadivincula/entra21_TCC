@@ -45,7 +45,7 @@
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="email" value="@ViewBag.Email" ">
+                        <input class="input100" type="text" name="email" value="@ViewBag.Email">
                         <span class="focus-input100" data-placeholder="Email"></span>
                     </div>
 
@@ -63,10 +63,6 @@
                             <button class="login100-form-btn" type="submit">
                                 Entrar
                             </button>
-                        </div>
-                    </div>
-
-
                     @{
                         if (TempData["Mensagem"] != null)
                         {
@@ -74,6 +70,10 @@
                             <label style="color:red;font-size: 13px;"> @TempData["Mensagem"] </label>
                         }
                     }
+                        </div>
+                    </div>
+
+
 
                     <div class="text-center p-t-115">
                         <span class="txt1">

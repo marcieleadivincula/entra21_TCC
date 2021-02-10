@@ -22,11 +22,10 @@ namespace DataAccessLayer
         {
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO procedimento (nomeProcedimento,dsProcedimento,idTipoProcedimento) values (@nomeProcedimento,@dsProcedimento,@idTipoProcedimento)";
-            
+
             cmd.Parameters.AddWithValue("@nomeProcedimento", procedimento.Nome);
             cmd.Parameters.AddWithValue("@dsProcedimento", procedimento.DescricaoProcedimento);
             cmd.Parameters.AddWithValue("@idTipoProcedimento", procedimento.TipoProcedimento.Id);
-
 
             try
             {
@@ -36,7 +35,7 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
                     return ("Procedimento já cadastrado.");
                 }
@@ -71,7 +70,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                return "Erro no Banco de dados.Contate o administrador.";
+                return "Erro no Banco de dados. Contate o administrador.";
             }
             finally
             {
@@ -85,13 +84,12 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Atualizar(Procedimento procedimento)
         {
-
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE procedimento SET nomeProcedimento = @nomeProcedimento, dsProcedimento = @dsProcedimento WHERE idProcedimento = @idProcedimento";
-            cmd.Parameters.AddWithValue("@idProcedimento", procedimento.Id);
+            cmd.CommandText = "UPDATE procedimento SET nomeProcedimento = @nomeProcedimento, dsProcedimento = @dsProcedimento, idTipoProcedimento = @idTipoProcedimento WHERE idProcedimento = @idProcedimento";
             cmd.Parameters.AddWithValue("@nomeProcedimento", procedimento.Nome);
             cmd.Parameters.AddWithValue("@dsProcedimento", procedimento.DescricaoProcedimento);
-
+            cmd.Parameters.AddWithValue("@idTipoProcedimento", procedimento.TipoProcedimento.Id);
+            cmd.Parameters.AddWithValue("@idProcedimento", procedimento.Id);
 
             try
             {
@@ -120,7 +118,8 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<Procedimento> Procedimentos = new List<Procedimento>();
+                List<Procedimento> procedimentos = new List<Procedimento>();
+
                 while (reader.Read())
                 {
                     Procedimento temp = new Procedimento();
@@ -129,12 +128,10 @@ namespace DataAccessLayer
                     temp.Nome = Convert.ToString(reader["nomeProcedimento"]);
                     temp.DescricaoProcedimento = Convert.ToString(reader["dsProcedimento"]);
                     temp.TipoProcedimento.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
-                 
 
-
-                    Procedimentos.Add(temp);
+                    procedimentos.Add(temp);
                 }
-                return Procedimentos;
+                return procedimentos;
             }
             catch (Exception)
             {
@@ -159,13 +156,12 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
-
                     temp.Id = Convert.ToInt32(reader["idProcedimento"]);
                     temp.Nome = Convert.ToString(reader["nomeProcedimento"]);
                     temp.DescricaoProcedimento = Convert.ToString(reader["dsProcedimento"]);
                     temp.TipoProcedimento.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
-
                 }
+
                 return temp;
             }
             catch (Exception)
@@ -186,7 +182,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Procedimento Procedimento = new Procedimento();
+                Procedimento procedimento = new Procedimento();
 
                 while (reader.Read())
                 {
@@ -198,10 +194,44 @@ namespace DataAccessLayer
                     temp.TipoProcedimento.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
 
 
-                    Procedimento = temp;
+                    procedimento = temp;
                 }
 
-                return Procedimento;
+                return procedimento;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+
+        public List<Atendimento> GetAtendimentos(int idProcedimento)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM atendimentoprocedimentos ap INNER JOIN atendimento a ON ap.idAtendimento = a.idAtendimento WHERE ap.idProcedimento = @ID";
+            cmd.Parameters.AddWithValue("@ID", idProcedimento);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Atendimento> atendimentos = new List<Atendimento>();
+
+                while (reader.Read())
+                {
+                    Atendimento temp = new Atendimento();
+
+                    temp.Id = Convert.ToInt32(reader["idAtendimento"]);
+                    temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
+                    temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+
+                    atendimentos.Add(temp);
+                }
+                return atendimentos;
             }
             catch (Exception)
             {

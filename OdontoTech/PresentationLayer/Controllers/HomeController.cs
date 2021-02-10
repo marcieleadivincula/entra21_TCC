@@ -22,6 +22,13 @@ namespace PresentationLayer.Controllers
             _logger = logger;
         }
 
+        EnderecoBLL enderecoBLL = new EnderecoBLL();
+        LogradouroBLL logradouroBLL = new LogradouroBLL();
+        BairroBLL bairroBLL = new BairroBLL();
+        CidadeBLL cidadeBLL = new CidadeBLL();
+        EstadoBLL estadoBLL = new EstadoBLL();
+        PaisBLL paisBll = new PaisBLL();
+
         public IActionResult Index()
         {
             ViewBag.name = "";
@@ -286,6 +293,9 @@ namespace PresentationLayer.Controllers
 
         public IActionResult Pais()
         {
+            ViewBag.Id = paisBll.GetAll();
+            ViewBag.Nome = paisBll.GetAll();
+
             return View();
         }
 
@@ -364,6 +374,11 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
+
         public IActionResult AlterarSenha()
         {
             return View();
@@ -377,7 +392,6 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         public IActionResult VerificadorLogin(string email, string pass)
         {
-
             UsuarioDAL dal = new UsuarioDAL();
 
             if (dal.VerificaLogin(email, pass))
@@ -386,14 +400,17 @@ namespace PresentationLayer.Controllers
             }
             else
             {
-                TempData.Add("Mensagem", "Login falhou, verifique seus dados.");
+                TempData.Add("Mensagem", "Senha ou Email invalido, verifique seus dados.");
 
                 return RedirectToAction("Index", "Home");
             }
-
+        }               
+        
+        [HttpPost]
+        public IActionResult VerificarLogin(string email, string pass)
+        {
+          return View();
         }
-
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

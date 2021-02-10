@@ -10,12 +10,10 @@ namespace DataAccessLayer
 
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
-
-        public string Inserir(Logradouro logradouro)
+        public string Insert(Logradouro logradouro)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO logradouro (nomeLogradouro,idBairro) values (@nomeLogradouro,@idBairro)";
-
+            cmd.CommandText = "INSERT INTO logradouro (nomeLogradouro,idBairro) values (@nomeLogradouro, @idBairro)";
             cmd.Parameters.AddWithValue("@nomeLogradouro", logradouro.Nome);
             cmd.Parameters.AddWithValue("@idBairro", logradouro.Bairro.Id);
 
@@ -43,8 +41,13 @@ namespace DataAccessLayer
             }
 
         }
-        public string Deletar(Logradouro logradouro)
+        public string Delete(Logradouro logradouro)
         {
+            if (logradouro.Id == 0)
+            {
+                return "Logradouro informada inválido!";
+            }
+
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM logradouro WHERE idLogradouro = @ID";
             cmd.Parameters.AddWithValue("@ID", logradouro.Id);
@@ -65,15 +68,13 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Atualizar(Logradouro logradouro)
+        public string Update(Logradouro logradouro)
         {
-
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE logradouro SET nomeLogradouro = @nomeLogradouro WHERE idLogradouro = @idLogradouro";
-
-            cmd.Parameters.AddWithValue("@idLogradouro", logradouro.Id);
-            cmd.Parameters.AddWithValue("@idBairro", logradouro.Bairro.Id);
+            cmd.CommandText = "UPDATE logradouro SET nomeLogradouro = @nomeLogradouro, idBairro = @idBairro WHERE idLogradouro = @idLogradouro";
             cmd.Parameters.AddWithValue("@nomeLogradouro", logradouro.Nome);
+            cmd.Parameters.AddWithValue("@idBairro", logradouro.Bairro.Id);
+            cmd.Parameters.AddWithValue("@idLogradouro", logradouro.Id);
 
             try
             {
@@ -93,30 +94,28 @@ namespace DataAccessLayer
 
         }
 
-        public List<Logradouro> SelecionaTodos()
+        public List<Logradouro> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM logradouro";
+
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<Logradouro> Logradouros = new List<Logradouro>();
+                List<Logradouro> logradouros = new List<Logradouro>();
+
                 while (reader.Read())
                 {
                     Logradouro temp = new Logradouro();
-
-                    temp.Bairro = new Bairro();
-
                     temp.Id = Convert.ToInt32(reader["idLogradouro"]);
                     temp.Nome = Convert.ToString(reader["nomeLogradouro"]);
                     temp.Bairro.Id = Convert.ToInt32(reader["idBairro"]);
-                
-                    
 
-                    Logradouros.Add(temp);
+                    logradouros.Add(temp);
                 }
-                return Logradouros;
+
+                return logradouros;
             }
             catch (Exception)
             {
@@ -127,27 +126,26 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Logradouro GetByID(int id)
+        public Logradouro GetByID(int idLogradouro)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM logradouro WHERE idLogradouro = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.Parameters.AddWithValue("@ID", idLogradouro);
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Logradouro temp = new Logradouro();
+                Logradouro logradouro = new Logradouro();
 
                 while (reader.Read())
                 {
-                    temp.Bairro = new Bairro();
-                    temp.Id = Convert.ToInt32(reader["idLogradouro"]);
-                    temp.Nome = Convert.ToString(reader["nomeLogradouro"]);
-                    temp.Bairro.Id = Convert.ToInt32(reader["idBairro"]);
-
+                    logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
+                    logradouro.Nome = Convert.ToString(reader["nomeLogradouro"]);
+                    logradouro.Bairro.Id = Convert.ToInt32(reader["idBairro"]);
                 }
-                return temp;
+
+                return logradouro;
             }
             catch (Exception)
             {
@@ -167,20 +165,50 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Logradouro Logradouro = new Logradouro();
+                Logradouro logradouro = new Logradouro();
 
                 while (reader.Read())
                 {
-                    Logradouro temp = new Logradouro();
-                    temp.Bairro = new Bairro();
+                    logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
+                    logradouro.Nome = Convert.ToString(reader["nomeLogradouro"]);
+                    logradouro.Bairro.Id = Convert.ToInt32(reader["idBairro"]);
+                }
+
+                return logradouro;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados. Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+
+        public List<Logradouro> GetByBairro(Bairro bairro)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM logradouro WHERE idBairro = @idBairro";
+            cmd.Parameters.AddWithValue("@idBairro", bairro.Id);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Logradouro> logradouros = new List<Logradouro>();
+
+                while (reader.Read())
+                {
+                    Logradouro temp = new Logradouro();              
                     temp.Id = Convert.ToInt32(reader["idLogradouro"]);
                     temp.Nome = Convert.ToString(reader["nomeLogradouro"]);
                     temp.Bairro.Id = Convert.ToInt32(reader["idBairro"]);
 
-                    Logradouro = temp;
+                    logradouros.Add(temp);
                 }
 
-                return Logradouro;
+                return logradouros;
             }
             catch (Exception)
             {

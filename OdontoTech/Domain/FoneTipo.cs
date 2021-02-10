@@ -16,5 +16,20 @@ namespace Domain
             Id = id;
             Tipo = tipo;
         }
+
+        public FoneTipo()
+        {
+
+        }
+
+        public override string ToString()
+        {
+            return $"{Id} - {Tipo}";
+        }
+
+        public FoneTipo(int id)
+        {
+            Id = id;
+        }
     }
 }

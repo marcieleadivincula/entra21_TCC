@@ -12,6 +12,8 @@ namespace DataAccessLayer
 {
     public class AtendimentoDAL
     {
+        MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
+        MySqlCommand cmd = new MySqlCommand();
 
         /// <summary>
         /// Insere o Endereço no BD. Caso houver erro a função informa.
@@ -19,8 +21,6 @@ namespace DataAccessLayer
         /// <param name="atendimento"></param>
         public string Inserir(Atendimento atendimento)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO atendimento (idPaciente,idColaborador) values (@idPaciente,@idColaborador)";
 
@@ -57,8 +57,6 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(Atendimento Atendimento)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM atendimento WHERE idAtendimento = @ID";
             cmd.Parameters.AddWithValue("@ID", Atendimento.Id);
@@ -86,11 +84,9 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Atualizar(Atendimento Atendimento)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE atendimento SET idPaciente = @idPacientem, idColaborador = @idColaborador WHERE idAtendimento = @idAtendimento";
-            cmd.Parameters.AddWithValue("@idPacientem", Atendimento.Paciente.Id);
+            cmd.CommandText = "UPDATE atendimento SET idPaciente = @idPaciente, idColaborador = @idColaborador WHERE idAtendimento = @idAtendimento";
+            cmd.Parameters.AddWithValue("@idPaciente", Atendimento.Paciente.Id);
             cmd.Parameters.AddWithValue("@idColaborador", Atendimento.Colaborador.Id);
             cmd.Parameters.AddWithValue("@idAtendimento", Atendimento.Id);
 
@@ -115,15 +111,15 @@ namespace DataAccessLayer
         /// <returns></returns>
         public List<Atendimento> SelecionaTodos()
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM atendimento";
-            //try
-            //{
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM atendimento";
+
+            try
+            {
                 conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                List<Atendimento> Atendimentos = new List<Atendimento>();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Atendimento> atendimentos = new List<Atendimento>();
+
                 while (reader.Read())
                 {
                     Atendimento temp = new Atendimento();
@@ -132,34 +128,30 @@ namespace DataAccessLayer
                     temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
                     temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
 
-                    Atendimentos.Add(temp);
+                    atendimentos.Add(temp);
                 }
-            conn.Dispose();
-            return Atendimentos;
-            //}
-            //catch (Exception)
-            //{
-            //    throw new Exception("Erro no Banco de dados.Contate o administrador.");
-            //}
-            //finally
-            //{
-               
-            //}
+                return atendimentos;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
         }
 
         public Atendimento GetAtendimentoById(int id)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM atendimento WHERE idAtendimento = @Id";
-            command.Parameters.AddWithValue("@Id", id);
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM atendimento WHERE idAtendimento = @Id";
+            cmd.Parameters.AddWithValue("@Id", id);
 
             try
             {
                 conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                //List<Atendimento> Atendimentos = new List<Atendimento>();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Atendimento atendimento = new Atendimento();
 
                 while (reader.Read())
@@ -186,15 +178,13 @@ namespace DataAccessLayer
         }
         public Atendimento GetLastRegister()
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT * FROM atendimento ORDER BY idAtendimento DESC limit 1";
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM atendimento ORDER BY idAtendimento DESC limit 1";
 
             try
             {
                 conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
                 Atendimento atendimento = new Atendimento();
 
                 while (reader.Read())
@@ -209,6 +199,41 @@ namespace DataAccessLayer
                 }
 
                 return atendimento;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+
+        public List<Procedimento> GetProcedimentos(int idAtendimento)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM atendimentoprocedimentos ap INNER JOIN procedimento p ON ap.idProcedimento = p.idProcedimento WHERE ap.idAtendimento = @ID";
+            cmd.Parameters.AddWithValue("@ID", idAtendimento);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Procedimento> procedimentos = new List<Procedimento>();
+
+                while (reader.Read())
+                {
+                    Procedimento temp = new Procedimento();
+
+                    temp.Id = Convert.ToInt32(reader["idProcedimento"]);
+                    temp.Nome = Convert.ToString(reader["nomeProcedimento"]);
+                    temp.DescricaoProcedimento = Convert.ToString(reader["dsProcedimento"]);
+                    temp.TipoProcedimento.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
+
+                    procedimentos.Add(temp);
+                }
+                return procedimentos;
             }
             catch (Exception)
             {

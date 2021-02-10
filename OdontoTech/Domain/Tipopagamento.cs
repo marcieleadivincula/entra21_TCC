@@ -23,5 +23,10 @@ namespace Domain
         {
 
         }
+        public TipoPagamento(int id)
+        {
+            Id = id;
+        }
+
     }
 }

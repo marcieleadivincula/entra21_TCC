@@ -31,5 +31,18 @@ namespace Domain
         {
 
         }
+
+        public Procedimento(int id)
+        {
+            Id = id;
+        }
+
+        public Procedimento(int id, string nome, TipoProcedimento tipoProcedimento, string descricaoProcedimento)
+        {
+            Id = id;
+            Nome = nome;
+            TipoProcedimento = tipoProcedimento;
+            DescricaoProcedimento = descricaoProcedimento;
+        }
     }
 }
