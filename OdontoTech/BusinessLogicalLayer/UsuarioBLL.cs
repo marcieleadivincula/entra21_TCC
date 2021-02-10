@@ -96,5 +96,18 @@ namespace BusinessLogicalLayer
             string respostaDB = dal.Deletar(usuario);
             return respostaDB;
         }
+
+        public bool Autenticar(string login, string password)
+        {
+            Usuario user = dal.Autenticar(login, password);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            Parametros.UsuarioLogado = user;
+            return true;
+        }
     }
 }

@@ -12,90 +12,100 @@ namespace BusinessLogicalLayer
     {
         EnderecoDAL dal = new EnderecoDAL();
 
-        public string Insert(Endereco Endereco)
+        //Incluir um registro
+        public string Insert(Endereco endereco)
         {
             StringBuilder erros = new StringBuilder();
 
-            if (Endereco.Id == 0  || Endereco.Id < 0)
-            {
-                erros.AppendLine("O ID de endereço deve ser informado.");
-            }
-
-            if (Endereco.Logradouro.Id == 0 || Endereco.Logradouro.Id < 0)
-            {
-                erros.AppendLine("O ID de Logradouro deve ser informado.");
-            }
-
-            if (Endereco.NumeroCasa == 0 || Endereco.NumeroCasa < 0)
-            {
-                erros.AppendLine("O Numero da casa do endereço deve ser informado.");
-            }
-
-            if (string.IsNullOrWhiteSpace(Endereco.Cep))
+            if (string.IsNullOrWhiteSpace(endereco.Cep))
             {
                 erros.AppendLine("O Cep deve ser informado.");
             }
 
-            if (Endereco.Cep.Length > 10)
+            if (endereco.Cep.Length > 10)
             {
                 erros.AppendLine("O CEP não pode conter mais que 10 caracteres.");
             }
 
+            if (endereco.NumeroCasa == 0 || endereco.NumeroCasa < 0)
+            {
+                erros.AppendLine("O número do endereço deve ser informado.");
+            }
+  
             if (erros.Length != 0)
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(Endereco);
+
+            string respostaDB = dal.Insert(endereco);
             return respostaDB;
         }
 
+        //Obter todos os registros
         public List<Endereco> GetAll()
         {
-            return dal.SelecionaTodos();
+            return dal.GetAll();
         }
 
-        public string Update(Endereco Endereco)
+        //Atualizar um registro existente
+        public string Update(Endereco endereco)
         {
             StringBuilder erros = new StringBuilder();
-            if (Endereco.Id == 0 || Endereco.Id < 0)
-            {
-                erros.AppendLine("O ID de endereço deve ser informado.");
-            }
 
-            if (Endereco.Logradouro.Id == 0 || Endereco.Logradouro.Id < 0)
-            {
-                erros.AppendLine("O ID de Logradouro deve ser informado.");
-            }
-
-            if (Endereco.NumeroCasa == 0 || Endereco.NumeroCasa < 0)
-            {
-                erros.AppendLine("O Numero da casa do endereço deve ser informado.");
-            }
-
-            if (string.IsNullOrWhiteSpace(Endereco.Cep))
+            if (string.IsNullOrWhiteSpace(endereco.Cep))
             {
                 erros.AppendLine("O Cep deve ser informado.");
             }
 
-            if (Endereco.Cep.Length > 10)
+            if (endereco.Cep.Length > 10)
             {
                 erros.AppendLine("O CEP não pode conter mais que 10 caracteres.");
             }
 
+            if (endereco.NumeroCasa == 0 || endereco.NumeroCasa < 0)
+            {
+                erros.AppendLine("O número do endereço deve ser informado.");
+            }
 
             if (erros.Length != 0)
             {
                 return erros.ToString();
             }
 
-            string respostaDB = dal.Atualizar(Endereco);
+            string respostaDB = dal.Update(endereco);
             return respostaDB;
         }
 
-        public string Delete(Endereco Endereco)
+        //Excluir um registro
+        public string Delete(Endereco endereco)
         {
-            string respostaDB = dal.Deletar(Endereco);
+            string respostaDB = dal.Delete(endereco);
             return respostaDB;
+        }
+
+        //Obter um registro
+        public Endereco GetById(Endereco endereco)
+        {
+            StringBuilder erros = new StringBuilder();
+
+            if (endereco.Id == 0 || endereco.Id < 0)
+            {
+                erros.AppendLine("O ID do endereco deve ser informado.");
+            }
+
+            return dal.GetById(endereco.Id);
+        }
+
+        //Obter último registro
+        public Endereco getLastRegister()
+        {
+            return dal.GetLastRegister();
+        }
+
+        //Obter registros de determinado logradouro
+        public List<Endereco> GetByLogradouro(Logradouro logradouro)
+        {
+            return dal.GetByLogradouro(logradouro);
         }
     }
 }

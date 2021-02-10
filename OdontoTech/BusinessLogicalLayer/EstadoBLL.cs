@@ -12,79 +12,90 @@ namespace BusinessLogicalLayer
     {
         EstadoDAL dal = new EstadoDAL();
 
+        //Incluir um registro
         public string Insert(Estado estado)
         {
             StringBuilder erros = new StringBuilder();
 
             if (string.IsNullOrWhiteSpace(estado.Nome))
             {
-                erros.AppendLine("O nome deve ser informado.");
+                erros.AppendLine("O nome do estado deve ser informado.");
             }
 
             if (estado.Nome.Length > 20)
             {
-                erros.AppendLine("O nome não pode conter mais que 20 caracteres.");
-            }
-
-            if (estado.Pais.Id == 0 || estado.Pais.Id < 0)
-            {
-                erros.AppendLine("A ID do pais deve ser informado.");
-            }
-
-            if (estado.Id == 0 || estado.Id < 0)
-            {
-                erros.AppendLine("A ID do estado deve ser informado.");
+                erros.AppendLine("O nome do estado não pode conter mais que 20 caracteres.");
             }
 
             if (erros.Length != 0)
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(estado);
+
+            string respostaDB = dal.Insert(estado);
             return respostaDB;
         }
 
+        // Obter todos os registros
         public List<Estado> GetAll()
         {
-            return dal.SelecionaTodos();
+            return dal.GetAll();
         }
 
+        //Atualizar um registro existente
         public string Update(Estado estado)
         {
             StringBuilder erros = new StringBuilder();
 
             if (string.IsNullOrWhiteSpace(estado.Nome))
             {
-                erros.AppendLine("O nome deve ser informado.");
+                erros.AppendLine("O nome do estado deve ser informado.");
             }
 
             if (estado.Nome.Length > 20)
             {
-                erros.AppendLine("O nome não pode conter mais que 20 caracteres.");
-            }
-
-            if (estado.Pais.Id == 0 || estado.Pais.Id < 0)
-            {
-                erros.AppendLine("A ID do pais deve ser informado.");
-            }
-
-            if (estado.Id == 0 || estado.Id < 0)
-            {
-                erros.AppendLine("A ID do estado deve ser informado.");
+                erros.AppendLine("O nome do estado não pode conter mais que 20 caracteres.");
             }
 
             if (erros.Length != 0)
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Atualizar(estado);
+
+            string respostaDB = dal.Update(estado);
             return respostaDB;
         }
 
+        //Excluir um registro
         public string Delete(Estado estado)
         {
-            string respostaDB = dal.Deletar(estado);
+            string respostaDB = dal.Delete(estado);
             return respostaDB;
+        }
+
+        //Obter um registro
+        public Estado GetById(Estado estado)
+        {
+            StringBuilder erros = new StringBuilder();
+
+            if (estado.Id < 0 || estado.Id == 0)
+            {
+                erros.AppendLine("O ID do estado deve ser informado.");
+            }
+
+            return dal.GetById(estado.Id);
+        }
+
+        //Obter último registro
+        public Estado GetLastRegister()
+        {
+            return dal.GetLastRegister();
+        }
+
+        //Obter registros de determinado estado
+        public List<Estado> GetByPais(Pais pais)
+        {
+            return dal.GetByPais(pais);
         }
     }
 }

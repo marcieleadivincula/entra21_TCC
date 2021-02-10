@@ -34,6 +34,7 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
+
             string respostaDB = dal.Inserir(atendimento);
             return respostaDB;
         }
