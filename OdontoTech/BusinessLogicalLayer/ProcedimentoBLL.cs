@@ -26,9 +26,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("Uma descrição deve ser informada.");
             }
 
-            if (procedimento.DescricaoProcedimento.Length > 60)
+            if (!string.IsNullOrWhiteSpace(procedimento.DescricaoProcedimento))
             {
-                erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
+                if (procedimento.DescricaoProcedimento.Length > 60)
+                {
+                    erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
+                }
             }
 
             if (procedimento.TipoProcedimento.Id == 0 || procedimento.TipoProcedimento.Id < 0)
@@ -63,9 +66,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("Uma descrição deve ser informada.");
             }
 
-            if (procedimento.DescricaoProcedimento.Length > 60)
+            if (!string.IsNullOrWhiteSpace(procedimento.DescricaoProcedimento))
             {
-                erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
+                if (procedimento.DescricaoProcedimento.Length > 60)
+                {
+                    erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
+                }
             }
 
             if (procedimento.TipoProcedimento.Id == 0 || procedimento.TipoProcedimento.Id < 0)
@@ -83,6 +89,18 @@ namespace BusinessLogicalLayer
 
         public string Delete(Procedimento procedimento)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (~procedimento.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Deletar(procedimento);
             return respostaDB;
         }

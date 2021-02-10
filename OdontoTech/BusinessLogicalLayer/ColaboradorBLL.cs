@@ -18,27 +18,38 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome deve ser informado.");
             }
 
-            if (colaborador.Nome.Length > 100)
+            if (!string.IsNullOrWhiteSpace(colaborador.Nome))
             {
-                erros.AppendLine("O nome não pode conter mais que 100 caracteres.");
+                if (colaborador.Nome.Length > 100)
+                {
+                    erros.AppendLine("O nome não pode conter mais que 100 caracteres.");
+                }
             }
 
             if (string.IsNullOrWhiteSpace(colaborador.Cro))
             {
                 erros.AppendLine("O CRO deve ser informado.");
             }
-            if (colaborador.Cro.Length > 10)
+
+            if (!string.IsNullOrWhiteSpace(colaborador.Cro))
             {
-                erros.AppendLine("O CRO não pode conter mais que 10 caracteres.");
+                if (colaborador.Cro.Length > 10)
+                {
+                    erros.AppendLine("O CRO não pode conter mais que 10 caracteres.");
+                }
             }
 
             if (string.IsNullOrWhiteSpace(colaborador.CroEstado))
             {
                 erros.AppendLine("O estado do CRO deve ser informado.");
             }
-            if (colaborador.CroEstado.Length > 2)
+
+            if (!string.IsNullOrWhiteSpace(colaborador.CroEstado))
             {
-                erros.AppendLine("O estado do CRO não pode conter mais que 2 caracteres.");
+                if (colaborador.CroEstado.Length > 2)
+                {
+                    erros.AppendLine("O estado do CRO não pode conter mais que 2 caracteres.");
+                }
             }
 
             if (erros.Length != 0)
@@ -62,27 +73,38 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome deve ser informado.");
             }
 
-            if (colaborador.Nome.Length > 100)
+            if (!string.IsNullOrWhiteSpace(colaborador.Nome))
             {
-                erros.AppendLine("O nome não pode conter mais que 100 caracteres.");
+                if (colaborador.Nome.Length > 100)
+                {
+                    erros.AppendLine("O nome não pode conter mais que 100 caracteres.");
+                }
             }
 
             if (string.IsNullOrWhiteSpace(colaborador.Cro))
             {
                 erros.AppendLine("O CRO deve ser informado.");
             }
-            if (colaborador.Cro.Length > 10)
+
+            if (!string.IsNullOrWhiteSpace(colaborador.Cro))
             {
-                erros.AppendLine("O CRO não pode conter mais que 10 caracteres.");
+                if (colaborador.Cro.Length > 10)
+                {
+                    erros.AppendLine("O CRO não pode conter mais que 10 caracteres.");
+                }
             }
 
             if (string.IsNullOrWhiteSpace(colaborador.CroEstado))
             {
                 erros.AppendLine("O estado do CRO deve ser informado.");
             }
-            if (colaborador.CroEstado.Length > 2)
+
+            if (!string.IsNullOrWhiteSpace(colaborador.CroEstado))
             {
-                erros.AppendLine("O estado do CRO não pode conter mais que 2 caracteres.");
+                if (colaborador.CroEstado.Length > 2)
+                {
+                    erros.AppendLine("O estado do CRO não pode conter mais que 2 caracteres.");
+                }
             }
 
             if (erros.Length != 0)
@@ -96,6 +118,18 @@ namespace BusinessLogicalLayer
 
         public string Delete(Colaborador colaborador)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (colaborador.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Deletar(colaborador);
             return respostaDB;
         }

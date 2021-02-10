@@ -120,6 +120,9 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Estado temp = new Estado();
+
+                    temp.Pais = new Pais();
+
                     temp.Id = Convert.ToInt32(reader["idEstado"]);
                     temp.Nome = Convert.ToString(reader["nomeEstado"]);
                     temp.Pais.Id = Convert.ToInt32(reader["idPais"]);
@@ -152,6 +155,9 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+
+                    estado.Pais = new Pais();
+
                     estado.Id = Convert.ToInt32(reader["idEstado"]);
                     estado.Nome = Convert.ToString(reader["nomeEstado"]);
                     estado.Pais.Id = Convert.ToInt32(reader["idPais"]);
@@ -181,6 +187,9 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+
+                    estado.Pais = new Pais();
+
                     estado.Id = Convert.ToInt32(reader["idEstado"]);
                     estado.Nome = Convert.ToString(reader["nomeEstado"]);
                     estado.Pais.Id = Convert.ToInt32(reader["idPais"]);
@@ -213,6 +222,9 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Estado temp = new Estado();
+
+                    temp.Pais = new Pais();
+
                     temp.Id = Convert.ToInt32(reader["idEstado"]);
                     temp.Nome = Convert.ToString(reader["nomeEstado"]);
                     temp.Pais.Id = Convert.ToInt32(reader["idPais"]);

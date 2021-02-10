@@ -18,30 +18,30 @@ namespace BusinessLogicalLayer
 
             if (string.IsNullOrWhiteSpace(produto.Nome))
             {
-                erros.Append("O nome deve ser informado. ");
+                erros.AppendLine("O nome deve ser informado. ");
             }
 
             if (!string.IsNullOrWhiteSpace(produto.Nome))
             {
                 if (produto.Nome.Length > 60)
                 {
-                    erros.Append(" \nO nome não pode conter mais que 60 caracteres.");
+                    erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
                 }
             }
 
             if (produto.TipoEmbalagem.Id == 0)
             {
-                erros.Append(" \nO Id da Embalagem deve ser informado.");
+                erros.AppendLine("O Id da Embalagem deve ser informado.");
             }
 
             if (produto.DataCompra == null)
             {
-                erros.Append(" \nA data deve ser indormada.");
+                erros.AppendLine("A data deve ser indormada.");
             }
 
             if (produto.Preco == 0 || produto.Preco < 0)
             {
-                erros.Append(" \nO preço deve ser informado.");
+                erros.AppendLine("O preço deve ser informado.");
             }
 
             if (produto.DataCompra == null)
@@ -71,9 +71,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome deve ser informado.");
             }
 
-            if (produto.Nome.Length > 60)
+            if (!string.IsNullOrWhiteSpace(produto.Nome))
             {
-                erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+                if (produto.Nome.Length > 60)
+                {
+                    erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+                }
             }
 
             if (produto.Preco == 0 || produto.Preco < 0)
@@ -81,7 +84,7 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O preço deve ser informado.");
             }
 
-            if (produto.DataCompra == null) 
+            if (produto.DataCompra == null)
             {
                 erros.AppendLine("A data do produto deve ser informado.");
             }
@@ -96,6 +99,18 @@ namespace BusinessLogicalLayer
 
         public string Delete(Produto produto)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (produto.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Deletar(produto);
             return respostaDB;
         }

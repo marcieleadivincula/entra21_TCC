@@ -22,16 +22,19 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O Cep deve ser informado.");
             }
 
-            if (endereco.Cep.Length > 10)
+            if (!string.IsNullOrWhiteSpace(endereco.Cep))
             {
-                erros.AppendLine("O CEP não pode conter mais que 10 caracteres.");
+                if (endereco.Cep.Length > 10)
+                {
+                    erros.AppendLine("O CEP não pode conter mais que 10 caracteres.");
+                }
             }
 
             if (endereco.NumeroCasa == 0 || endereco.NumeroCasa < 0)
             {
                 erros.AppendLine("O número do endereço deve ser informado.");
             }
-  
+
             if (erros.Length != 0)
             {
                 return erros.ToString();
@@ -57,9 +60,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O Cep deve ser informado.");
             }
 
-            if (endereco.Cep.Length > 10)
+            if (!string.IsNullOrWhiteSpace(endereco.Cep))
             {
-                erros.AppendLine("O CEP não pode conter mais que 10 caracteres.");
+                if (endereco.Cep.Length > 10)
+                {
+                    erros.AppendLine("O CEP não pode conter mais que 10 caracteres.");
+                }
             }
 
             if (endereco.NumeroCasa == 0 || endereco.NumeroCasa < 0)
@@ -79,6 +85,18 @@ namespace BusinessLogicalLayer
         //Excluir um registro
         public string Delete(Endereco endereco)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (endereco.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Delete(endereco);
             return respostaDB;
         }

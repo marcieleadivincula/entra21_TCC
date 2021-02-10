@@ -59,7 +59,7 @@
 
                         <input class="input100" type="text" name="embalagem" value="@ViewBag.embalagem">
 
-                        <span class="focus-input100" data-placeholder="Embalagem"></span>
+                        <span class="focus-input100" data-placeholder="Tipo de embalagem"></span>
 
                         @*@{
 
@@ -94,17 +94,29 @@
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
 
+
                         <input class="input100" type="number" name="idProduto" value="@ViewBag.idProduto">
 
-                        <span class="focus-input100" data-placeholder="Produto"></span>
+                        <span class="focus-input100" data-placeholder="ID do Produto"></span>
+                        <label style="color:dimgrey;font-size:13px"> Somente para deletar e atualizar. </label>
                     </div>
-                    @{ if (ViewData["result"] != "")
+
+                    @{
+                        if (Convert.ToString(ViewData["result"]) != "")
                         {
-                           <label style="color:aqua"> @ViewData["result"] </label>
+                            if (Convert.ToString(ViewData["result"]).Contains("!"))
+                            {
+                                <label style="color:green"> @ViewData["result"] </label>
+                            }
+                            else
+                            {
+
+                              <label style="color:red;font-size:13px"> @ViewData["result"] </label>
+                            }
 
                         }
-                        
-                        }
+
+                    }
 
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
@@ -147,7 +159,7 @@
 
                     <div class="text-center p-t-115">
                         <span class="login100-form-title p-b-26">
-                            Lista do Produtos
+                            Lista De Produtos
                         </span>
                         @* Trazer a lista de Produtos com id, produto, embalagem, dtCompra e preço *@
                     </div>

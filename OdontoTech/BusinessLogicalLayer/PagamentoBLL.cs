@@ -74,6 +74,18 @@ namespace BusinessLogicalLayer
 
         public string Delete(Pagamento pagamento)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (pagamento.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Deletar(pagamento);
             return respostaDB;
         }
