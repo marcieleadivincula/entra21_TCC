@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Recuperar Senha";
+    ViewData["Title"] = "Aprovar Senha";
 }
 
 <!DOCTYPE html>
@@ -46,22 +46,30 @@
 
                     <div>
                         <samp>
-
+                            <label style="color:darkgrey;font-size:13px"> Um email com o codigo de segurança foi enviado para @ViewBag.Email. </label>
+                             <input class="input100"  name="email" value="@ViewBag.Email" >
                         </samp>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="email" value="@ViewBag.email">
-                        <span class="focus-input100" data-placeholder="Insira seu email já cadastrado."></span>
+                        <input class="input100" type="text" name="codigo" value="@ViewBag.codigo">
+                        <span class="focus-input100" data-placeholder="Codigo de segurança"></span>
                     </div>
 
-                    <label style="color:darkgrey;font-size:13px"> Iremos enviar um email com um codigo de verificação. </label>
 
                     <div>
                         <samp>
-
+                            <label style="color:darkgrey;font-size:13px">Caso não encontrar verifique a caixa de SPAM.</label>
                         </samp>
                     </div>
+
+                    @if (Convert.ToString(ViewData["msgcodigo"]) == "O codigo inserido esta incorreto, Tente Novamente !")
+                    {
+
+                <label style="color:red;font-size:13px">O codigo inserido esta incorreto, Tente Novamente ! Enviamos outro EMAIL.</label>
+
+                    }
+
 
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">

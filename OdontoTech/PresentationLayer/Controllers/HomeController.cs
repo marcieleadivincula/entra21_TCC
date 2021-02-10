@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain;
 using DataAccessLayer;
+using System.Net.Mail;
 
 namespace PresentationLayer.Controllers
 {
@@ -304,7 +305,7 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Produto(string produto, int embalagem, DateTime dtCompra,double preco, int idProduto, string funcao)
+        public IActionResult Produto(string produto, string embalagem, DateTime dtCompra,double preco, int idProduto, string funcao)
         
         {
 
@@ -317,8 +318,35 @@ namespace PresentationLayer.Controllers
             ViewBag.idProduto = idProduto;
             ViewData["btn"] = funcao;
 
+            if (funcao == "Deletar")
+            {
+                Produto x = new Produto();
 
-            TipoEmbalagem tipoEmbalagem = new TipoEmbalagem(embalagem,"");
+                x.Id = idProduto;
+                ViewData["result"] = bll.Delete(x);
+                return View();
+            }
+            TipoEmbalagem tipoEmbalagem = new TipoEmbalagem(0,embalagem);
+            TipoEmbalagemDAL tipoEmbalagemDAL = new TipoEmbalagemDAL();
+
+            if ((tipoEmbalagemDAL.Inserir(tipoEmbalagem)).Contains("já"))
+            {
+                List < TipoEmbalagem > lista = tipoEmbalagemDAL.SelecionaTodos();
+                foreach (var item in lista)
+                {
+                    if (item.Descricao == tipoEmbalagem.Descricao )
+                    {
+                        tipoEmbalagem.Id = item.Id;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                tipoEmbalagem = tipoEmbalagemDAL.GetLastRegister();
+            }
+  
+
 
             Produto temp = new Produto(idProduto,produto,tipoEmbalagem,preco,dtCompra);
 
@@ -340,10 +368,6 @@ namespace PresentationLayer.Controllers
             if (funcao == "Atualizar")
             {
                 ViewData["result"] = bll.Update(temp);
-            }
-            else if (funcao == "Deletar")
-            {
-                ViewData["result"] = bll.Delete(temp);
             }
             else if (funcao == "Salvar")
             {
@@ -387,6 +411,58 @@ namespace PresentationLayer.Controllers
         public IActionResult RecuperarSenha()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult RecuperarSenhaAprovar(string email,string codigo)
+        {
+            string codigoemail = Convert.ToString(ViewData["codigo2o"]);
+
+            if (codigoemail == codigo)
+            {
+                return RedirectToAction("AlterarSenha", "Home");
+            }
+            else if (codigo == null)
+            {
+            }
+            else if (codigo != codigoemail)
+            {
+                ViewData["msgcodigo"] = "O codigo inserido esta incorreto, Tente Novamente !";
+            }
+
+
+            ViewBag.email = email;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new System.Net.NetworkCredential("bifrostodontotech@gmail.com", "bifrost4545");
+                smtp.Timeout = 50000;
+
+
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("bifrostodontotech@gmail.com");
+                //mail.To.Add("vitorantonio.644@gmail.com");
+                mail.To.Add(email);
+                mail.Subject = "Recuperação de senha ODONTO TECH.";
+
+                Random ram = new Random();
+
+                string codigo1 = "";
+                for (int i = 0; i < 5; i++)
+                {
+                    codigo1 += ram.Next(0, 10).ToString();
+                }
+
+                mail.Body = "Seu codigo de verificação é: " + codigo1;
+
+                ViewData["codigo2o"] = codigo1;
+                smtp.Send(mail);
+
+                ViewData["email"] = email;
+
+                return View();
+            
         }
 
         [HttpPost]
