@@ -15,7 +15,7 @@ namespace DataAccessLayer
         /// Insere o  Produto no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="produto"></param>
-        public string Inserir(Produto produto)
+        public string Insert(Produto produto)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO produto(nomeProduto, idTipoEmbalagem, precoProduto, dtCompra) values(@nomeProduto, @idTipoEmbalagem, @precoProduto, @dtCompra)";
@@ -52,7 +52,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="produto"></param>
         /// <returns></returns>
-        public string Deletar(Produto produto)
+        public string Delete(Produto produto)
         {
             if (produto.Id == 0)
             {
@@ -84,7 +84,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="produto"></param>
         /// <returns></returns>
-        public string Atualizar(Produto produto)
+        public string Update(Produto produto)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE produto SET nomeProduto = @nomeProduto, idTipoEmbalagem = @idTipoEmbalagem, precoProduto = @precoProduto,  dtCompra = @dtCompra WHERE idProduto = @idProduto";
@@ -110,7 +110,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public List<Produto> SelecionaTodos()
+        public List<Produto> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM produto";
@@ -143,7 +143,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Produto GetByID(int idProduto)
+        public Produto GetById(int idProduto)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM produto WHERE idProduto = @idProduto";
