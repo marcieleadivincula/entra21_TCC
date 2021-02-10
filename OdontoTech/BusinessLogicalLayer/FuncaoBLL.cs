@@ -26,16 +26,19 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("Um nome deve ser informado.");
             }
 
-            if (funcao.Nome.Length > 100)
+            if (!string.IsNullOrWhiteSpace(funcao.Nome))
             {
-                erros.AppendLine("O nome da função não pode conter mais que 100 caracteres.");
+                if (funcao.Nome.Length > 100)
+                {
+                    erros.AppendLine("O nome da função não pode conter mais que 100 caracteres.");
+                }
             }
 
             if (funcao.Salario < 0) //rever
             {
                 erros.AppendLine("O salário não pode ser negativo.");
             }
-             
+
             if (funcao.Comissao < 0) //rever tmb. 
             {
                 erros.AppendLine("A comissão não pode ser negativa.");
@@ -68,9 +71,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("Um nome deve ser informado.");
             }
 
-            if (funcao.Nome.Length > 100)
+            if (!string.IsNullOrWhiteSpace(funcao.Nome))
             {
-                erros.AppendLine("O nome da função não pode conter mais que 100 caracteres.");
+                if (funcao.Nome.Length > 100)
+                {
+                    erros.AppendLine("O nome da função não pode conter mais que 100 caracteres.");
+                }
             }
 
             if (funcao.Salario < 0) //rever

@@ -80,6 +80,18 @@ namespace BusinessLogicalLayer
 
         public string Delete(Estoque estoque)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (estoque.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Deletar(estoque);
             return respostaDB;
         }
