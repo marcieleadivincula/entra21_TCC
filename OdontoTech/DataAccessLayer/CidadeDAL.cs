@@ -166,7 +166,6 @@ namespace DataAccessLayer
                     cidade.Nome = Convert.ToString(reader["nomeCidade"]);
                     cidade.Estado.Id = Convert.ToInt32(reader["idEstado"]);
                 }
-
                 return cidade;
             }
             catch (Exception)

@@ -200,7 +200,7 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
-                    Logradouro temp = new Logradouro();
+                    Logradouro temp = new Logradouro();              
                     temp.Id = Convert.ToInt32(reader["idLogradouro"]);
                     temp.Nome = Convert.ToString(reader["nomeLogradouro"]);
                     temp.Bairro.Id = Convert.ToInt32(reader["idBairro"]);
