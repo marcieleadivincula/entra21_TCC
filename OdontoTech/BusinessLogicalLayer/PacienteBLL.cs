@@ -191,10 +191,18 @@ namespace BusinessLogicalLayer
 
         public string Delete(Paciente paciente)
         {
+            StringBuilder erros = new StringBuilder();
+
             if (paciente.Id == 0)
             {
-                return "O ID do paciente deve ser informado.";
+                erros.AppendLine("O ID deve ser informado.");
             }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Deletar(paciente);
             return respostaDB;
         }
