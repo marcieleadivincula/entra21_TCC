@@ -227,11 +227,22 @@ namespace PresentationLayer.Controllers
             }
         }               
         
-        [HttpPost]
-        public IActionResult VerificarLogin(string email, string pass)
-        {
-          return View();
-        }
+        //[HttpPost]
+        //public IActionResult VerificarLogin(string login, string password)
+        //{
+        //    UsuarioDAL dal = new UsuarioDAL();
+
+        //    if (dal.Autenticar(login, password))
+        //    {
+        //        return View();
+        //    }
+        //    else
+        //    {
+        //        TempData.Add("Mensagem", "Login falhou, verifique seus dados.");
+
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
