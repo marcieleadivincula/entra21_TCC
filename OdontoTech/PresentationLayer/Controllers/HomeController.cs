@@ -5,6 +5,7 @@ using System.Diagnostics;
 using Domain;
 using DataAccessLayer;
 using BusinessLogicalLayer;
+using System.Collections.Generic;
 
 namespace PresentationLayer.Controllers
 {
@@ -16,6 +17,13 @@ namespace PresentationLayer.Controllers
         {
             _logger = logger;
         }
+
+        EnderecoBLL enderecoBLL = new EnderecoBLL();
+        LogradouroBLL logradouroBLL = new LogradouroBLL();
+        BairroBLL bairroBLL = new BairroBLL();
+        CidadeBLL cidadeBLL = new CidadeBLL();
+        EstadoBLL estadoBLL = new EstadoBLL();
+        PaisBLL paisBll = new PaisBLL();
 
         public IActionResult Index()
         {
@@ -102,6 +110,9 @@ namespace PresentationLayer.Controllers
 
         public IActionResult Pais()
         {
+            ViewBag.Id = paisBll.GetAll();
+            ViewBag.Nome = paisBll.GetAll();
+
             return View();
         }
 
