@@ -26,5 +26,10 @@ namespace Domain
         {
 
         }
+
+        public Logradouro(int id)
+        {
+            Id = id;
+        }
     }
 }

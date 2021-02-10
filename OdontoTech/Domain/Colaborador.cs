@@ -52,5 +52,10 @@ namespace Domain
         {
 
         }
+
+        public Colaborador(int id)
+        {
+            Id = id;
+        }
     }
 }

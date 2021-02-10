@@ -31,5 +31,10 @@ namespace Domain
         {
 
         }
+
+        public Atendimento(int id)
+        {
+            Id = id;
+        }
     }
 }

@@ -26,5 +26,10 @@ namespace Domain
         {
             return $"{Id} - {Tipo}";
         }
+
+        public FoneTipo(int id)
+        {
+            Id = id;
+        }
     }
 }

@@ -25,5 +25,9 @@ namespace Domain
         {
 
         }
+        public Estado(int id)
+        {
+            Id = id;
+        }
     }
 }

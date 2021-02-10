@@ -23,5 +23,10 @@ namespace Domain
         {
             
         }
+
+        public Clinica(int id)
+        {
+            Id = id;
+        }
     }
 }

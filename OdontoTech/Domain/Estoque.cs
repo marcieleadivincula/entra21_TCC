@@ -29,5 +29,10 @@ namespace Domain
         {
 
         }
+
+        public Estoque(int id)
+        {
+            Id = id;
+        }
     }
 }

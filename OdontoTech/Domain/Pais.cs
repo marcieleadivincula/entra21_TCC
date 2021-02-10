@@ -30,5 +30,11 @@ namespace Domain
         {
             return $"{Id} - {Nome}";
         }
+
+        public Pais(int id)
+        {
+            Id = id;
+        }
+
     }
 }

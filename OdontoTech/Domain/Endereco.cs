@@ -29,5 +29,10 @@ namespace Domain
 
         }
 
+        public Endereco(int id)
+        {
+            Id = id;
+        }
+
     }
 }

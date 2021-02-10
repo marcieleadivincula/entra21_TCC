@@ -35,5 +35,10 @@ namespace Domain
         {
 
         }
+
+        public Usuario(int id)
+        {
+            Id = id;
+        }
     }
 }
