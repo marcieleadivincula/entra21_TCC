@@ -9,7 +9,7 @@ namespace DataAccessLayer
     {
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
-        public string Inserir(Estoque estoque)
+        public string Insert(Estoque estoque)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO estoque(idProduto, qtdProduto, dtEntrada, dtSaida) values(@idProduto, @qtdProduto, @dtEntrada, @dtSaida)";
@@ -42,7 +42,7 @@ namespace DataAccessLayer
             }
 
         }
-        public string Deletar(Estoque estoque)
+        public string Delete(Estoque estoque)
         {
             if (estoque.Id == 0)
             {
@@ -68,7 +68,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Atualizar(Estoque estoque)
+        public string Update(Estoque estoque)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE estoque SET idProduto = @idProduto,  qtdProduto = @qtdProduto,  dtEntrada = @dtEntrada,  dtSaida = @dtSaida WHERE idEstoque = @idEstoque";
@@ -95,7 +95,7 @@ namespace DataAccessLayer
             }
 
         }
-        public List<Estoque> SelecionaTodos()
+        public List<Estoque> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM estoque";
@@ -128,7 +128,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Estoque GetByID(int idEstoque)
+        public Estoque GetById(int idEstoque)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM estoque WHERE idEstoque = @idEstoque";
