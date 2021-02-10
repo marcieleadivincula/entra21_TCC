@@ -113,11 +113,11 @@ namespace PresentationLayer.Controllers
 
     
 
-                string b = estadoDAL.Inserir(estadoo);
+                string b = estadoDAL.Insert(estadoo);
                 if (b.Contains("já"))
                 {
                     List<Estado> lista = new List<Estado>();
-                    lista = estadoDAL.SelecionaTodos();
+                    lista = estadoDAL.GetAll();
 
                     foreach (var item in lista)
                     {
@@ -139,11 +139,11 @@ namespace PresentationLayer.Controllers
 
                 Cidade cidadee = new Cidade(0,cidade,estadoo);
 
-                string c = cidadeDAL.Inserir(cidadee);
+                string c = cidadeDAL.Insert(cidadee);
                 if (c.Contains("já"))
                 {
                     List<Cidade> lista = new List<Cidade>();
-                    lista = cidadeDAL.SelecionaTodos();
+                    lista = cidadeDAL.GetAll();
 
                     foreach (var item in lista)
                     {
@@ -165,11 +165,11 @@ namespace PresentationLayer.Controllers
 
                 Bairro bairoo = new Bairro(0,bairro,cidadee);
 
-                string d = bairroDAL.Inserir(bairoo);
+                string d = bairroDAL.Insert(bairoo);
                 if (d.Contains("já"))
                 {
                     List<Bairro> lista = new List<Bairro>();
-                    lista = bairroDAL.SelecionaTodos();
+                    lista = bairroDAL.GetAll();
 
                     foreach (var item in lista)
                     {
@@ -192,11 +192,11 @@ namespace PresentationLayer.Controllers
 
                 Logradouro logradouroo = new Logradouro(0,logradouro,bairoo);
 
-                string e = logradouroDAL.Inserir(logradouroo);
+                string e = logradouroDAL.Insert(logradouroo);
                 if (d.Contains("já"))
                 {
                     List<Logradouro> lista = new List<Logradouro>();
-                    lista = logradouroDAL.SelecionaTodos();
+                    lista = logradouroDAL.GetAll();
 
                     foreach (var item in lista)
                     {
@@ -218,7 +218,7 @@ namespace PresentationLayer.Controllers
                 Endereco endereco1 = new Endereco(0, logradouroo, numeroCasa, cep);
 
                 EnderecoDAL endereco = new EnderecoDAL();
-                endereco.Inserir(endereco1);
+                endereco.Insert(endereco1);
 
                 endereco1 = endereco.GetLastRegister();
 
