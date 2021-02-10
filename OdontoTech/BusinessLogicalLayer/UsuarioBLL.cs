@@ -12,6 +12,7 @@ namespace BusinessLogicalLayer
     {
         UsuarioDAL dal = new UsuarioDAL();
 
+        //Incluir um registro
         public string Insert(Usuario usuario)
         {
             StringBuilder erros = new StringBuilder();
@@ -45,15 +46,17 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(usuario);
+            string respostaDB = dal.Insert(usuario);
             return respostaDB;
         }
 
+        //Obter todos os registros
         public List<Usuario> GetAll()
         {
-            return dal.SelecionaTodos();
+            return dal.GetAll();
         }
 
+        //Atualizar um registro existente
         public string Update(Usuario usuario)
         {
             StringBuilder erros = new StringBuilder();
@@ -87,16 +90,18 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Atualizar(usuario);
+            string respostaDB = dal.Update(usuario);
             return respostaDB;
         }
 
+        //Excluir um registro
         public string Delete(Usuario usuario)
         {
-            string respostaDB = dal.Deletar(usuario);
+            string respostaDB = dal.Delete(usuario);
             return respostaDB;
         }
 
+        //REVER
         public bool Autenticar(string login, string password)
         {
             Usuario user = dal.Autenticar(login, password);
@@ -108,6 +113,25 @@ namespace BusinessLogicalLayer
 
             Parametros.UsuarioLogado = user;
             return true;
+        }
+
+        //Obter um registro
+        public Usuario GetById(Usuario usuario)
+        {
+            StringBuilder erros = new StringBuilder();
+
+            if (usuario.Id == 0 || usuario.Id < 0)
+            {
+                erros.AppendLine("O ID do usuario deve ser informado.");
+            }
+
+            return dal.GetById(usuario.Id);
+        }
+
+        //Obter último registro
+        public Usuario GetLastRegister()
+        {
+            return dal.GetLastRegister();
         }
     }
 }
