@@ -21,10 +21,14 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome deve ser informado.");
             }
 
-            if (bairro.Nome.Length > 50)
+            if (!string.IsNullOrWhiteSpace(bairro.Nome))
             {
-                erros.AppendLine("O nome não pode conter mais que 50 caracteres.");
+               if (bairro.Nome.Length > 50)
+               {
+                  erros.AppendLine("O nome não pode conter mais que 50 caracteres.");
+               }
             }
+
 
             if (bairro.Cidade.Id == 0 || bairro.Cidade.Id < 0)
             {
@@ -46,6 +50,17 @@ namespace BusinessLogicalLayer
 
         public string Delete(Bairro bairro)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (bairro.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
             string respostaDB = dal.Deletar(bairro);
             return respostaDB;
         }
@@ -60,9 +75,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome deve ser informado.");
             }
 
-            if (bairro.Nome.Length > 50)
+            if (!string.IsNullOrWhiteSpace(bairro.Nome))
             {
-                erros.AppendLine("O nome não pode conter mais que 50 caracteres.");
+                if (bairro.Nome.Length > 50)
+                {
+                    erros.AppendLine("O nome não pode conter mais que 50 caracteres.");
+                }
             }
 
             if (bairro.Cidade.Id == 0 || bairro.Cidade.Id < 0)
