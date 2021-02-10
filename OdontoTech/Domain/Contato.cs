@@ -32,5 +32,15 @@ namespace Domain
             Email = email;
             Paciente = paciente;
         }
+
+        public Contato(int id)
+        {
+            Id = id;
+        }
+
+        public Contato()
+        {
+
+        }
     }
 }

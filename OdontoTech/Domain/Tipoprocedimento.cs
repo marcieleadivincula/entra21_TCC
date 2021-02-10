@@ -22,5 +22,10 @@ namespace Domain
         {
 
         }
+
+        public TipoProcedimento(int id)
+        {
+            Id = id;
+        }
     }
 }

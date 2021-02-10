@@ -14,11 +14,10 @@ namespace DataAccessLayer
         /// Insere a Clinica no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="clinica"></param>
-        public string Inserir(Clinica clinica)
+        public string Insert(Clinica clinica)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO clinica (nomeClinica,dtInauguracao,idEndereco) values (@nomeClinica,@dtInauguracao,@idEndereco)";
-
+            cmd.CommandText = "INSERT INTO clinica (nomeClinica, dtInauguracao, idEndereco) values (@nomeClinica, @dtInauguracao, @idEndereco)";
             cmd.Parameters.AddWithValue("@nomeClinica", clinica.Nome);
             cmd.Parameters.AddWithValue("@dtInauguracao", clinica.DataInauguracao);
             cmd.Parameters.AddWithValue("@idEndereco", clinica.Endereco.Id);
@@ -50,12 +49,16 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="clinica"></param>
         /// <returns></returns>
-        public string Deletar(Clinica clinica)
-        {            
-            MySqlCommand cmd = new MySqlCommand();
+        public string Delete(Clinica clinica)
+        {
+            if (clinica.Id == 0)
+            {
+                return "Clínica informada inválida!";
+            }
+
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM clinica WHERE idClinica = @ID";
-            cmd.Parameters.AddWithValue("@ID", clinica.Id);
+            cmd.CommandText = "DELETE FROM clinica WHERE idClinica = @idClinica";
+            cmd.Parameters.AddWithValue("@idClinica", clinica.Id);
 
             try
             {
@@ -77,13 +80,14 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="clinica"></param>
         /// <returns></returns>
-        public string Atualizar(Clinica clinica)
+        public string Update(Clinica clinica)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE clinica SET nomeClinica = @nomeClinica, dtInauguracao = @dtInauguracao WHERE idClinica = @idClinica";
-            cmd.Parameters.AddWithValue("@idClinica", clinica.Id);
+            cmd.CommandText = "UPDATE clinica SET nomeClinica = @nomeClinica, dtInauguracao = @dtInauguracao, idEndereco = @idEndereco WHERE idClinica = @idClinica";
             cmd.Parameters.AddWithValue("@nomeClinica", clinica.Nome);
             cmd.Parameters.AddWithValue("@dtInauguracao", clinica.DataInauguracao);
+            cmd.Parameters.AddWithValue("@idEndereco", clinica.Endereco.Id);
+            cmd.Parameters.AddWithValue("@idClinica", clinica.Id);
 
             try
             {
@@ -104,7 +108,7 @@ namespace DataAccessLayer
         /// Retorna Lista com todas as clinicas
         /// </summary>
         /// <returns></returns>
-        public List<Clinica> SelecionaTodos()
+        public List<Clinica> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM clinica";
@@ -112,19 +116,20 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<Clinica> Clinicas = new List<Clinica>();
+                List<Clinica> clinicas = new List<Clinica>();
+
                 while (reader.Read())
                 {
                     Clinica temp = new Clinica();
-
                     temp.Id = Convert.ToInt32(reader["idClinica"]);
                     temp.Nome = Convert.ToString(reader["nomeClinica"]);
                     temp.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
                     temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
 
-                    Clinicas.Add(temp);
+                    clinicas.Add(temp);
                 }
-                return Clinicas;
+
+                return clinicas;
             }
             catch (Exception)
             {
@@ -135,30 +140,27 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Clinica GetByID(int id)
+        public Clinica GetById(int idClinica)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM clinica WHERE idClinica = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.CommandText = "SELECT * FROM clinica WHERE idClinica = @idClinica";
+            cmd.Parameters.AddWithValue("@idClinica", idClinica);
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Clinica temp = new Clinica();
+                Clinica clinica = new Clinica();
 
                 while (reader.Read())
                 {
-
-
-                    temp.Id = Convert.ToInt32(reader["idClinica"]);
-                    temp.Nome = Convert.ToString(reader["nomeClinica"]);
-                    temp.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
-                    temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
-
-
+                    clinica.Id = Convert.ToInt32(reader["idClinica"]);
+                    clinica.Nome = Convert.ToString(reader["nomeClinica"]);
+                    clinica.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
+                    clinica.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
                 }
-                return temp;
+
+                return clinica;
             }
             catch (Exception)
             {
@@ -180,23 +182,52 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = command.ExecuteReader();
-                Clinica Clinica = new Clinica();
+                Clinica clinica = new Clinica();
+
+                while (reader.Read())
+                {
+                    clinica.Id = Convert.ToInt32(reader["idClinica"]);
+                    clinica.Nome = Convert.ToString(reader["nomeClinica"]);
+                    clinica.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
+                    clinica.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
+                }
+
+                return clinica;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+
+        public List<Clinica> GetByEndereco(Endereco endereco)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM clinica WHERE idEndereco = @idEndereco";
+            cmd.Parameters.AddWithValue("@idEndereco", endereco.Id);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Clinica> clinicas = new List<Clinica>();
 
                 while (reader.Read())
                 {
                     Clinica temp = new Clinica();
-
-
                     temp.Id = Convert.ToInt32(reader["idClinica"]);
                     temp.Nome = Convert.ToString(reader["nomeClinica"]);
                     temp.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
                     temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
 
-
-                    Clinica = temp;
+                    clinicas.Add(temp);
                 }
 
-                return Clinica;
+                return clinicas;
             }
             catch (Exception)
             {

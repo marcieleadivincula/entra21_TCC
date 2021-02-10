@@ -27,5 +27,10 @@ namespace Domain
         {
 
         }
+
+        public Funcao(int id)
+        {
+            Id = id;
+        }
     }
 }

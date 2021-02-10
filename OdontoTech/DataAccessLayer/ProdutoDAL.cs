@@ -17,10 +17,8 @@ namespace DataAccessLayer
         /// <param name="produto"></param>
         public string Inserir(Produto produto)
         {
-            
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO produto (nomeProduto,idTipoEmbalagem,precoProduto,dtCompra) values (@nomeProduto,@idTipoEmbalagem,@precoProduto,@dtCompra)";
-           
+            cmd.CommandText = "INSERT INTO produto(nomeProduto, idTipoEmbalagem, precoProduto, dtCompra) values(@nomeProduto, @idTipoEmbalagem, @precoProduto, @dtCompra)";
             cmd.Parameters.AddWithValue("@nomeProduto", produto.Nome);
             cmd.Parameters.AddWithValue("@idTipoEmbalagem", produto.TipoEmbalagem.Id);
             cmd.Parameters.AddWithValue("@precoProduto", produto.Preco);
@@ -56,9 +54,14 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(Produto produto)
         {
+            if (produto.Id == 0)
+            {
+                return "Produto informado inválido!";
+            }
+
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM produto WHERE idProduto = @ID";
-            cmd.Parameters.AddWithValue("@ID", produto.Id);
+            cmd.CommandText = "DELETE FROM produto WHERE idProduto = @idProduto";
+            cmd.Parameters.AddWithValue("@idProduto", produto.Id);
 
             try
             {
@@ -83,13 +86,13 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Atualizar(Produto produto)
         {
-
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE produto SET nomeProduto = @nomeProduto, precoProduto = @precoProduto,  dtCompra = @dtCompra WHERE idProduto = @idProduto";
-            cmd.Parameters.AddWithValue("@idProduto", produto.Id);
+            cmd.CommandText = "UPDATE produto SET nomeProduto = @nomeProduto, idTipoEmbalagem = @idTipoEmbalagem, precoProduto = @precoProduto,  dtCompra = @dtCompra WHERE idProduto = @idProduto";
             cmd.Parameters.AddWithValue("@nomeProduto", produto.Nome);
+            cmd.Parameters.AddWithValue("@idTipoEmbalagem", produto.TipoEmbalagem.Id);
             cmd.Parameters.AddWithValue("@precoProduto", produto.Preco);
             cmd.Parameters.AddWithValue("@dtCompra", produto.DataCompra);
+            cmd.Parameters.AddWithValue("@idProduto", produto.Id);
 
             try
             {
@@ -115,22 +118,21 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<Produto> Produtos = new List<Produto>();
+                List<Produto> produtos = new List<Produto>();
+
                 while (reader.Read())
                 {
                     Produto temp = new Produto();
-                    temp.TipoEmbalagem = new TipoEmbalagem();
-
                     temp.Id = Convert.ToInt32(reader["idProduto"]);
                     temp.Nome = Convert.ToString(reader["nomeProduto"]);
                     temp.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
                     temp.Preco = Convert.ToDouble(reader["precoProduto"]);
                     temp.DataCompra = Convert.ToDateTime(reader["dtCompra"]);
 
-
-                    Produtos.Add(temp);
+                    produtos.Add(temp);
                 }
-                return Produtos;
+
+                return produtos;
             }
             catch (Exception)
             {
@@ -141,29 +143,28 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Produto GetByID(int id)
+        public Produto GetByID(int idProduto)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM produto WHERE idProduto = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.CommandText = "SELECT * FROM produto WHERE idProduto = @idProduto";
+            cmd.Parameters.AddWithValue("@idProduto", idProduto);
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Produto temp = new Produto();
+                Produto produto = new Produto();
 
                 while (reader.Read())
                 {
-
-                    temp.Id = Convert.ToInt32(reader["idProduto"]);
-                    temp.Nome = Convert.ToString(reader["nomeProduto"]);
-                    temp.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
-                    temp.Preco = Convert.ToDouble(reader["precoProduto"]);
-                    temp.DataCompra = Convert.ToDateTime(reader["dtCompra"]);
-
+                    produto.Id = Convert.ToInt32(reader["idProduto"]);
+                    produto.Nome = Convert.ToString(reader["nomeProduto"]);
+                    produto.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
+                    produto.Preco = Convert.ToDouble(reader["precoProduto"]);
+                    produto.DataCompra = Convert.ToDateTime(reader["dtCompra"]);
                 }
-                return temp;
+
+                return produto;
             }
             catch (Exception)
             {
@@ -183,23 +184,53 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Produto Produto = new Produto();
+                Produto produto = new Produto();
+
+                while (reader.Read())
+                {
+                    produto.Id = Convert.ToInt32(reader["idProduto"]);
+                    produto.Nome = Convert.ToString(reader["nomeProduto"]);
+                    produto.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
+                    produto.Preco = Convert.ToDouble(reader["precoProduto"]);
+                    produto.DataCompra = Convert.ToDateTime(reader["dtCompra"]);
+                }
+
+                return produto;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public List<Produto> GetByTipoEmbalagem(TipoEmbalagem tipoEmbalagem)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM produto WHERE idTipoEmbalagem = @idTipoEmbalagem";
+            cmd.Parameters.AddWithValue("@idTipoEmbalagem", tipoEmbalagem.Id);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Produto> produtos = new List<Produto>();
 
                 while (reader.Read())
                 {
                     Produto temp = new Produto();
-
                     temp.Id = Convert.ToInt32(reader["idProduto"]);
                     temp.Nome = Convert.ToString(reader["nomeProduto"]);
                     temp.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
                     temp.Preco = Convert.ToDouble(reader["precoProduto"]);
                     temp.DataCompra = Convert.ToDateTime(reader["dtCompra"]);
 
-
-                    Produto = temp;
+                    produtos.Add(temp);
                 }
 
-                return Produto;
+                return produtos;
             }
             catch (Exception)
             {
@@ -211,6 +242,4 @@ namespace DataAccessLayer
             }
         }
     }
-
-    
 }

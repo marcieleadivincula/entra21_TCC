@@ -14,11 +14,10 @@ namespace DataAccessLayer
         /// Insere o Endereço no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="endereco"></param>
-        public string Inserir(Endereco endereco)
+        public string Insert(Endereco endereco)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO endereco (idLogradouro,numeroCasa,cep) values (@idLogradouro,@numeroCasa,@cep)";
-         
+            cmd.CommandText = "INSERT INTO endereco (idLogradouro, numeroCasa, cep) values (@idLogradouro, @numeroCasa, @cep)";
             cmd.Parameters.AddWithValue("@idLogradouro", endereco.Logradouro.Id);
             cmd.Parameters.AddWithValue("@numeroCasa", endereco.NumeroCasa);
             cmd.Parameters.AddWithValue("@cep", endereco.Cep);
@@ -47,17 +46,21 @@ namespace DataAccessLayer
             }
         }
 
-
         /// <summary>
         /// Tenta deletar, caso der certo retorna (Endereço deletado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
         /// </summary>
         /// <param name="endereco"></param>
         /// <returns></returns>
-        public string Deletar(Endereco endereco)
+        public string Delete(Endereco endereco)
         {
+            if (endereco.Id == 0)
+            {
+                return "Endereçoo informada inválido!";
+            }
+
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM endereco WHERE idEndereco = @ID";
-            cmd.Parameters.AddWithValue("@ID", endereco.Id);
+            cmd.CommandText = "DELETE FROM endereco WHERE idEndereco = @idEndereco";
+            cmd.Parameters.AddWithValue("@idEndereco", endereco.Id);
 
             try
             {
@@ -76,19 +79,19 @@ namespace DataAccessLayer
 
         }
 
-
         /// <summary>
         /// Tenta atualizar, caso der certo retorna (Endereço atualizado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
         /// </summary>
         /// <param name="endereco"></param>
         /// <returns></returns>
-        public string Atualizar(Endereco endereco)
+        public string Update(Endereco endereco)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE endereco  SET numeroCasa = @numeroCasa,  cep = @cep WHERE idEndereco = @idEndereco";
-            cmd.Parameters.AddWithValue("@idEndereco", endereco.Id);
+            cmd.CommandText = "UPDATE endereco  SET idLogradouro = @idLogradouro, numeroCasa = @numeroCasa,  cep = @cep WHERE idEndereco = @idEndereco";
+            cmd.Parameters.AddWithValue("@idLogradouro", endereco.Logradouro.Id);
             cmd.Parameters.AddWithValue("@numeroCasa", endereco.NumeroCasa);
             cmd.Parameters.AddWithValue("@cep", endereco.Cep);
+            cmd.Parameters.AddWithValue("@idEndereco", endereco.Id);
 
             try
             {
@@ -110,7 +113,7 @@ namespace DataAccessLayer
         /// Retorna Lista com todos os Enderecos.
         /// </summary>
         /// <returns></returns>
-        public List<Endereco> SelecionaTodos()
+        public List<Endereco> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM endereco";
@@ -119,18 +122,18 @@ namespace DataAccessLayer
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
                 List<Endereco> enderecos = new List<Endereco>();
+
                 while (reader.Read())
                 {
                     Endereco temp = new Endereco();
-
                     temp.Id = Convert.ToInt32(reader["idEndereco"]);
                     temp.Logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
                     temp.NumeroCasa = Convert.ToInt32(reader["numeroCasa"]);
                     temp.Cep = Convert.ToString(reader["cep"]);
 
-
                     enderecos.Add(temp);
                 }
+
                 return enderecos;
             }
             catch (Exception)
@@ -142,28 +145,27 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Endereco GetByID(int id)
+        public Endereco GetById(int idEndereco)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM endereco WHERE idEndereco = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.CommandText = "SELECT * FROM endereco WHERE idEndereco = @idEndereco";
+            cmd.Parameters.AddWithValue("@idEndereco", idEndereco);
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Endereco temp = new Endereco();
+                Endereco endereco = new Endereco();
 
                 while (reader.Read())
                 {
-
-                    temp.Id = Convert.ToInt32(reader["idEndereco"]);
-                    temp.Logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
-                    temp.NumeroCasa = Convert.ToInt32(reader["numeroCasa"]);
-                    temp.Cep = Convert.ToString(reader["cep"]);
-
+                    endereco.Id = Convert.ToInt32(reader["idEndereco"]);
+                    endereco.Logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
+                    endereco.NumeroCasa = Convert.ToInt32(reader["numeroCasa"]);
+                    endereco.Cep = Convert.ToString(reader["cep"]);
                 }
-                return temp;
+
+                return endereco;
             }
             catch (Exception)
             {
@@ -185,24 +187,52 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = command.ExecuteReader();
-                Endereco Endereco = new Endereco();
+                Endereco endereco = new Endereco();
+
+                while (reader.Read())
+                {
+                    endereco.Id = Convert.ToInt32(reader["idEndereco"]);
+                    endereco.Logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
+                    endereco.NumeroCasa = Convert.ToInt32(reader["numeroCasa"]);
+                    endereco.Cep = Convert.ToString(reader["cep"]);
+                }
+
+                return endereco;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+
+        public List<Endereco> GetByLogradouro(Logradouro logradouro)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM endereco WHERE idLogradouro = @idLogradouro";
+            cmd.Parameters.AddWithValue("@idLogradouro", logradouro.Id);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Endereco> enderecos = new List<Endereco>();
 
                 while (reader.Read())
                 {
                     Endereco temp = new Endereco();
-
-
                     temp.Id = Convert.ToInt32(reader["idEndereco"]);
                     temp.Logradouro.Id = Convert.ToInt32(reader["idLogradouro"]);
                     temp.NumeroCasa = Convert.ToInt32(reader["numeroCasa"]);
                     temp.Cep = Convert.ToString(reader["cep"]);
 
-
-
-                    Endereco = temp;
+                    enderecos.Add(temp);
                 }
 
-                return Endereco;
+                return enderecos;
             }
             catch (Exception)
             {

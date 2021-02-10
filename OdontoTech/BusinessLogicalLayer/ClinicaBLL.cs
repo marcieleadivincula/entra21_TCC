@@ -9,15 +9,11 @@ namespace BusinessLogicalLayer
     {
         ClinicaDAL dal = new ClinicaDAL();
 
+        //Incluir um registro
         public string Insert(Clinica clinica)
         {
             StringBuilder erros = new StringBuilder();
 
-            if (clinica.Id == 0 || clinica.Id < 0)
-            {
-                erros.AppendLine("O ID da clínica deve ser informado.");
-            }
-
             if (string.IsNullOrWhiteSpace(clinica.Nome))
             {
                 erros.AppendLine("O nome da clínica deve ser informado.");
@@ -28,12 +24,7 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
             }
 
-            if (clinica.Endereco.Id == 0 || clinica.Id < 0)
-            {
-                erros.AppendLine("O ID do endereço deve ser informado.");
-            }
-
-            if (clinica.DataInauguracao == null) // rever a data
+            if (clinica.DataInauguracao == null || clinica.DataInauguracao.Equals("")) // rever a data
             {
                 erros.AppendLine("A data de inauguração da clínica deve ser informado.");
             }
@@ -42,57 +33,76 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(clinica);
+
+            string respostaDB = dal.Insert(clinica);
             return respostaDB;
         }
 
+        // Obter todos os registros
         public List<Clinica> GetAll()
         {
-            return dal.SelecionaTodos();
+            return dal.GetAll();
         }
 
+        //Atualizar um registro existente
         public string Update(Clinica clinica)
+        {
+            StringBuilder erros = new StringBuilder();
+
+            if (clinica.Nome.Length > 60)
+            {
+                erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+            }
+
+            if (string.IsNullOrWhiteSpace(clinica.Nome))
+            {
+                erros.AppendLine("O nome da clínica deve ser informado.");
+            }
+
+            if (clinica.DataInauguracao == null || clinica.DataInauguracao.Equals("")) // rever a data
+            {
+                erros.AppendLine("A data de inauguração da clínica deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
+            string respostaDB = dal.Update(clinica);
+            return respostaDB;
+        }
+
+        //Excluir um registro
+        public string Delete(Clinica clinica)
+        {
+            string respostaDB = dal.Delete(clinica);
+            return respostaDB;
+        }
+
+        //Obter um registro
+        public Clinica GetById(Clinica clinica)
         {
             StringBuilder erros = new StringBuilder();
 
             if (clinica.Id == 0 || clinica.Id < 0)
             {
-                erros.AppendLine("O ID da clínica deve ser informado.");
+                erros.AppendLine("O ID da clinica deve ser informado.");
             }
 
-            if (string.IsNullOrWhiteSpace(clinica.Nome))
-            {
-                erros.AppendLine("O nome da clínica deve ser informado.");
-            }
-
-            if (clinica.Nome.Length > 60)
-            {
-                erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
-            }
-
-            if (clinica.Endereco.Id == 0 || clinica.Id < 0)
-            {
-                erros.AppendLine("O ID do endereço deve ser informado.");
-            }
-
-            if (clinica.DataInauguracao == null) // rever a data
-            {
-                erros.AppendLine("A data de inauguração da clínica deve ser informado.");
-            }
-
-            if (erros.Length != 0)
-            {
-                return erros.ToString();
-            }
-            string respostaDB = dal.Atualizar(clinica);
-            return respostaDB;
+            return dal.GetById(clinica.Id);
         }
 
-        public string Delete(Clinica clinica)
+        //Obter último registro
+        public Clinica GetLastRegister()
         {
-            string respostaDB = dal.Deletar(clinica);
-            return respostaDB;
+            return dal.GetLastRegister();
         }
 
+        //Obter registros de determinado endereço
+        public List<Clinica> getByEndereco(Endereco endereco)
+        {
+            return dal.GetByEndereco(endereco);
+        }
     }
 }

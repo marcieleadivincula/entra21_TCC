@@ -17,7 +17,7 @@ namespace DataAccessLayer
         public string Inserir(Funcao funcao)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO funcao (nomeFuncao,salario,comissao) values (@nomeFuncao,@salario,@comissao)";
+            cmd.CommandText = "INSERT INTO funcao(nomeFuncao, salario, comissao) values(@nomeFuncao, @salario, @comissao)";
             cmd.Parameters.AddWithValue("@nomeFuncao", funcao.Nome);
             cmd.Parameters.AddWithValue("@salario", funcao.Salario);
             cmd.Parameters.AddWithValue("@comissao", funcao.Comissao);
@@ -48,9 +48,14 @@ namespace DataAccessLayer
         }
         public string Deletar(Funcao funcao)
         {
+            if (funcao.Id == 0)
+            {
+                return "Funcao informada inválida!";
+            }
+
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM funcao WHERE idFuncao = @ID";
-            cmd.Parameters.AddWithValue("@ID", funcao.Id);
+            cmd.CommandText = "DELETE FROM funcao WHERE idFuncao = @idFuncao";
+            cmd.Parameters.AddWithValue("@idFuncao", funcao.Id);
 
             try
             {
@@ -72,9 +77,7 @@ namespace DataAccessLayer
         {
 
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE funcao SET nomeFuncao = @nomeFuncao,  salario = @salario,  comissao = @comissao WHERE idFuncao = @idFuncao";
-
-
+            cmd.CommandText = "UPDATE funcao SET nomeFuncao = @nomeFuncao, salario = @salario, comissao = @comissao WHERE idFuncao = @idFuncao";
             cmd.Parameters.AddWithValue("@nomeFuncao", funcao.Nome);
             cmd.Parameters.AddWithValue("@salario", funcao.Salario);
             cmd.Parameters.AddWithValue("@comissao", funcao.Comissao);
@@ -100,24 +103,25 @@ namespace DataAccessLayer
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM funcao";
+
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<Funcao> Funcaos = new List<Funcao>();
+                List<Funcao> funcoes = new List<Funcao>();
+
                 while (reader.Read())
                 {
                     Funcao temp = new Funcao();
-
                     temp.Id = Convert.ToInt32(reader["idFuncao"]);
                     temp.Nome = Convert.ToString(reader["nomeFuncao"]);
                     temp.Salario = Convert.ToDouble(reader["salario"]);
                     temp.Comissao = Convert.ToDouble(reader["comissao"]);
-;
 
-                    Funcaos.Add(temp);
+                    funcoes.Add(temp);
                 }
-                return Funcaos;
+
+                return funcoes;
             }
             catch (Exception)
             {
@@ -128,28 +132,27 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Funcao GetByID(int id)
+        public Funcao GetByID(int idFuncao)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM funcao WHERE idFuncao = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.CommandText = "SELECT * FROM funcao WHERE idFuncao = @idFuncao";
+            cmd.Parameters.AddWithValue("@idFuncao", idFuncao);
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Funcao temp = new Funcao();
+                Funcao funcao = new Funcao();
 
                 while (reader.Read())
                 {
-
-                    temp.Id = Convert.ToInt32(reader["idFuncao"]);
-                    temp.Nome = Convert.ToString(reader["nomeFuncao"]);
-                    temp.Salario = Convert.ToDouble(reader["salario"]);
-                    temp.Comissao = Convert.ToDouble(reader["comissao"]);
-
+                    funcao.Id = Convert.ToInt32(reader["idFuncao"]);
+                    funcao.Nome = Convert.ToString(reader["nomeFuncao"]);
+                    funcao.Salario = Convert.ToDouble(reader["salario"]);
+                    funcao.Comissao = Convert.ToDouble(reader["comissao"]);
                 }
-                return temp;
+
+                return funcao;
             }
             catch (Exception)
             {
@@ -169,21 +172,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Funcao Funcao = new Funcao();
+                Funcao funcao = new Funcao();
 
                 while (reader.Read())
                 {
-                    Funcao temp = new Funcao();
-
-                    temp.Id = Convert.ToInt32(reader["idFuncao"]);
-                    temp.Nome = Convert.ToString(reader["nomeFuncao"]);
-                    temp.Salario = Convert.ToDouble(reader["salario"]);
-                    temp.Comissao = Convert.ToDouble(reader["comissao"]);
-
-                    Funcao = temp;
+                    funcao.Id = Convert.ToInt32(reader["idFuncao"]);
+                    funcao.Nome = Convert.ToString(reader["nomeFuncao"]);
+                    funcao.Salario = Convert.ToDouble(reader["salario"]);
+                    funcao.Comissao = Convert.ToDouble(reader["comissao"]);
                 }
 
-                return Funcao;
+                return funcao;
             }
             catch (Exception)
             {

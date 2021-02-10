@@ -17,26 +17,24 @@ namespace DataAccessLayer
         /// Insere o  TipoProcedimento no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="TipoProcedimento"></param>
-        public string Inserir(TipoProcedimento TipoProcedimento)
+        public string Inserir(TipoProcedimento tipoProcedimento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO tipoprocedimento (idTipoProcedimento,nomeTipoProcedimento,valorProcedimento) values (@idTipoProcedimento,@nomeTipoProcedimento,@valorProcedimento)";
-          
-            cmd.Parameters.AddWithValue("@idTipoProcedimento", TipoProcedimento.Id);
-            cmd.Parameters.AddWithValue("@nomeTipoProcedimento", TipoProcedimento.Nome);
-            cmd.Parameters.AddWithValue("@valorProcedimento", TipoProcedimento.Valor);
+            cmd.CommandText = "INSERT INTO tipoprocedimento(nomeTipoProcedimento, valorProcedimento) values(@nomeTipoProcedimento, @valorProcedimento)";
+            cmd.Parameters.AddWithValue("@nomeTipoProcedimento", tipoProcedimento.Nome);
+            cmd.Parameters.AddWithValue("@valorProcedimento", tipoProcedimento.Valor);
 
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Tipo procedimento cadastrado com sucesso";
+                return "Tipo de procedimento cadastrado com sucesso";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("Duplicate"))
                 {
-                    return ("Tipo Procedimento já cadastrado.");
+                    return ("Tipo de procedimento já cadastrado.");
                 }
                 else
                 {
@@ -56,17 +54,22 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="TipoProcedimento"></param>
         /// <returns></returns>
-        public string Deletar(TipoProcedimento TipoProcedimento)
+        public string Deletar(TipoProcedimento tipoProcedimento)
         {
+            if (tipoProcedimento.Id == 0)
+            {
+                return "Tipo de procedimento informado inválido!";
+            }
+
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM tipoprocedimento WHERE idTipoProcedimento = @ID";
-            cmd.Parameters.AddWithValue("@ID", TipoProcedimento.Id);
+            cmd.CommandText = "DELETE FROM tipoprocedimento WHERE idTipoProcedimento = @idTipoProcedimento";
+            cmd.Parameters.AddWithValue("@idTipoProcedimento", tipoProcedimento.Id);
 
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Tipo Procedimento deletado com êxito!";
+                return "Tipo de procedimento deletado com êxito!";
             }
             catch (Exception ex)
             {
@@ -83,14 +86,13 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="TipoProcedimento"></param>
         /// <returns></returns>
-        public string Atualizar(TipoProcedimento TipoProcedimento)
+        public string Atualizar(TipoProcedimento tipoProcedimento)
         {
-
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE tipoprocedimento SET nomeTipoProcedimento = @nomeTipoProcedimento,  valorProcedimento = @valorProcedimento WHERE idTipoProcedimento = @idTipoProcedimento";
-            cmd.Parameters.AddWithValue("@nomeTipoProcedimento", TipoProcedimento.Nome);
-            cmd.Parameters.AddWithValue("@valorProcedimento", TipoProcedimento.Valor);
-            cmd.Parameters.AddWithValue("@idTipoProcedimento", TipoProcedimento.Id);
+            cmd.Parameters.AddWithValue("@nomeTipoProcedimento", tipoProcedimento.Nome);
+            cmd.Parameters.AddWithValue("@valorProcedimento", tipoProcedimento.Valor);
+            cmd.Parameters.AddWithValue("@idTipoProcedimento", tipoProcedimento.Id);
 
             try
             {
@@ -122,18 +124,19 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<TipoProcedimento> TipoProcedimentos = new List<TipoProcedimento>();
+                List<TipoProcedimento> tiposDeProcedimentos = new List<TipoProcedimento>();
+
                 while (reader.Read())
                 {
                     TipoProcedimento temp = new TipoProcedimento();
-
                     temp.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
                     temp.Nome = Convert.ToString(reader["nomeTipoProcedimento"]);
                     temp.Valor = Convert.ToInt32(reader["valorProcedimento"]);
 
-                    TipoProcedimentos.Add(temp);
+                    tiposDeProcedimentos.Add(temp);
                 }
-                return TipoProcedimentos;
+
+                return tiposDeProcedimentos;
             }
             catch (Exception)
             {
@@ -144,26 +147,26 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public TipoProcedimento GetByID(int id)
+        public TipoProcedimento GetByID(int idTipoProcedimento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM tipoprocedimento WHERE idTipoProcedimento = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.CommandText = "SELECT * FROM tipoprocedimento WHERE idTipoProcedimento = @idTipoProcedimento";
+            cmd.Parameters.AddWithValue("@idTipoProcedimento", idTipoProcedimento);
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                TipoProcedimento temp = new TipoProcedimento();
+                TipoProcedimento tipoProcedimento = new TipoProcedimento();
 
                 while (reader.Read())
                 {
-                    temp.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
-                    temp.Nome = Convert.ToString(reader["nomeTipoProcedimento"]);
-                    temp.Valor = Convert.ToInt32(reader["valorProcedimento"]);
-
+                    tipoProcedimento.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
+                    tipoProcedimento.Nome = Convert.ToString(reader["nomeTipoProcedimento"]);
+                    tipoProcedimento.Valor = Convert.ToInt32(reader["valorProcedimento"]);
                 }
-                return temp;
+
+                return tipoProcedimento;
             }
             catch (Exception)
             {
@@ -183,20 +186,16 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                TipoProcedimento TipoProcedimento = new TipoProcedimento();
+                TipoProcedimento tipoProcedimento = new TipoProcedimento();
 
                 while (reader.Read())
                 {
-                    TipoProcedimento temp = new TipoProcedimento();
-
-                    temp.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
-                    temp.Nome = Convert.ToString(reader["nomeTipoProcedimento"]);
-                    temp.Valor = Convert.ToInt32(reader["valorProcedimento"]);
-
-                    TipoProcedimento = temp;
+                    tipoProcedimento.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
+                    tipoProcedimento.Nome = Convert.ToString(reader["nomeTipoProcedimento"]);
+                    tipoProcedimento.Valor = Convert.ToInt32(reader["valorProcedimento"]);
                 }
 
-                return TipoProcedimento;
+                return tipoProcedimento;
             }
             catch (Exception)
             {

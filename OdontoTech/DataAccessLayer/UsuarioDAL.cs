@@ -22,8 +22,7 @@ namespace DataAccessLayer
         public string Inserir(Usuario usuario)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO usuario (login,senha,idColaborador) values (@login,@senha,@idColaborador)";
-
+            cmd.CommandText = "INSERT INTO usuario (login, senha, idColaborador) values (@login, @senha, @idColaborador)";
             cmd.Parameters.AddWithValue("@login", usuario.Login);
             cmd.Parameters.AddWithValue("@senha", usuario.Senha);
             cmd.Parameters.AddWithValue("@idColaborador", usuario.Colaborador.Id);
@@ -57,17 +56,20 @@ namespace DataAccessLayer
         /// <returns></returns>
         public string Deletar(Usuario usuario)
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand();
+            if (usuario.Id == 0)
+            {
+                return "Usuário informado inválido!";
+            }
+
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM usuario WHERE idUsuario = @ID";
-            cmd.Parameters.AddWithValue("@ID", usuario.Id);
+            cmd.CommandText = "DELETE FROM usuario WHERE idUsuario = @idUsuario";
+            cmd.Parameters.AddWithValue("@idUsuario", usuario.Id);
 
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Tipo Usuário deletado com êxito!";
+                return "Usuário deletado com êxito!";
             }
             catch (Exception)
             {
@@ -87,10 +89,11 @@ namespace DataAccessLayer
         {
 
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE usuario SET login = @login,  senha = @senha WHERE idUsuario = @idUsuario";
-            cmd.Parameters.AddWithValue("@idUsuario", usuario.Id);
+            cmd.CommandText = "UPDATE usuario SET login = @login,  senha = @senha, idColaborador = @idColaborador WHERE idUsuario = @idUsuario";
             cmd.Parameters.AddWithValue("@login", usuario.Login);
             cmd.Parameters.AddWithValue("@senha", usuario.Senha);
+            cmd.Parameters.AddWithValue("@idColaborador", usuario.Colaborador.Id);
+            cmd.Parameters.AddWithValue("@idUsuario", usuario.Id);
 
 
             try
@@ -121,19 +124,20 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<Usuario> Usuarios = new List<Usuario>();
+                List<Usuario> usuarios = new List<Usuario>();
+
                 while (reader.Read())
                 {
                     Usuario temp = new Usuario();
-
                     temp.Id = Convert.ToInt32(reader["idUsuario"]);
                     temp.Login = Convert.ToString(reader["login"]);
                     temp.Senha = Convert.ToString(reader["senha"]);
                     temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
 
-                    Usuarios.Add(temp);
+                    usuarios.Add(temp);
                 }
-                return Usuarios;
+
+                return usuarios;
             }
             catch (Exception)
             {
@@ -178,7 +182,6 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-
                 MySqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -196,26 +199,27 @@ namespace DataAccessLayer
 
         }
 
-        public Usuario GetByID(int id)
+        public Usuario GetByID(int idUsuario)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM usuario WHERE idUsuario = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.CommandText = "SELECT * FROM usuario WHERE idUsuario = @idUsuario";
+            cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Usuario temp = new Usuario();
+                Usuario usuario = new Usuario();
 
                 while (reader.Read())
                 {
-                    temp.Id = Convert.ToInt32(reader["idUsuario"]);
-                    temp.Login = Convert.ToString(reader["login"]);
-                    temp.Senha = Convert.ToString(reader["senha"]);
-                    temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+                    usuario.Id = Convert.ToInt32(reader["idUsuario"]);
+                    usuario.Login = Convert.ToString(reader["login"]);
+                    usuario.Senha = Convert.ToString(reader["senha"]);
+                    usuario.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
                 }
-                return temp;
+
+                return usuario;
             }
             catch (Exception)
             {
@@ -235,25 +239,89 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Usuario Usuario = new Usuario();
+                Usuario usuario = new Usuario();
+
+                while (reader.Read())
+                {
+                    usuario.Id = Convert.ToInt32(reader["idUsuario"]);
+                    usuario.Login = Convert.ToString(reader["login"]);
+                    usuario.Senha = Convert.ToString(reader["senha"]);
+                    usuario.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+                }
+
+                return usuario;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public List<Usuario> GetByColaborador(Colaborador colaborador)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM usuario WHERE idColaborador = @idColaborador";
+            cmd.Parameters.AddWithValue("@idColaborador", colaborador.Id);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Usuario> usuarios = new List<Usuario>();
 
                 while (reader.Read())
                 {
                     Usuario temp = new Usuario();
-
                     temp.Id = Convert.ToInt32(reader["idUsuario"]);
                     temp.Login = Convert.ToString(reader["login"]);
                     temp.Senha = Convert.ToString(reader["senha"]);
                     temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
 
-                    Usuario = temp;
+                    usuarios.Add(temp);
                 }
 
-                return Usuario;
+                return usuarios;
             }
             catch (Exception)
             {
                 throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+
+        public Usuario Autenticar(string login, string password)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT idUsuario FROM usuario where login = @login AND senha = @senha";
+            cmd.Parameters.AddWithValue("@login", login);
+            cmd.Parameters.AddWithValue("@senha", password);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                Usuario usuario = new Usuario();
+
+                while (reader.Read())
+                {
+                    usuario.Id = Convert.ToInt32(reader["idUsuario"]);
+                    usuario.Login = Convert.ToString(reader["login"]);
+                    usuario.Senha = Convert.ToString(reader["senha"]);
+                    usuario.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+                }
+
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw new Exception("Erro no Banco de dados. Contate o administrador.");
             }
             finally
             {

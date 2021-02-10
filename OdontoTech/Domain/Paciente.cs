@@ -32,5 +32,10 @@ namespace Domain
         {
            
         }
+
+        public Paciente(int id)
+        {
+            Id = id;
+        }
     }
 }

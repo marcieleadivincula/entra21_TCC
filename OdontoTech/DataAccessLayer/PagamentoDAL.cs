@@ -10,24 +10,22 @@ namespace DataAccessLayer
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
 
-        public string Inserir(Pagamento Pagamento)
+        public string Inserir(Pagamento pagamento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO pagamento (dtPagamento,idTipoPagamento) values (@dtPagamento,@idTipoPagamento)";
-
-            cmd.Parameters.AddWithValue("@idTipoPagamento", Pagamento.TipoPagamento.Id);
-            cmd.Parameters.AddWithValue("@dtPagamento", Pagamento.DataPagamento);
-
+            cmd.CommandText = "INSERT INTO pagamento(dtPagamento,idTipoPagamento) values(@dtPagamento, @idTipoPagamento)";
+            cmd.Parameters.AddWithValue("@dtPagamento", pagamento.DataPagamento);
+            cmd.Parameters.AddWithValue("@idTipoPagamento", pagamento.TipoPagamento.Id);
 
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Pagamento cadastrado com sucesso !";
+                return "Pagamento cadastrado com sucesso!";
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
                     return ("Pagamento já cadastrado.");
                 }
@@ -42,11 +40,16 @@ namespace DataAccessLayer
             }
 
         }
-        public string Deletar(Pagamento Pagamento)
+        public string Deletar(Pagamento pagamento)
         {
+            if (pagamento.Id == 0)
+            {
+                return "Pagamento informado inválido!";
+            }
+
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM pagamento WHERE idPagamento = @ID";
-            cmd.Parameters.AddWithValue("@ID", Pagamento.Id);
+            cmd.CommandText = "DELETE FROM pagamento WHERE idPagamento = @idPagamento";
+            cmd.Parameters.AddWithValue("@idPagamento", pagamento.Id);
                 
             try
             {
@@ -63,12 +66,13 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Atualizar(Pagamento Pagamento)
+        public string Atualizar(Pagamento pagamento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE pagamento SET dtPagamento = @dtPagamento WHERE idPagamento = @idPagamento";
-            cmd.Parameters.AddWithValue("@idPagamento", Pagamento.Id);
-            cmd.Parameters.AddWithValue("@dtPagamento", Pagamento.DataPagamento);
+            cmd.CommandText = "UPDATE pagamento SET dtPagamento = @dtPagamento, idTipoPagamento = @idTipoPagamento WHERE idPagamento = @idPagamento";
+            cmd.Parameters.AddWithValue("@dtPagamento", pagamento.DataPagamento);
+            cmd.Parameters.AddWithValue("@idTipoPagamento", pagamento.TipoPagamento.Id);
+            cmd.Parameters.AddWithValue("@idPagamento", pagamento.Id);
 
             try
             {
@@ -89,23 +93,24 @@ namespace DataAccessLayer
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM pagamento";
+
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<Pagamento> Pagamentos = new List<Pagamento>();
+                List<Pagamento> pagamentos = new List<Pagamento>();
+
                 while (reader.Read())
                 {
                     Pagamento temp = new Pagamento();
-
                     temp.Id = Convert.ToInt32(reader["idPagamento"]);
                     temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
                     temp.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
 
-
-                    Pagamentos.Add(temp);
+                    pagamentos.Add(temp);
                 }
-                return Pagamentos;
+
+                return pagamentos;
             }
             catch (Exception)
             {
@@ -116,27 +121,26 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Pagamento GetByID(int id)
+        public Pagamento GetByID(int idPagamento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM pagamento WHERE idPagamento = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.CommandText = "SELECT * FROM pagamento WHERE idPagamento = @idPagamento";
+            cmd.Parameters.AddWithValue("@idPagamento", idPagamento);
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Pagamento temp = new Pagamento();
+                Pagamento pagamento = new Pagamento();
 
                 while (reader.Read())
                 {
-
-                    temp.Id = Convert.ToInt32(reader["idPagamento"]);
-                    temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
-                    temp.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
-
+                    pagamento.Id = Convert.ToInt32(reader["idPagamento"]);
+                    pagamento.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
+                    pagamento.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
                 }
-                return temp;
+
+                return pagamento;
             }
             catch (Exception)
             {
@@ -149,8 +153,6 @@ namespace DataAccessLayer
         }
         public Pagamento GetLastRegister()
         {
-            MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
-            MySqlCommand command = new MySqlCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM pagamento ORDER BY idPagamento DESC limit 1";
 
@@ -158,20 +160,50 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Pagamento Pagamento = new Pagamento();
+                Pagamento pagamento = new Pagamento();
+
+                while (reader.Read())
+                {
+                    pagamento.Id = Convert.ToInt32(reader["idPagamento"]);
+                    pagamento.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
+                    pagamento.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
+                }
+
+                return pagamento;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+
+        public List<Pagamento> GetByTipoPagamento(TipoPagamento tipoPagamento)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM pagamento WHERE idTipoPagamento = @idTipoPagamento";
+            cmd.Parameters.AddWithValue("@idTipoPagamento", tipoPagamento.Id);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Pagamento> pagamentos = new List<Pagamento>();
 
                 while (reader.Read())
                 {
                     Pagamento temp = new Pagamento();
-
                     temp.Id = Convert.ToInt32(reader["idPagamento"]);
                     temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
                     temp.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
 
-                    Pagamento = temp;
+                    pagamentos.Add(temp);
                 }
 
-                return Pagamento;
+                return pagamentos;
             }
             catch (Exception)
             {

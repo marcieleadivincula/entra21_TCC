@@ -30,5 +30,10 @@ namespace Domain
         {
 
         }
+
+        public Produto(int id)
+        {
+            Id = id;
+        }
     }
 }

@@ -28,5 +28,9 @@ namespace Domain
 
         }
 
+        public Bairro(int id)
+        {
+            Id = id;
+        }
     }
 }

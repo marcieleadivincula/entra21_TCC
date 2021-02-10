@@ -14,13 +14,13 @@ namespace DataAccessLayer
         /// Insere o  Estado no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="estado"></param>
-        public string Inserir(Estado estado)
+        public string Insert(Estado estado)
         {
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO estado (nomeEstado,idPais) values (@nomeEstado,@idPais)";
-      
             cmd.Parameters.AddWithValue("@nomeEstado", estado.Nome);
             cmd.Parameters.AddWithValue("@idPais", estado.Pais.Id);
+
             try
             {
                 conn.Open();
@@ -29,7 +29,7 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
                     return ("Estado já cadastrado.");
                 }
@@ -46,15 +46,18 @@ namespace DataAccessLayer
 
         }
 
-
         /// <summary>
         ///  Tenta deletar, caso der certo retorna (Estado deletado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
         /// </summary>
         /// <param name="estado"></param>
         /// <returns></returns>
-        public string Deletar(Estado estado)
+        public string Delete(Estado estado)
         {
-           
+            if (estado.Id == 0)
+            {
+                return "Estado informado inválido!";
+            }
+
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM estado WHERE idEstado = @ID";
             cmd.Parameters.AddWithValue("@ID", estado.Id);
@@ -80,9 +83,8 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="estado"></param>
         /// <returns></returns>
-        public string Atualizar(Estado estado)
+        public string Update(Estado estado)
         {
-
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE estado SET nomeEstado = @nomeEstado WHERE idEstado = @idEstado";
             cmd.Parameters.AddWithValue("@nomeEstado", estado.Nome);
@@ -104,26 +106,28 @@ namespace DataAccessLayer
             }
           
         }
-        public List<Estado> SelecionaTodos()
+        public List<Estado> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM estado";
+
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<Estado> Estados = new List<Estado>();
+                List<Estado> estados = new List<Estado>();
+
                 while (reader.Read())
                 {
                     Estado temp = new Estado();
-
                     temp.Id = Convert.ToInt32(reader["idEstado"]);
                     temp.Nome = Convert.ToString(reader["nomeEstado"]);
                     temp.Pais.Id = Convert.ToInt32(reader["idPais"]);
 
-                    Estados.Add(temp);
+                    estados.Add(temp);
                 }
-                return Estados;
+
+                return estados;
             }
             catch (Exception)
             {
@@ -134,27 +138,26 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Estado GetByID(int id)
+        public Estado GetById(int idEstado)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM estado WHERE idEstado = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.Parameters.AddWithValue("@ID", idEstado);
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Estado temp = new Estado();
+                Estado estado = new Estado();
 
                 while (reader.Read())
                 {
-
-                    temp.Id = Convert.ToInt32(reader["idEstado"]);
-                    temp.Nome = Convert.ToString(reader["nomeEstado"]);
-                    temp.Pais.Id = Convert.ToInt32(reader["idPais"]);
-
+                    estado.Id = Convert.ToInt32(reader["idEstado"]);
+                    estado.Nome = Convert.ToString(reader["nomeEstado"]);
+                    estado.Pais.Id = Convert.ToInt32(reader["idPais"]);
                 }
-                return temp;
+
+                return estado;
             }
             catch (Exception)
             {
@@ -174,23 +177,50 @@ namespace DataAccessLayer
             {
                 conn.Open();
                MySqlDataReader reader = cmd.ExecuteReader();
-                Estado Estado = new Estado();
+                Estado estado = new Estado();
+
+                while (reader.Read())
+                {
+                    estado.Id = Convert.ToInt32(reader["idEstado"]);
+                    estado.Nome = Convert.ToString(reader["nomeEstado"]);
+                    estado.Pais.Id = Convert.ToInt32(reader["idPais"]);
+                }
+
+                return estado;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+
+        public List<Estado> GetByPais(Pais pais)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM estado WHERE idPais = @idPais";
+            cmd.Parameters.AddWithValue("@ID", pais.Id);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Estado> estados = new List<Estado>();
 
                 while (reader.Read())
                 {
                     Estado temp = new Estado();
-
-
                     temp.Id = Convert.ToInt32(reader["idEstado"]);
                     temp.Nome = Convert.ToString(reader["nomeEstado"]);
                     temp.Pais.Id = Convert.ToInt32(reader["idPais"]);
 
-
-
-                    Estado = temp;
+                    estados.Add(temp);
                 }
 
-                return Estado;
+                return estados;
             }
             catch (Exception)
             {
