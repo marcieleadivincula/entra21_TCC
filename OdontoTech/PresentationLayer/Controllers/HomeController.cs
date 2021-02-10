@@ -2,10 +2,14 @@
 using Microsoft.Extensions.Logging;
 using PresentationLayer.Models;
 using System.Diagnostics;
+using BusinessLogicalLayer;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Domain;
 using DataAccessLayer;
-using BusinessLogicalLayer;
-using System.Collections.Generic;
 
 namespace PresentationLayer.Controllers
 {
@@ -121,8 +125,53 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Produto()
+        public IActionResult Produto(string produto, int embalagem, DateTime dtCompra,double preco, int idProduto, string funcao)
+        
         {
+
+            ProdutoBLL bll = new ProdutoBLL();
+
+            ViewBag.produto = produto;
+            ViewBag.embalagem = embalagem;
+            ViewBag.dtCompra = dtCompra;
+            ViewBag.preco = preco;
+            ViewBag.idProduto = idProduto;
+            ViewData["btn"] = funcao;
+
+
+            TipoEmbalagem tipoEmbalagem = new TipoEmbalagem(embalagem,"");
+
+            Produto temp = new Produto(idProduto,produto,tipoEmbalagem,preco,dtCompra);
+
+
+            //if (Convert.ToString(ViewBag.btn) == "Atualizar" )
+            //{
+            //    bll.Update(temp);
+            //}
+            //else if (Convert.ToString(ViewBag.btn) == "Deletar")
+            //{
+            //    bll.Delete(temp);
+            //}
+            //else if (Convert.ToString(ViewBag.btn) == "Salvar")
+            //{
+            //    bll.Insert(temp);
+            //}
+
+            ViewData["result"] = "";
+            if (funcao == "Atualizar")
+            {
+                ViewData["result"] = bll.Update(temp);
+            }
+            else if (funcao == "Deletar")
+            {
+                ViewData["result"] = bll.Delete(temp);
+            }
+            else if (funcao == "Salvar")
+            {
+                ViewData["result"] = bll.Insert(temp);
+            }
+
+
             return View();
         }
 
@@ -162,7 +211,7 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public IActionResult VerificarLogin(string email, string pass)
+        public IActionResult VerificadorLogin(string email, string pass)
         {
             UsuarioDAL dal = new UsuarioDAL();
 
@@ -172,10 +221,16 @@ namespace PresentationLayer.Controllers
             }
             else
             {
-                TempData.Add("Mensagem", "Login falhou, verifique seus dados.");
+                TempData.Add("Mensagem", "Senha ou Email invalido, verifique seus dados.");
 
                 return RedirectToAction("Index", "Home");
             }
+        }               
+        
+        [HttpPost]
+        public IActionResult VerificarLogin(string email, string pass)
+        {
+          return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
