@@ -14,7 +14,7 @@ namespace DataAccessLayer
         /// Insere a Clinica no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="clinica"></param>
-        public string Inserir(Clinica clinica)
+        public string Insert(Clinica clinica)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO clinica (nomeClinica, dtInauguracao, idEndereco) values (@nomeClinica, @dtInauguracao, @idEndereco)";
@@ -49,7 +49,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="clinica"></param>
         /// <returns></returns>
-        public string Deletar(Clinica clinica)
+        public string Delete(Clinica clinica)
         {
             if (clinica.Id == 0)
             {
@@ -80,7 +80,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="clinica"></param>
         /// <returns></returns>
-        public string Atualizar(Clinica clinica)
+        public string Update(Clinica clinica)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE clinica SET nomeClinica = @nomeClinica, dtInauguracao = @dtInauguracao, idEndereco = @idEndereco WHERE idClinica = @idClinica";
@@ -108,7 +108,7 @@ namespace DataAccessLayer
         /// Retorna Lista com todas as clinicas
         /// </summary>
         /// <returns></returns>
-        public List<Clinica> SelecionaTodos()
+        public List<Clinica> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM clinica";
@@ -140,7 +140,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Clinica GetByID(int idClinica)
+        public Clinica GetById(int idClinica)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM clinica WHERE idClinica = @idClinica";

@@ -14,7 +14,7 @@ namespace DataAccessLayer
         /// Insere o Endereço no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="endereco"></param>
-        public string Inserir(Endereco endereco)
+        public string Insert(Endereco endereco)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO endereco (idLogradouro, numeroCasa, cep) values (@idLogradouro, @numeroCasa, @cep)";
@@ -51,7 +51,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="endereco"></param>
         /// <returns></returns>
-        public string Deletar(Endereco endereco)
+        public string Delete(Endereco endereco)
         {
             if (endereco.Id == 0)
             {
@@ -84,7 +84,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="endereco"></param>
         /// <returns></returns>
-        public string Atualizar(Endereco endereco)
+        public string Update(Endereco endereco)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE endereco  SET idLogradouro = @idLogradouro, numeroCasa = @numeroCasa,  cep = @cep WHERE idEndereco = @idEndereco";
@@ -113,7 +113,7 @@ namespace DataAccessLayer
         /// Retorna Lista com todos os Enderecos.
         /// </summary>
         /// <returns></returns>
-        public List<Endereco> SelecionaTodos()
+        public List<Endereco> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM endereco";
@@ -145,7 +145,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Endereco GetByID(int idEndereco)
+        public Endereco GetById(int idEndereco)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM endereco WHERE idEndereco = @idEndereco";

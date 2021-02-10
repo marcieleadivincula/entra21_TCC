@@ -9,7 +9,7 @@ namespace DataAccessLayer
     {
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
-        public string Inserir(Cidade cidade)
+        public string Insert(Cidade cidade)
         {
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO cidade (nomeCidade,idEstado) values (@nomeCidade,@idEstado)";
@@ -39,7 +39,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Deletar(Cidade cidade)
+        public string Delete(Cidade cidade)
         {
             if (cidade.Id == 0)
             {
@@ -65,7 +65,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Atualizar(Cidade cidade)
+        public string Update(Cidade cidade)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE cidade SET nomeCidade = @nomeCidade, idEstado = @idEstado WHERE idCidade = @idCidade";
@@ -88,7 +88,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public List<Cidade> SelecionaTodos()
+        public List<Cidade> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM cidade";
@@ -118,7 +118,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Cidade GetByID(int idCidade)
+        public Cidade GetById(int idCidade)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM cidade WHERE idCidade = @ID";
@@ -178,7 +178,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public List<Cidade> getByEstado(Estado estado)
+        public List<Cidade> GetByEstado(Estado estado)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM cidade WHERE idEstado = @idEstado";

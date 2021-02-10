@@ -13,7 +13,7 @@ namespace DataAccessLayer
     {
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
-        public string Inserir(Bairro bairro)
+        public string Insert(Bairro bairro)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO bairro(nomeBairro, idCidade) values(@nomeBairro, @idCidade)";
@@ -43,7 +43,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Deletar(Bairro bairro)
+        public string Delete(Bairro bairro)
         {
             if (bairro.Id == 0)
             {
@@ -69,7 +69,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Atualizar(Bairro bairro)
+        public string Update(Bairro bairro)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE bairro SET nomeBairro = @nomeBairro, idCidade = @idCidade WHERE idBairro = @idBairro";
@@ -93,7 +93,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public List<Bairro> SelecionaTodos()
+        public List<Bairro> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM bairro";
@@ -125,7 +125,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Bairro GetByID(int idBairro)
+        public Bairro GetById(int idBairro)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM bairro WHERE idBairro = @idBairro";

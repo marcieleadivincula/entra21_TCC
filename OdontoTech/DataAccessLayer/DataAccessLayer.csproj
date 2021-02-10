@@ -115,6 +115,7 @@
     <Compile Include="CidadeDAL.cs" />
     <Compile Include="ClinicaDAL.cs" />
     <Compile Include="ColaboradorDAL.cs" />
+    <Compile Include="ContatoDAL.cs" />
     <Compile Include="DBConfig.cs" />
     <Compile Include="EnderecoDAL.cs" />
     <Compile Include="EstadoDAL.cs" />

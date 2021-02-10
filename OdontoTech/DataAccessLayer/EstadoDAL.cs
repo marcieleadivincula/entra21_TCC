@@ -14,7 +14,7 @@ namespace DataAccessLayer
         /// Insere o  Estado no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="estado"></param>
-        public string Inserir(Estado estado)
+        public string Insert(Estado estado)
         {
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO estado (nomeEstado,idPais) values (@nomeEstado,@idPais)";
@@ -51,7 +51,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="estado"></param>
         /// <returns></returns>
-        public string Deletar(Estado estado)
+        public string Delete(Estado estado)
         {
             if (estado.Id == 0)
             {
@@ -83,7 +83,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="estado"></param>
         /// <returns></returns>
-        public string Atualizar(Estado estado)
+        public string Update(Estado estado)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE estado SET nomeEstado = @nomeEstado WHERE idEstado = @idEstado";
@@ -106,7 +106,7 @@ namespace DataAccessLayer
             }
           
         }
-        public List<Estado> SelecionaTodos()
+        public List<Estado> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM estado";
@@ -138,7 +138,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Estado GetByID(int idEstado)
+        public Estado GetById(int idEstado)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM estado WHERE idEstado = @ID";

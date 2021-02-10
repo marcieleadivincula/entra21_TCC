@@ -105,6 +105,7 @@ namespace DataAccessLayer
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM paciente";
+
             try
             {
                 conn.Open();

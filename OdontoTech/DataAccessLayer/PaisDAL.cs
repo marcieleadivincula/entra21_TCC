@@ -120,7 +120,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Pais GetPaisById(int idPais)
+        public Pais GetById(int idPais)
         {            
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM pais WHERE idPais = @idPais";

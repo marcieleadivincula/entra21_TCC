@@ -10,7 +10,7 @@ namespace DataAccessLayer
 
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
-        public string Inserir(Logradouro logradouro)
+        public string Insert(Logradouro logradouro)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO logradouro (nomeLogradouro,idBairro) values (@nomeLogradouro, @idBairro)";
@@ -41,7 +41,7 @@ namespace DataAccessLayer
             }
 
         }
-        public string Deletar(Logradouro logradouro)
+        public string Delete(Logradouro logradouro)
         {
             if (logradouro.Id == 0)
             {
@@ -68,7 +68,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Atualizar(Logradouro logradouro)
+        public string Update(Logradouro logradouro)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE logradouro SET nomeLogradouro = @nomeLogradouro, idBairro = @idBairro WHERE idLogradouro = @idLogradouro";
@@ -94,7 +94,7 @@ namespace DataAccessLayer
 
         }
 
-        public List<Logradouro> SelecionaTodos()
+        public List<Logradouro> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM logradouro";
