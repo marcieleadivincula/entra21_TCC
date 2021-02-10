@@ -19,12 +19,11 @@ namespace DataAccessLayer
         /// Insere o  Tipo Embalagem no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="TipoEmbalagem"></param>
-        public string Inserir(TipoEmbalagem TipoEmbalagem)
+        public string Inserir(TipoEmbalagem tipoEmbalagem)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO tipoembalagem (descricao) values (@descricao)";
-
-            cmd.Parameters.AddWithValue("@descricao", TipoEmbalagem.Descricao);
+            cmd.CommandText = "INSERT INTO tipoembalagem(descricao) values(@descricao)";
+            cmd.Parameters.AddWithValue("@descricao", tipoEmbalagem.Descricao);
 
             try
             {
@@ -34,7 +33,7 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE"))
+                if (ex.Message.Contains("Duplicate"))
                 {
                     return ("Tipo Embalagem já cadastrada.");
                 }
@@ -53,17 +52,22 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="TipoEmbalagem"></param>
         /// <returns></returns>
-        public string Deletar(TipoEmbalagem TipoEmbalagem)
+        public string Deletar(TipoEmbalagem tipoEmbalagem)
         {
+            if (tipoEmbalagem.Id == 0)
+            {
+                return "Tipo de embalagem informada inválida!";
+            }
+
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM tipoembalagem WHERE idTipoEmbalagem = @ID";
-            cmd.Parameters.AddWithValue("@ID", TipoEmbalagem.Id);
+            cmd.CommandText = "DELETE FROM tipoembalagem WHERE idTipoEmbalagem = @idTipoEmbalagem";
+            cmd.Parameters.AddWithValue("@idTipoEmbalagem", tipoEmbalagem.Id);
 
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Tipo Embalagem deletado com êxito!";
+                return "Tipo de embalagem deletado com êxito!";
             }
             catch (Exception)
             {
@@ -81,19 +85,19 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="TipoEmbalagem"></param>
         /// <returns></returns>
-        public string Atualizar(TipoEmbalagem TipoEmbalagem)
+        public string Atualizar(TipoEmbalagem tipoEmbalagem)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE tipoembalagem SET descricao = @descricao WHERE idTipoEmbalagem = @idTipoEmbalagem";
-            cmd.Parameters.AddWithValue("@idTipoEmbalagem", TipoEmbalagem.Id);
-            cmd.Parameters.AddWithValue("@descricao", TipoEmbalagem.Descricao);
+            cmd.Parameters.AddWithValue("@descricao", tipoEmbalagem.Descricao);
+            cmd.Parameters.AddWithValue("@idTipoEmbalagem", tipoEmbalagem.Id);
 
 
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "TipoEmbalagem atualizado com êxito!";
+                return "Tipo de embalagem atualizado com êxito!";
             }
             catch (Exception)
             {
@@ -117,17 +121,18 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<TipoEmbalagem> TipoEmbalagems = new List<TipoEmbalagem>();
+                List<TipoEmbalagem> tipoEmbalagens = new List<TipoEmbalagem>();
+
                 while (reader.Read())
                 {
                     TipoEmbalagem temp = new TipoEmbalagem();
-
                     temp.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
                     temp.Descricao = Convert.ToString(reader["descricao"]);
 
-                    TipoEmbalagems.Add(temp);
+                    tipoEmbalagens.Add(temp);
                 }
-                return TipoEmbalagems;
+
+                return tipoEmbalagens;
             }
             catch (Exception)
             {
@@ -138,24 +143,25 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public TipoEmbalagem GetByID(int id)
+        public TipoEmbalagem GetByID(int idTipoEmbalagem)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM tipoembalagem WHERE idTipoEmbalagem = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.CommandText = "SELECT * FROM tipoembalagem WHERE idTipoEmbalagem = @idTipoEmbalagem";
+            cmd.Parameters.AddWithValue("@idTipoEmbalagem", idTipoEmbalagem);
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                TipoEmbalagem temp = new TipoEmbalagem();
+                TipoEmbalagem tipoEmbalagem = new TipoEmbalagem();
 
                 while (reader.Read())
                 {
-                    temp.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
-                    temp.Descricao = Convert.ToString(reader["descricao"]);
+                    tipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
+                    tipoEmbalagem.Descricao = Convert.ToString(reader["descricao"]);
                 }
-                return temp;
+
+                return tipoEmbalagem;
             }
             catch (Exception)
             {
@@ -175,19 +181,15 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                TipoEmbalagem TipoEmbalagem = new TipoEmbalagem();
+                TipoEmbalagem tipoEmbalagem = new TipoEmbalagem();
 
                 while (reader.Read())
                 {
-                    TipoEmbalagem temp = new TipoEmbalagem();
-
-                    temp.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
-                    temp.Descricao = Convert.ToString(reader["descricao"]);
-
-                    TipoEmbalagem = temp;
+                    tipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
+                    tipoEmbalagem.Descricao = Convert.ToString(reader["descricao"]);
                 }
 
-                return TipoEmbalagem;
+                return tipoEmbalagem;
             }
             catch (Exception)
             {

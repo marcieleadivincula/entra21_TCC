@@ -1,35 +1,36 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using Domain;
-using MySql.Data.MySqlClient;
 
 namespace DataAccessLayer
 {
-    public class PaisDAL
+    public class FoneTipoDAL
     {
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
 
-        public string Inserir(Pais pais)
+        public string Inserir(FoneTipo foneTipo)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO pais (nomePais) values (@nomePais)";
-            cmd.Parameters.AddWithValue("@nomePais", pais.Nome);
+            cmd.CommandText = "INSERT INTO foneTipo(tipo) values(@tipo)";
+            cmd.Parameters.AddWithValue("@tipo", foneTipo.Tipo);
 
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "País cadastrado com sucesso";
+                return "Tipo de telefone cadastrado com sucesso";
             }
             catch (Exception ex)
-            {                
+            {
                 if (ex.Message.Contains("Duplicate"))
                 {
-                    return ("País já cadastrado.");
+                    return ("Tipo de telefone já cadastrada.");
                 }
                 else
                 {
+                    Console.WriteLine(ex);
                     return ("Erro no Banco de dados. Contate o administrador.");
                 }
             }
@@ -39,22 +40,45 @@ namespace DataAccessLayer
             }
 
         }
-        public string Deletar(Pais pais)
+        public string Deletar(FoneTipo foneTipo)
         {
-            if (pais.Id == 0)
+            if (foneTipo.Id == 0)
             {
-                return "País informado inválido!";
+                return "Tipo de telefone informado é inválido!";
             }
 
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM pais WHERE idPais = @ID";
-            cmd.Parameters.AddWithValue("@ID", pais.Id);
+            cmd.CommandText = "DELETE FROM foneTipo WHERE idFoneTipo = @idFoneTipo";
+            cmd.Parameters.AddWithValue("@idFoneTipo", foneTipo.Id);
 
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "País deletado com êxito!";
+                return "Tipo de telefone deletado com êxito!";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public string Atualizar(FoneTipo foneTipo)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "UPDATE foneTipo SET tipo = @tipo WHERE idFoneTipo = @idFoneTipo";
+            cmd.Parameters.AddWithValue("@tipo", foneTipo.Tipo);
+            cmd.Parameters.AddWithValue("@idFoneTipo", foneTipo.Id);
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Tipo de telefone atualizado com êxito!";
             }
             catch (Exception)
             {
@@ -64,110 +88,29 @@ namespace DataAccessLayer
             {
                 conn.Dispose();
             }
+
         }
-        public string Atualizar(Pais pais)
+        public List<FoneTipo> SelecionaTodos()
         {
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE pais SET nomePais = @nomePais WHERE idPais = @idPais";
-            cmd.Parameters.AddWithValue("@nomePais", pais.Nome);
-            cmd.Parameters.AddWithValue("@idPais", pais.Id);
-
-            try
-            {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                return "País atualizado com êxito!";
-            }
-            catch (Exception)
-            {
-                return "Erro no Banco de dados. Contate o administrador.";
-            }
-            finally
-            {
-                conn.Dispose();
-            }
-        }
-        public List<Pais> SelecionaTodos()
-        {            
-            cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM pais";
-            try
-            {
-                conn.Open();
-                MySqlDataReader reader = cmd.ExecuteReader();
-                List<Pais> pais = new List<Pais>();
-
-                while (reader.Read())
-                {
-                    Pais temp = new Pais();
-                    temp.Id = Convert.ToInt32(reader["idPais"]);
-                    temp.Nome = Convert.ToString(reader["nomePais"]);
-
-                    pais.Add(temp);
-                }
-
-                return pais;
-            }
-            catch (Exception ex)
-            {
-
-                Console.WriteLine(ex.Message);
-
-                throw new Exception("Erro no Banco de dados.Contate o administrador.");
-            }
-            finally
-            {
-                conn.Dispose();
-            }
-        }
-        public Pais GetPaisById(int idPais)
-        {            
-            cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM pais WHERE idPais = @idPais";
-            cmd.Parameters.AddWithValue("@Id", idPais);
+            cmd.CommandText = "SELECT * FROM foneTipo";
 
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                Pais pais = new Pais();
+                List<FoneTipo> foneTipos = new List<FoneTipo>();
 
                 while (reader.Read())
                 {
-                    pais.Id = Convert.ToInt32(reader["idPais"]);
-                    pais.Nome = Convert.ToString(reader["nomePais"]);
+                    FoneTipo temp = new FoneTipo();
+                    temp.Id = Convert.ToInt32(reader["idFoneTipo"]);
+                    temp.Tipo = Convert.ToString(reader["tipo"]);
+
+                    foneTipos.Add(temp);
                 }
 
-                return pais;
-            }
-            catch (Exception)
-            {                
-                throw new Exception("Erro no Banco de dados. Contate o administrador.");
-            }
-            finally
-            {
-                conn.Dispose();
-            }
-        }
-        public Pais GetLastRegister()
-        {
-           
-            cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM pais ORDER BY idPais DESC limit 1";
-
-            try
-            {
-                conn.Open();
-                MySqlDataReader reader = cmd.ExecuteReader();
-                Pais pais = new Pais();
-
-                while (reader.Read())
-                {
-                    pais.Id = Convert.ToInt32(reader["idPais"]);
-                    pais.Nome = Convert.ToString(reader["nomePais"]);
-                }
-
-                return pais;
+                return foneTipos;
             }
             catch (Exception)
             {
@@ -178,7 +121,62 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public FoneTipo GetByID(int idFoneTipo)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM foneTipo WHERE idFoneTipo = @idFoneTipo";
+            cmd.Parameters.AddWithValue("@idFoneTipo", idFoneTipo);
 
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                FoneTipo foneTipo = new FoneTipo();
 
+                while (reader.Read())
+                {
+                    foneTipo.Id = Convert.ToInt32(reader["idFoneTipo"]);
+                    foneTipo.Tipo = Convert.ToString(reader["tipo"]);
+                }
+
+                return foneTipo;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public FoneTipo GetLastRegister()
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM foneTipo ORDER BY idFoneTipo DESC limit 1";
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                FoneTipo foneTipo = new FoneTipo();
+
+                while (reader.Read())
+                {
+                    foneTipo.Id = Convert.ToInt32(reader["idFoneTipo"]);
+                    foneTipo.Tipo = Convert.ToString(reader["tipo"]);
+                }
+
+                return foneTipo;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

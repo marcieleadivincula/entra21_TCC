@@ -30,7 +30,5 @@ namespace Domain
         {
             return $"{Id} - {Nome}";
         }
-
-
     }
 }

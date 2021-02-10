@@ -20,7 +20,7 @@ namespace BusinessLogicalLayer
             {
                 erros.AppendLine("O ID de atendimento deve ser informado.");
             }
-            if (atendimento.Paciente.Id == 0 || atendimento.Paciente.Id < 0 )
+            if (atendimento.Paciente.Id == 0 || atendimento.Paciente.Id < 0)
             {
                 erros.AppendLine("O ID de Paciente deve ser informado.");
             }
@@ -90,10 +90,15 @@ namespace BusinessLogicalLayer
         }
 
         //Obter último registro
-        //public Atendimento getLastRegister()
-        //{
-        //return dal.getLastRegister();
+        public Atendimento GetLastRegister()
+        {
+            return dal.GetLastRegister();
+        }
 
-        //}
+        //Obter lista de procedimentos do atendimento
+        public List<Procedimento> GetProcedimentos(int idAtendimento)
+        {
+            return dal.GetProcedimentos(idAtendimento);
+        }
     }
 }
