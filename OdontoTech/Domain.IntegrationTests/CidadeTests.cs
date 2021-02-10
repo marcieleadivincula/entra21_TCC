@@ -55,7 +55,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "O nome deve ser informado.\r\n");
+            Assert.AreEqual(str, "O nome da cidade deve ser informado.\r\n");
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "O nome não pode conter mais que 50 caracteres.\r\n");
+            Assert.AreEqual(str, "O nome da cidade não pode conter mais que 50 caracteres.\r\n");
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace Domain.IntegrationTests
             Cidade test = new Cidade(1, "1012345678910123456789101234567891012345678910123456789", estado);
             str = bll.Update(test);
 
-            Assert.AreEqual(str, "O nome não pode conter mais que 50 caracteres.\r\n");
+            Assert.AreEqual(str, "O nome da cidade não pode conter mais que 50 caracteres.\r\n");
         }
 
         [Test]

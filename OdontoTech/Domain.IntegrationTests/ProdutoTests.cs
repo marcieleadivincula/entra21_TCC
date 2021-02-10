@@ -34,7 +34,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Produto cadastrado com sucesso");
+            Assert.AreEqual(str, "Produto cadastrado com sucesso !");
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "O nome deve ser informado.\r\n");
+            Assert.AreEqual(str, "O nome deve ser informado. \r\n");
         }
 
         [Test]

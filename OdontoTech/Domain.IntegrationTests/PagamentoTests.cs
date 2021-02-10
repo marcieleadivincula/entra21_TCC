@@ -36,7 +36,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Pagamento cadastrado com sucesso !");
+            Assert.AreEqual(str, "Pagamento cadastrado com sucesso!");
         }       
 
         [Test]

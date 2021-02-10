@@ -94,7 +94,8 @@ namespace DataAccessLayer
         public string Atualizar(Colaborador colaborador)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE colaborador SET nome = @nome, cro = @cro,  croEstado = @croEstado,  dtAdmissao = @dtAdmissao,  dtDemissao = @dtDemissao,  @idEndereco, @idClinica, ferias = @ferias,  demitido = @demitido  WHERE idColaborador = @idColaborador";
+            cmd.CommandText = "UPDATE colaborador SET nome = @nome, cro = @cro,  croEstado = @croEstado,  dtAdmissao = @dtAdmissao,  dtDemissao = @dtDemissao, idEndereco = @idEndereco, idClinica = @idClinica, ferias = @ferias,  demitido = @demitido  WHERE idColaborador = @idColaborador";
+
             cmd.Parameters.AddWithValue("@nome", colaborador.Nome);
             cmd.Parameters.AddWithValue("@cro", colaborador.Cro);
             cmd.Parameters.AddWithValue("@croEstado", colaborador.CroEstado);
@@ -112,8 +113,9 @@ namespace DataAccessLayer
                 cmd.ExecuteNonQuery();
                 return "Colaborador atualizado com êxito!";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return "Erro no Banco de dados.Contate o administrador.";
             }
             finally
