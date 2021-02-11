@@ -75,8 +75,8 @@ namespace DataAccessLayer
         public string DeleteByEmail(string email)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM codseguranca WHERE Email = @Email";
-            cmd.Parameters.AddWithValue("@Email", email);
+            cmd.CommandText = $"DELETE FROM codseguranca WHERE Email = '{email}'";
+            //cmd.Parameters.AddWithValue("@Email", email);
 
             try
             {

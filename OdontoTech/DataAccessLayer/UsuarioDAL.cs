@@ -89,10 +89,7 @@ namespace DataAccessLayer
         {
 
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE usuario SET login = @login,  senha = @senha, idColaborador = @idColaborador WHERE idUsuario = @idUsuario";
-            cmd.Parameters.AddWithValue("@login", usuario.Login);
-            cmd.Parameters.AddWithValue("@senha", usuario.Senha);
-            cmd.Parameters.AddWithValue("@idColaborador", usuario.Colaborador.Id);
+            cmd.CommandText = $"UPDATE usuario SET login = '{usuario.Login}',  senha = '{usuario.Senha}', idColaborador =  {usuario.Colaborador.Id} WHERE idUsuario = @idUsuario";
             cmd.Parameters.AddWithValue("@idUsuario", usuario.Id);
 
 

@@ -21,14 +21,8 @@ namespace PresentationLayer.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-        }
 
-        EnderecoBLL enderecoBLL = new EnderecoBLL();
-        LogradouroBLL logradouroBLL = new LogradouroBLL();
-        BairroBLL bairroBLL = new BairroBLL();
-        CidadeBLL cidadeBLL = new CidadeBLL();
-        EstadoBLL estadoBLL = new EstadoBLL();
-        PaisBLL paisBll = new PaisBLL();
+        }
 
         public IActionResult Index()
         {
@@ -294,6 +288,8 @@ namespace PresentationLayer.Controllers
 
         public IActionResult Pais()
         {
+            PaisBLL paisBll = new PaisBLL();
+
             ViewBag.Id = paisBll.GetAll();
             ViewBag.Nome = paisBll.GetAll();
 
@@ -390,9 +386,10 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        [HttpPost]
+      
         public IActionResult AlterarSenha(string Email,string senha1,string senha2)
         {
+
             if (senha1 != senha2)
             {
                 ViewBag.Email = Email;
@@ -406,6 +403,8 @@ namespace PresentationLayer.Controllers
             }
             if (senha1 == senha2)
             {
+                
+
                 UsuarioBLL bll = new UsuarioBLL();
                 Usuario user = new Usuario();
 
@@ -414,7 +413,10 @@ namespace PresentationLayer.Controllers
                 user.Senha = senha1;
 
                 bll.Update(user);
-                g
+
+                TempData["Mensagem"] = "Senha Alterada com Sucesso !";
+
+                return RedirectToAction("Index","Home");
             }
             return View();
         }
@@ -437,7 +439,8 @@ namespace PresentationLayer.Controllers
             if (bll.VerificaCodigo(codigo,Email))
             {
                 bll.DeletaByEmail(Email);
-                return RedirectToAction("AlterarSenha","Home",Email);
+                TempData.Add("Email",Email);
+                return RedirectToAction("AlterarSenha","Home");
             }
             else
             {
