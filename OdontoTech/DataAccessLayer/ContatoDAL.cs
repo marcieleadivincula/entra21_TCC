@@ -9,7 +9,6 @@ namespace DataAccessLayer
     {
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
-
         public string Insert(Contato contato)
         {
             cmd.Connection = conn;

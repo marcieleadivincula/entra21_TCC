@@ -9,6 +9,7 @@ namespace BusinessLogicalLayer
     {
         PacienteDAL dal = new PacienteDAL();
 
+        //Incluir um registro
         public string Insert(Paciente paciente)
         {
             StringBuilder erros = new StringBuilder();
@@ -91,15 +92,17 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(paciente);
+            string respostaDB = dal.Insert(paciente);
             return respostaDB;
         }
 
+        //Obter todos os registros
         public List<Paciente> GetAll()
         {
-            return dal.SelecionaTodos();
+            return dal.GetAll();
         }
 
+        //Atualizar um registro existente
         public string Update(Paciente paciente)
         {
             StringBuilder erros = new StringBuilder();
@@ -185,10 +188,11 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Atualizar(paciente);
+            string respostaDB = dal.Update(paciente);
             return respostaDB;
         }
 
+        //Excluir um registro
         public string Delete(Paciente paciente)
         {
             StringBuilder erros = new StringBuilder();
@@ -203,8 +207,27 @@ namespace BusinessLogicalLayer
                 return erros.ToString();
             }
 
-            string respostaDB = dal.Deletar(paciente);
+            string respostaDB = dal.Delete(paciente);
             return respostaDB;
+        }
+
+        //Obter um registro
+        public Paciente GetById(Paciente paciente)
+        {
+            StringBuilder erros = new StringBuilder();
+
+            if (paciente.Id == 0 || paciente.Id < 0)
+            {
+                erros.AppendLine("O ID do paciente deve ser informado.");
+            }
+
+            return dal.GetById(paciente.Id);
+        }
+
+        //Obter último registro
+        public Paciente GetLastRegister()
+        {
+            return dal.GetLastRegister();
         }
     }
 }
