@@ -19,7 +19,7 @@ namespace DataAccessLayer
         /// Insere o  Tipo Embalagem no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="TipoEmbalagem"></param>
-        public string Inserir(TipoEmbalagem tipoEmbalagem)
+        public string Insert(TipoEmbalagem tipoEmbalagem)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO tipoembalagem(descricao) values(@descricao)";
@@ -52,7 +52,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="TipoEmbalagem"></param>
         /// <returns></returns>
-        public string Deletar(TipoEmbalagem tipoEmbalagem)
+        public string Delete(TipoEmbalagem tipoEmbalagem)
         {
             if (tipoEmbalagem.Id == 0)
             {
@@ -85,7 +85,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="TipoEmbalagem"></param>
         /// <returns></returns>
-        public string Atualizar(TipoEmbalagem tipoEmbalagem)
+        public string Update(TipoEmbalagem tipoEmbalagem)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE tipoembalagem SET descricao = @descricao WHERE idTipoEmbalagem = @idTipoEmbalagem";
@@ -113,7 +113,7 @@ namespace DataAccessLayer
 /// retorna uma lista com todos os tipos de embalagens.
 /// </summary>
 /// <returns></returns>
-        public List<TipoEmbalagem> SelecionaTodos()
+        public List<TipoEmbalagem> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM tipoembalagem";
@@ -143,7 +143,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public TipoEmbalagem GetByID(int idTipoEmbalagem)
+        public TipoEmbalagem GetById(int idTipoEmbalagem)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM tipoembalagem WHERE idTipoEmbalagem = @idTipoEmbalagem";

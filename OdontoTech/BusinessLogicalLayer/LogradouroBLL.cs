@@ -22,9 +22,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome do logradouro deve ser informado.");
             }
 
-            if (logradouro.Nome.Length > 50)
+            if (!string.IsNullOrWhiteSpace(logradouro.Nome))
             {
-                erros.AppendLine("O nome do logradouro não pode conter mais que 50 caracteres.");
+                if (logradouro.Nome.Length > 50)
+                {
+                    erros.AppendLine("O nome do logradouro não pode conter mais que 50 caracteres.");
+                }
             }
 
             if (erros.Length != 0)
@@ -52,9 +55,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome do logradouro deve ser informado.");
             }
 
-            if (logradouro.Nome.Length > 50)
+            if (!string.IsNullOrWhiteSpace(logradouro.Nome))
             {
-                erros.AppendLine("O nome do logradouro não pode conter mais que 50 caracteres.");
+                if (logradouro.Nome.Length > 50)
+                {
+                    erros.AppendLine("O nome do logradouro não pode conter mais que 50 caracteres.");
+                }
             }
 
             if (erros.Length != 0)
@@ -69,6 +75,18 @@ namespace BusinessLogicalLayer
         //Excluir um registro
         public string Delete(Logradouro logradouro)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (logradouro.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Delete(logradouro);
             return respostaDB;
         }

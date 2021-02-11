@@ -19,7 +19,7 @@ namespace DataAccessLayer
         /// Insere o  Usuario no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="usuario"></param>
-        public string Inserir(Usuario usuario)
+        public string Insert(Usuario usuario)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO usuario (login, senha, idColaborador) values (@login, @senha, @idColaborador)";
@@ -54,7 +54,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="usuario"></param>
         /// <returns></returns>
-        public string Deletar(Usuario usuario)
+        public string Delete(Usuario usuario)
         {
             if (usuario.Id == 0)
             {
@@ -85,7 +85,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="usuario"></param>
         /// <returns></returns>
-        public string Atualizar(Usuario usuario)
+        public string Update(Usuario usuario)
         {
 
             cmd.Connection = conn;
@@ -113,7 +113,7 @@ namespace DataAccessLayer
         /// Retorna Lista Com Todos os usuarios do BD.
         /// </summary>
         /// <returns></returns>
-        public List<Usuario> SelecionaTodos()
+        public List<Usuario> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM usuario";
@@ -145,7 +145,6 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-
         public bool EhFuncionarioCadastrado(string login, string senha)
         {
             long? usuarioId = null;
@@ -168,7 +167,6 @@ namespace DataAccessLayer
 
             return usuarioId != null;
         }
-
         public bool VerificaLogin(string login, string senha)
         {
             cmd.Connection = conn;
@@ -195,8 +193,7 @@ namespace DataAccessLayer
 
 
         }
-
-        public Usuario GetByID(int idUsuario)
+        public Usuario GetById(int idUsuario)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM usuario WHERE idUsuario = @idUsuario";
@@ -297,7 +294,6 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-
         public Usuario Autenticar(string login, string password)
         {
             cmd.Connection = conn;

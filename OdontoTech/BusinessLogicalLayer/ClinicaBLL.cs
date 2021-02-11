@@ -19,9 +19,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome da clínica deve ser informado.");
             }
 
-            if (clinica.Nome.Length > 60)
+            if (!string.IsNullOrWhiteSpace(clinica.Nome))
             {
-                erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+                if (clinica.Nome.Length > 60)
+                {
+                    erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+                }
             }
 
             if (clinica.DataInauguracao == null || clinica.DataInauguracao.Equals("")) // rever a data
@@ -49,14 +52,17 @@ namespace BusinessLogicalLayer
         {
             StringBuilder erros = new StringBuilder();
 
-            if (clinica.Nome.Length > 60)
-            {
-                erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
-            }
-
             if (string.IsNullOrWhiteSpace(clinica.Nome))
             {
                 erros.AppendLine("O nome da clínica deve ser informado.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(clinica.Nome))
+            {
+                if (clinica.Nome.Length > 60)
+                {
+                    erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+                }
             }
 
             if (clinica.DataInauguracao == null || clinica.DataInauguracao.Equals("")) // rever a data
@@ -76,6 +82,18 @@ namespace BusinessLogicalLayer
         //Excluir um registro
         public string Delete(Clinica clinica)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (clinica.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Delete(clinica);
             return respostaDB;
         }

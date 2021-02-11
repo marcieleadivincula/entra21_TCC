@@ -36,7 +36,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Paciente cadastrado com sucesso");
+            Assert.AreEqual(str, "Paciente cadastrado com sucesso !");
         }
 
         [Test]
@@ -230,7 +230,7 @@ namespace Domain.IntegrationTests
 
             Paciente test = new Paciente(150, "Ana", "Julia", "132", "123", data, "blabla", endereco);
             str = bll.Delete(test);
-            Assert.AreEqual(str, "Paciente deletado com êxito!");
+            Assert.AreEqual(str, "Paciente deletado com êxito !");
         }
 
     }

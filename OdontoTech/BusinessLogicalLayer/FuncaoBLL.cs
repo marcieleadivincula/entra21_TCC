@@ -12,49 +12,103 @@ namespace BusinessLogicalLayer
     {
         FuncaoDAL dal = new FuncaoDAL();
 
+        //Incluir um registro
         public string Insert(Funcao funcao)
         {
             StringBuilder erros = new StringBuilder();
 
-            if (funcao.Id == 0 || funcao.Id < 0)
-            {
-                erros.AppendLine("O ID da função deve ser informado.");
-            }
-
             if (string.IsNullOrWhiteSpace(funcao.Nome))
             {
-                erros.AppendLine("Um nome deve ser informado.");
+                erros.AppendLine("O nome da função deve ser informado.");
             }
 
-            if (funcao.Nome.Length > 100)
+            if (!string.IsNullOrWhiteSpace(funcao.Nome))
             {
-                erros.AppendLine("O nome da função não pode conter mais que 100 caracteres.");
+                if (funcao.Nome.Length > 100)
+                {
+                    erros.AppendLine("O nome da função não pode conter mais que 100 caracteres.");
+                }
             }
 
-            if (funcao.Salario < 0) //rever
+            if (funcao.Salario < 0 || funcao.Salario == 0) //rever
             {
-                erros.AppendLine("O salário não pode ser negativo.");
+                erros.AppendLine("O salário deve ser informado.");
             }
-             
+
             if (funcao.Comissao < 0) //rever tmb. 
             {
-                erros.AppendLine("A comissão não pode ser negativa.");
+                erros.AppendLine("A comissão deve ser informada.");
+            }
+
+            if (funcao.Comissao > 0.6) //rever tmb. 
+            {
+                erros.AppendLine("A comissão não pode ser maior que 60%.");
             }
 
             if (erros.Length != 0)
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(funcao);
+            string respostaDB = dal.Insert(funcao);
             return respostaDB;
         }
 
+        //Obter todos os registros
         public List<Funcao> GetAll()
         {
-            return dal.SelecionaTodos();
+            return dal.GetAll();
         }
 
+        //Atualizar um registro existente
         public string Update(Funcao funcao)
+        {
+            StringBuilder erros = new StringBuilder();
+
+            if (string.IsNullOrWhiteSpace(funcao.Nome))
+            {
+                erros.AppendLine("O nome da função deve ser informado.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(funcao.Nome))
+            {
+                if (funcao.Nome.Length > 100)
+                {
+                    erros.AppendLine("O nome da função não pode conter mais que 100 caracteres.");
+                }
+            }
+
+            if (funcao.Salario < 0 || funcao.Salario == 0) //rever
+            {
+                erros.AppendLine("O salário deve ser informado.");
+            }
+
+            if (funcao.Comissao < 0) //rever tmb. 
+            {
+                erros.AppendLine("A comissão deve ser informada.");
+            }
+
+            if (funcao.Comissao > 0.6) //rever tmb. 
+            {
+                erros.AppendLine("A comissão não pode ser maior que 60%.");
+            }
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
+            string respostaDB = dal.Update(funcao);
+            return respostaDB;
+        }
+
+        //Excluir um registro
+        public string Delete(Funcao funcao)
+        {
+            string respostaDB = dal.Delete(funcao);
+            return respostaDB;
+        }
+
+        //Obter um registro
+        public Funcao GetById(Funcao funcao)
         {
             StringBuilder erros = new StringBuilder();
 
@@ -63,36 +117,13 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O ID da função deve ser informado.");
             }
 
-            if (string.IsNullOrWhiteSpace(funcao.Nome))
-            {
-                erros.AppendLine("Um nome deve ser informado.");
-            }
-
-            if (funcao.Nome.Length > 100)
-            {
-                erros.AppendLine("O nome da função não pode conter mais que 100 caracteres.");
-            }
-
-            if (funcao.Salario < 0) //rever
-            {
-                erros.AppendLine("O salário não pode ser negativo.");
-            }
-
-            if (erros.Length != 0)
-            {
-                return erros.ToString();
-            }
-            string respostaDB = dal.Atualizar(funcao);
-            return respostaDB;
+            return dal.GetById(funcao.Id);
         }
 
-        public string Delete(Funcao funcao)
+        //Obter último registro
+        public Funcao GetLastRegister()
         {
-            string respostaDB = dal.Deletar(funcao);
-            return respostaDB;
+            return dal.GetLastRegister();
         }
-
-
-
     }
 }

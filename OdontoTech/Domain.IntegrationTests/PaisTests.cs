@@ -49,7 +49,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "O nome deve ser informado.\r\n");
+            Assert.AreEqual(str, "O nome do país deve ser informado.\r\n");
         }
 
         
@@ -61,7 +61,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "O nome não pode conter mais que 20 caracteres.\r\n");
+            Assert.AreEqual(str, "O nome do país não pode conter mais que 20 caracteres.\r\n");
         }
         
         [Test]
@@ -82,7 +82,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Update(test);
 
-            Assert.AreEqual(str, "O nome deve ser informado.\r\n");
+            Assert.AreEqual(str, "O nome do país deve ser informado.\r\n");
         }     
 
         [Test]
@@ -91,7 +91,7 @@ namespace Domain.IntegrationTests
             Pais test = new Pais(1, "321546789546123654879");
             str = bll.Update(test);
 
-            Assert.AreEqual(str, "O nome não pode conter mais que 20 caracteres.\r\n");
+            Assert.AreEqual(str, "O nome do país não pode conter mais que 20 caracteres.\r\n");
         }     
 
         [Test]

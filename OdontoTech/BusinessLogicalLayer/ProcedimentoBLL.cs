@@ -12,18 +12,32 @@ namespace BusinessLogicalLayer
     {
         ProcedimentoDAL dal = new ProcedimentoDAL();
 
+        //Incluir um registro
         public string Insert(Procedimento procedimento)
         {
             StringBuilder erros = new StringBuilder();
 
-            if (procedimento.Id == 0 || procedimento.Id < 0)
+            if (string.IsNullOrWhiteSpace(procedimento.Nome))
             {
-                erros.AppendLine("O ID do procedimento deve ser informado.");
+                erros.AppendLine("O nome do procedimento deve ser informada.");
+            }
+
+            if (procedimento.Nome.Length > 60)
+            {
+                erros.AppendLine("O nome do procedimento não pode conter mais que 60 caracteres.");
             }
 
             if (string.IsNullOrWhiteSpace(procedimento.DescricaoProcedimento))
             {
-                erros.AppendLine("Uma descrição deve ser informada.");
+                erros.AppendLine("A descrição do procedimento deve ser informada.");
+            }   
+
+            if (!string.IsNullOrWhiteSpace(procedimento.DescricaoProcedimento))
+            {
+                if (procedimento.DescricaoProcedimento.Length > 60)
+                {
+                    erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
+                }
             }
 
             if (procedimento.DescricaoProcedimento.Length > 60)
@@ -31,25 +45,84 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
             }
 
-            if (procedimento.TipoProcedimento.Id == 0 || procedimento.TipoProcedimento.Id < 0)
+            if (erros.Length != 0)
             {
-                erros.AppendLine("O ID do tipo de procedimento deve ser informado.");
+                return erros.ToString();
+            }
+
+            string respostaDB = dal.Insert(procedimento);
+            return respostaDB;
+        }
+
+        //Obter todos os registros
+        public List<Procedimento> GetAll()
+        {
+            return dal.GetAll();
+        }
+
+        //Atualizar um registro existente
+        public string Update(Procedimento procedimento)
+        {
+            StringBuilder erros = new StringBuilder();
+
+            if (string.IsNullOrWhiteSpace(procedimento.Nome))
+            {
+                erros.AppendLine("O nome do procedimento deve ser informada.");
+            }
+
+            if (procedimento.Nome.Length > 60)
+            {
+                erros.AppendLine("O nome do procedimento não pode conter mais que 60 caracteres.");
+            }
+
+            if (string.IsNullOrWhiteSpace(procedimento.DescricaoProcedimento))
+            {
+                erros.AppendLine("A descrição do procedimento deve ser informada.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(procedimento.DescricaoProcedimento))
+            {
+                if (procedimento.DescricaoProcedimento.Length > 60)
+                {
+                    erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
+                }
+            }
+
+            if (procedimento.DescricaoProcedimento.Length > 60)
+            {
+                erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
             }
 
             if (erros.Length != 0)
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(procedimento);
+
+            string respostaDB = dal.Update(procedimento);
             return respostaDB;
         }
 
-        public List<Procedimento> GetAll()
+        //Excluir um registro
+        public string Delete(Procedimento procedimento)
         {
-            return dal.SelecionaTodos();
+            StringBuilder erros = new StringBuilder();
+
+            if (~procedimento.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
+            string respostaDB = dal.Delete(procedimento);
+            return respostaDB;
         }
 
-        public string Update(Procedimento procedimento)
+        //Obter um registro
+        public Procedimento GetById(Procedimento procedimento)
         {
             StringBuilder erros = new StringBuilder();
 
@@ -58,33 +131,19 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O ID do procedimento deve ser informado.");
             }
 
-            if (string.IsNullOrWhiteSpace(procedimento.DescricaoProcedimento))
-            {
-                erros.AppendLine("Uma descrição deve ser informada.");
-            }
-
-            if (procedimento.DescricaoProcedimento.Length > 60)
-            {
-                erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
-            }
-
-            if (procedimento.TipoProcedimento.Id == 0 || procedimento.TipoProcedimento.Id < 0)
-            {
-                erros.AppendLine("O ID do tipo de procedimento deve ser informado.");
-            }
-
-            if (erros.Length != 0)
-            {
-                return erros.ToString();
-            }
-            string respostaDB = dal.Atualizar(procedimento);
-            return respostaDB;
+            return dal.GetById(procedimento.Id);
         }
 
-        public string Delete(Procedimento procedimento)
+        //Obter último registro
+        public Procedimento GetLastRegister()
         {
-            string respostaDB = dal.Deletar(procedimento);
-            return respostaDB;
+            return dal.GetLastRegister();
+        }
+
+        //Obtem lista de atendimentos por procedimento
+        public List<Atendimento> GetAtendimentos(int idProcedimento)
+        {
+            return dal.GetAtendimentos(idProcedimento);
         }
     }
 }

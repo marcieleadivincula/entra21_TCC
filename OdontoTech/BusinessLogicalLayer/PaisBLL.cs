@@ -19,9 +19,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome do país deve ser informado.");
             }
 
-            if (pais.Nome.Length > 20)
+            if (!string.IsNullOrWhiteSpace(pais.Nome))
             {
-                erros.AppendLine("O nome do país não pode conter mais que 20 caracteres.");
+                if (pais.Nome.Length > 20)
+                {
+                    erros.AppendLine("O nome do país não pode conter mais que 20 caracteres.");
+                }
             }
 
             if (erros.Length != 0)
@@ -29,14 +32,14 @@ namespace BusinessLogicalLayer
                 return erros.ToString();
             }
 
-            string respostaDB = dal.Inserir(pais);
+            string respostaDB = dal.Insert(pais);
             return respostaDB;
         }
 
         // Obter todos os registros
         public List<Pais> GetAll()
         {
-            return dal.SelecionaTodos();
+            return dal.GetAll();
         }
 
         //Atualizar um registro existente
@@ -44,14 +47,17 @@ namespace BusinessLogicalLayer
         {
             StringBuilder erros = new StringBuilder();
 
-            if (pais.Nome.Length > 20)
-            {
-                erros.AppendLine("O nome do país não pode conter mais que 20 caracteres.");
-            }
-
             if (string.IsNullOrWhiteSpace(pais.Nome))
             {
                 erros.AppendLine("O nome do país deve ser informado.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(pais.Nome))
+            {
+                if (pais.Nome.Length > 20)
+                {
+                    erros.AppendLine("O nome do país não pode conter mais que 20 caracteres.");
+                }
             }
 
             if (erros.Length != 0)
@@ -59,14 +65,26 @@ namespace BusinessLogicalLayer
                 return erros.ToString();
             }
 
-            string respostaDB = dal.Atualizar(pais);
+            string respostaDB = dal.Update(pais);
             return respostaDB;
         }
 
         //Excluir um registro
         public string Delete(Pais pais)
         {
-            string respostaDB = dal.Deletar(pais);
+            StringBuilder erros = new StringBuilder();
+
+            if (pais.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
+            string respostaDB = dal.Delete(pais);
             return respostaDB;
         }
 

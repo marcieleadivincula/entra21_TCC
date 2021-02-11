@@ -12,6 +12,7 @@ namespace BusinessLogicalLayer
     {
         AtendimentoDAL dal = new AtendimentoDAL();
 
+        //Incluir um registro
         public string Insert(Atendimento atendimento)
         {
             StringBuilder erros = new StringBuilder();
@@ -29,26 +30,38 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O ID de Colaborador deve ser informado.");
             }
 
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
+            string respostaDB = dal.Insert(atendimento);
+            return respostaDB;
+        }
+
+        //Excluir um registro
+        public string Delete(Atendimento atendimento)
+        {
+            StringBuilder erros = new StringBuilder();
+
+            if (atendimento.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
 
             if (erros.Length != 0)
             {
                 return erros.ToString();
             }
 
-            string respostaDB = dal.Inserir(atendimento);
+            string respostaDB = dal.Delete(atendimento);
             return respostaDB;
         }
 
-        public string Delete(Atendimento atendimento)
-        {
-            string respostaDB = dal.Deletar(atendimento);
-            return respostaDB;
-        }
-
+        //Atualizar um registro existente
         public string Update(Atendimento atendimento)
         {
             StringBuilder erros = new StringBuilder();
-
 
             if (atendimento.Id == 0 || atendimento.Id < 0)
             {
@@ -63,22 +76,23 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O ID de Colaborador deve ser informado.");
             }
 
-
             if (erros.Length != 0)
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Atualizar(atendimento);
+
+            string respostaDB = dal.Update(atendimento);
             return respostaDB;
         }
 
+        //Obter todos os registros
         public List<Atendimento> GetAll()
         {
-            return dal.SelecionaTodos();
+            return dal.GetAll();
         }
 
         //Obter um registro
-        public Atendimento GetAtendimentoById(Atendimento atendimento)
+        public Atendimento GetById(Atendimento atendimento)
         {
             StringBuilder erros = new StringBuilder();
 
@@ -87,7 +101,7 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O ID do atendimento deve ser informado.");
             }
 
-            return dal.GetAtendimentoById(atendimento.Id);
+            return dal.GetById(atendimento.Id);
         }
 
         //Obter último registro
