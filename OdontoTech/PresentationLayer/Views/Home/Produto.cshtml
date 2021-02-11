@@ -56,22 +56,22 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-
+                        <label style="color:darkgray; font-size:15px; margin-left:5px;">Tipo de embalagem</label>
                         <input class="input100" type="text" name="embalagem" value="@ViewBag.embalagem">
 
-                        <span class="focus-input100" data-placeholder="Tipo de embalagem"></span>
+                        <span class="focus-input100" data-placeholder=""></span>
 
                         @*@{
 
 
-               for (int i = 0; i < Model.GetAll().Count; i++)
-               {
-                   <select>
-                             <option value="">@Model.GetAll()[i].TipoEmbalagem.Descricao</option>
-                   </select>
+           for (int i = 0; i < Model.GetAll().Count; i++)
+           {
+               <select>
+                         <option value="">@Model.GetAll()[i].TipoEmbalagem.Descricao</option>
+               </select>
 
-               }
-            }*@
+           }
+        }*@
 
 
                         @* Trazer a lista de embalagem *@
@@ -79,26 +79,26 @@
 
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-
+                        <label style="color:darkgray; font-size:15px; margin-left:5px;">Data de compra</label>
                         <input class="input100" type="datetime-local" name="dtCompra" value="@ViewBag.dtCompra">
 
-                        <span class="focus-input100" data-placeholder="Data de compra"></span>
+                        <span class="focus-input100" data-placeholder=""></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-
+                        <label style="color:darkgray; font-size:15px; margin-left:5px;">Preço</label>
                         <input class="input100" type="number" name="preco" value="@ViewBag.preco">
 
-                        <span class="focus-input100" data-placeholder="Preço"></span>
+                        <span class="focus-input100" data-placeholder=""></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
 
-
+                        <label style="color:darkgray; font-size:15px; margin-left:5px;">ID do Produto</label>
                         <input class="input100" type="number" name="idProduto" value="@ViewBag.idProduto">
 
-                        <span class="focus-input100" data-placeholder="ID do Produto"></span>
-                        <label style="color:dimgrey;font-size:13px"> Somente para deletar e atualizar. </label>
+                        <span class="focus-input100" data-placeholder=""></span>
+                        <label style="color:dimgrey;font-size:13px">Obs: Somente para deletar e atualizar. </label>
                     </div>
 
                     @{
