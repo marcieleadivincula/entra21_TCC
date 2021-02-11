@@ -12,22 +12,12 @@ namespace BusinessLogicalLayer
     {
         PagamentoDAL dal = new PagamentoDAL();
 
+        //Incluir um registro
         public string Insert(Pagamento pagamento)
         {
             StringBuilder erros = new StringBuilder();
 
-            if (pagamento.Id == 0 || pagamento.Id < 0)
-            {
-                erros.AppendLine("O ID do pagamento deve ser informado.");
-            }
-
-            if (pagamento.TipoPagamento.Id == 0 || pagamento.TipoPagamento.Id < 0)
-            {
-                erros.AppendLine("O nome do pagamento deve ser informado.");
-            }
-
-            
-            if (pagamento.DataPagamento == null) 
+            if (pagamento.DataPagamento == null || pagamento.DataPagamento.Equals("")) 
             {
                 erros.AppendLine("A data do pagamento deve ser informado.");
             }
@@ -36,30 +26,23 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(pagamento);
+
+            string respostaDB = dal.Insert(pagamento);
             return respostaDB;
         }
 
+        //Obter todos os registros
         public List<Pagamento> GetAll()
         {
-            return dal.SelecionaTodos();
+            return dal.GetAll();
         }
 
+        //Atualizar um registro existente
         public string Update(Pagamento pagamento)
         {
             StringBuilder erros = new StringBuilder();
-            if (pagamento.Id == 0 || pagamento.Id < 0)
-            {
-                erros.AppendLine("O ID do pagamento deve ser informado.");
-            }
 
-            if (pagamento.TipoPagamento.Id == 0 || pagamento.TipoPagamento.Id < 0)
-            {
-                erros.AppendLine("O nome do pagamento deve ser informado.");
-            }
-
-
-            if (pagamento.DataPagamento == null) // rever a data
+            if (pagamento.DataPagamento == null || pagamento.DataPagamento.Equals("")) // rever a data
             {
                 erros.AppendLine("A data do pagamento deve ser informado.");
             }
@@ -68,10 +51,12 @@ namespace BusinessLogicalLayer
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Atualizar(pagamento);
+
+            string respostaDB = dal.Update(pagamento);
             return respostaDB;
         }
 
+        //Excluir um registro
         public string Delete(Pagamento pagamento)
         {
             StringBuilder erros = new StringBuilder();
@@ -86,9 +71,33 @@ namespace BusinessLogicalLayer
                 return erros.ToString();
             }
 
-            string respostaDB = dal.Deletar(pagamento);
+            string respostaDB = dal.Delete(pagamento);
             return respostaDB;
         }
 
+        //Obter um registro
+        public Pagamento GetById(Pagamento pagamento)
+        {
+            StringBuilder erros = new StringBuilder();
+
+            if (pagamento.Id == 0 || pagamento.Id < 0)
+            {
+                erros.AppendLine("O ID do pagamento deve ser informado.");
+            }
+
+            return dal.GetById(pagamento.Id);
+        }
+
+        //Obter último registro
+        public Pagamento GetLastRegister()
+        {
+            return dal.GetLastRegister();
+        }
+
+        //Obtem lista de pagamentos por tipo
+        public List<Pagamento> GetByTipoPagamento(TipoPagamento tipoPagamento)
+        {
+            return dal.GetByTipoPagamento(tipoPagamento);
+        }
     }
 }

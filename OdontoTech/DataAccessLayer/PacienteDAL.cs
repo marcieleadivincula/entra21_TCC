@@ -9,8 +9,7 @@ namespace DataAccessLayer
     {
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
-
-        public string Inserir(Paciente paciente)
+        public string Insert(Paciente paciente)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO paciente(nome,sobrenome,rg,cpf,dtNascimento,obs,idEndereco) values(@nome, @sobrenome, @rg, @cpf, @dtNascimento, @obs, @idEndereco)";
@@ -46,7 +45,7 @@ namespace DataAccessLayer
             }
 
         }
-        public string Deletar(Paciente paciente)
+        public string Delete(Paciente paciente)
         {
             if (paciente.Id == 0)
             {
@@ -73,7 +72,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Atualizar(Paciente paciente)
+        public string Update(Paciente paciente)
         {
 
             cmd.Connection = conn;
@@ -102,7 +101,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public List<Paciente> SelecionaTodos()
+        public List<Paciente> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM paciente";
@@ -144,7 +143,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Paciente GetByID(int idPaciente)
+        public Paciente GetById(int idPaciente)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM paciente WHERE idPaciente = @idPaciente";

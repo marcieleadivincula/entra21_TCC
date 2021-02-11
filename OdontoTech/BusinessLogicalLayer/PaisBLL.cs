@@ -32,14 +32,14 @@ namespace BusinessLogicalLayer
                 return erros.ToString();
             }
 
-            string respostaDB = dal.Inserir(pais);
+            string respostaDB = dal.Insert(pais);
             return respostaDB;
         }
 
         // Obter todos os registros
         public List<Pais> GetAll()
         {
-            return dal.SelecionaTodos();
+            return dal.GetAll();
         }
 
         //Atualizar um registro existente
@@ -65,7 +65,7 @@ namespace BusinessLogicalLayer
                 return erros.ToString();
             }
 
-            string respostaDB = dal.Atualizar(pais);
+            string respostaDB = dal.Update(pais);
             return respostaDB;
         }
 
@@ -84,7 +84,7 @@ namespace BusinessLogicalLayer
                 return erros.ToString();
             }
 
-            string respostaDB = dal.Deletar(pais);
+            string respostaDB = dal.Delete(pais);
             return respostaDB;
         }
 

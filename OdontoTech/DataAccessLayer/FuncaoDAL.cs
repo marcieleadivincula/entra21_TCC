@@ -14,7 +14,7 @@ namespace DataAccessLayer
         /// Insere Funcao caso der erro informa.
         /// </summary>
         /// <param name="Função"></param>
-        public string Inserir(Funcao funcao)
+        public string Insert(Funcao funcao)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO funcao(nomeFuncao, salario, comissao) values(@nomeFuncao, @salario, @comissao)";
@@ -46,7 +46,7 @@ namespace DataAccessLayer
             }
 
         }
-        public string Deletar(Funcao funcao)
+        public string Delete(Funcao funcao)
         {
             if (funcao.Id == 0)
             {
@@ -73,7 +73,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Atualizar(Funcao funcao)
+        public string Update(Funcao funcao)
         {
 
             cmd.Connection = conn;
@@ -99,7 +99,7 @@ namespace DataAccessLayer
             }
 
         }
-        public List<Funcao> SelecionaTodos()
+        public List<Funcao> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM funcao";
@@ -132,7 +132,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Funcao GetByID(int idFuncao)
+        public Funcao GetById(int idFuncao)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM funcao WHERE idFuncao = @idFuncao";

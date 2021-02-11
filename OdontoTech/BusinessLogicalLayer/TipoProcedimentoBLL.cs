@@ -10,21 +10,16 @@ namespace BusinessLogicalLayer
 {
     public class TipoProcedimentoBLL
     {
-
         TipoProcedimentoDAL dal = new TipoProcedimentoDAL();
 
+        //Incluir um registro
         public string Insert(TipoProcedimento tipoProcedimento)
         {
             StringBuilder erros = new StringBuilder();
 
-            if (tipoProcedimento.Id == 0 || tipoProcedimento.Id < 0)
-            {
-                erros.AppendLine("O ID do tipo procedimento deve ser informado.");
-            }
-
             if (string.IsNullOrWhiteSpace(tipoProcedimento.Nome))
             {
-                erros.AppendLine("O nome deve ser informado.");
+                erros.AppendLine("O nome do tipo de procedimento deve ser informado.");
             }
 
             if (!string.IsNullOrWhiteSpace(tipoProcedimento.Nome))
@@ -35,36 +30,34 @@ namespace BusinessLogicalLayer
                 }
             }
 
-            if (tipoProcedimento.Valor < 0) //rever
+            if (tipoProcedimento.Valor < 0 || tipoProcedimento.Valor == 0) //rever
             {
-                erros.AppendLine("O valor do procedimento não pode ser negativo.");
+                erros.AppendLine("O valor do procedimento deve ser informado.");
             }
 
             if (erros.Length != 0)
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Inserir(tipoProcedimento);
+
+            string respostaDB = dal.Insert(tipoProcedimento);
             return respostaDB;
         }
 
+        //Obter todos os registros
         public List<TipoProcedimento> GetAll()
         {
-            return dal.SelecionaTodos();
+            return dal.GetAll();
         }
 
+        //Atualizar um registro existente
         public string Update(TipoProcedimento tipoProcedimento)
         {
             StringBuilder erros = new StringBuilder();
 
-            if (tipoProcedimento.Id == 0 || tipoProcedimento.Id < 0)
-            {
-                erros.AppendLine("O ID do tipo procedimento deve ser informado.");
-            }
-
             if (string.IsNullOrWhiteSpace(tipoProcedimento.Nome))
             {
-                erros.AppendLine("O nome deve ser informado.");
+                erros.AppendLine("O nome do tipo de procedimento deve ser informado.");
             }
 
             if (!string.IsNullOrWhiteSpace(tipoProcedimento.Nome))
@@ -75,19 +68,21 @@ namespace BusinessLogicalLayer
                 }
             }
 
-            if (tipoProcedimento.Valor < 0) //rever
+            if (tipoProcedimento.Valor < 0 || tipoProcedimento.Valor == 0) //rever
             {
-                erros.AppendLine("O valor do procedimento não pode ser negativo.");
+                erros.AppendLine("O valor do procedimento deve ser informado.");
             }
 
             if (erros.Length != 0)
             {
                 return erros.ToString();
             }
-            string respostaDB = dal.Atualizar(tipoProcedimento);
+
+            string respostaDB = dal.Update(tipoProcedimento);
             return respostaDB;
         }
 
+        //Excluir um registro
         public string Delete(TipoProcedimento tipoProcedimento)
         {
             StringBuilder erros = new StringBuilder();
@@ -102,9 +97,27 @@ namespace BusinessLogicalLayer
                 return erros.ToString();
             }
 
-            string respostaDB = dal.Deletar(tipoProcedimento);
+            string respostaDB = dal.Delete(tipoProcedimento);
             return respostaDB;
         }
 
+        //Obter um registro
+        public TipoProcedimento GetById(TipoProcedimento tipoProcedimento)
+        {
+            StringBuilder erros = new StringBuilder();
+
+            if (tipoProcedimento.Id == 0 || tipoProcedimento.Id < 0)
+            {
+                erros.AppendLine("O ID do tipo de procedimento deve ser informado.");
+            }
+
+            return dal.GetById(tipoProcedimento.Id);
+        }
+
+        //Obter último registro
+        public TipoProcedimento GetLastRegister()
+        {
+            return dal.GetLastRegister();
+        }
     }
 }
