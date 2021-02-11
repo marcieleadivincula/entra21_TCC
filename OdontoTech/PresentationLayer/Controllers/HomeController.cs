@@ -159,11 +159,11 @@ namespace PresentationLayer.Controllers
 
                 Pais paiss = new Pais(0,pais);
 
-               string a =  paisDAL.Inserir(paiss);
+               string a =  paisDAL.Insert(paiss);
                 if (a.Contains("já"))
                 {
                     List<Pais> lista = new List<Pais>();
-                    lista = paisDAL.SelecionaTodos();
+                    lista = paisDAL.GetAll();
 
                     foreach (var item in lista)
                     {
