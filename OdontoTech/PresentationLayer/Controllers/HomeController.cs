@@ -351,19 +351,6 @@ namespace PresentationLayer.Controllers
             Produto temp = new Produto(idProduto,produto,tipoEmbalagem,preco,dtCompra);
 
 
-            //if (Convert.ToString(ViewBag.btn) == "Atualizar" )
-            //{
-            //    bll.Update(temp);
-            //}
-            //else if (Convert.ToString(ViewBag.btn) == "Deletar")
-            //{
-            //    bll.Delete(temp);
-            //}
-            //else if (Convert.ToString(ViewBag.btn) == "Salvar")
-            //{
-            //    bll.Insert(temp);
-            //}
-
             ViewData["result"] = "";
             if (funcao == "Atualizar")
             {
@@ -413,57 +400,26 @@ namespace PresentationLayer.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult RecuperarSenhaAprovar(string email,string codigo)
+        public IActionResult RecuperarSenhaAprovar(string Email,string codigo)
         {
-            string codigoemail = Convert.ToString(ViewData["codigo2o"]);
+            CodsegurancaBLL bll = new CodsegurancaBLL();
 
-            if (codigoemail == codigo)
+            if (codigo == null)
             {
-                return RedirectToAction("AlterarSenha", "Home");
-            }
-            else if (codigo == null)
-            {
-
-            }
-            else if (codigo != codigoemail)
-            {
-                ViewData["msgcodigo"] = "O codigo inserido esta incorreto, Tente Novamente !";
-            }
-
-
-                ViewBag.email = email;
-                SmtpClient smtp = new SmtpClient();
-                smtp.Host = "smtp.gmail.com";
-                smtp.Port = 587;
-                smtp.EnableSsl = true;
-                smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new System.Net.NetworkCredential("bifrostodontotech@gmail.com", "bifrost4545");
-                smtp.Timeout = 50000;
-
-
-                MailMessage mail = new MailMessage();
-                mail.From = new MailAddress("bifrostodontotech@gmail.com");
-                //mail.To.Add("vitorantonio.644@gmail.com");
-                mail.To.Add(email);
-                mail.Subject = "Recuperação de senha ODONTO TECH.";
-
-                Random ram = new Random();
-
-                string codigo1 = "";
-                for (int i = 0; i < 5; i++)
-                {
-                    codigo1 += ram.Next(0, 10).ToString();
-                }
-
-                mail.Body = "Seu codigo de verificação é: " + codigo1;
-
-                
-                smtp.Send(mail);
-
-                
-
+                ViewBag.Email = Email;
+                bll.EnviaEMAIL(Email);
                 return View();
-            
+            }
+            if (bll.VerificaCodigo(codigo,Email))
+            {
+                return RedirectToAction("AlterarSenha","Home");
+            }
+            else
+            {
+                ViewBag.Email = Email;
+                ViewData["msgcodigo"] = true;
+                return View();
+            }
         }
 
         [HttpPost]
