@@ -18,7 +18,7 @@ namespace DataAccessLayer
         /// Inserir procedimento
         /// </summary>
         /// <param name="procedimento"></param>
-        public string Inserir(Procedimento procedimento)
+        public string Insert(Procedimento procedimento)
         {
             cmd.Connection = conn;
             cmd.CommandText = $"INSERT INTO procedimento (nomeProcedimento,dsProcedimento,idTipoProcedimento) values (@nomeProcedimento,@dsProcedimento,@idTipoProcedimento)";
@@ -55,7 +55,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="procedimento"></param>
         /// <returns></returns>
-        public string Deletar(Procedimento procedimento)
+        public string Delete(Procedimento procedimento)
         {
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM procedimento WHERE idProcedimento = @ID";
@@ -82,7 +82,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="procedimento"></param>
         /// <returns></returns>
-        public string Atualizar(Procedimento procedimento)
+        public string Update(Procedimento procedimento)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE procedimento SET nomeProcedimento = @nomeProcedimento, dsProcedimento = @dsProcedimento, idTipoProcedimento = @idTipoProcedimento WHERE idProcedimento = @idProcedimento";
@@ -110,7 +110,7 @@ namespace DataAccessLayer
         /// retorna lista com todos os Procedimentos 
         /// </summary>
         /// <returns></returns>
-        public List<Procedimento> SelecionaTodos()
+        public List<Procedimento> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM procedimento";
@@ -142,7 +142,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Procedimento GetByID(int id)
+        public Procedimento GetById(int id)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM procedimento WHERE idProcedimento = @ID";
@@ -208,7 +208,6 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-
         public List<Atendimento> GetAtendimentos(int idProcedimento)
         {
             cmd.Connection = conn;

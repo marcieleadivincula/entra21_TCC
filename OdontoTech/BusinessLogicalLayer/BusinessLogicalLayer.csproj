@@ -76,9 +76,11 @@
     <Compile Include="EnderecoBLL.cs" />
     <Compile Include="EstadoBLL.cs" />
     <Compile Include="EstoqueBLL.cs" />
+    <Compile Include="FoneTipoBLL.cs" />
     <Compile Include="FuncaoBLL.cs" />
     <Compile Include="Parametros.cs" />
     <Compile Include="ProcedimentoBLL.cs" />
+    <Compile Include="TipoPagamentoBLL.cs" />
     <Compile Include="TipoProcedimentoBLL.cs" />
     <Compile Include="LogradouroBLL.cs" />
     <Compile Include="PacienteBLL.cs" />

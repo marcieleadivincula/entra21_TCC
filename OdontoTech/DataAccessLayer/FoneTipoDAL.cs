@@ -9,8 +9,7 @@ namespace DataAccessLayer
     {
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
-
-        public string Inserir(FoneTipo foneTipo)
+        public string Insert(FoneTipo foneTipo)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO foneTipo(tipo) values(@tipo)";
@@ -40,7 +39,7 @@ namespace DataAccessLayer
             }
 
         }
-        public string Deletar(FoneTipo foneTipo)
+        public string Delete(FoneTipo foneTipo)
         {
             if (foneTipo.Id == 0)
             {
@@ -67,7 +66,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Atualizar(FoneTipo foneTipo)
+        public string Update(FoneTipo foneTipo)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE foneTipo SET tipo = @tipo WHERE idFoneTipo = @idFoneTipo";
@@ -90,7 +89,7 @@ namespace DataAccessLayer
             }
 
         }
-        public List<FoneTipo> SelecionaTodos()
+        public List<FoneTipo> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM foneTipo";
@@ -121,7 +120,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public FoneTipo GetByID(int idFoneTipo)
+        public FoneTipo GetById(int idFoneTipo)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM foneTipo WHERE idFoneTipo = @idFoneTipo";

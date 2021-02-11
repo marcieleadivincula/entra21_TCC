@@ -19,7 +19,7 @@ namespace DataAccessLayer
         /// Insere o Endereço no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="atendimento"></param>
-        public string Inserir(Atendimento atendimento)
+        public string Insert(Atendimento atendimento)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO atendimento (idPaciente,idColaborador) values (@idPaciente,@idColaborador)";
@@ -55,7 +55,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="Atendimento"></param>
         /// <returns></returns>
-        public string Deletar(Atendimento Atendimento)
+        public string Delete(Atendimento Atendimento)
         {
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM atendimento WHERE idAtendimento = @ID";
@@ -82,7 +82,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="endereco"></param>
         /// <returns></returns>
-        public string Atualizar(Atendimento Atendimento)
+        public string Update(Atendimento Atendimento)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE atendimento SET idPaciente = @idPaciente, idColaborador = @idColaborador WHERE idAtendimento = @idAtendimento";
@@ -109,7 +109,7 @@ namespace DataAccessLayer
         /// retorna lista com todos os atendimentos 
         /// </summary>
         /// <returns></returns>
-        public List<Atendimento> SelecionaTodos()
+        public List<Atendimento> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM atendimento";
@@ -141,8 +141,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-
-        public Atendimento GetAtendimentoById(int id)
+        public Atendimento GetById(int id)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM atendimento WHERE idAtendimento = @Id";
@@ -209,7 +208,6 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-
         public List<Procedimento> GetProcedimentos(int idAtendimento)
         {
             cmd.Connection = conn;

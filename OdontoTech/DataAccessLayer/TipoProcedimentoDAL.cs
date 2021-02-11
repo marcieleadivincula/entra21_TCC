@@ -17,7 +17,7 @@ namespace DataAccessLayer
         /// Insere o  TipoProcedimento no BD. Caso houver erro a função informa.
         /// </summary>
         /// <param name="TipoProcedimento"></param>
-        public string Inserir(TipoProcedimento tipoProcedimento)
+        public string Insert(TipoProcedimento tipoProcedimento)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO tipoprocedimento(nomeTipoProcedimento, valorProcedimento) values(@nomeTipoProcedimento, @valorProcedimento)";
@@ -54,7 +54,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="TipoProcedimento"></param>
         /// <returns></returns>
-        public string Deletar(TipoProcedimento tipoProcedimento)
+        public string Delete(TipoProcedimento tipoProcedimento)
         {
             if (tipoProcedimento.Id == 0)
             {
@@ -86,7 +86,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="TipoProcedimento"></param>
         /// <returns></returns>
-        public string Atualizar(TipoProcedimento tipoProcedimento)
+        public string Update(TipoProcedimento tipoProcedimento)
         {
             cmd.Connection = conn;
             cmd.CommandText = "UPDATE tipoprocedimento SET nomeTipoProcedimento = @nomeTipoProcedimento,  valorProcedimento = @valorProcedimento WHERE idTipoProcedimento = @idTipoProcedimento";
@@ -111,12 +111,11 @@ namespace DataAccessLayer
 
         }
 
-
         /// <summary>
         /// retorna lista de tiposprocedimentos
         /// </summary>
         /// <returns></returns>
-        public List<TipoProcedimento> SelecionaTodos()
+        public List<TipoProcedimento> GetAll()
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM tipoprocedimento";
@@ -147,7 +146,7 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public TipoProcedimento GetByID(int idTipoProcedimento)
+        public TipoProcedimento GetById(int idTipoProcedimento)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM tipoprocedimento WHERE idTipoProcedimento = @idTipoProcedimento";
