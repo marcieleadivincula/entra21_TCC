@@ -390,8 +390,32 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult AlterarSenha()
+        [HttpPost]
+        public IActionResult AlterarSenha(string Email,string senha1,string senha2)
         {
+            if (senha1 != senha2)
+            {
+                ViewBag.Email = Email;
+                ViewData["SenhasErradas"] = true;
+                return View();
+            }
+            if (senha1 == null && senha2 == null)
+            {
+                ViewBag.Email = Email;
+                return View();
+            }
+            if (senha1 == senha2)
+            {
+                UsuarioBLL bll = new UsuarioBLL();
+                Usuario user = new Usuario();
+
+                user = bll.GetByEmail(Email);
+
+                user.Senha = senha1;
+
+                bll.Update(user);
+                g
+            }
             return View();
         }
 
@@ -412,7 +436,8 @@ namespace PresentationLayer.Controllers
             }
             if (bll.VerificaCodigo(codigo,Email))
             {
-                return RedirectToAction("AlterarSenha","Home");
+                bll.DeletaByEmail(Email);
+                return RedirectToAction("AlterarSenha","Home",Email);
             }
             else
             {

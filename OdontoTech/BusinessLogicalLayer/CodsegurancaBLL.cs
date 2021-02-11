@@ -27,6 +27,10 @@ namespace BusinessLogicalLayer
             }
 
         }
+        public void DeletaByEmail(string email)
+        {
+            dal.DeleteByEmail(email);
+        }
 
     }
 }

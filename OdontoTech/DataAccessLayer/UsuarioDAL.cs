@@ -213,6 +213,8 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    usuario.Colaborador = new Colaborador();
+
                     usuario.Id = Convert.ToInt32(reader["idUsuario"]);
                     usuario.Login = Convert.ToString(reader["login"]);
                     usuario.Senha = Convert.ToString(reader["senha"]);
@@ -243,6 +245,8 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    usuario.Colaborador = new Colaborador();
+
                     usuario.Id = Convert.ToInt32(reader["idUsuario"]);
                     usuario.Login = Convert.ToString(reader["login"]);
                     usuario.Senha = Convert.ToString(reader["senha"]);
@@ -275,6 +279,8 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Usuario temp = new Usuario();
+                    temp.Colaborador = new Colaborador();
+
                     temp.Id = Convert.ToInt32(reader["idUsuario"]);
                     temp.Login = Convert.ToString(reader["login"]);
                     temp.Senha = Convert.ToString(reader["senha"]);
@@ -310,6 +316,42 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    usuario.Colaborador = new Colaborador();
+
+                    usuario.Id = Convert.ToInt32(reader["idUsuario"]);
+                    usuario.Login = Convert.ToString(reader["login"]);
+                    usuario.Senha = Convert.ToString(reader["senha"]);
+                    usuario.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+                }
+
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw new Exception("Erro no Banco de dados. Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Usuario GetInfosByEmail(string email)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM usuario where login = @login";
+            cmd.Parameters.AddWithValue("@login", email);
+           
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                Usuario usuario = new Usuario();
+
+                while (reader.Read())
+                {
+                    usuario.Colaborador = new Colaborador();
                     usuario.Id = Convert.ToInt32(reader["idUsuario"]);
                     usuario.Login = Convert.ToString(reader["login"]);
                     usuario.Senha = Convert.ToString(reader["senha"]);
