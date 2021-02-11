@@ -29,7 +29,7 @@ namespace BusinessLogicalLayer
                     erros.AppendLine("O Login não pode conter mais que 60 caracteres.");
                 }
             }
-
+         
             if (string.IsNullOrWhiteSpace(usuario.Senha))
             {
                 erros.AppendLine("A Senha deve ser informada.");
@@ -42,11 +42,12 @@ namespace BusinessLogicalLayer
                     erros.AppendLine("A Senha Não pode conter mais que 250 caracteres.");
                 }
             }
-
+   
             if (usuario.Colaborador.Id == 0 || usuario.Colaborador.Id < 0)
             {
                 erros.AppendLine("A ID do colaborador deve ser informado.");
             }
+
 
             if (erros.Length != 0)
             {
@@ -139,6 +140,15 @@ namespace BusinessLogicalLayer
             return true;
         }
 
+        public Usuario GetByEmail(string email)
+        {
+            Usuario temp = new Usuario();
+
+            temp = dal.GetInfosByEmail(email);
+
+            return temp;
+        }
+      
         //Obter um registro
         public Usuario GetById(Usuario usuario)
         {
