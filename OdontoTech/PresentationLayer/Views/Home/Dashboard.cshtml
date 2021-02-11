@@ -78,7 +78,7 @@
                 <th>Start Time</th>
                 <th>End Time</th>
 
-                @foreach (var item in ViewBag.EventList as List<PresentationLayer.Controllers.CalendarEvent>)
+                @foreach (var item in ViewBag.EventList as List<Domain.CalendarEvent>)
                 {
                     <tr>
                         <td>@item.Summay</td>

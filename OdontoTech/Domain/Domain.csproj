@@ -112,6 +112,8 @@
   <ItemGroup>
     <Compile Include="Atendimento.cs" />
     <Compile Include="Bairro.cs" />
+    <Compile Include="Calendar.cs" />
+    <Compile Include="CalendarEvent.cs" />
     <Compile Include="Cidade.cs" />
     <Compile Include="Clinica.cs" />
     <Compile Include="Colaborador.cs" />
