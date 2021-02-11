@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer;
 using Domain;
+using System.Net.Mail;
 
 namespace DataAccessLayer
 {
-    class CodsegurancaDAL
+   public  class CodsegurancaDAL
     {
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
@@ -91,6 +92,50 @@ namespace DataAccessLayer
             {
                 conn.Dispose();
             }
+        }
+        public bool EnviaEmail(string email)
+        {
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.Port = 587;
+            smtp.EnableSsl = true;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new System.Net.NetworkCredential("bifrostodontotech@gmail.com", "bifrost4545");
+            smtp.Timeout = 50000;
+
+
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress("bifrostodontotech@gmail.com");
+            //mail.To.Add("vitorantonio.644@gmail.com");
+            mail.To.Add(email);
+            mail.Subject = "Recuperação de senha ODONTO TECH.";
+
+            Random ram = new Random();
+
+            string codigo1 = "";
+            for (int i = 0; i < 5; i++)
+            {
+                codigo1 += ram.Next(0, 10).ToString();
+            }
+
+            mail.Body = "Seu codigo de verificação é: " + codigo1;
+            try
+            {
+
+                smtp.Send(mail);
+
+                CodsegurancaDAL DAL = new CodsegurancaDAL();
+                DAL.Insert(codigo1, email);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+
+         
+            
         }
     }
 }
