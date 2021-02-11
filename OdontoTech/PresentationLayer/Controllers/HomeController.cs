@@ -423,6 +423,7 @@ namespace PresentationLayer.Controllers
             }
             else if (codigo == null)
             {
+
             }
             else if (codigo != codigoemail)
             {
@@ -430,7 +431,7 @@ namespace PresentationLayer.Controllers
             }
 
 
-            ViewBag.email = email;
+                ViewBag.email = email;
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
                 smtp.Port = 587;
@@ -456,10 +457,10 @@ namespace PresentationLayer.Controllers
 
                 mail.Body = "Seu codigo de verificação é: " + codigo1;
 
-                ViewData["codigo2o"] = codigo1;
+                
                 smtp.Send(mail);
 
-                ViewData["email"] = email;
+                
 
                 return View();
             
