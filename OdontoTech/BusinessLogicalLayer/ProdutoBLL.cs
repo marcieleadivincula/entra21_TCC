@@ -27,6 +27,14 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome do produto não pode conter mais que 60 caracteres.");
             }
 
+            if (!string.IsNullOrWhiteSpace(produto.Nome))
+            {
+                if (produto.Nome.Length > 60)
+                {
+                    erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+                }
+            }
+
             if (produto.Preco == 0 || produto.Preco < 0)
             {
                 erros.AppendLine("O preço do produto deve ser informado.");
@@ -62,9 +70,13 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome do produto deve ser informado.");
             }
 
-            if (produto.Nome.Length > 60)
+            if (!string.IsNullOrWhiteSpace(produto.Nome))
             {
                 erros.AppendLine("O nome do produto não pode conter mais que 60 caracteres.");
+                if (produto.Nome.Length > 60)
+                {
+                    erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+                }
             }
 
             if (produto.Preco == 0 || produto.Preco < 0)
@@ -89,6 +101,18 @@ namespace BusinessLogicalLayer
         //Excluir um registro
         public string Delete(Produto produto)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (produto.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Delete(produto);
             return respostaDB;
         }

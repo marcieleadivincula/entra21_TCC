@@ -19,9 +19,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("A descrição do tipo de embalagem deve ser informada.");
             }
 
-            if (tipoEmbalagem.Descricao.Length > 60)
+            if (!string.IsNullOrWhiteSpace(tipoEmbalagem.Descricao))
             {
-                erros.AppendLine("A descrição do tipo de embalagem não pode conter mais que 60 caracteres.");
+                if (tipoEmbalagem.Descricao.Length > 60)
+                {
+                    erros.AppendLine("A descrição do tipo de embalagem não pode conter mais que 60 caracteres.");
+                }
             }
 
             if (erros.Length != 0)
@@ -49,9 +52,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("A descrição do tipo de embalagem deve ser informada.");
             }
 
-            if (tipoEmbalagem.Descricao.Length > 60)
+            if (!string.IsNullOrWhiteSpace(tipoEmbalagem.Descricao))
             {
-                erros.AppendLine("A descrição do tipo de embalagem não pode conter mais que 60 caracteres.");
+                if (tipoEmbalagem.Descricao.Length > 60)
+                {
+                    erros.AppendLine("A descrição do tipo de embalagem não pode conter mais que 60 caracteres.");
+                }
             }
 
             if (erros.Length != 0)
@@ -66,6 +72,18 @@ namespace BusinessLogicalLayer
         //Excluir um registro
         public string Delete(TipoEmbalagem tipoEmbalagem)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (tipoEmbalagem.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Delete(tipoEmbalagem);
             return respostaDB;
         }

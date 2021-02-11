@@ -129,9 +129,188 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Paciente()
-        {
+
+
+        public IActionResult Paciente(string firstName, string lastName, string cpf, string rg, DateTime dtNascimento, string pais,string estado, string cidade, string bairro, string logradouro,string cep,int numeroCasa, string contatos ,string observacoes, int idPaciente, string funcao)
+         {
+            if (funcao != null)
+            {
+                PacienteBLL bll = new PacienteBLL();
+
+                if (funcao == "Deletar")
+                {
+                    Paciente temp1 = new Paciente();
+                    temp1.Id = idPaciente;
+                    ViewData["result"] = bll.Delete(temp1);
+                    return View();
+                }
+
+                if (pais == null || estado == null || cidade == null || logradouro == null)
+                {
+                    ViewData["result"] = "Algum dado de moradia não foi preenchido.";
+                    return View();
+                }
+
+                LogradouroDAL logradouroDAL = new LogradouroDAL();
+                PaisDAL paisDAL = new PaisDAL();
+                EstadoDAL estadoDAL = new EstadoDAL();
+                BairroDAL bairroDAL = new BairroDAL();
+                CidadeDAL cidadeDAL = new CidadeDAL();
+
+                Pais paiss = new Pais(0,pais);
+
+               string a =  paisDAL.Inserir(paiss);
+                if (a.Contains("já"))
+                {
+                    List<Pais> lista = new List<Pais>();
+                    lista = paisDAL.SelecionaTodos();
+
+                    foreach (var item in lista)
+                    {
+                        if (item.Nome == pais)
+                        {
+                            paiss.Id = item.Id;
+                            break;
+                        }
+                    }
+                    
+                }
+                else
+                {
+                  paiss = paisDAL.GetLastRegister();
+
+                }
+
+                Estado estadoo = new Estado(0,estado,paiss);
+
+    
+
+                string b = estadoDAL.Insert(estadoo);
+                if (b.Contains("já"))
+                {
+                    List<Estado> lista = new List<Estado>();
+                    lista = estadoDAL.GetAll();
+
+                    foreach (var item in lista)
+                    {
+                        if (item.Nome == estado)
+                        {
+                            estadoo.Id = item.Id;
+                            break;
+                        }
+                    }
+
+                }
+                else
+                {
+    
+                    estadoo = estadoDAL.GetLastRegister();
+
+                }
+
+
+                Cidade cidadee = new Cidade(0,cidade,estadoo);
+
+                string c = cidadeDAL.Insert(cidadee);
+                if (c.Contains("já"))
+                {
+                    List<Cidade> lista = new List<Cidade>();
+                    lista = cidadeDAL.GetAll();
+
+                    foreach (var item in lista)
+                    {
+                        if (item.Nome == cidade)
+                        {
+                            estadoo.Id = item.Id;
+                            break;
+                        }
+                    }
+
+                }
+                else
+                {
+
+                    cidadee = cidadeDAL.GetLastRegister();
+       
+
+                }
+
+                Bairro bairoo = new Bairro(0,bairro,cidadee);
+
+                string d = bairroDAL.Insert(bairoo);
+                if (d.Contains("já"))
+                {
+                    List<Bairro> lista = new List<Bairro>();
+                    lista = bairroDAL.GetAll();
+
+                    foreach (var item in lista)
+                    {
+                        if (item.Nome == cidade)
+                        {
+                            estadoo.Id = item.Id;
+                            break;
+                        }
+                    }
+
+                }
+                else
+                {
+
+                bairoo = bairroDAL.GetLastRegister();
+
+
+                }
+
+
+                Logradouro logradouroo = new Logradouro(0,logradouro,bairoo);
+
+                string e = logradouroDAL.Insert(logradouroo);
+                if (d.Contains("já"))
+                {
+                    List<Logradouro> lista = new List<Logradouro>();
+                    lista = logradouroDAL.GetAll();
+
+                    foreach (var item in lista)
+                    {
+                        if (item.Nome == logradouro)
+                        {
+                            logradouroo.Id = item.Id;
+                            break;
+                        }
+                    }
+
+                }
+                else
+                {
+
+                logradouroo = logradouroDAL.GetLastRegister();
+
+                }
+
+                Endereco endereco1 = new Endereco(0, logradouroo, numeroCasa, cep);
+
+                EnderecoDAL endereco = new EnderecoDAL();
+                endereco.Insert(endereco1);
+
+                endereco1 = endereco.GetLastRegister();
+
+
+                Paciente temp = new Paciente(idPaciente, firstName, lastName, rg, cpf, dtNascimento, observacoes, endereco1); 
+
+                ViewData["result"] = "";
+
+                if (funcao == "Atualizar")
+                {
+                    ViewData["result"] = bll.Update(temp);
+                }
+              
+                else if (funcao == "Salvar")
+                {
+                    ViewData["result"] = bll.Insert(temp);
+                }
+            }
             return View();
+
         }
 
         public IActionResult Funcao()

@@ -42,6 +42,18 @@ namespace BusinessLogicalLayer
         //Excluir um registro
         public string Delete(Atendimento atendimento)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (atendimento.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Delete(atendimento);
             return respostaDB;
         }

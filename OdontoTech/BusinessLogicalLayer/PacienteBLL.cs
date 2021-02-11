@@ -19,42 +19,56 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome deve ser informado.");
             }
 
-            if (paciente.Nome.Length > 60)
+            if (!string.IsNullOrWhiteSpace(paciente.Nome))
             {
-                erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+
+                if (paciente.Nome.Length > 60)
+                {
+                    erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+                }
             }
+
 
             if (string.IsNullOrWhiteSpace(paciente.Sobrenome))
             {
                 erros.AppendLine("O sobrenome deve ser informado.");
             }
 
-            if (paciente.Sobrenome.Length > 60)
+            if (!string.IsNullOrWhiteSpace(paciente.Sobrenome))
             {
-                erros.AppendLine("O sobrenome não pode conter mais que 60 caracteres.");
-            }
+                if (paciente.Sobrenome.Length > 60)
+                {
+                    erros.AppendLine("O sobrenome não pode conter mais que 60 caracteres.");
+                }
+            } 
 
             if (string.IsNullOrWhiteSpace(paciente.Rg))
             {
                 erros.AppendLine("O rg deve ser informado.");
             }
-
-            if (paciente.Rg.Length > 20)
+            if (!string.IsNullOrWhiteSpace(paciente.Rg))
             {
-                erros.AppendLine("O rg não pode conter mais que 20 caracteres.");
+                if (paciente.Rg.Length > 20)
+                {
+                    erros.AppendLine("O rg não pode conter mais que 20 caracteres.");
+                }
             }
-
             if (string.IsNullOrWhiteSpace(paciente.Cpf))
             {
                 erros.AppendLine("O cpf deve ser informado.");
-            }
 
-            if (paciente.Cpf.Length > 14)
+            }
+            if (!string.IsNullOrWhiteSpace(paciente.Cpf))
             {
-                erros.AppendLine("O cpf não pode conter mais que 14 caracteres.");
-            }
+                if (paciente.Cpf.Length > 14)
+                {
+                    erros.AppendLine("O cpf não pode conter mais que 14 caracteres.");
+                }
 
-           
+            }
+        
+
+            
             if (paciente.DataNascimento == null)
             {
                 erros.AppendLine("A data de nacimento deve ser informada.");
@@ -64,11 +78,15 @@ namespace BusinessLogicalLayer
             {
                 erros.AppendLine("Uma observação deve ser informada.");
             }
-
-            if (paciente.Observacao.Length > 250)
+            if (!string.IsNullOrWhiteSpace(paciente.Observacao))
             {
-                erros.AppendLine("A observação não pode conter mais que 250 caracteres.");
+                if (paciente.Observacao.Length > 250)
+                {
+                    erros.AppendLine("A observação não pode conter mais que 250 caracteres.");
+                }
+
             }
+            
 
             if (erros.Length != 0)
             {
@@ -94,40 +112,55 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome deve ser informado.");
             }
 
-            if (paciente.Nome.Length > 60)
+            if (!string.IsNullOrWhiteSpace(paciente.Nome))
             {
-                erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+
+                if (paciente.Nome.Length > 60)
+                {
+                    erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+                }
             }
+
 
             if (string.IsNullOrWhiteSpace(paciente.Sobrenome))
             {
                 erros.AppendLine("O sobrenome deve ser informado.");
             }
 
-            if (paciente.Sobrenome.Length > 60)
+            if (!string.IsNullOrWhiteSpace(paciente.Sobrenome))
             {
-                erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
+                if (paciente.Sobrenome.Length > 60)
+                {
+                    erros.AppendLine("O sobrenome não pode conter mais que 60 caracteres.");
+                }
             }
 
             if (string.IsNullOrWhiteSpace(paciente.Rg))
             {
                 erros.AppendLine("O rg deve ser informado.");
             }
-
-            if (paciente.Rg.Length > 20)
+            if (!string.IsNullOrWhiteSpace(paciente.Rg))
             {
-                erros.AppendLine("O rg não pode conter mais que 20 caracteres.");
+                if (paciente.Rg.Length > 20)
+                {
+                    erros.AppendLine("O rg não pode conter mais que 20 caracteres.");
+                }
             }
-
             if (string.IsNullOrWhiteSpace(paciente.Cpf))
             {
                 erros.AppendLine("O cpf deve ser informado.");
+
+            }
+            if (!string.IsNullOrWhiteSpace(paciente.Cpf))
+            {
+                if (paciente.Cpf.Length > 14)
+                {
+                    erros.AppendLine("O cpf não pode conter mais que 14 caracteres.");
+                }
+
             }
 
-            if (paciente.Cpf.Length > 14)
-            {
-                erros.AppendLine("O cpf não pode conter mais que 14 caracteres.");
-            }
+
 
             if (paciente.DataNascimento == null)
             {
@@ -138,10 +171,17 @@ namespace BusinessLogicalLayer
             {
                 erros.AppendLine("Uma observação deve ser informada.");
             }
-
-            if (paciente.Observacao.Length > 250)
+            if (!string.IsNullOrWhiteSpace(paciente.Observacao))
             {
-                erros.AppendLine("A observação não pode conter mais que 250 caracteres.");
+                if (paciente.Observacao.Length > 250)
+                {
+                    erros.AppendLine("A observação não pode conter mais que 250 caracteres.");
+                }
+
+            }
+            if (paciente.Id == 0)
+            {
+                return "O ID do paciente deve ser informado.";
             }
 
             if (erros.Length != 0)
@@ -155,6 +195,18 @@ namespace BusinessLogicalLayer
         //Excluir um registro
         public string Delete(Paciente paciente)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (paciente.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Delete(paciente);
             return respostaDB;
         }

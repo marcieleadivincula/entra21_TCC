@@ -19,9 +19,12 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome do país deve ser informado.");
             }
 
-            if (pais.Nome.Length > 20)
+            if (!string.IsNullOrWhiteSpace(pais.Nome))
             {
-                erros.AppendLine("O nome do país não pode conter mais que 20 caracteres.");
+                if (pais.Nome.Length > 20)
+                {
+                    erros.AppendLine("O nome do país não pode conter mais que 20 caracteres.");
+                }
             }
 
             if (erros.Length != 0)
@@ -44,14 +47,17 @@ namespace BusinessLogicalLayer
         {
             StringBuilder erros = new StringBuilder();
 
-            if (pais.Nome.Length > 20)
-            {
-                erros.AppendLine("O nome do país não pode conter mais que 20 caracteres.");
-            }
-
             if (string.IsNullOrWhiteSpace(pais.Nome))
             {
                 erros.AppendLine("O nome do país deve ser informado.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(pais.Nome))
+            {
+                if (pais.Nome.Length > 20)
+                {
+                    erros.AppendLine("O nome do país não pode conter mais que 20 caracteres.");
+                }
             }
 
             if (erros.Length != 0)
@@ -66,6 +72,18 @@ namespace BusinessLogicalLayer
         //Excluir um registro
         public string Delete(Pais pais)
         {
+            StringBuilder erros = new StringBuilder();
+
+            if (pais.Id == 0)
+            {
+                erros.AppendLine("O ID deve ser informado.");
+            }
+
+            if (erros.Length != 0)
+            {
+                return erros.ToString();
+            }
+
             string respostaDB = dal.Delete(pais);
             return respostaDB;
         }
