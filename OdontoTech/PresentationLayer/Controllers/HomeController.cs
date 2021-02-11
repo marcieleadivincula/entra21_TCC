@@ -397,9 +397,9 @@ namespace PresentationLayer.Controllers
             TipoEmbalagem tipoEmbalagem = new TipoEmbalagem(0,embalagem);
             TipoEmbalagemDAL tipoEmbalagemDAL = new TipoEmbalagemDAL();
 
-            if ((tipoEmbalagemDAL.Inserir(tipoEmbalagem)).Contains("já"))
+            if ((tipoEmbalagemDAL.Insert(tipoEmbalagem)).Contains("já"))
             {
-                List < TipoEmbalagem > lista = tipoEmbalagemDAL.SelecionaTodos();
+                List < TipoEmbalagem > lista = tipoEmbalagemDAL.GetAll();
                 foreach (var item in lista)
                 {
                     if (item.Descricao == tipoEmbalagem.Descricao )
