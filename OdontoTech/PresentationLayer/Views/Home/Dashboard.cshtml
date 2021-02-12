@@ -25,54 +25,114 @@
 
     <!-- Style -->
     <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/calendar.css">
 
     <title>Home</title>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="toggle">
-            <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
-                <span></span>
-            </a>
-        </div>
-        <div class="side-inner">
+    @*<aside class="sidebar">
+            <div class="toggle">
+                <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
+                    <span></span>
+                </a>
+            </div>
+            <div class="side-inner">
 
-            <div class="logo-wrap">
-                <div class="logo">
-                    <span>C</span>
+                <div class="logo-wrap">
+                    <div class="logo">
+                        <span>C</span>
+                    </div>
+                    <span class="logo-text">Colorlib</span>
                 </div>
-                <span class="logo-text">Colorlib</span>
+
+                <div class="search-form">
+                    <form action="#">
+                        <span class="wrap-icon">
+                            <span class="icon-search2"></span>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Search...">
+                    </form>
+                </div>
+                <div class="nav-menu">
+                    <ul>
+                        <li class="active"><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-home2 mr-3"></span><span class="menu-text">Home</span></a></li>
+                        <li><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-videocam mr-3"></span><span class="menu-text">Videos</span></a></li>
+                        <li><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-book mr-3"></span><span class="menu-text">Books</span></a></li>
+                        <li><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-shopping-cart mr-3"></span><span class="menu-text">Store</span></a></li>
+                        <li><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-pie-chart mr-3"></span><span class="menu-text">Analytics</span></a></li>
+                        <li><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-cog mr-3"></span><span class="menu-text">Settings</span></a></li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="search-form">
-                <form action="#">
-                    <span class="wrap-icon">
-                        <span class="icon-search2"></span>
-                    </span>
-                    <input type="text" class="form-control" placeholder="Search...">
-                </form>
-            </div>
-            <div class="nav-menu">
-                <ul>
-                    <li class="active"><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-home2 mr-3"></span><span class="menu-text">Home</span></a></li>
-                    <li><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-videocam mr-3"></span><span class="menu-text">Videos</span></a></li>
-                    <li><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-book mr-3"></span><span class="menu-text">Books</span></a></li>
-                    <li><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-shopping-cart mr-3"></span><span class="menu-text">Store</span></a></li>
-                    <li><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-pie-chart mr-3"></span><span class="menu-text">Analytics</span></a></li>
-                    <li><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-cog mr-3"></span><span class="menu-text">Settings</span></a></li>
-                </ul>
-            </div>
-        </div>
-
-    </aside>
+        </aside>*@
 
     <main>
 
         @if (ViewBag.EventList != null)
         {
+            <div class="container">
+                <div class="calendar light">
+                    <div class="calendar_header">
+                        <h1 class="header_title">Welcome Back</h1>
+                        <p class="header_copy"> Calendar Plan</p>
+                    </div>
+                    <div class="calendar_plan">
+                        <div class="cl_plan">
+                            <div class="cl_title">Today</div>
+                            <div class="cl_copy">@DateTime.Now</div>
+                            <div class="cl_add">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="calendar_events">
+                        <p class="ce_title">Upcoming Events</p>
+
+                        @foreach (var item in ViewBag.EventList as List<Domain.CalendarEvent>)
+                        {
+                            <div class="event_item">
+                                @*<div class="ei_Dot dot_active"></div>*@
+                                <div class="ei_Title">@item.Summay</div>
+                                <div class="ei_Copy">@item.Description</div>
+                                <div class="ei_Copy">@item.StartTime</div>
+                                <div class="ei_Copy">@item.EndTime</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        }
+
+        <form id="form1" runat="server">
+
+            <asp:Calendar id="calendar1" runat="server">
+
+                <OtherMonthDayStyle ForeColor="LightGray">
+                </OtherMonthDayStyle>
+
+                <TitleStyle BackColor="Blue"
+                            ForeColor="White">
+                </TitleStyle>
+
+                <DayStyle BackColor="gray">
+                </DayStyle>
+
+                <SelectedDayStyle BackColor="LightGray"
+                                  Font-Bold="True">
+                </SelectedDayStyle>
+
+            </asp:Calendar>
+
+        </form>
+
+
+        @*@if (ViewBag.EventList != null)
+        {
             <table class="table table-hover">
-                <th>Event title</th>
+                <th>Title</th>
                 <th>Organizer</th>
                 <th>Description</th>
                 <th>Start Time</th>
@@ -95,16 +155,16 @@
             <div class="alert alert-danger">
                 No Upcomming events
             </div>
-        }
+        }*@
 
         <!--<div class="site-section">
-        <div class="container">
-            <div class="row justify-content-center">
+    <div class="container">
+        <div class="row justify-content-center">
 
-                <div class="col-md-9">
+            <div class="col-md-9">
 
 
-                    <p>Google Calendar API Quickstart</p>-->
+                <p>Google Calendar API Quickstart</p>-->
         <!--Add buttons to initiate auth sequence and sign out-->
         <!--<button id="authorize_button" style="display: none;">Authorize</button>
                     <button id="signout_button" style="display: none;">Sign Out</button>
@@ -124,6 +184,8 @@
             onload="this.onload=function(){};handleClientLoad()"
             onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
+
+    <script src="https://use.fontawesome.com/d09559d1bd.js"></script>
 
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/popper.min.js"></script>

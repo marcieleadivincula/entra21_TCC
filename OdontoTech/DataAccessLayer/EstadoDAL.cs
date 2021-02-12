@@ -96,8 +96,10 @@ namespace DataAccessLayer
                 cmd.ExecuteNonQuery();
                 return "Estado atualizado com êxito!";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.InnerException);
                 return "Erro no Banco de dados.Contate o administrador.";
             }
             finally
@@ -132,8 +134,11 @@ namespace DataAccessLayer
 
                 return estados;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                //Debug.print();
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.InnerException);
                 throw new Exception("Erro no Banco de dados.Contate o administrador.");
             }
             finally
@@ -206,7 +211,6 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-
         public List<Estado> GetByPais(Pais pais)
         {
             cmd.Connection = conn;
@@ -228,6 +232,45 @@ namespace DataAccessLayer
                     temp.Id = Convert.ToInt32(reader["idEstado"]);
                     temp.Nome = Convert.ToString(reader["nomeEstado"]);
                     temp.Pais.Id = Convert.ToInt32(reader["idPais"]);
+
+                    estados.Add(temp);
+                }
+
+                return estados;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+
+        public List<Estado> GetByNamePais(Pais pais)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM estado e INNER JOIN pais p ON e.idPais = p.idPais WHERE e.idPais = @idPais and p.nomePais = @nomePais";
+            cmd.Parameters.AddWithValue("@nomePais", pais.Nome);
+            cmd.Parameters.AddWithValue("@idPais", pais.Id);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Estado> estados = new List<Estado>();
+
+                while (reader.Read())
+                {
+                    Estado temp = new Estado();
+
+                    temp.Pais = new Pais();
+
+                    temp.Id = Convert.ToInt32(reader["idEstado"]);
+                    temp.Nome = Convert.ToString(reader["nomeEstado"]);
+                    temp.Pais.Id = Convert.ToInt32(reader["idPais"]);
+                    temp.Pais.Nome = Convert.ToString(reader["nomePais"]);
 
                     estados.Add(temp);
                 }
