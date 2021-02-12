@@ -25,7 +25,6 @@ namespace Domain.IntegrationTests
         public void TestarInsertFuncao()
         {
             Funcao test = new Funcao(1, "Barman",1500,0.5);
-
             str = bll.Insert(test);
 
             Assert.AreEqual(str, "Função cadastrada com sucesso");
@@ -35,7 +34,6 @@ namespace Domain.IntegrationTests
         public void TestarInsertFuncaoVazio()
         {
             Funcao test = new Funcao(1, "", 1500, 0.5);
-
             str = bll.Insert(test);
 
             Assert.AreEqual(str, "O nome da função deve ser informado.\r\n");
@@ -67,7 +65,6 @@ namespace Domain.IntegrationTests
         {
             Funcao test = new Funcao(1, "", 1500, 0.5);
 
-
             str = bll.Update(test);
 
             Assert.AreEqual(str, "O nome da função deve ser informado.\r\n");
@@ -85,6 +82,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarDeletarFuncao()
         {
+
             Funcao test2 = new Funcao(15, "Barman", 1500, 0.5);
 
             str = bll.Insert(test2);
