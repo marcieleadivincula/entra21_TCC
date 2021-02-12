@@ -158,5 +158,11 @@ namespace BusinessLogicalLayer
 
             return false;
         }
+
+        public int GetIdPorNome(string nome)
+        {
+            ProdutoDAL pdall = new ProdutoDAL();
+            return pdall.PegaIDporNome(nome);
+        }
     }
 }

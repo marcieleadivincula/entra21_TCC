@@ -184,6 +184,11 @@ namespace PresentationLayer.Controllers
 
         public IActionResult Estoque(string produto, int qtdProduto, DateTime dtEntrada, DateTime dtSaida, string funcao, int idEstoque)
         {
+            ProdutoBLL pbll = new ProdutoBLL();
+
+            ViewData["produtos"] = pbll.GetAll();
+
+
             EstoqueBLL bll = new EstoqueBLL();
             if (funcao == "Deletar")
             {
@@ -196,9 +201,8 @@ namespace PresentationLayer.Controllers
             }
             if (funcao == "Atualizar")
             {
-                ProdutoBLL pbll = new ProdutoBLL();
 
-                if (pbll.VerificaProduto(produto))
+                if (!pbll.VerificaProduto(produto))
                 {
                     ViewData["result"] = "Este produto não existe em nosso estoque.";
                     return View();
@@ -206,7 +210,8 @@ namespace PresentationLayer.Controllers
                 else
                 {
                     Produto prdt = new Produto();
-                    prdt.Nome = produto;
+
+                    prdt.Id = pbll.GetIdPorNome(produto);
 
                     Estoque est = new Estoque(idEstoque,prdt,qtdProduto,dtEntrada,dtSaida);
                     ViewData["result"] = bll.Update(est);
@@ -218,7 +223,6 @@ namespace PresentationLayer.Controllers
             else if (funcao == "Salvar")
             {
 
-                ProdutoBLL pbll = new ProdutoBLL();
 
                 if (!pbll.VerificaProduto(produto))
                 {
@@ -228,7 +232,8 @@ namespace PresentationLayer.Controllers
                 else
                 {
                     Produto prdt = new Produto();
-                    prdt.Nome = produto;
+
+                    prdt.Id = pbll.GetIdPorNome(produto);
 
                     Estoque est = new Estoque(idEstoque, prdt, qtdProduto, dtEntrada, dtSaida);
                     ViewData["result"] = bll.Insert(est);

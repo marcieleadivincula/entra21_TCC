@@ -1,6 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using BusinessLogicalLayer
 @{
     ViewData["Title"] = "Estoque";
 }
@@ -45,10 +46,27 @@
                     <span class="login100-form-title p-b-26">
                         Estoque
                     </span>
-
+                    <label style="color:darkgray; font-size:15px; margin-left:5px;">Produto</label>
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="produto">
-                        <span class="focus-input100" data-placeholder="Produto"></span>
+
+                        @*<input class="input100" type="text" name="produto">*@
+
+                        <select id="produto">
+
+                            @{
+                                ProdutoBLL bll = new ProdutoBLL();
+
+                                List<Domain.Produto> Lista = bll.GetAll();
+
+                                for (int i = 0; i < Lista.Count; i++)
+                                {
+                                    <option value="@Lista[i].Nome">@Lista[i].Nome</option>
+                                }
+                            }
+
+                        </select>
+
+                        <span class="focus-input100" data-placeholder=""></span>
                         @* Trazer a lista de produto *@
                     </div>
 
@@ -69,9 +87,23 @@
                         <span class="focus-input100" data-placeholder=""></span>
                     </div>
 
+                    <label style="color:darkgray; font-size:15px; margin-left:5px;">Id do Estoque</label>
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="number" name="idEstoque">
-                        <span class="focus-input100" data-placeholder="Id do Estoque"></span>
+                        <select id="idEstoque">
+
+                            @{
+                                EstoqueBLL blle = new EstoqueBLL();
+
+                                List<Domain.Estoque> Estoques = blle.GetAll();
+
+                                for (int i = 0; i < Estoques.Count; i++)
+                                {
+                                    <option value="@Estoques[i].Id">@Estoques[i].Id</option>
+                                }
+                            }
+
+                        </select>
+                        <span class="focus-input100" data-placeholder=""></span>
                         <label style="color:dimgrey;font-size:13px"> Somente para deletar e atualizar. </label>
                     </div>
 
@@ -132,14 +164,20 @@
                         </div>
                     </div>
 
-                    <div class="text-center p-t-115">
-                        <span class="login100-form-title p-b-26">
-                            Lista do estoque
-                        </span>
-                        @* Trazer a lista de estoque com id, produto, qtdProduto, dtEntrada e dtSaida *@
-                    </div>
-
                 </form>
+
+                <div class="text-center p-t-115">
+                    <span class="login100-form-title p-b-26">
+                        Lista do estoque
+                    </span>
+                    @{for (int i = 0; i < Estoques.Count; i++)
+                        {
+                            <label> @Estoques[i].Id  @Estoques[i].Produto.Nome @Estoques[i].QtdProduto @Estoques[i].DataEntrada  @Estoques[i].DataSaida <br /> </label>
+                        }
+
+                    }
+                </div>
+
             </div>
         </div>
 
@@ -163,6 +201,7 @@
     <script src="~/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
     <script src="./js/main.js"></script>
+
 
 </body>
 </html>

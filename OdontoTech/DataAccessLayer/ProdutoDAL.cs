@@ -252,5 +252,43 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public int PegaIDporNome(string nome)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM produto WHERE nomeProduto = @nomeProduto";
+            cmd.Parameters.AddWithValue("@nomeProduto", nome);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                    Produto temp = new Produto();
+
+                while (reader.Read())
+                {
+
+                    temp.TipoEmbalagem = new TipoEmbalagem();
+
+                    temp.Id = Convert.ToInt32(reader["idProduto"]);
+                    temp.Nome = Convert.ToString(reader["nomeProduto"]);
+                    temp.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
+                    temp.Preco = Convert.ToDouble(reader["precoProduto"]);
+                    temp.DataCompra = Convert.ToDateTime(reader["dtCompra"]);
+
+
+                }
+
+                return temp.Id;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

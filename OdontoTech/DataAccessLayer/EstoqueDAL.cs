@@ -22,7 +22,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Estoque cadastrado com sucesso";
+                return "Estoque cadastrado com sucesso!";
             }
             catch (Exception ex)
             {
@@ -108,6 +108,8 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Estoque temp = new Estoque();
+
+                    temp.Produto = new Produto();
                     temp.Id = Convert.ToInt32(reader["idEstoque"]);
                     temp.Produto.Id = Convert.ToInt32(reader["idProduto"]);
                     temp.QtdProduto = Convert.ToInt32(reader["qtdProduto"]);
@@ -142,6 +144,7 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    estoque.Produto = new Produto();
                     estoque.Id = Convert.ToInt32(reader["idEstoque"]);
                     estoque.Produto.Id = Convert.ToInt32(reader["idProduto"]);
                     estoque.QtdProduto = Convert.ToInt32(reader["qtdProduto"]);
@@ -173,6 +176,7 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    estoque.Produto = new Produto();
                     estoque.Id = Convert.ToInt32(reader["idEstoque"]);
                     estoque.Produto.Id = Convert.ToInt32(reader["idProduto"]);
                     estoque.QtdProduto = Convert.ToInt32(reader["qtdProduto"]);
@@ -206,6 +210,7 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Estoque temp = new Estoque();
+                    temp.Produto = new Produto();
                     temp.Id = Convert.ToInt32(reader["idEstoque"]);
                     temp.Produto.Id = Convert.ToInt32(reader["idProduto"]);
                     temp.QtdProduto = Convert.ToInt32(reader["qtdProduto"]);
