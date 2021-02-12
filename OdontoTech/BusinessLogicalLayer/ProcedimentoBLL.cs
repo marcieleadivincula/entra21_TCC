@@ -36,9 +36,6 @@ namespace BusinessLogicalLayer
                     erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
                 }
             }
-
-
-
             if (erros.Length != 0)
             {
                 return erros.ToString();
@@ -76,7 +73,6 @@ namespace BusinessLogicalLayer
                     erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
                 }
             }
-            
             if (erros.Length != 0)
             {
                 return erros.ToString();

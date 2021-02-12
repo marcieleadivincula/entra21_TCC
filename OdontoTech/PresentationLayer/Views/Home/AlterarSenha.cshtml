@@ -36,24 +36,27 @@
 </head>
 <body>
 
+
+                      @{ if (!string.IsNullOrWhiteSpace(Convert.ToString(TempData["Email"])))
+                         {
+                              ViewBag.Email = TempData["Email"];
+                         }}
+
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
-                <form class="login100-form validate-form" action="/Home/VerificadorLogin" method="post">
+                <form class="login100-form validate-form" action="/Home/AlterarSenha" method="post">
                     <span class="login100-form-title p-b-26">
-                        Alterar Senha
+                           <input class="input100" type="hidden" style="color:dimgrey" name="email" value="@ViewBag.Email">
+                        Alterar Senha de <br /> 
+                                         <label style="font-size:15px"> @ViewBag.Email</label>
+                       
                     </span>
-
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="email" value="@ViewBag.Senha">
-                        <span class="focus-input100" data-placeholder="Senha atual"></span>
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="Insira sua senha">
+                    <div class="wrap-input100 validate-input" data-validate="senha1">
                         <span class="btn-show-pass">
                             <i class="zmdi zmdi-eye"></i>
                         </span>
-                        <input class="input100" type="password" name="pass" value="@ViewBag.Senha">
+                        <input class="input100" type="password" name="senha1" value="@ViewBag.senha1">
                         <span class="focus-input100" data-placeholder="Nova senha"></span>
                     </div>
 
@@ -61,10 +64,14 @@
                         <span class="btn-show-pass">
                             <i class="zmdi zmdi-eye"></i>
                         </span>
-                        <input class="input100" type="password" name="pass" value="@ViewBag.Senha">
+                        <input class="input100" type="password" name="senha2" value="@ViewBag.senha2">
                         <span class="focus-input100" data-placeholder="Confirmar nova senha"></span>
                     </div>
 
+                    @if (Convert.ToBoolean(ViewData["SenhasErradas"]) == true)
+                    {
+                        <label style="color:red;font-size:13px">As senhas não são iguais.</label>
+                    }
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>

@@ -1,0 +1,228 @@
+:root {
+    --title-color: #322153;
+    --primary-color: #34cb79;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background: #f0f0f5;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Ubuntu', sans-serif;
+    color: var(--title-color);
+}
+
+/* BOX MODEL
+Toda caixa tem: 
+largura (width), altura(height), comprimento, preenchimento, bordas (border), cor (color), fundo (background), maneira que é vista pelo HTML(display)
+*/
+
+
+/* CREATE POINT*/
+
+#page-create-point {
+    width: 90%;
+    max-width: 1100px;
+    /* alinhamento de caixa (pelo lado de fora da caixa) */
+    margin: 0 auto;
+}
+
+    #page-create-point header {
+        margin-top: 48px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        #page-create-point header a {
+            color: var(--title-color);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+            #page-create-point header a span {
+                margin-right: 16px;
+                background-image: url('../assets/arrow-left.svg');
+                display: flex;
+                width: 20px;
+                height: 24px;
+            }
+
+form {
+    background-color: white;
+    margin: 80px auto;
+    /* preencimento */
+    padding: 64px;
+    border-radius: 8px;
+    max-width: 730px;
+}
+
+    form h1 {
+        font-size: 36px;
+    }
+
+    form fieldset {
+        margin-top: 64px;
+        border: 0;
+    }
+
+    form legend {
+        margin-bottom: 40px;
+    }
+
+        form legend h2 {
+            font-size: 24px;
+        }
+
+    form .field {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 24px;
+    }
+
+    form .field-group {
+        display: flex;
+    }
+
+    form input,
+    form select {
+        background-color: #f0f0f5;
+        border: 0;
+        padding: 16px 24px;
+        font-size: 16px;
+        border-radius: 8px;
+        /* outline: none; */
+    }
+
+    form select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    form label {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    form .field-group .field + .field {
+        margin-left: 24px;
+    }
+
+    form button {
+        width: 260px;
+        height: 56px;
+        background-color: var(--primary-color);
+        border-radius: 8px;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        border: 0;
+        margin-top: 40px;
+        transition: background-color 400ms;
+    }
+
+        form button:hover {
+            background-color: #2fb86e;
+        }
+
+/* grid é multidimensional */
+.items-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+}
+
+    .items-grid li {
+        background-color: #f5f5f5;
+        list-style-type: none;
+        border: 2px solid #f5f5f5;
+        border-radius: 8px;
+        height: 180px;
+        padding: 32px 24px 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+        cursor: pointer;
+    }
+
+        .items-grid li span {
+            margin-top: 12px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            color: var(--title-color);
+        }
+
+        /* Não coloque espaço entre o li e a classe .selected, pois a classe pertence ao li. O espaço é apenas quando temos elementos dentro de elementos */
+        .items-grid li.selected {
+            background: #e1faec;
+            border: 2px solid #34cb79;
+        }
+
+        .items-grid li img,
+        .items-grid li span {
+            pointer-events: none;
+        }
+
+
+
+/*RESPONSIVE*/
+
+@media(max-width: 900px) {
+    #page-home {
+        background-position-x: 70vw;
+    }
+
+        #page-home .content {
+            align-items: center;
+            text-align: center;
+        }
+
+        #page-home header a {
+            position: absolute;
+            bottom: 48px;
+            left: 50px;
+            transform: translateX(-50%);
+        }
+
+        #page-home main {
+            align-items: center;
+        }
+}
+
+@media (min-width: 1700px) {
+    #page-home {
+        background-position-x: 40vw;
+    }
+}
+
+@media (max-height: 760px) {
+    #page-home {
+        background-position-y: 200px;
+    }
+}

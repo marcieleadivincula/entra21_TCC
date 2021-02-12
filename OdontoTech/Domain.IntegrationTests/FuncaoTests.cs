@@ -24,8 +24,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarInsertFuncao()
         {
-            Funcao test = new Funcao(1, "Barman", 1500, 0.6);
-
+            Funcao test = new Funcao(1, "Barman",1500,0.5);
             str = bll.Insert(test);
 
             Assert.AreEqual(str, "Função cadastrada com sucesso");
@@ -34,8 +33,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarInsertFuncaoVazio()
         {
-            Funcao test = new Funcao(1, "", 1500, 0.6);
-
+            Funcao test = new Funcao(1, "", 1500, 0.5);
             str = bll.Insert(test);
 
             Assert.AreEqual(str, "O nome da função deve ser informado.\r\n");
@@ -45,7 +43,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarInsertFuncaoTamanhoExcedido()
         {
-            Funcao test = new Funcao(1, "01234567890123456701234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567898901234567890123456789012345678901234567890123456789012345678901234567890123456789", 1500, 0.6);
+            Funcao test = new Funcao(1, "01234567890123456701234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567898901234567890123456789012345678901234567890123456789012345678901234567890123456789", 1500, 0.5);
 
             str = bll.Insert(test);
 
@@ -55,7 +53,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarAtualizarFuncao()
         {
-            Funcao test = new Funcao(1, "Barman", 1500, 0.6);
+            Funcao test = new Funcao(1, "Barman", 1500, 0.5);
 
             str = bll.Update(test);
 
@@ -65,8 +63,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarAtualizarFuncaoVazio()
         {
-            Funcao test = new Funcao(1, "", 1500, 0.6);
-
+            Funcao test = new Funcao(1, "", 1500, 0.5);
 
             str = bll.Update(test);
 
@@ -76,7 +73,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarAtualizarFuncaoTamanhoExcedido()
         {
-            Funcao test = new Funcao(1, "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789", 1500, 0.6);
+            Funcao test = new Funcao(1, "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789", 1500, 0.5);
             str = bll.Update(test);
 
             Assert.AreEqual(str, "O nome da função não pode conter mais que 100 caracteres.\r\n");
@@ -85,11 +82,12 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarDeletarFuncao()
         {
-            Funcao test2 = new Funcao(15, "Barman", 1500, 0.6);
+
+            Funcao test2 = new Funcao(15, "Barman", 1500, 0.5);
 
             str = bll.Insert(test2);
 
-            Funcao test = new Funcao(15, "Barman", 1500, 0.6);
+            Funcao test = new Funcao(15, "Barman", 1500, 0.5);
             str = bll.Delete(test);
 
             Assert.AreEqual(str, "Função deletada com êxito!");

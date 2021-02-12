@@ -71,6 +71,7 @@
     <Compile Include="BairroBLL.cs" />
     <Compile Include="CidadeBLL.cs" />
     <Compile Include="ClinicaBLL.cs" />
+    <Compile Include="CodsegurancaBLL.cs" />
     <Compile Include="ColaboradorBLL.cs" />
     <Compile Include="ContatoBLL.cs" />
     <Compile Include="EnderecoBLL.cs" />

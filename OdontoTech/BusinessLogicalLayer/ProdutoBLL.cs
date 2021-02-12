@@ -20,7 +20,7 @@ namespace BusinessLogicalLayer
             if (string.IsNullOrWhiteSpace(produto.Nome))
             {
                 erros.AppendLine("O nome do produto deve ser informado.");
-            }
+            }          
 
             if (!string.IsNullOrWhiteSpace(produto.Nome))
             {

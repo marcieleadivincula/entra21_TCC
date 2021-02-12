@@ -5,9 +5,6 @@ using System.Diagnostics;
 using BusinessLogicalLayer;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Domain;
 using DataAccessLayer;
 
@@ -16,12 +13,8 @@ using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
-using System;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace PresentationLayer.Controllers
 {
@@ -38,14 +31,8 @@ namespace PresentationLayer.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-        }
 
-        EnderecoBLL enderecoBLL = new EnderecoBLL();
-        LogradouroBLL logradouroBLL = new LogradouroBLL();
-        BairroBLL bairroBLL = new BairroBLL();
-        CidadeBLL cidadeBLL = new CidadeBLL();
-        EstadoBLL estadoBLL = new EstadoBLL();
-        PaisBLL paisBll = new PaisBLL();
+        }
 
         public void CalendarEvents()
         {
@@ -365,6 +352,8 @@ namespace PresentationLayer.Controllers
 
         public IActionResult Pais()
         {
+            PaisBLL paisBll = new PaisBLL();
+
             ViewBag.Id = paisBll.GetAll();
             ViewBag.Nome = paisBll.GetAll();
 
@@ -376,7 +365,7 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Produto(string produto, int embalagem, DateTime dtCompra,double preco, int idProduto, string funcao)
+        public IActionResult Produto(string produto, string embalagem, DateTime dtCompra,double preco, int idProduto, string funcao)
         
         {
 
@@ -389,33 +378,43 @@ namespace PresentationLayer.Controllers
             ViewBag.idProduto = idProduto;
             ViewData["btn"] = funcao;
 
+            if (funcao == "Deletar")
+            {
+                Produto x = new Produto();
 
-            TipoEmbalagem tipoEmbalagem = new TipoEmbalagem(embalagem,"");
+                x.Id = idProduto;
+                ViewData["result"] = bll.Delete(x);
+                return View();
+            }
+            TipoEmbalagem tipoEmbalagem = new TipoEmbalagem(0,embalagem);
+            TipoEmbalagemDAL tipoEmbalagemDAL = new TipoEmbalagemDAL();
+
+            if ((tipoEmbalagemDAL.Insert(tipoEmbalagem)).Contains("já"))
+            {
+                List < TipoEmbalagem > lista = tipoEmbalagemDAL.GetAll();
+                foreach (var item in lista)
+                {
+                    if (item.Descricao == tipoEmbalagem.Descricao )
+                    {
+                        tipoEmbalagem.Id = item.Id;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                tipoEmbalagem = tipoEmbalagemDAL.GetLastRegister();
+            }
+  
+
 
             Produto temp = new Produto(idProduto,produto,tipoEmbalagem,preco,dtCompra);
 
-
-            //if (Convert.ToString(ViewBag.btn) == "Atualizar" )
-            //{
-            //    bll.Update(temp);
-            //}
-            //else if (Convert.ToString(ViewBag.btn) == "Deletar")
-            //{
-            //    bll.Delete(temp);
-            //}
-            //else if (Convert.ToString(ViewBag.btn) == "Salvar")
-            //{
-            //    bll.Insert(temp);
-            //}
 
             ViewData["result"] = "";
             if (funcao == "Atualizar")
             {
                 ViewData["result"] = bll.Update(temp);
-            }
-            else if (funcao == "Deletar")
-            {
-                ViewData["result"] = bll.Delete(temp);
             }
             else if (funcao == "Salvar")
             {
@@ -454,14 +453,68 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult AlterarSenha()
+      
+        public IActionResult AlterarSenha(string Email,string senha1,string senha2)
         {
+
+            if (senha1 != senha2)
+            {
+                ViewBag.Email = Email;
+                ViewData["SenhasErradas"] = true;
+                return View();
+            }
+            if (senha1 == null && senha2 == null)
+            {
+                ViewBag.Email = Email;
+                return View();
+            }
+            if (senha1 == senha2)
+            {
+                
+
+                UsuarioBLL bll = new UsuarioBLL();
+                Usuario user = new Usuario();
+
+                user = bll.GetByEmail(Email);
+
+                user.Senha = senha1;
+
+                bll.Update(user);
+
+                TempData["Mensagem"] = "Senha Alterada com Sucesso !";
+
+                return RedirectToAction("Index","Home");
+            }
             return View();
         }
 
         public IActionResult RecuperarSenha()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult RecuperarSenhaAprovar(string Email,string codigo)
+        {
+            CodsegurancaBLL bll = new CodsegurancaBLL();
+
+            if (codigo == null)
+            {
+                ViewBag.Email = Email;
+                bll.EnviaEMAIL(Email);
+                return View();
+            }
+            if (bll.VerificaCodigo(codigo,Email))
+            {
+                bll.DeletaByEmail(Email);
+                TempData.Add("Email",Email);
+                return RedirectToAction("AlterarSenha","Home");
+            }
+            else
+            {
+                ViewBag.Email = Email;
+                ViewData["msgcodigo"] = true;
+                return View();
+            }
         }
 
         [HttpPost]
@@ -497,6 +550,11 @@ namespace PresentationLayer.Controllers
         //        return RedirectToAction("Index", "Home");
         //    }
         //}
+
+        public IActionResult Finances()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
