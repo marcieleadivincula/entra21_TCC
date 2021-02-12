@@ -1,121 +1,175 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+@using BusinessLogicalLayer;
+@using Domain;
+
 @{
     ViewData["Title"] = "Atendimento";
 }
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <title>Atendimento</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="./css/main.css">
-    <link rel="stylesheet" type="text/css" href="./css/util.css">
-    <!--===============================================================================================-->
-</head>
-<body>
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <title>Estado</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--===============================================================================================-->
+        <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
+        <!--===============================================================================================-->
+        <link href="~/css/endereco.css" rel="stylesheet" />
+        <!--===============================================================================================-->
+        <!-- Adicionando JQuery -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    </head>
+    <body>
+        <main id="page-create-point">
+            <header>
+                <img src="~/images/icons/OdontoTechV2.png" alt="logo" height="70" width="70" data-atf="1" />
+
+                <a href="/Home/Dashboard">
+                    <span></span>
+                    Voltar para home
+                </a>
+            </header>
+
+            <form action="" method="post">
+
+                <h2 id="balance">Cadastro Atendimento</h2>
+                @{
+                    AtendimentoBLL bll = new AtendimentoBLL();
+                    List<Atendimento> lista = bll.GetAll();
+                    PacienteBLL paciente = new PacienteBLL();
+                    ColaboradorBLL colaborador = new ColaboradorBLL();
 
 
-    <div class="limiter">
+                    List<Paciente> PCS = paciente.GetAll();
 
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form class="login100-form validate-form">
-                    <span class="login100-form-title p-b-26">
-                        Atendimento
-                    </span>
+                    List<Colaborador> PCC = colaborador.GetAll();
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="paciente">
-                        <span class="focus-input100" data-placeholder="Paciente"></span>
-                        @* Trazer a lista de pacientes *@
-                    </div>
+                }
+                <fieldset>
+                    <div class="field-group">
+                        <div class="field">
+                            <label for="idPaciente">Paciente</label>
+                            <select name="idPaciente" id="idPaciente" required>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="colaborador">
-                        <span class="focus-input100" data-placeholder="Colaborador"></span>
-                        @* Trazer a lista de colaboradores *@
-                    </div>
+                                <option value="">Selecione o Paciente</option>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Salvar
-                            </button>
+                                @{ for (int i = 0; i < PCS.Count; i++)
+                                    {
+                                        <option value="@PCS[i].Id">@PCS[i].Nome</option>
+                                    }}
+
+                            </select>
+
+                            <input type="hidden" name="idPaciente" value="" />
+                        </div>
+                        <div class="field">
+                            <label for="idColaborador">Colaborador</label>
+                            <select name="idColaborador" id="idColaborador" required>
+
+                                <option value="">Selecione o Colaborador</option>
+
+                                @{ for (int i = 0; i < PCC.Count; i++)
+                                    {
+                                        <option value="@PCC[i].Id">@PCC[i].Nome</option>
+                                    }}
+
+                            </select>
+
+                            <input type="hidden" name="sidColaboradortate" value="" />
                         </div>
                     </div>
+                </fieldset>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Atualizar
-                            </button>
-                        </div>
-                    </div>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Deletar
-                            </button>
-                        </div>
-                    </div>
+                @*<div class="field">
+            <label for="city">Atendimento</label>
+            <select name="idAtentimento" id="idAtentimento" required>
 
-                    <div class="text-center p-t-115">
-                        <span class="login100-form-title p-b-26">
-                            Lista de atendimentos
-                        </span>
-                        @* Trazer a lista de bairros com id, nome do paciente e do colaborador *@
-                    </div>
+                <option value="">Selecione o ID do atendimento.</option>
 
-                </form>
-            </div>
-        </div>
+                @{ for (int i = 0; i < lista.Count; i++)
+                    {
+                        <option value="@lista[i].Id">@lista[i].Id</option>
+                    }}
 
-    </div>
+            </select>
 
-    <div id="dropDownSelect1"></div>
+            <input type="hidden" name="sidColaboradortate" value="idAtentimento" />
 
-    <!--===============================================================================================-->
-   <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
-    <!--===============================================================================================-->
-   <script src="~/vendor/animsition/js/animsition.min.js"></script>
-    <!--===============================================================================================-->
-   <script src="~/vendor/bootstrap/js/popper.js"></script>
-   <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!--===============================================================================================-->
-   <script src="~/vendor/select2/select2.min.js"></script>
-    <!--===============================================================================================-->
-   <script src="~/vendor/daterangepicker/moment.min.js"></script>
-   <script src="~/vendor/daterangepicker/daterangepicker.js"></script>
-    <!--===============================================================================================-->
-   <script src="~/vendor/countdowntime/countdowntime.js"></script>
-    <!--===============================================================================================-->
-    <script src="./js/main.js"></script>
+            <label> "Esta opção é somente para Deletar e Atualizar"</label>
+        </div>*@
 
-</body>
+                <div>
+                    <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
+                </div>
+
+                <br />
+                <br />
+                <br />
+
+                <h2 id="balance">Lista de atendimentos</h2>
+                <br />          
+                <br />
+                @for (int i = 0; i < lista.Count; i++)
+                {
+
+                    Paciente pac = paciente.GetById(lista[i].Paciente);
+                    Colaborador col = colaborador.GetById(lista[i].Colaborador.Id);
+
+
+
+                    <label> <b>ID:</b> @lista[i].Id</label> <label> <b>Paciente:</b> @pac.Nome</label> <label> <b>Colaborador:</b> @col.Nome</label> <br />
+                }
+
+            </form>
+        </main>
+
+        <script src="https://use.fontawesome.com/d09559d1bd.js"></script>
+
+        <!--===============================================================================================-->
+        <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/animsition/js/animsition.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/bootstrap/js/popper.js"></script>
+        <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/select2/select2.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/daterangepicker/moment.min.js"></script>
+        <script src="~/vendor/daterangepicker/daterangepicker.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/countdowntime/countdowntime.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/js/main.js"></script>
+        <script src="~/js/viacep.js"></script>
+        <script src="~/js/viacepJSandJson.js"></script>
+        <script src="~/js/endereco.js"></script>
+
+    </body>
 </html>
+
+
+
+

@@ -111,8 +111,19 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Atendimento()
+        public IActionResult Atendimento(int idPaciente,int idColaborador,string funcao)
         {
+            if (funcao == "salvar")
+            {
+                AtendimentoBLL bll = new AtendimentoBLL();
+                Atendimento a = new Atendimento();
+                a.Paciente.Id = idPaciente;
+                a.Colaborador.Id = idColaborador;
+
+                bll.Insert(a);
+
+            }
+
             return View();
         }
 

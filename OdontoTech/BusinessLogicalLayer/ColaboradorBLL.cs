@@ -133,5 +133,9 @@ namespace BusinessLogicalLayer
             string respostaDB = dal.Deletar(colaborador);
             return respostaDB;
         }
+        public Colaborador GetById(int id)
+        {
+            return dal.GetByID(id);
+        }
     }
 }

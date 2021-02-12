@@ -1,6 +1,6 @@
 :root {
-    --title-color: #322153;
-    --primary-color: #34cb79;
+    --title-color: #808080;
+    --primary-color: #21d4fd;
 }
 
 * {
@@ -29,7 +29,7 @@ h4,
 h5,
 h6 {
     font-family: 'Ubuntu', sans-serif;
-    color: var(--title-color);
+    color: #4c4c4c;
 }
 
 /* BOX MODEL
@@ -134,7 +134,7 @@ form {
     form button {
         width: 260px;
         height: 56px;
-        background-color: var(--primary-color);
+        background-color: #b721ff;
         border-radius: 8px;
         color: white;
         font-weight: bold;
@@ -145,7 +145,7 @@ form {
     }
 
         form button:hover {
-            background-color: #2fb86e;
+            background-color: #21d4fd;
         }
 
 /* grid é multidimensional */

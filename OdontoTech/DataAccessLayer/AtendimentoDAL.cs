@@ -124,6 +124,9 @@ namespace DataAccessLayer
                 {
                     Atendimento temp = new Atendimento();
 
+                    temp.Paciente = new Paciente();
+                    temp.Colaborador = new Colaborador();
+
                     temp.Id = Convert.ToInt32(reader["idAtendimento"]);
                     temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
                     temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
@@ -156,6 +159,9 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Atendimento temp = new Atendimento();
+
+                    temp.Paciente = new Paciente();
+                    temp.Colaborador = new Colaborador();
 
                     temp.Id = Convert.ToInt32(reader["idAtendimento"]);
                     temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
@@ -190,6 +196,9 @@ namespace DataAccessLayer
                 {
                     Atendimento temp = new Atendimento();
 
+                    temp.Paciente = new Paciente();
+                    temp.Colaborador = new Colaborador();
+
                     temp.Id = Convert.ToInt32(reader["idAtendimento"]);
                     temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
                     temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
@@ -223,6 +232,9 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Procedimento temp = new Procedimento();
+
+                    temp.TipoProcedimento = new TipoProcedimento();
+         
 
                     temp.Id = Convert.ToInt32(reader["idProcedimento"]);
                     temp.Nome = Convert.ToString(reader["nomeProcedimento"]);
