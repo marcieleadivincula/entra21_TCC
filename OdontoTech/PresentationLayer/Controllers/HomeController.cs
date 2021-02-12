@@ -227,18 +227,10 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Produto(string produto, string embalagem, DateTime dtCompra,double preco, int idProduto, string funcao)
-        
+        public IActionResult Produto(string produto, string embalagem, DateTime dtCompra,double preco, int idProduto, string funcao)      
         {
 
             ProdutoBLL bll = new ProdutoBLL();
-
-            ViewBag.produto = produto;
-            ViewBag.embalagem = embalagem;
-            ViewBag.dtCompra = dtCompra;
-            ViewBag.preco = preco;
-            ViewBag.idProduto = idProduto;
-            ViewData["btn"] = funcao;
 
             if (funcao == "Deletar")
             {
@@ -248,30 +240,10 @@ namespace PresentationLayer.Controllers
                 ViewData["result"] = bll.Delete(x);
                 return View();
             }
-            TipoEmbalagem tipoEmbalagem = new TipoEmbalagem(0,embalagem);
-            TipoEmbalagemDAL tipoEmbalagemDAL = new TipoEmbalagemDAL();
 
-            if ((tipoEmbalagemDAL.Insert(tipoEmbalagem)).Contains("já"))
-            {
-                List < TipoEmbalagem > lista = tipoEmbalagemDAL.GetAll();
-                foreach (var item in lista)
-                {
-                    if (item.Descricao == tipoEmbalagem.Descricao )
-                    {
-                        tipoEmbalagem.Id = item.Id;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                tipoEmbalagem = tipoEmbalagemDAL.GetLastRegister();
-            }
-  
-
-
-            Produto temp = new Produto(idProduto,produto,tipoEmbalagem,preco,dtCompra);
-
+            TipoEmbalagemBLL embalagembll = new TipoEmbalagemBLL();
+           
+            Produto temp = new Produto(idProduto,produto,embalagembll.ValidaTipoEmbalagem(embalagem),preco,dtCompra);
 
             ViewData["result"] = "";
             if (funcao == "Atualizar")

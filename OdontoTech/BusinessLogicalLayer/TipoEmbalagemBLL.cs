@@ -106,5 +106,29 @@ namespace BusinessLogicalLayer
         {
             return dal.GetLastRegister();
         }
+
+        public TipoEmbalagem ValidaTipoEmbalagem(string embalagem)
+        {
+            TipoEmbalagem tipoEmbalagem = new TipoEmbalagem(0, embalagem);
+            TipoEmbalagemDAL tipoEmbalagemDAL = new TipoEmbalagemDAL();
+
+            if ((tipoEmbalagemDAL.Insert(tipoEmbalagem)).Contains("já"))
+            {
+                List<TipoEmbalagem> lista = tipoEmbalagemDAL.GetAll();
+                foreach (var item in lista)
+                {
+                    if (item.Descricao == tipoEmbalagem.Descricao)
+                    {
+                        tipoEmbalagem.Id = item.Id;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                tipoEmbalagem = tipoEmbalagemDAL.GetLastRegister();
+            }
+            return tipoEmbalagem;
+        }
     }
 }
