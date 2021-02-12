@@ -120,12 +120,14 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Estado temp = new Estado();
+                    PaisDAL dalpais = new PaisDAL();
 
                     temp.Pais = new Pais();
 
                     temp.Id = Convert.ToInt32(reader["idEstado"]);
                     temp.Nome = Convert.ToString(reader["nomeEstado"]);
                     temp.Pais.Id = Convert.ToInt32(reader["idPais"]);
+                    temp.Pais = dalpais.GetById(temp.Pais.Id);
 
                     estados.Add(temp);
                 }
@@ -206,12 +208,48 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-
         public List<Estado> GetByPais(Pais pais)
         {
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM estado WHERE idPais = @idPais";
             cmd.Parameters.AddWithValue("@ID", pais.Id);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                List<Estado> estados = new List<Estado>();
+
+                while (reader.Read())
+                {
+                    Estado temp = new Estado();
+
+                    temp.Pais = new Pais();
+
+                    temp.Id = Convert.ToInt32(reader["idEstado"]);
+                    temp.Nome = Convert.ToString(reader["nomeEstado"]);
+                    temp.Pais.Id = Convert.ToInt32(reader["idPais"]);
+
+                    estados.Add(temp);
+                }
+
+                return estados;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+
+        public List<Estado> GetByNamePais(int id)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM estado e INNER JOIN pais p ON e.idPais = p.idPais WHERE e.idPais = @idPais";
+            cmd.Parameters.AddWithValue("@idPais", id);
 
             try
             {

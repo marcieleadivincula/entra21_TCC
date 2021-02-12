@@ -130,6 +130,7 @@
     <Compile Include="Procedimento.cs" />
     <Compile Include="Produto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatusAtendimento.cs" />
     <Compile Include="TipoEmbalagem.cs" />
     <Compile Include="TipoPagamento.cs" />
     <Compile Include="TipoProcedimento.cs" />

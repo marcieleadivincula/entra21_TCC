@@ -106,55 +106,76 @@
             </div>
         }
 
+        <form id="form1" runat="server">
+
+            <asp:Calendar id="calendar1" runat="server">
+
+                <OtherMonthDayStyle ForeColor="LightGray">
+                </OtherMonthDayStyle>
+
+                <TitleStyle BackColor="Blue"
+                            ForeColor="White">
+                </TitleStyle>
+
+                <DayStyle BackColor="gray">
+                </DayStyle>
+
+                <SelectedDayStyle BackColor="LightGray"
+                                  Font-Bold="True">
+                </SelectedDayStyle>
+
+            </asp:Calendar>
+
+        </form>
 
 
         @*@if (ViewBag.EventList != null)
-            {
-                <table class="table table-hover">
-                    <th>Title</th>
-                    <th>Organizer</th>
-                    <th>Description</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
+        {
+            <table class="table table-hover">
+                <th>Title</th>
+                <th>Organizer</th>
+                <th>Description</th>
+                <th>Start Time</th>
+                <th>End Time</th>
 
-                    @foreach (var item in ViewBag.EventList as List<Domain.CalendarEvent>)
-                    {
-                        <tr>
-                            <td>@item.Summay</td>
-                            <td>@item.Organizer</td>
-                            <td>@item.Description</td>
-                            <td>@item.StartTime</td>
-                            <td>@item.EndTime</td>
-                        </tr>
-                    }
-                </table>
-            }
-            else
-            {
-                <div class="alert alert-danger">
-                    No Upcomming events
-                </div>
-            }*@
+                @foreach (var item in ViewBag.EventList as List<Domain.CalendarEvent>)
+                {
+                    <tr>
+                        <td>@item.Summay</td>
+                        <td>@item.Organizer</td>
+                        <td>@item.Description</td>
+                        <td>@item.StartTime</td>
+                        <td>@item.EndTime</td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                No Upcomming events
+            </div>
+        }*@
 
         <!--<div class="site-section">
-        <div class="container">
-            <div class="row justify-content-center">
+    <div class="container">
+        <div class="row justify-content-center">
 
-                <div class="col-md-9">
+            <div class="col-md-9">
 
 
-                    <p>Google Calendar API Quickstart</p>-->
+                <p>Google Calendar API Quickstart</p>-->
         <!--Add buttons to initiate auth sequence and sign out-->
         <!--<button id="authorize_button" style="display: none;">Authorize</button>
-                        <button id="signout_button" style="display: none;">Sign Out</button>
+                    <button id="signout_button" style="display: none;">Sign Out</button>
 
-                        <pre id="content" style="white-space: pre-wrap;"></pre>
-
-                    </div>
+                    <pre id="content" style="white-space: pre-wrap;"></pre>
 
                 </div>
+
             </div>
-        </div>-->
+        </div>
+    </div>-->
 
 
     </main>
