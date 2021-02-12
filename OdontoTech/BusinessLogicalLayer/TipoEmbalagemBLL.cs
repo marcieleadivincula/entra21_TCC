@@ -112,20 +112,24 @@ namespace BusinessLogicalLayer
             TipoEmbalagem tipoEmbalagem = new TipoEmbalagem(0, embalagem);
             TipoEmbalagemDAL tipoEmbalagemDAL = new TipoEmbalagemDAL();
 
-            if ((tipoEmbalagemDAL.Insert(tipoEmbalagem)).Contains("já"))
-            {
+            bool x = true;
+
+
                 List<TipoEmbalagem> lista = tipoEmbalagemDAL.GetAll();
                 foreach (var item in lista)
                 {
                     if (item.Descricao == tipoEmbalagem.Descricao)
                     {
+                        x = false;
                         tipoEmbalagem.Id = item.Id;
                         break;
                     }
                 }
-            }
-            else
+
+            if (x)
             {
+                tipoEmbalagem.Descricao = embalagem;
+                tipoEmbalagemDAL.Insert(tipoEmbalagem);
                 tipoEmbalagem = tipoEmbalagemDAL.GetLastRegister();
             }
             return tipoEmbalagem;
