@@ -47,7 +47,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "A quantidade de produto deve ser informada.\r\n");
+            Assert.AreEqual(str, "A quantidade do produto deve ser informada.\r\n");
         }
 
         [Test]

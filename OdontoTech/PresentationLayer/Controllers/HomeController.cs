@@ -5,9 +5,6 @@ using System.Diagnostics;
 using BusinessLogicalLayer;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Domain;
 using DataAccessLayer;
 using System.Net.Mail;
@@ -18,7 +15,6 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System.IO;
 using System.Threading;
-
 
 namespace PresentationLayer.Controllers
 {
@@ -302,6 +298,7 @@ namespace PresentationLayer.Controllers
 
             TipoEmbalagemBLL embalagembll = new TipoEmbalagemBLL();
 
+
             Produto temp = new Produto(idProduto, produto, embalagembll.ValidaTipoEmbalagem(embalagem), preco, dtCompra);
 
             ViewData["result"] = "";
@@ -451,6 +448,11 @@ namespace PresentationLayer.Controllers
         //        return RedirectToAction("Index", "Home");
         //    }
         //}
+
+        public IActionResult Finances()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

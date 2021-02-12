@@ -22,10 +22,7 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome do procedimento deve ser informada.");
             }
 
-            if (procedimento.Nome.Length > 60)
-            {
-                erros.AppendLine("O nome do procedimento não pode conter mais que 60 caracteres.");
-            }
+            
 
             if (string.IsNullOrWhiteSpace(procedimento.DescricaoProcedimento))
             {
@@ -39,12 +36,6 @@ namespace BusinessLogicalLayer
                     erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
                 }
             }
-
-            if (procedimento.DescricaoProcedimento.Length > 60)
-            {
-                erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
-            }
-
             if (erros.Length != 0)
             {
                 return erros.ToString();
@@ -68,12 +59,7 @@ namespace BusinessLogicalLayer
             if (string.IsNullOrWhiteSpace(procedimento.Nome))
             {
                 erros.AppendLine("O nome do procedimento deve ser informada.");
-            }
-
-            if (procedimento.Nome.Length > 60)
-            {
-                erros.AppendLine("O nome do procedimento não pode conter mais que 60 caracteres.");
-            }
+            }            
 
             if (string.IsNullOrWhiteSpace(procedimento.DescricaoProcedimento))
             {
@@ -87,12 +73,6 @@ namespace BusinessLogicalLayer
                     erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
                 }
             }
-
-            if (procedimento.DescricaoProcedimento.Length > 60)
-            {
-                erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
-            }
-
             if (erros.Length != 0)
             {
                 return erros.ToString();
