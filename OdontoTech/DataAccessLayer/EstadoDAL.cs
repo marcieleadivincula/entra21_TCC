@@ -96,8 +96,10 @@ namespace DataAccessLayer
                 cmd.ExecuteNonQuery();
                 return "Estado atualizado com êxito!";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.InnerException);
                 return "Erro no Banco de dados.Contate o administrador.";
             }
             finally
@@ -120,22 +122,23 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Estado temp = new Estado();
-                    PaisDAL dalpais = new PaisDAL();
 
                     temp.Pais = new Pais();
 
                     temp.Id = Convert.ToInt32(reader["idEstado"]);
                     temp.Nome = Convert.ToString(reader["nomeEstado"]);
                     temp.Pais.Id = Convert.ToInt32(reader["idPais"]);
-                    temp.Pais = dalpais.GetById(temp.Pais.Id);
 
                     estados.Add(temp);
                 }
 
                 return estados;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                //Debug.print();
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.InnerException);
                 throw new Exception("Erro no Banco de dados.Contate o administrador.");
             }
             finally
