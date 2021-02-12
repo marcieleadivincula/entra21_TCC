@@ -39,10 +39,9 @@
 
 
     <div class="limiter">
-
         <div class="container-login100">
             <div class="wrap-login100">
-                <form class="login100-form validate-form">
+                <form class="login100-form validate-form" action="/Home/Estoque" method="post">
                     <span class="login100-form-title p-b-26">
                         Estoque
                     </span>
@@ -51,7 +50,7 @@
 
                         @*<input class="input100" type="text" name="produto">*@
 
-                        <select id="produto">
+                        <select id="produto" >
 
                             @{
                                 ProdutoBLL bll = new ProdutoBLL();
@@ -60,11 +59,11 @@
 
                                 for (int i = 0; i < Lista.Count; i++)
                                 {
-                                    <option value="@Lista[i].Nome">@Lista[i].Nome</option>
+                                    <option value="@ViewBag.Nome">@Lista[i].Nome</option>
                                 }
                             }
-
                         </select>
+                                    <input type="hidden" name="produto" value="@ViewBag.Nome" />
 
                         <span class="focus-input100" data-placeholder=""></span>
                         @* Trazer a lista de produto *@
@@ -170,9 +169,15 @@
                     <span class="login100-form-title p-b-26">
                         Lista do estoque
                     </span>
-                    @{for (int i = 0; i < Estoques.Count; i++)
+
+                    @{
+                        EstoqueBLL bllee = new EstoqueBLL();
+
+                        List<Domain.Estoque> Estoquees = bllee.GetAll();
+
+                        for (int i = 0; i < Estoquees.Count; i++)
                         {
-                            <label> @Estoques[i].Id  @Estoques[i].Produto.Nome @Estoques[i].QtdProduto @Estoques[i].DataEntrada  @Estoques[i].DataSaida <br /> </label>
+                            <label> @Estoquees[i].Id  @Estoquees[i].Produto.Nome @Estoquees[i].QtdProduto @Estoquees[i].DataEntrada  @Estoquees[i].DataSaida <br /> </label>
                         }
 
                     }

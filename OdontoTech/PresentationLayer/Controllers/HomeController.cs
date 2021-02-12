@@ -184,6 +184,7 @@ namespace PresentationLayer.Controllers
 
         public IActionResult Estoque(string produto, int qtdProduto, DateTime dtEntrada, DateTime dtSaida, string funcao, int idEstoque)
         {
+            produto = ViewBag.Produto;
             ProdutoBLL pbll = new ProdutoBLL();
 
             ViewData["produtos"] = pbll.GetAll();
