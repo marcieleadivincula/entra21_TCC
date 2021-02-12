@@ -40,7 +40,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Uma descrição deve ser informada.\r\n");
+            Assert.AreEqual(str, "A descrição do tipo de embalagem deve ser informada.\r\n");
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "A descrição não pode conter mais que 60 caracteres.\r\n");
+            Assert.AreEqual(str, "A descrição do tipo de embalagem não pode conter mais que 60 caracteres.\r\n");
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Update(test);
 
-            Assert.AreEqual(str, "Tipo de embalagem cadastrado com sucesso");
+            Assert.AreEqual(str, "Tipo de embalagem atualizado com êxito!");
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Update(test);
 
-            Assert.AreEqual(str, "Uma descrição deve ser informada.\r\n");
+            Assert.AreEqual(str, "A descrição do tipo de embalagem deve ser informada.\r\n");
         }
 
 

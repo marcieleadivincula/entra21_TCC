@@ -22,11 +22,6 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O nome do produto deve ser informado.");
             }
 
-            if (produto.Nome.Length > 60)
-            {
-                erros.AppendLine("O nome do produto não pode conter mais que 60 caracteres.");
-            }
-
             if (!string.IsNullOrWhiteSpace(produto.Nome))
             {
                 if (produto.Nome.Length > 60)
@@ -72,7 +67,6 @@ namespace BusinessLogicalLayer
 
             if (!string.IsNullOrWhiteSpace(produto.Nome))
             {
-                erros.AppendLine("O nome do produto não pode conter mais que 60 caracteres.");
                 if (produto.Nome.Length > 60)
                 {
                     erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
