@@ -20,7 +20,7 @@ namespace BusinessLogicalLayer
             if (string.IsNullOrWhiteSpace(produto.Nome))
             {
                 erros.AppendLine("O nome do produto deve ser informado.");
-            }            
+            }          
 
             if (!string.IsNullOrWhiteSpace(produto.Nome))
             {
@@ -67,7 +67,6 @@ namespace BusinessLogicalLayer
 
             if (!string.IsNullOrWhiteSpace(produto.Nome))
             {
-                erros.AppendLine("O nome do produto não pode conter mais que 60 caracteres.");
                 if (produto.Nome.Length > 60)
                 {
                     erros.AppendLine("O nome não pode conter mais que 60 caracteres.");
@@ -135,6 +134,29 @@ namespace BusinessLogicalLayer
         public List<Produto> GetByTipoEmbalagem(TipoEmbalagem tipoEmbalagem)
         {
             return dal.GetByTipoEmbalagem(tipoEmbalagem);
+        }
+
+        public bool VerificaProduto(string NomeProduto)
+        {
+            ProdutoBLL pdall = new ProdutoBLL();
+
+            List<Produto> lpdt = pdall.GetAll();
+
+            foreach (var item in lpdt)
+            {
+                if (item.Nome == NomeProduto)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public int GetIdPorNome(string nome)
+        {
+            ProdutoDAL pdall = new ProdutoDAL();
+            return pdall.PegaIDporNome(nome);
         }
     }
 }

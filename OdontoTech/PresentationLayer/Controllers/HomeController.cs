@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using Domain;
 using DataAccessLayer;
-
+using System.Net.Mail;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
@@ -118,8 +118,8 @@ namespace PresentationLayer.Controllers
 
 
 
-        public IActionResult Paciente(string firstName, string lastName, string cpf, string rg, DateTime dtNascimento, string pais,string estado, string cidade, string bairro, string logradouro,string cep,int numeroCasa, string contatos ,string observacoes, int idPaciente, string funcao)
-         {
+        public IActionResult Paciente(string firstName, string lastName, string cpf, string rg, DateTime dtNascimento, string pais, string estado, string cidade, string bairro, string logradouro, string cep, int numeroCasa, string contatos, string observacoes, int idPaciente, string funcao)
+        {
             if (funcao != null)
             {
                 PacienteBLL bll = new PacienteBLL();
@@ -138,151 +138,9 @@ namespace PresentationLayer.Controllers
                     return View();
                 }
 
-                LogradouroDAL logradouroDAL = new LogradouroDAL();
-                PaisDAL paisDAL = new PaisDAL();
-                EstadoDAL estadoDAL = new EstadoDAL();
-                BairroDAL bairroDAL = new BairroDAL();
-                CidadeDAL cidadeDAL = new CidadeDAL();
+                EnderecoBLL bllmoradia = new EnderecoBLL();
 
-                Pais paiss = new Pais(0,pais);
-
-               string a =  paisDAL.Insert(paiss);
-                if (a.Contains("já"))
-                {
-                    List<Pais> lista = new List<Pais>();
-                    lista = paisDAL.GetAll();
-
-                    foreach (var item in lista)
-                    {
-                        if (item.Nome == pais)
-                        {
-                            paiss.Id = item.Id;
-                            break;
-                        }
-                    }
-                    
-                }
-                else
-                {
-                  paiss = paisDAL.GetLastRegister();
-
-                }
-
-                Estado estadoo = new Estado(0,estado,paiss);
-
-    
-
-                string b = estadoDAL.Insert(estadoo);
-                if (b.Contains("já"))
-                {
-                    List<Estado> lista = new List<Estado>();
-                    lista = estadoDAL.GetAll();
-
-                    foreach (var item in lista)
-                    {
-                        if (item.Nome == estado)
-                        {
-                            estadoo.Id = item.Id;
-                            break;
-                        }
-                    }
-
-                }
-                else
-                {
-    
-                    estadoo = estadoDAL.GetLastRegister();
-
-                }
-
-
-                Cidade cidadee = new Cidade(0,cidade,estadoo);
-
-                string c = cidadeDAL.Insert(cidadee);
-                if (c.Contains("já"))
-                {
-                    List<Cidade> lista = new List<Cidade>();
-                    lista = cidadeDAL.GetAll();
-
-                    foreach (var item in lista)
-                    {
-                        if (item.Nome == cidade)
-                        {
-                            estadoo.Id = item.Id;
-                            break;
-                        }
-                    }
-
-                }
-                else
-                {
-
-                    cidadee = cidadeDAL.GetLastRegister();
-       
-
-                }
-
-                Bairro bairoo = new Bairro(0,bairro,cidadee);
-
-                string d = bairroDAL.Insert(bairoo);
-                if (d.Contains("já"))
-                {
-                    List<Bairro> lista = new List<Bairro>();
-                    lista = bairroDAL.GetAll();
-
-                    foreach (var item in lista)
-                    {
-                        if (item.Nome == cidade)
-                        {
-                            estadoo.Id = item.Id;
-                            break;
-                        }
-                    }
-
-                }
-                else
-                {
-
-                bairoo = bairroDAL.GetLastRegister();
-
-
-                }
-
-
-                Logradouro logradouroo = new Logradouro(0,logradouro,bairoo);
-
-                string e = logradouroDAL.Insert(logradouroo);
-                if (d.Contains("já"))
-                {
-                    List<Logradouro> lista = new List<Logradouro>();
-                    lista = logradouroDAL.GetAll();
-
-                    foreach (var item in lista)
-                    {
-                        if (item.Nome == logradouro)
-                        {
-                            logradouroo.Id = item.Id;
-                            break;
-                        }
-                    }
-
-                }
-                else
-                {
-
-                logradouroo = logradouroDAL.GetLastRegister();
-
-                }
-
-                Endereco endereco1 = new Endereco(0, logradouroo, numeroCasa, cep);
-
-                EnderecoDAL endereco = new EnderecoDAL();
-                endereco.Insert(endereco1);
-
-                endereco1 = endereco.GetLastRegister();
-
-
-                Paciente temp = new Paciente(idPaciente, firstName, lastName, rg, cpf, dtNascimento, observacoes, endereco1); 
+                Paciente temp = new Paciente(idPaciente, firstName, lastName, rg, cpf, dtNascimento, observacoes, bllmoradia.EnderecoConstruido(pais, estado, cidade, bairro, logradouro, numeroCasa, cep));
 
                 ViewData["result"] = "";
 
@@ -290,7 +148,7 @@ namespace PresentationLayer.Controllers
                 {
                     ViewData["result"] = bll.Update(temp);
                 }
-              
+
                 else if (funcao == "Salvar")
                 {
                     ViewData["result"] = bll.Insert(temp);
@@ -320,8 +178,67 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Estoque()
+        public IActionResult Estoque(string produto, int qtdProduto, DateTime dtEntrada, DateTime dtSaida, string funcao, int idEstoque)
         {
+            produto = ViewBag.Produto;
+            ProdutoBLL pbll = new ProdutoBLL();
+
+            ViewData["produtos"] = pbll.GetAll();
+
+
+            EstoqueBLL bll = new EstoqueBLL();
+            if (funcao == "Deletar")
+            {
+
+                Domain.Estoque a = new Domain.Estoque();
+                a.Id = idEstoque;
+
+                ViewData["result"] = bll.Delete(a);
+                return View();
+            }
+            if (funcao == "Atualizar")
+            {
+
+                if (!pbll.VerificaProduto(produto))
+                {
+                    ViewData["result"] = "Este produto não existe em nosso estoque.";
+                    return View();
+                }
+                else
+                {
+                    Produto prdt = new Produto();
+
+                    prdt.Id = pbll.GetIdPorNome(produto);
+
+                    Estoque est = new Estoque(idEstoque,prdt,qtdProduto,dtEntrada,dtSaida);
+                    ViewData["result"] = bll.Update(est);
+                    return View();
+                }
+
+
+            }
+            else if (funcao == "Salvar")
+            {
+
+
+                if (!pbll.VerificaProduto(produto))
+                {
+                    ViewData["result"] = "Este produto não existe em nosso estoque.";
+                    return View();
+                }
+                else
+                {
+                    Produto prdt = new Produto();
+
+                    prdt.Id = pbll.GetIdPorNome(produto);
+
+                    Estoque est = new Estoque(idEstoque, prdt, qtdProduto, dtEntrada, dtSaida);
+                    ViewData["result"] = bll.Insert(est);
+                    return View();
+                }
+ 
+            }
+
             return View();
         }
 
@@ -365,18 +282,10 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Produto(string produto, string embalagem, DateTime dtCompra,double preco, int idProduto, string funcao)
-        
+        public IActionResult Produto(string produto, string embalagem, DateTime dtCompra, double preco, int idProduto, string funcao)
         {
 
             ProdutoBLL bll = new ProdutoBLL();
-
-            ViewBag.produto = produto;
-            ViewBag.embalagem = embalagem;
-            ViewBag.dtCompra = dtCompra;
-            ViewBag.preco = preco;
-            ViewBag.idProduto = idProduto;
-            ViewData["btn"] = funcao;
 
             if (funcao == "Deletar")
             {
@@ -386,30 +295,11 @@ namespace PresentationLayer.Controllers
                 ViewData["result"] = bll.Delete(x);
                 return View();
             }
-            TipoEmbalagem tipoEmbalagem = new TipoEmbalagem(0,embalagem);
-            TipoEmbalagemDAL tipoEmbalagemDAL = new TipoEmbalagemDAL();
 
-            if ((tipoEmbalagemDAL.Insert(tipoEmbalagem)).Contains("já"))
-            {
-                List < TipoEmbalagem > lista = tipoEmbalagemDAL.GetAll();
-                foreach (var item in lista)
-                {
-                    if (item.Descricao == tipoEmbalagem.Descricao )
-                    {
-                        tipoEmbalagem.Id = item.Id;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                tipoEmbalagem = tipoEmbalagemDAL.GetLastRegister();
-            }
-  
+            TipoEmbalagemBLL embalagembll = new TipoEmbalagemBLL();
 
 
-            Produto temp = new Produto(idProduto,produto,tipoEmbalagem,preco,dtCompra);
-
+            Produto temp = new Produto(idProduto, produto, embalagembll.ValidaTipoEmbalagem(embalagem), preco, dtCompra);
 
             ViewData["result"] = "";
             if (funcao == "Atualizar")
@@ -453,8 +343,8 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-      
-        public IActionResult AlterarSenha(string Email,string senha1,string senha2)
+
+        public IActionResult AlterarSenha(string Email, string senha1, string senha2)
         {
 
             if (senha1 != senha2)
@@ -470,7 +360,7 @@ namespace PresentationLayer.Controllers
             }
             if (senha1 == senha2)
             {
-                
+
 
                 UsuarioBLL bll = new UsuarioBLL();
                 Usuario user = new Usuario();
@@ -483,7 +373,7 @@ namespace PresentationLayer.Controllers
 
                 TempData["Mensagem"] = "Senha Alterada com Sucesso !";
 
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -493,21 +383,29 @@ namespace PresentationLayer.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult RecuperarSenhaAprovar(string Email,string codigo)
+        public IActionResult RecuperarSenhaAprovar(string Email, string codigo)
         {
             CodsegurancaBLL bll = new CodsegurancaBLL();
+            UsuarioBLL usuariobll = new UsuarioBLL();
 
             if (codigo == null)
             {
+                Usuario temp = new Usuario();
+                temp = usuariobll.GetByEmail(Email);
+                if (temp.Login == null || temp.Login == "")
+                {
+                    TempData.Add("Verificacaoemail", "O email informado não é cadastrado em nosso sistema.");
+                    return RedirectToAction("RecuperarSenha", "Home");
+                }
                 ViewBag.Email = Email;
                 bll.EnviaEMAIL(Email);
                 return View();
             }
-            if (bll.VerificaCodigo(codigo,Email))
+            if (bll.VerificaCodigo(codigo, Email))
             {
                 bll.DeletaByEmail(Email);
-                TempData.Add("Email",Email);
-                return RedirectToAction("AlterarSenha","Home");
+                TempData.Add("Email", Email);
+                return RedirectToAction("AlterarSenha", "Home");
             }
             else
             {
@@ -532,8 +430,8 @@ namespace PresentationLayer.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-        }               
-        
+        }
+
         //[HttpPost]
         //public IActionResult VerificarLogin(string login, string password)
         //{
