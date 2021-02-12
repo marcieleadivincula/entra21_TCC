@@ -47,7 +47,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Uma descrição deve ser informada.\r\n");
+            Assert.AreEqual(str, "A descrição do procedimento deve ser informada.\r\n");
         }
 
          [Test]
@@ -88,7 +88,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Update(test);
 
-            Assert.AreEqual(str, "Uma descrição deve ser informada.\r\n");
+            Assert.AreEqual(str, "A descrição do procedimento deve ser informada.\r\n");
         }
 
         [Test]
