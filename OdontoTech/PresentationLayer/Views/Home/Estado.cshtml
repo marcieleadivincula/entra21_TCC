@@ -30,165 +30,91 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/css/main.css">
-    <link rel="stylesheet" type="text/css" href="~/css/util.css">
+    <link href="~/css/endereco.css" rel="stylesheet" />
     <!--===============================================================================================-->
     <!-- Adicionando JQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 </head>
 <body>
+    <main id="page-create-point">
+        <header>
+            <img src="#" alt="Logo da OdontoTech" />
 
-    <!-- Inicio do formulario ViaCEP Webservice -->
-    <form method="get" action=".">
-        <label>
-            Cep:
-            <input name="cep" type="text" id="cep" value="" size="10" maxlength="9" />
-        </label><br />
-        <label>
-            Rua:
-            <input name="rua" type="text" id="rua" size="60" />
-        </label><br />
-        <label>
-            Bairro:
-            <input name="bairro" type="text" id="bairro" size="40" />
-        </label><br />
-        <label>
-            Cidade:
-            <input name="cidade" type="text" id="cidade" size="40" />
-        </label><br />
-        <label>
-            Estado:
-            <input name="uf" type="text" id="uf" size="2" />
-        </label><br />
-        <label>
-            IBGE:
-            <input name="ibge" type="text" id="ibge" size="8" />
-        </label><br />
-    </form>
+            <a href="/Home/Index">
+                <span></span>
+                Voltar para home
+            </a>
+        </header>
 
-    <!-- Inicio do formulario (Javascript e Json) -->
-    <form method="get" action=".">
-        <label>
-            Cep:
-            <input name="cep" type="text" id="cep" value="" size="10" maxlength="9"
-                   onblur="pesquisacep(this.value);" />
-        </label><br />
-        <label>
-            Rua:
-            <input name="rua" type="text" id="rua" size="60" />
-        </label><br />
-        <label>
-            Bairro:
-            <input name="bairro" type="text" id="bairro" size="40" />
-        </label><br />
-        <label>
-            Cidade:
-            <input name="cidade" type="text" id="cidade" size="40" />
-        </label><br />
-        <label>
-            Estado:
-            <input name="uf" type="text" id="uf" size="2" />
-        </label><br />
-        <label>
-            IBGE:
-            <input name="ibge" type="text" id="ibge" size="8" />
-        </label><br />
-    </form>
+        <form action="" method="post">
+            <h2 id="balance">Estado</h2>
 
-    <div class="limiter">
+            <fieldset>
+                <div class="field-group">
+                    <div class="field">
+                        <label for="state">Estado</label>
+                        <select name="uf" id="state" required>
+                            <option value="@ViewBag.uf">Selecione o estado</option>
+                        </select>
 
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form class="login100-form validate-form">
-                    <span class="login100-form-title p-b-26">
-                        Estado
-                    </span>
-
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="estado">
-                        <span class="focus-input100" data-placeholder="Nome do estado"></span>
+                        <input type="hidden" name="state" />
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="pais">
-                        <span class="focus-input100" data-placeholder="Pais"></span>
-                        @* Trazer a lista de países *@
+                    <div class="field">
+                        <label for="city">Cidade</label>
+                        <select name="city" id="city" disabled required>
+                            <option value="@ViewBag.city">Selecione a cidade</option>
+
+                            <input type="hidden" name="city" />
+                        </select>
                     </div>
+                </div>
+            </fieldset>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Salvar
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Atualizar
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Deletar
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="text-center p-t-115">
-                        <span class="login100-form-title p-b-26">
-                            Lista de estados
-                        </span>
-                        @* Trazer a lista de estados com id, nome do estado e país *@
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Estado</th>
-                                        <th scope="col">País</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>twitter</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-
-                    </div>
-
-                </form>
+            <div>
+                <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
             </div>
-        </div>
 
-    </div>
+            <fieldset>
 
-    <div id="dropDownSelect1"></div>
+                <section class="table-responsive" id="state">
+                    <h2 class="sr-only">Lista de estados</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="description">#</th>
+                                <th>Estado</th>
+                                <th>País</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <th scope="row">@ViewBag.Id</th>
+                                <td>@ViewBag.Nome</td>
+                                <td>@ViewBag.idPais</td>
+                                <td>
+                                    <img onclick="Transaction.remove(${index})" src="~/images/assets/plus.svg" alt="Atualizar estado" />
+                                </td>
+                                <td>
+                                    <img onclick="Transaction.remove(${index})" src="~/images/assets/minus.svg" alt="Remover estado" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <input type="hidden" name="items" />
+
+            </fieldset>
+
+        </form>
+    </main>
+
+    <script src="https://use.fontawesome.com/d09559d1bd.js"></script>
 
     <!--===============================================================================================-->
     <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -208,6 +134,7 @@
     <script src="~/js/main.js"></script>
     <script src="~/js/viacep.js"></script>
     <script src="~/js/viacepJSandJson.js"></script>
+    <script src="~/js/endereco.js"></script>
 
 </body>
 </html>
