@@ -5,24 +5,16 @@ using System.Diagnostics;
 using BusinessLogicalLayer;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Domain;
 using DataAccessLayer;
-using System.Net.Mail;
 
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
-using System;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace PresentationLayer.Controllers
 {
@@ -397,9 +389,9 @@ namespace PresentationLayer.Controllers
             TipoEmbalagem tipoEmbalagem = new TipoEmbalagem(0,embalagem);
             TipoEmbalagemDAL tipoEmbalagemDAL = new TipoEmbalagemDAL();
 
-            if ((tipoEmbalagemDAL.Inserir(tipoEmbalagem)).Contains("já"))
+            if ((tipoEmbalagemDAL.Insert(tipoEmbalagem)).Contains("já"))
             {
-                List < TipoEmbalagem > lista = tipoEmbalagemDAL.SelecionaTodos();
+                List < TipoEmbalagem > lista = tipoEmbalagemDAL.GetAll();
                 foreach (var item in lista)
                 {
                     if (item.Descricao == tipoEmbalagem.Descricao )
