@@ -122,8 +122,8 @@ namespace PresentationLayer.Controllers
 
 
 
-        public IActionResult Paciente(string firstName, string lastName, string cpf, string rg, DateTime dtNascimento, string pais,string estado, string cidade, string bairro, string logradouro,string cep,int numeroCasa, string contatos ,string observacoes, int idPaciente, string funcao)
-         {
+        public IActionResult Paciente(string firstName, string lastName, string cpf, string rg, DateTime dtNascimento, string pais, string estado, string cidade, string bairro, string logradouro, string cep, int numeroCasa, string contatos, string observacoes, int idPaciente, string funcao)
+        {
             if (funcao != null)
             {
                 PacienteBLL bll = new PacienteBLL();
@@ -144,7 +144,7 @@ namespace PresentationLayer.Controllers
 
                 EnderecoBLL bllmoradia = new EnderecoBLL();
 
-                Paciente temp = new Paciente(idPaciente, firstName, lastName, rg, cpf, dtNascimento, observacoes, bllmoradia.EnderecoConstruido(pais, estado, cidade, bairro, logradouro, numeroCasa, cep)); 
+                Paciente temp = new Paciente(idPaciente, firstName, lastName, rg, cpf, dtNascimento, observacoes, bllmoradia.EnderecoConstruido(pais, estado, cidade, bairro, logradouro, numeroCasa, cep));
 
                 ViewData["result"] = "";
 
@@ -152,7 +152,7 @@ namespace PresentationLayer.Controllers
                 {
                     ViewData["result"] = bll.Update(temp);
                 }
-              
+
                 else if (funcao == "Salvar")
                 {
                     ViewData["result"] = bll.Insert(temp);
@@ -182,8 +182,61 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Estoque()
+        public IActionResult Estoque(string produto, int qtdProduto, DateTime dtEntrada, DateTime dtSaida, string funcao, int idEstoque)
         {
+            EstoqueBLL bll = new EstoqueBLL();
+            if (funcao == "Deletar")
+            {
+
+                Domain.Estoque a = new Domain.Estoque();
+                a.Id = idEstoque;
+
+                ViewData["result"] = bll.Delete(a);
+                return View();
+            }
+            if (funcao == "Atualizar")
+            {
+                ProdutoBLL pbll = new ProdutoBLL();
+
+                if (pbll.VerificaProduto(produto))
+                {
+                    ViewData["result"] = "Este produto não existe em nosso estoque.";
+                    return View();
+                }
+                else
+                {
+                    Produto prdt = new Produto();
+                    prdt.Nome = produto;
+
+                    Estoque est = new Estoque(idEstoque,prdt,qtdProduto,dtEntrada,dtSaida);
+                    ViewData["result"] = bll.Update(est);
+                    return View();
+                }
+
+
+            }
+            else if (funcao == "Salvar")
+            {
+
+                ProdutoBLL pbll = new ProdutoBLL();
+
+                if (!pbll.VerificaProduto(produto))
+                {
+                    ViewData["result"] = "Este produto não existe em nosso estoque.";
+                    return View();
+                }
+                else
+                {
+                    Produto prdt = new Produto();
+                    prdt.Nome = produto;
+
+                    Estoque est = new Estoque(idEstoque, prdt, qtdProduto, dtEntrada, dtSaida);
+                    ViewData["result"] = bll.Insert(est);
+                    return View();
+                }
+ 
+            }
+
             return View();
         }
 
@@ -227,7 +280,7 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Produto(string produto, string embalagem, DateTime dtCompra,double preco, int idProduto, string funcao)      
+        public IActionResult Produto(string produto, string embalagem, DateTime dtCompra, double preco, int idProduto, string funcao)
         {
 
             ProdutoBLL bll = new ProdutoBLL();
@@ -242,8 +295,8 @@ namespace PresentationLayer.Controllers
             }
 
             TipoEmbalagemBLL embalagembll = new TipoEmbalagemBLL();
-           
-            Produto temp = new Produto(idProduto,produto,embalagembll.ValidaTipoEmbalagem(embalagem),preco,dtCompra);
+
+            Produto temp = new Produto(idProduto, produto, embalagembll.ValidaTipoEmbalagem(embalagem), preco, dtCompra);
 
             ViewData["result"] = "";
             if (funcao == "Atualizar")
@@ -287,8 +340,8 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-      
-        public IActionResult AlterarSenha(string Email,string senha1,string senha2)
+
+        public IActionResult AlterarSenha(string Email, string senha1, string senha2)
         {
 
             if (senha1 != senha2)
@@ -304,7 +357,7 @@ namespace PresentationLayer.Controllers
             }
             if (senha1 == senha2)
             {
-                
+
 
                 UsuarioBLL bll = new UsuarioBLL();
                 Usuario user = new Usuario();
@@ -317,7 +370,7 @@ namespace PresentationLayer.Controllers
 
                 TempData["Mensagem"] = "Senha Alterada com Sucesso !";
 
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -327,7 +380,7 @@ namespace PresentationLayer.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult RecuperarSenhaAprovar(string Email,string codigo)
+        public IActionResult RecuperarSenhaAprovar(string Email, string codigo)
         {
             CodsegurancaBLL bll = new CodsegurancaBLL();
             UsuarioBLL usuariobll = new UsuarioBLL();
@@ -336,20 +389,20 @@ namespace PresentationLayer.Controllers
             {
                 Usuario temp = new Usuario();
                 temp = usuariobll.GetByEmail(Email);
-                if(temp.Login == null || temp.Login == "")
+                if (temp.Login == null || temp.Login == "")
                 {
-                    TempData.Add("Verificacaoemail","O email informado não é cadastrado em nosso sistema.");
-                    return RedirectToAction("RecuperarSenha","Home");
+                    TempData.Add("Verificacaoemail", "O email informado não é cadastrado em nosso sistema.");
+                    return RedirectToAction("RecuperarSenha", "Home");
                 }
                 ViewBag.Email = Email;
                 bll.EnviaEMAIL(Email);
                 return View();
             }
-            if (bll.VerificaCodigo(codigo,Email))
+            if (bll.VerificaCodigo(codigo, Email))
             {
                 bll.DeletaByEmail(Email);
-                TempData.Add("Email",Email);
-                return RedirectToAction("AlterarSenha","Home");
+                TempData.Add("Email", Email);
+                return RedirectToAction("AlterarSenha", "Home");
             }
             else
             {
@@ -374,8 +427,8 @@ namespace PresentationLayer.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-        }               
-        
+        }
+
         //[HttpPost]
         //public IActionResult VerificarLogin(string login, string password)
         //{

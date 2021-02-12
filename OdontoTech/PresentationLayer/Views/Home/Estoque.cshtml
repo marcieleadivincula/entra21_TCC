@@ -58,19 +58,49 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="dtEntrada">
-                        <span class="focus-input100" data-placeholder="Data de entrada"></span>
+                        <label style="color:darkgray; font-size:15px; margin-left:5px;">Data de entrada</label>
+                        <input class="input100" type="date" name="dtEntrada">
+                        <span class="focus-input100" data-placeholder=""></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="dtSaida">
-                        <span class="focus-input100" data-placeholder="Data de saída"></span>
+                        <label style="color:darkgray; font-size:15px; margin-left:5px;">Data de saída</label>
+                        <input class="input100" type="date" name="dtSaida">
+                        <span class="focus-input100" data-placeholder=""></span>
                     </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                        <input class="input100" type="number" name="idEstoque">
+                        <span class="focus-input100" data-placeholder="Id do Estoque"></span>
+                        <label style="color:dimgrey;font-size:13px"> Somente para deletar e atualizar. </label>
+                    </div>
+
+
+                    @{
+                        if (Convert.ToString(ViewData["result"]) != null)
+                        {
+                            if (Convert.ToString(ViewData["result"]).Contains("!"))
+                            {
+                                <label style="color:green"> @ViewData["result"] </label>
+                            }
+                            else
+                            {
+
+                                <label style="color:red;font-size:13px"> @ViewData["result"] </label>
+                            }
+
+                        }
+
+                    }
 
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" name="funcao" type="submit" value="Salvar" onclick=" @{
+
+                                ViewData["btn"] = "Salvar";
+
+                            }">
                                 Salvar
                             </button>
                         </div>
@@ -79,7 +109,11 @@
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" name="funcao" type="submit" value="Atualizar" onclick=" @{
+
+                                ViewData["btn"] = "Atualizar";
+
+                            }">
                                 Atualizar
                             </button>
                         </div>
@@ -88,7 +122,11 @@
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" name="funcao" type="submit" value="Deletar" onclick=" @{
+
+                                ViewData["btn"] = "Deletar";
+
+                            }">
                                 Deletar
                             </button>
                         </div>

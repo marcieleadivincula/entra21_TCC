@@ -12,7 +12,7 @@ namespace DataAccessLayer
         public string Insert(Estoque estoque)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO estoque(idProduto, qtdProduto, dtEntrada, dtSaida) values(@idProduto, @qtdProduto, @dtEntrada, @dtSaida)";
+            cmd.CommandText = "INSERT INTO estoque(idProduto, qtdProduto, dtEntrada, dtSaida) values (@idProduto, @qtdProduto, @dtEntrada, @dtSaida)";
             cmd.Parameters.AddWithValue("@idProduto", estoque.Produto.Id);
             cmd.Parameters.AddWithValue("@qtdProduto", estoque.QtdProduto);
             cmd.Parameters.AddWithValue("@dtEntrada", estoque.DataEntrada);

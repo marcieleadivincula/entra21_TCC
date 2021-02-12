@@ -141,5 +141,22 @@ namespace BusinessLogicalLayer
         {
             return dal.GetByTipoEmbalagem(tipoEmbalagem);
         }
+
+        public bool VerificaProduto(string NomeProduto)
+        {
+            ProdutoBLL pdall = new ProdutoBLL();
+
+            List<Produto> lpdt = pdall.GetAll();
+
+            foreach (var item in lpdt)
+            {
+                if (item.Nome == NomeProduto)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

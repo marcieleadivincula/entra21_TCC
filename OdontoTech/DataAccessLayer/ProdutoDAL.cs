@@ -123,6 +123,9 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Produto temp = new Produto();
+
+                    temp.TipoEmbalagem = new TipoEmbalagem();
+
                     temp.Id = Convert.ToInt32(reader["idProduto"]);
                     temp.Nome = Convert.ToString(reader["nomeProduto"]);
                     temp.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
@@ -157,6 +160,8 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    produto.TipoEmbalagem = new TipoEmbalagem();
+
                     produto.Id = Convert.ToInt32(reader["idProduto"]);
                     produto.Nome = Convert.ToString(reader["nomeProduto"]);
                     produto.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
@@ -188,6 +193,9 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+
+                    produto.TipoEmbalagem = new TipoEmbalagem();
+
                     produto.Id = Convert.ToInt32(reader["idProduto"]);
                     produto.Nome = Convert.ToString(reader["nomeProduto"]);
                     produto.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
@@ -221,6 +229,9 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Produto temp = new Produto();
+
+                    temp.TipoEmbalagem = new TipoEmbalagem();
+
                     temp.Id = Convert.ToInt32(reader["idProduto"]);
                     temp.Nome = Convert.ToString(reader["nomeProduto"]);
                     temp.TipoEmbalagem.Id = Convert.ToInt32(reader["idTipoEmbalagem"]);
