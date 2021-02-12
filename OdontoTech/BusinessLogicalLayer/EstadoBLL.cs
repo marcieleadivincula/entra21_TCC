@@ -115,5 +115,11 @@ namespace BusinessLogicalLayer
         {
             return dal.GetByPais(pais);
         }
+
+        //Obter registros por nome do pais de determinado estado
+        public List<Estado> GetByNamePais(Pais pais)
+        {
+            return dal.GetByNamePais(pais);
+        }
     }
 }

@@ -95,7 +95,9 @@
                         <tbody>
                             @{
                                 EstadoBLL estadoBLL = new EstadoBLL();
+                                Domain.Pais pais = new Domain.Pais(1, "Brasil");
                                 List<Domain.Estado> lista = estadoBLL.GetAll();
+                                List<Domain.Estado> listaP = estadoBLL.GetByNamePais(pais);
                             }
 
                             @foreach (var item in lista)
@@ -103,7 +105,11 @@
                                 <tr>
                                     <th scope="row">@item.Id</th>
                                     <td>@item.Nome</td>
-                                    <td>@item.Pais.Id</td>
+                                    @foreach (var p in listaP)
+                                    {
+
+                                    <td>@p.Pais.Nome</td>
+                                    }
                                     <td>
                                         <img onclick="Transaction.remove(${index})" src="~/images/assets/plus.svg" alt="Atualizar estado" />
                                     </td>

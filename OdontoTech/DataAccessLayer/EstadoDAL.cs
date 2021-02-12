@@ -245,11 +245,12 @@ namespace DataAccessLayer
             }
         }
 
-        public List<Estado> GetByNamePais(int id)
+        public List<Estado> GetByNamePais(Pais pais)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM estado e INNER JOIN pais p ON e.idPais = p.idPais WHERE e.idPais = @idPais";
-            cmd.Parameters.AddWithValue("@idPais", id);
+            cmd.CommandText = "SELECT * FROM estado e INNER JOIN pais p ON e.idPais = p.idPais WHERE e.idPais = @idPais and p.nomePais = @nomePais";
+            cmd.Parameters.AddWithValue("@nomePais", pais.Nome);
+            cmd.Parameters.AddWithValue("@idPais", pais.Id);
 
             try
             {
@@ -266,6 +267,7 @@ namespace DataAccessLayer
                     temp.Id = Convert.ToInt32(reader["idEstado"]);
                     temp.Nome = Convert.ToString(reader["nomeEstado"]);
                     temp.Pais.Id = Convert.ToInt32(reader["idPais"]);
+                    temp.Pais.Nome = Convert.ToString(reader["nomePais"]);
 
                     estados.Add(temp);
                 }
