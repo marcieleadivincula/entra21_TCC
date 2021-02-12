@@ -55,11 +55,15 @@
                         <span class="focus-input100" data-placeholder="Insira seu email já cadastrado."></span>
                     </div>
 
-                    <label style="color:darkgrey;font-size:13px"> Iremos enviar um email com um codigo de verificação. </label>
+                    <label style="color:darkgrey;font-size:13px"> Iremos enviar um email com um codigo de verificação.<br /> </label>
 
                     <div>
                         <samp>
-
+                            @{if (TempData["Verificacaoemail"] != null)
+                              {
+                                    <label style="color:red;font-size:15px;position:center;text-emphasis-position:above"> @Convert.ToString(TempData["Verificacaoemail"]) </label>
+                              }
+                            }
                         </samp>
                     </div>
 

@@ -1,6 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using BusinessLogicalLayer
 @{
     ViewData["Title"] = "Estoque";
 }
@@ -38,17 +39,33 @@
 
 
     <div class="limiter">
-
         <div class="container-login100">
             <div class="wrap-login100">
-                <form class="login100-form validate-form">
+                <form class="login100-form validate-form" action="/Home/Estoque" method="post">
                     <span class="login100-form-title p-b-26">
                         Estoque
                     </span>
-
+                    <label style="color:darkgray; font-size:15px; margin-left:5px;">Produto</label>
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="produto">
-                        <span class="focus-input100" data-placeholder="Produto"></span>
+
+                        @*<input class="input100" type="text" name="produto">*@
+
+                        <select id="produto" >
+
+                            @{
+                                ProdutoBLL bll = new ProdutoBLL();
+
+                                List<Domain.Produto> Lista = bll.GetAll();
+
+                                for (int i = 0; i < Lista.Count; i++)
+                                {
+                                    <option value="@ViewBag.Nome">@Lista[i].Nome</option>
+                                }
+                            }
+                        </select>
+                                    <input type="hidden" name="produto" value="@ViewBag.Nome" />
+
+                        <span class="focus-input100" data-placeholder=""></span>
                         @* Trazer a lista de produto *@
                     </div>
 
@@ -58,19 +75,63 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="dtEntrada">
-                        <span class="focus-input100" data-placeholder="Data de entrada"></span>
+                        <label style="color:darkgray; font-size:15px; margin-left:5px;">Data de entrada</label>
+                        <input class="input100" type="date" name="dtEntrada">
+                        <span class="focus-input100" data-placeholder=""></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="dtSaida">
-                        <span class="focus-input100" data-placeholder="Data de saída"></span>
+                        <label style="color:darkgray; font-size:15px; margin-left:5px;">Data de saída</label>
+                        <input class="input100" type="date" name="dtSaida">
+                        <span class="focus-input100" data-placeholder=""></span>
                     </div>
+
+                    <label style="color:darkgray; font-size:15px; margin-left:5px;">Id do Estoque</label>
+                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                        <select id="idEstoque">
+
+                            @{
+                                EstoqueBLL blle = new EstoqueBLL();
+
+                                List<Domain.Estoque> Estoques = blle.GetAll();
+
+                                for (int i = 0; i < Estoques.Count; i++)
+                                {
+                                    <option value="@Estoques[i].Id">@Estoques[i].Id</option>
+                                }
+                            }
+
+                        </select>
+                        <span class="focus-input100" data-placeholder=""></span>
+                        <label style="color:dimgrey;font-size:13px"> Somente para deletar e atualizar. </label>
+                    </div>
+
+
+                    @{
+                        if (Convert.ToString(ViewData["result"]) != null)
+                        {
+                            if (Convert.ToString(ViewData["result"]).Contains("!"))
+                            {
+                                <label style="color:green"> @ViewData["result"] </label>
+                            }
+                            else
+                            {
+
+                                <label style="color:red;font-size:13px"> @ViewData["result"] </label>
+                            }
+
+                        }
+
+                    }
 
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" name="funcao" type="submit" value="Salvar" onclick=" @{
+
+                                ViewData["btn"] = "Salvar";
+
+                            }">
                                 Salvar
                             </button>
                         </div>
@@ -79,7 +140,11 @@
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" name="funcao" type="submit" value="Atualizar" onclick=" @{
+
+                                ViewData["btn"] = "Atualizar";
+
+                            }">
                                 Atualizar
                             </button>
                         </div>
@@ -88,20 +153,36 @@
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" name="funcao" type="submit" value="Deletar" onclick=" @{
+
+                                ViewData["btn"] = "Deletar";
+
+                            }">
                                 Deletar
                             </button>
                         </div>
                     </div>
 
-                    <div class="text-center p-t-115">
-                        <span class="login100-form-title p-b-26">
-                            Lista do estoque
-                        </span>
-                        @* Trazer a lista de estoque com id, produto, qtdProduto, dtEntrada e dtSaida *@
-                    </div>
-
                 </form>
+
+                <div class="text-center p-t-115">
+                    <span class="login100-form-title p-b-26">
+                        Lista do estoque
+                    </span>
+
+                    @{
+                        EstoqueBLL bllee = new EstoqueBLL();
+
+                        List<Domain.Estoque> Estoquees = bllee.GetAll();
+
+                        for (int i = 0; i < Estoquees.Count; i++)
+                        {
+                            <label> @Estoquees[i].Id  @Estoquees[i].Produto.Nome @Estoquees[i].QtdProduto @Estoquees[i].DataEntrada  @Estoquees[i].DataSaida <br /> </label>
+                        }
+
+                    }
+                </div>
+
             </div>
         </div>
 
@@ -125,6 +206,7 @@
     <script src="~/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
     <script src="./js/main.js"></script>
+
 
 </body>
 </html>
