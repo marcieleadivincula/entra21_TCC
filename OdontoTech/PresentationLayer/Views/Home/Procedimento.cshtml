@@ -47,13 +47,13 @@
 
             <a href="/Home/Dashboard">
                 <span></span>
-                Voltar para home
+                ⟲ Voltar para home
             </a>
         </header>
 
         <form action="/Home/Procedimento" method="post">
 
-            <h2 id="balance">Cadastro Atendimento</h2>
+            <h2 id="balance">Cadastro Procedimento  <img src="~/images/procedimento.png" alt="logo" height="50" width="50" data-atf="1" /></h2>
             @{
                 ProcedimentoBLL bll = new ProcedimentoBLL();
                 List<Procedimento> lista = bll.GetAll();
@@ -90,7 +90,7 @@
                             }}
 
                     </select>
-                    <a style="color:blue;font-size:13px" href="/Home/TipoProcedimento">Gerenciar Tipos de procedimento</a>
+                    <a style="color:blue;font-size:13px" href="/Home/TipoProcedimento">♻ Gerenciar Tipos de procedimento</a>
 
                     <input type="hidden" name="idTipoProcedimento" value="@ViewBag.idTipoProcedimento" />
                 </div>

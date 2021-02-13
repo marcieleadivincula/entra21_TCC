@@ -60,8 +60,8 @@ namespace DataAccessLayer
             }
 
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM tipoembalagem WHERE idTipoEmbalagem = @idTipoEmbalagem";
-            cmd.Parameters.AddWithValue("@idTipoEmbalagem", tipoEmbalagem.Id);
+            cmd.CommandText = $"DELETE FROM tipoembalagem WHERE idTipoEmbalagem = {tipoEmbalagem.Id}";
+        
 
             try
             {

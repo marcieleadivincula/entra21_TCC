@@ -53,14 +53,14 @@
 
         <form action="" method="post">
 
-            <h2 id="balance">Cadastro Atendimento</h2>
+            <h2 id="balance">Cadastro Atendimento <img src="~/images/atendimento-ao-cliente-e-suporte-conceito-de-call-center_18591-20397.jpg" alt="logo" height="50" width="50" data-atf="1" /></h2>
             @{
                 AtendimentoBLL bll = new AtendimentoBLL();
                 List<Atendimento> lista = bll.GetAll();
                 PacienteBLL paciente = new PacienteBLL();
                 ColaboradorBLL colaborador = new ColaboradorBLL();
                 ProcedimentoBLL procedimento = new ProcedimentoBLL();
-                TipoProcedimentoBLL TipoProcedimentoBLL  = new TipoProcedimentoBLL();
+                TipoProcedimentoBLL TipoProcedimentoBLL = new TipoProcedimentoBLL();
 
 
                 List<Paciente> PCS = paciente.GetAll();
@@ -218,8 +218,15 @@
                 Colaborador col = colaborador.GetById(lista[i].Colaborador.Id);
 
 
-                <input type="radio" name="idSelecionado" value="@lista[i].Id" /> <label> <b>ID:</b> @lista[i].Id</label> <label> <b>Paciente:</b> @pac.Nome</label> <label> <b>Colaborador:</b> @col.Nome </label> <label> <b>Horario:</b> @lista[i].DtAtendimento</label> <label> <b>Status:</b> @lista[i].Status </label> @* Rever oçãao de deletar  <img src="~/images/Lixeira.png" alt="logo" height="15" width="15" data-atf="1" onclick="deletar()" />*@ <br />
-
+                <input type="radio" name="idSelecionado" value="@lista[i].Id" /> <label> <b>ID:</b> @lista[i].Id</label>
+                <label> <b>Paciente:</b> @pac.Nome</label> <label> <b>Colaborador:</b> @col.Nome </label>
+                <label> <b>Horario:</b> @lista[i].DtAtendimento</label> <label> <b>Status:</b> @lista[i].Status </label>
+                @if (lista[i].Status == "Atendido")
+                {<img src="~/images/atendido.png" alt="logo" height="20" width="20" data-atf="1" /> }
+                else if (lista[i].Status == "Agendado" || lista[i].Status == "Reagendado")
+                {<img src="~/images/agendado.png" alt="logo" height="23" width="23" data-atf="1" />}
+                else if (lista[i].Status == "Cancelado")
+                {<img src="~/images/canceladio.png" alt="logo" height="20" width="20" data-atf="1" />}<br />
             }
             <br />
             <br />

@@ -1,7 +1,8 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@using BusinessLogicalLayer
+@using Domain;
+@using BusinessLogicalLayer;
 @{
     ViewData["Title"] = "Estoque";
 }
@@ -9,186 +10,158 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>Estoque</title>
+    <title>Estado</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="./css/main.css">
-    <link rel="stylesheet" type="text/css" href="./css/util.css">
+    <link href="~/css/endereco.css" rel="stylesheet" />
     <!--===============================================================================================-->
+    <!-- Adicionando JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
 </head>
 <body>
+    <main id="page-create-point">
+        <header>
+            <img src="~/images/icons/OdontoTechV2.png" alt="logo" height="70" width="70" data-atf="1" />
+
+            <a href="/Home/Dashboard">
+                <span></span>
+                Voltar para Home
+            </a>
+        </header>
+
+        <form action="/Home/Estoque" method="post">
+
+            <h2 id="balance">Adicionar no estoque</h2>
+            @{
+                EstoqueBLL bll = new EstoqueBLL();
+                List<Estoque> lista = bll.GetAll();
+                ProdutoBLL prdt = new ProdutoBLL();
+                List<Produto> produtos = prdt.GetAll();
+
+            }
+        <fieldset>
+            <div class="field-group">
 
 
-    <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form class="login100-form validate-form" action="/Home/Estoque" method="post">
-                    <span class="login100-form-title p-b-26">
-                        Estoque
-                    </span>
-                    <label style="color:darkgray; font-size:15px; margin-left:5px;">Produto</label>
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                <div class="field">
+                    <label for="IDproduto">Produrto</label>
 
-                        @*<input class="input100" type="text" name="produto">*@
+                    <select name="IDproduto" id="IDproduto" required>
 
-                        <select id="produto" >
+                        <option value=" ">Selecione o Produto</option>
 
-                            @{
-                                ProdutoBLL bll = new ProdutoBLL();
-
-                                List<Domain.Produto> Lista = bll.GetAll();
-
-                                for (int i = 0; i < Lista.Count; i++)
-                                {
-                                    <option value="@ViewBag.Nome">@Lista[i].Nome</option>
-                                }
-                            }
-                        </select>
-                                    <input type="hidden" name="produto" value="@ViewBag.Nome" />
-
-                        <span class="focus-input100" data-placeholder=""></span>
-                        @* Trazer a lista de produto *@
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="qtdProduto">
-                        <span class="focus-input100" data-placeholder="Quantidade de produto"></span>
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <label style="color:darkgray; font-size:15px; margin-left:5px;">Data de entrada</label>
-                        <input class="input100" type="date" name="dtEntrada">
-                        <span class="focus-input100" data-placeholder=""></span>
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <label style="color:darkgray; font-size:15px; margin-left:5px;">Data de saída</label>
-                        <input class="input100" type="date" name="dtSaida">
-                        <span class="focus-input100" data-placeholder=""></span>
-                    </div>
-
-                    <label style="color:darkgray; font-size:15px; margin-left:5px;">Id do Estoque</label>
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <select id="idEstoque">
-
-                            @{
-                                EstoqueBLL blle = new EstoqueBLL();
-
-                                List<Domain.Estoque> Estoques = blle.GetAll();
-
-                                for (int i = 0; i < Estoques.Count; i++)
-                                {
-                                    <option value="@Estoques[i].Id">@Estoques[i].Id</option>
-                                }
-                            }
-
-                        </select>
-                        <span class="focus-input100" data-placeholder=""></span>
-                        <label style="color:dimgrey;font-size:13px"> Somente para deletar e atualizar. </label>
-                    </div>
-
-
-                    @{
-                        if (Convert.ToString(ViewData["result"]) != null)
-                        {
-                            if (Convert.ToString(ViewData["result"]).Contains("!"))
+                        @{ for (int i = 0; i < produtos.Count; i++)
                             {
-                                <label style="color:green"> @ViewData["result"] </label>
-                            }
-                            else
-                            {
+                                <option value="@produtos[i].Id">@produtos[i].Nome</option>
+                            }}
 
-                                <label style="color:red;font-size:13px"> @ViewData["result"] </label>
-                            }
+                    </select>
 
-                        }
+                    <input type="hidden" name="IDproduto" value="@ViewBag.IDproduto" />
+                </div>
 
-                    }
+                <div class="field">
+                    <label for="qtdProduto">Quantidade</label>
+                    <input type="number" name="qtdProduto" value="@ViewBag.qtdProduto" />
+                </div>
+            </div>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" name="funcao" type="submit" value="Salvar" onclick=" @{
+            <div class="field-group">
 
-                                ViewData["btn"] = "Salvar";
 
-                            }">
-                                Salvar
-                            </button>
-                        </div>
-                    </div>
+                <div class="field">
+                    <label for="dataentrada">Data de Entrada</label>
+                    <input type="datetime-local" name="dataentrada" value="@ViewBag.dataentrada" />
+                </div>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" name="funcao" type="submit" value="Atualizar" onclick=" @{
-
-                                ViewData["btn"] = "Atualizar";
-
-                            }">
-                                Atualizar
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" name="funcao" type="submit" value="Deletar" onclick=" @{
-
-                                ViewData["btn"] = "Deletar";
-
-                            }">
-                                Deletar
-                            </button>
-                        </div>
-                    </div>
-
-                </form>
-
-                <div class="text-center p-t-115">
-                    <span class="login100-form-title p-b-26">
-                        Lista do estoque
-                    </span>
-
-                    @{
-                        EstoqueBLL bllee = new EstoqueBLL();
-
-                        List<Domain.Estoque> Estoquees = bllee.GetAll();
-
-                        for (int i = 0; i < Estoquees.Count; i++)
-                        {
-                            <label> @Estoquees[i].Id  @Estoquees[i].Produto.Nome @Estoquees[i].QtdProduto @Estoquees[i].DataEntrada  @Estoquees[i].DataSaida <br /> </label>
-                        }
-
-                    }
+                <div class="field">
+                    <label for="datasaida">Data de Saida</label>
+                    <input type="datetime-local" name="datasaida" value="@ViewBag.datasaida" />
                 </div>
 
             </div>
-        </div>
 
-    </div>
 
-    <div id="dropDownSelect1"></div>
+
+            <div class="field-group">
+                <div class="field">
+
+                    <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
+                    <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
+
+
+                </div>
+
+                <div class="field">
+                    <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
+                    <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
+
+                </div>
+
+            </div>
+
+            @{
+                if (Convert.ToString(ViewData["result"]) != "")
+                {
+                    if (Convert.ToString(ViewData["result"]).Contains("!"))
+                    {
+                        <label style="color:green;font-size:13px"> @ViewData["result"] </label>
+                    }
+                    else
+                    {
+
+                        <label style="color:red;font-size:13px"> @ViewData["result"] </label>
+                    }
+
+                }
+
+            }
+
+            <br />
+            <br />
+
+            <h2 id="balance">Lista de Tipos de Procedimentos</h2>
+
+            <br />
+
+            @for (int i = 0; i < lista.Count; i++)
+            {
+
+                ProdutoBLL pcdbll = new ProdutoBLL();
+                lista[i].Produto = pcdbll.GetById(lista[i].Produto);
+
+                <input type="radio" name="idSelecionado" value="@lista[i].Id" /> <label> <b>ID:</b> @lista[i].Id</label> <label> <b>Produto:</b> @lista[i].Produto.Nome</label> <label> <b>Quantidade:</b> @lista[i].QtdProduto </label> <label> <b>Data de enstrada:</b> @lista[i].DataEntrada </label> <label> <b>Data de saida:</b> @lista[i].DataSaida </label> <br />
+
+            }
+            <br />
+            <br />
+            <input checked type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
+
+        </fieldset>
+        </form>
+    </main>
+
+    <script src="https://use.fontawesome.com/d09559d1bd.js"></script>
 
     <!--===============================================================================================-->
     <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -205,8 +178,13 @@
     <!--===============================================================================================-->
     <script src="~/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
-    <script src="./js/main.js"></script>
-
+    <script src="~/js/main.js"></script>
+    <script src="~/js/viacep.js"></script>
+    <script src="~/js/viacepJSandJson.js"></script>
+    <script src="~/js/endereco.js"></script>
 
 </body>
+
 </html>
+
+

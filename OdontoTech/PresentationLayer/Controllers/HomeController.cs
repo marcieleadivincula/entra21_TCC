@@ -133,10 +133,11 @@ namespace PresentationLayer.Controllers
                 ProcedimentoBLL pbll = new ProcedimentoBLL();
                 Procedimento procedimento = new Procedimento();
 
+                //procedimento.TipoProcedimento = new TipoProcedimento();
    
-                procedimento = pbll.GetProcedimentoIdTipo(idTipoProcedimento);
-                procedimento.TipoProcedimento.Id = idTipoProcedimento;
-                pbll.Insert(procedimento);
+                //procedimento = pbll.GetProcedimentoIdTipo(idTipoProcedimento);
+           
+                //pbll.Insert(procedimento);
 
                 a.Paciente = new Paciente();
                 a.Colaborador = new Colaborador();
@@ -157,6 +158,7 @@ namespace PresentationLayer.Controllers
                 AtendimentoBLL bll = new AtendimentoBLL();
                 Atendimento a = new Atendimento();
 
+                
                 a.Paciente = new Paciente();
                 a.Colaborador = new Colaborador();
                 a.Status = Status;
@@ -233,64 +235,46 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Estoque(string produto, int qtdProduto, DateTime dtEntrada, DateTime dtSaida, string funcao, int idEstoque)
+        public IActionResult Estoque(int IDproduto, int qtdProduto, DateTime dataentrada, DateTime datasaida, string saveBtn, string saveBtn2,int idSelecionado)
         {
-            produto = ViewBag.Produto;
-            ProdutoBLL pbll = new ProdutoBLL();
-
-            ViewData["produtos"] = pbll.GetAll();
-
-
             EstoqueBLL bll = new EstoqueBLL();
-            if (funcao == "Deletar")
+            Estoque estoque = new Estoque();
+
+            estoque.Produto = new Produto();
+
+            if (saveBtn2 == "Deletar")
             {
 
-                Domain.Estoque a = new Domain.Estoque();
-                a.Id = idEstoque;
+                estoque.Id = idSelecionado;
 
-                ViewData["result"] = bll.Delete(a);
+                ViewData["result"] = bll.Delete(estoque);
+
                 return View();
             }
-            if (funcao == "Atualizar")
+            if (idSelecionado != 0)
             {
 
-                if (!pbll.VerificaProduto(produto))
-                {
-                    ViewData["result"] = "Este produto não existe em nosso estoque.";
-                    return View();
-                }
-                else
-                {
-                    Produto prdt = new Produto();
-
-                    prdt.Id = pbll.GetIdPorNome(produto);
-
-                    Estoque est = new Estoque(idEstoque, prdt, qtdProduto, dtEntrada, dtSaida);
-                    ViewData["result"] = bll.Update(est);
-                    return View();
-                }
-
-
+                estoque.Id = idSelecionado;
+                estoque.Produto.Id = IDproduto;
+                estoque.DataEntrada = dataentrada;
+                estoque.DataSaida = datasaida;
+                estoque.QtdProduto = qtdProduto;
+               
+                ViewData["result"] = bll.Update(estoque);
+                return View();
             }
-            else if (funcao == "Salvar")
+
+
+            if (saveBtn == "Salvar")
             {
 
+                estoque.Produto.Id = IDproduto;
+                estoque.DataEntrada = dataentrada;
+                estoque.DataSaida = datasaida;
+                estoque.QtdProduto = qtdProduto;
 
-                if (!pbll.VerificaProduto(produto))
-                {
-                    ViewData["result"] = "Este produto não existe em nosso estoque.";
-                    return View();
-                }
-                else
-                {
-                    Produto prdt = new Produto();
-
-                    prdt.Id = pbll.GetIdPorNome(produto);
-
-                    Estoque est = new Estoque(idEstoque, prdt, qtdProduto, dtEntrada, dtSaida);
-                    ViewData["result"] = bll.Insert(est);
-                    return View();
-                }
+                ViewData["result"] = bll.Insert(estoque);
+                return View();
 
             }
 
