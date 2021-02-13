@@ -31,7 +31,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Procedimento cadastrado com sucesso";
+                return "Procedimento cadastrado com sucesso!";
             }
             catch (Exception ex)
             {
@@ -124,6 +124,8 @@ namespace DataAccessLayer
                 {
                     Procedimento temp = new Procedimento();
 
+                    temp.TipoProcedimento = new TipoProcedimento();
+
                     temp.Id = Convert.ToInt32(reader["idProcedimento"]);
                     temp.Nome = Convert.ToString(reader["nomeProcedimento"]);
                     temp.DescricaoProcedimento = Convert.ToString(reader["dsProcedimento"]);
@@ -156,6 +158,8 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    temp.TipoProcedimento = new TipoProcedimento();
+
                     temp.Id = Convert.ToInt32(reader["idProcedimento"]);
                     temp.Nome = Convert.ToString(reader["nomeProcedimento"]);
                     temp.DescricaoProcedimento = Convert.ToString(reader["dsProcedimento"]);
@@ -187,6 +191,7 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Procedimento temp = new Procedimento();
+                    temp.TipoProcedimento = new TipoProcedimento();
 
                     temp.Id = Convert.ToInt32(reader["idProcedimento"]);
                     temp.Nome = Convert.ToString(reader["nomeProcedimento"]);
@@ -223,7 +228,8 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Atendimento temp = new Atendimento();
-
+                    temp.Colaborador = new Colaborador();
+                    temp.Paciente = new Paciente();
                     temp.Id = Convert.ToInt32(reader["idAtendimento"]);
                     temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
                     temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
@@ -231,6 +237,39 @@ namespace DataAccessLayer
                     atendimentos.Add(temp);
                 }
                 return atendimentos;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erro no Banco de dados.Contate o administrador.");
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
+        public Procedimento GetProcedimentoIdTipo(int id)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM procedimento WHERE idTipoProcedimento = @ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                Procedimento temp = new Procedimento();
+
+                while (reader.Read())
+                {
+                    temp.TipoProcedimento = new TipoProcedimento();
+
+                    temp.Id = Convert.ToInt32(reader["idProcedimento"]);
+                    temp.Nome = Convert.ToString(reader["nomeProcedimento"]);
+                    temp.DescricaoProcedimento = Convert.ToString(reader["dsProcedimento"]);
+                    temp.TipoProcedimento.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
+                }
+
+                return temp;
             }
             catch (Exception)
             {

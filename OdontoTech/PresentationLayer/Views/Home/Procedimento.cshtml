@@ -1,6 +1,10 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+@using BusinessLogicalLayer;
+@using Domain;
+
 @{
     ViewData["Title"] = "Procedimento";
 }
@@ -8,101 +12,169 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>Procedimento</title>
+    <title>Estado</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="./css/main.css">
-    <link rel="stylesheet" type="text/css" href="./css/util.css">
+    <link href="~/css/endereco.css" rel="stylesheet" />
     <!--===============================================================================================-->
+    <!-- Adicionando JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
 </head>
 <body>
+    <main id="page-create-point">
+        <header>
+            <img src="~/images/icons/OdontoTechV2.png" alt="logo" height="70" width="70" data-atf="1" />
+
+            <a href="/Home/Dashboard">
+                <span></span>
+                ⟲ Voltar para home
+            </a>
+        </header>
+
+        <form action="/Home/Procedimento" method="post">
+
+            <h2 id="balance">Cadastro Procedimento  <img src="~/images/procedimento.png" alt="logo" height="50" width="50" data-atf="1" /></h2>
+            @{
+                ProcedimentoBLL bll = new ProcedimentoBLL();
+                List<Procedimento> lista = bll.GetAll();
+                TipoProcedimentoBLL TPPC = new TipoProcedimentoBLL();
+                List<TipoProcedimento> listatipo = TPPC.GetAll();
 
 
-    <div class="limiter">
+            }
+        <fieldset>
+            <div class="field-group">
+                <div class="field">
+                    <label for="nomeProcedimento">Procedimento</label>
+                    <input type="text" name="nomeProcedimento" value="@ViewBag.nomeProcedimento" />
+                </div>
 
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form class="login100-form validate-form">
-                    <span class="login100-form-title p-b-26">
-                        Procedimento
-                    </span>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="procedimento">
-                        <span class="focus-input100" data-placeholder="Nome do procedimento"></span>
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="descricao">
-                        <span class="focus-input100" data-placeholder="Descrição"></span>
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="tipoProcedimento">
-                        <span class="focus-input100" data-placeholder="Tipo de procedimento"></span>
-                        @* Trazer a lista de tipo de procedimento *@
-                    </div>
-
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Salvar
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Atualizar
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Deletar
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="text-center p-t-115">
-                        <span class="login100-form-title p-b-26">
-                            Lista de Procedimentos
-                        </span>
-                        @* Trazer a lista de Procedimentos com id, procedimento, descrição e tipo de Procedimento *@
-                    </div>
-
-                </form>
+                <div class="field">
+                    <label for="dsProcedimento">Descrição</label>
+                    <input type="text" name="dsProcedimento" value="@ViewBag.dsProcedimento" />
+                </div>
             </div>
-        </div>
 
-    </div>
+            <div class="field-group">
+                <div class="field">
+                    <label for="idTipoProcedimento">Tipo</label>
 
-    <div id="dropDownSelect1"></div>
+                    <select name="idTipoProcedimento" id="idTipoProcedimento" required>
+
+                        <option value=" ">Selecione um Tipo de procedimento</option>
+
+                        @{ for (int i = 0; i < listatipo.Count; i++)
+                            {
+                                <option value="@listatipo[i].Id">@listatipo[i].Nome</option>
+                            }}
+
+                    </select>
+                    <a style="color:blue;font-size:13px" href="/Home/TipoProcedimento">♻ Gerenciar Tipos de procedimento</a>
+
+                    <input type="hidden" name="idTipoProcedimento" value="@ViewBag.idTipoProcedimento" />
+                </div>
+
+            </div>
+
+            @*<div class="field">
+            <label for="city">Atendimento</label>
+            <select name="idAtentimento" id="idAtentimento" required>
+
+                <option value="">Selecione o ID do atendimento.</option>
+
+                @{ for (int i = 0; i < lista.Count; i++)
+                    {
+                        <option value="@lista[i].Id">@lista[i].Id</option>
+                    }}
+
+            </select>
+
+            <input type="hidden" name="sidColaboradortate" value="idAtentimento" />
+
+            <label> "Esta opção é somente para Deletar e Atualizar"</label>
+        </div>*@
+
+            <div class="field-group">
+                <div class="field">
+
+                    <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
+                    <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
+
+
+                </div>
+
+                <div class="field">
+                    <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
+                    <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
+
+                </div>
+
+            </div>
+
+            @{
+                if (Convert.ToString(ViewData["result"]) != "")
+                {
+                    if (Convert.ToString(ViewData["result"]).Contains("!"))
+                    {
+                        <label style="color:green;font-size:13px"> @ViewData["result"] </label>
+                    }
+                    else
+                    {
+
+                        <label style="color:red;font-size:13px"> @ViewData["result"] </label>
+                    }
+
+                }
+
+            }
+
+            <br />
+            <br />
+
+            <h2 id="balance">Lista de Procedimentos</h2>
+
+            <br />
+
+            @for (int i = 0; i < lista.Count; i++)
+            {
+                TipoProcedimentoBLL TPC = new TipoProcedimentoBLL();
+                TipoProcedimento TPCC = new TipoProcedimento();
+                TPCC.Id = lista[i].TipoProcedimento.Id;
+                TPCC = TPC.GetById(TPCC);
+
+                <input type="radio" name="idSelecionado" value="@lista[i].Id" /> <label> <b>ID:</b> @lista[i].Id</label> <label> <b>Procedimento:</b> @lista[i].Nome</label> <label> <b>Descrição:</b> @lista[i].DescricaoProcedimento </label> <label> <b>Tipo de procedimento:</b> @TPCC.Nome</label><label><b>Valor:</b> @TPCC.Valor</label>@* Rever oçãao de deletar  <img src="~/images/Lixeira.png" alt="logo" height="15" width="15" data-atf="1" onclick="deletar()" />*@ <br />
+
+            }
+            <br />
+            <br />
+            <input checked type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
+
+        </fieldset>
+        </form>
+    </main>
+
+    <script src="https://use.fontawesome.com/d09559d1bd.js"></script>
 
     <!--===============================================================================================-->
     <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -119,7 +191,14 @@
     <!--===============================================================================================-->
     <script src="~/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
-    <script src="./js/main.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/viacep.js"></script>
+    <script src="~/js/viacepJSandJson.js"></script>
+    <script src="~/js/endereco.js"></script>
 
 </body>
+
 </html>
+
+
+

@@ -115,6 +115,10 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Paciente temp = new Paciente();
+
+                    temp.Endereco = new Endereco();
+
+
                     temp.Id = Convert.ToInt32(reader["idPaciente"]);
                     temp.Nome = Convert.ToString(reader["nome"]);
                     temp.Sobrenome = Convert.ToString(reader["sobrenome"]);
@@ -146,8 +150,8 @@ namespace DataAccessLayer
         public Paciente GetById(int idPaciente)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM paciente WHERE idPaciente = @idPaciente";
-            cmd.Parameters.AddWithValue("@idPaciente", idPaciente);
+            cmd.CommandText = $"SELECT * FROM paciente WHERE idPaciente = {idPaciente}";
+
 
             try
             {
@@ -157,6 +161,8 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    paciente.Endereco = new Endereco();
+
                     paciente.Id = Convert.ToInt32(reader["idPaciente"]);
                     paciente.Nome = Convert.ToString(reader["nome"]);
                     paciente.Sobrenome = Convert.ToString(reader["sobrenome"]);
@@ -191,6 +197,9 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    paciente.Endereco = new Endereco();
+
+
                     paciente.Id = Convert.ToInt32(reader["idPaciente"]);
                     paciente.Nome = Convert.ToString(reader["nome"]);
                     paciente.Sobrenome = Convert.ToString(reader["sobrenome"]);
