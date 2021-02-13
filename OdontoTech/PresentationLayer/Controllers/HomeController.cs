@@ -370,8 +370,41 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Procedimento()
+        public IActionResult Procedimento(string nomeProcedimento,string dsProcedimento, int idTipoProcedimento,int idSelecionado, string saveBtn , string saveBtn2)
         {
+            ProcedimentoBLL bll = new ProcedimentoBLL();
+            Procedimento procedimento = new Procedimento();
+            procedimento.TipoProcedimento = new TipoProcedimento();
+
+            if (saveBtn2 == "Deletar")
+            {
+                procedimento.Id = idSelecionado;
+                ViewData["result"] = bll.Delete(procedimento);
+                return View();
+            }
+            if (idSelecionado != 0)
+            {
+                procedimento.Id = idSelecionado;
+                procedimento.Nome = nomeProcedimento;
+                procedimento.DescricaoProcedimento = dsProcedimento;
+                procedimento.TipoProcedimento.Id = idTipoProcedimento;
+
+                ViewData["result"] = bll.Update(procedimento);
+                return View();
+            }
+
+
+            if (saveBtn == "Salvar")
+            {
+
+                procedimento.Nome = nomeProcedimento;
+                procedimento.DescricaoProcedimento = dsProcedimento;
+                procedimento.TipoProcedimento.Id = idTipoProcedimento;
+
+                ViewData["result"] = bll.Insert(procedimento);
+                return View();
+
+            }
             return View();
         }
 
@@ -385,8 +418,40 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult TipoProcedimento()
+        public IActionResult TipoProcedimento(string nomeTipoProcedimento, double valorProcedimento, string saveBtn, string saveBtn2, int idSelecionado)
         {
+            TipoProcedimentoBLL bll = new TipoProcedimentoBLL();
+            TipoProcedimento procedimento = new TipoProcedimento();
+      
+            if (saveBtn2 == "Deletar")
+            {
+                procedimento.Id = idSelecionado;
+                ViewData["result"] = bll.Delete(procedimento);
+                return View();
+            }
+            if (idSelecionado != 0)
+            {
+                procedimento.Nome = nomeTipoProcedimento;
+                procedimento.Valor = valorProcedimento;
+                procedimento.Id = idSelecionado;
+                    
+
+                ViewData["result"] = bll.Update(procedimento);
+                return View();
+            }
+
+
+            if (saveBtn == "Salvar")
+            {
+
+                procedimento.Nome = nomeTipoProcedimento;
+                procedimento.Valor = valorProcedimento;
+
+
+                ViewData["result"] = bll.Insert(procedimento);
+                return View();
+
+            }
             return View();
         }
 
