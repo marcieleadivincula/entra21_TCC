@@ -11,6 +11,9 @@ namespace Domain
         public Colaborador Colaborador { get; set; }
 
         public DateTime DtAtendimento { get; set; }
+
+        //public DateTime horaInicioAtendimento { get; set; }
+        //public DateTime horaInicioAtendimento { get; set; }
         public string Status { get; set; }
         public List<Procedimento> Procedimentos = new List<Procedimento>();
 
@@ -23,8 +26,8 @@ namespace Domain
             Colaborador = colaborador;
             DtAtendimento = dtAtendimento;
             Status = status;
-            HoraInicioAtendimento = horaInicioAtendimento;
-            HoraFinalAtendimento = horaFinalAtendimento;
+            //HoraInicioAtendimento = horaInicioAtendimento;
+            //HoraFinalAtendimento = horaFinalAtendimento;
             Procedimentos = procedimentos;
         }
 
