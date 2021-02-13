@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace Domain
 {
@@ -7,13 +8,18 @@ namespace Domain
         public int Id { get; set; }
         public Paciente Paciente { get; set; }
         public Colaborador Colaborador { get; set; }
+        public DateTime DtAtendimento { get; set; }
+        public string Status { get; set; }
         public List<Procedimento> Procedimentos = new List<Procedimento>();
 
-        public Atendimento(int id, Paciente paciente, Colaborador colaborador, List<Procedimento> procedimentos)
+   
+        public Atendimento(int id, Paciente paciente, Colaborador colaborador, DateTime dtAtendimento, string status, List<Procedimento> procedimentos)
         {
             Id = id;
             Paciente = paciente;
             Colaborador = colaborador;
+            DtAtendimento = dtAtendimento;
+            Status = status;
             Procedimentos = procedimentos;
         }
 
@@ -36,5 +42,6 @@ namespace Domain
         {
             Id = id;
         }
+
     }
 }

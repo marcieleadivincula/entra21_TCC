@@ -111,19 +111,63 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Atendimento(int idPaciente,int idColaborador,string funcao)
+        public IActionResult Atendimento(int idPaciente, int idColaborador, string saveBtn, int idSelecionado, string saveBtn2, DateTime data,int idTipoProcedimento, string Status)
         {
-            if (funcao == "salvar")
+
+
+            if (saveBtn2 == "Deletar")
             {
                 AtendimentoBLL bll = new AtendimentoBLL();
                 Atendimento a = new Atendimento();
+
+                a.Id = idSelecionado;
+
+                ViewData["result"] = bll.Delete(a);
+
+                return View();
+            }
+            if (idSelecionado != 0)
+            {
+                AtendimentoBLL bll = new AtendimentoBLL();
+                Atendimento a = new Atendimento();
+                ProcedimentoBLL pbll = new ProcedimentoBLL();
+                Procedimento procedimento = new Procedimento();
+
+   
+                procedimento = pbll.GetProcedimentoIdTipo(idTipoProcedimento);
+                procedimento.TipoProcedimento.Id = idTipoProcedimento;
+                pbll.Insert(procedimento);
+
+                a.Paciente = new Paciente();
+                a.Colaborador = new Colaborador();
+
+                a.Id = idSelecionado;
+                a.Status = Status;
+                a.DtAtendimento = data;
                 a.Paciente.Id = idPaciente;
                 a.Colaborador.Id = idColaborador;
 
-                bll.Insert(a);
-
+                ViewData["result"] = bll.Update(a);
+                return View();
             }
 
+
+            if (saveBtn == "Salvar")
+            {
+                AtendimentoBLL bll = new AtendimentoBLL();
+                Atendimento a = new Atendimento();
+
+                a.Paciente = new Paciente();
+                a.Colaborador = new Colaborador();
+                a.Status = Status;
+                a.DtAtendimento = data;
+                a.Paciente.Id = idPaciente;
+                a.Colaborador.Id = idColaborador;
+
+                ViewData["result"] = bll.Insert(a);
+                return View();
+
+            }
             return View();
         }
 
@@ -221,7 +265,7 @@ namespace PresentationLayer.Controllers
 
                     prdt.Id = pbll.GetIdPorNome(produto);
 
-                    Estoque est = new Estoque(idEstoque,prdt,qtdProduto,dtEntrada,dtSaida);
+                    Estoque est = new Estoque(idEstoque, prdt, qtdProduto, dtEntrada, dtSaida);
                     ViewData["result"] = bll.Update(est);
                     return View();
                 }
@@ -247,7 +291,7 @@ namespace PresentationLayer.Controllers
                     ViewData["result"] = bll.Insert(est);
                     return View();
                 }
- 
+
             }
 
             return View();

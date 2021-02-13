@@ -9,100 +9,150 @@
     ViewData["Title"] = "Atendimento";
 }
 
-    <!DOCTYPE html>
-    <html lang="pt-br">
-    <head>
-        <title>Estado</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--===============================================================================================-->
-        <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
-        <!--===============================================================================================-->
-        <link href="~/css/endereco.css" rel="stylesheet" />
-        <!--===============================================================================================-->
-        <!-- Adicionando JQuery -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Estado</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link href="~/css/endereco.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <!-- Adicionando JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-    </head>
-    <body>
-        <main id="page-create-point">
-            <header>
-                <img src="~/images/icons/OdontoTechV2.png" alt="logo" height="70" width="70" data-atf="1" />
+</head>
+<body>
+    <main id="page-create-point">
+        <header>
+            <img src="~/images/icons/OdontoTechV2.png" alt="logo" height="70" width="70" data-atf="1" />
 
-                <a href="/Home/Dashboard">
-                    <span></span>
-                    Voltar para home
-                </a>
-            </header>
+            <a href="/Home/Dashboard">
+                <span></span>
+                Voltar para home
+            </a>
+        </header>
 
-            <form action="" method="post">
+        <form action="" method="post">
 
-                <h2 id="balance">Cadastro Atendimento</h2>
-                @{
-                    AtendimentoBLL bll = new AtendimentoBLL();
-                    List<Atendimento> lista = bll.GetAll();
-                    PacienteBLL paciente = new PacienteBLL();
-                    ColaboradorBLL colaborador = new ColaboradorBLL();
-
-
-                    List<Paciente> PCS = paciente.GetAll();
-
-                    List<Colaborador> PCC = colaborador.GetAll();
-
-                }
-                <fieldset>
-                    <div class="field-group">
-                        <div class="field">
-                            <label for="idPaciente">Paciente</label>
-                            <select name="idPaciente" id="idPaciente" required>
-
-                                <option value="">Selecione o Paciente</option>
-
-                                @{ for (int i = 0; i < PCS.Count; i++)
-                                    {
-                                        <option value="@PCS[i].Id">@PCS[i].Nome</option>
-                                    }}
-
-                            </select>
-
-                            <input type="hidden" name="idPaciente" value="" />
-                        </div>
-                        <div class="field">
-                            <label for="idColaborador">Colaborador</label>
-                            <select name="idColaborador" id="idColaborador" required>
-
-                                <option value="">Selecione o Colaborador</option>
-
-                                @{ for (int i = 0; i < PCC.Count; i++)
-                                    {
-                                        <option value="@PCC[i].Id">@PCC[i].Nome</option>
-                                    }}
-
-                            </select>
-
-                            <input type="hidden" name="sidColaboradortate" value="" />
-                        </div>
-                    </div>
-                </fieldset>
+            <h2 id="balance">Cadastro Atendimento</h2>
+            @{
+                AtendimentoBLL bll = new AtendimentoBLL();
+                List<Atendimento> lista = bll.GetAll();
+                PacienteBLL paciente = new PacienteBLL();
+                ColaboradorBLL colaborador = new ColaboradorBLL();
+                ProcedimentoBLL procedimento = new ProcedimentoBLL();
+                TipoProcedimentoBLL TipoProcedimentoBLL  = new TipoProcedimentoBLL();
 
 
-                @*<div class="field">
+                List<Paciente> PCS = paciente.GetAll();
+
+                List<Colaborador> PCC = colaborador.GetAll();
+
+                List<Procedimento> TPC = procedimento.GetAll();
+                List<TipoProcedimento> TIPO = TipoProcedimentoBLL.GetAll();
+
+            }
+        <fieldset>
+            <div class="field-group">
+                <div class="field">
+                    <label for="idPaciente">Paciente</label>
+                    <select name="idPaciente" id="idPaciente" required>
+
+                        <option value=" ">Selecione o Paciente</option>
+
+                        @{ for (int i = 0; i < PCS.Count; i++)
+                            {
+                                <option value="@PCS[i].Id">@PCS[i].Nome</option>
+                            }}
+
+                    </select>
+                    <input type="hidden" name="idPaciente" value="@ViewBag.idPaciente" />
+                </div>
+
+
+                <div class="field">
+                    <label for="idTipoProcedimento">Procedimento</label>
+                    <select name="idTipoProcedimento" id="idTipoProcedimento" required>
+
+                        <option value=" ">Selecione o Procedimento</option>
+
+                        @{ for (int i = 0; i < TIPO.Count; i++)
+                            {
+                                <option value="@TIPO[i].Id">@TIPO[i].Nome</option>
+                            }}
+
+                    </select>
+                    <input type="hidden" name="idTipoProcedimento" value="@ViewBag.idTipoProcedimento" />
+                </div>
+            </div>
+
+            <div class="field-group">
+                <div class="field">
+                    <label for="idColaborador">Colaborador</label>
+
+                    <select name="idColaborador" id="idColaborador" required>
+
+                        <option value=" ">Selecione o Colaborador</option>
+
+                        @{ for (int i = 0; i < PCC.Count; i++)
+                            {
+                                <option value="@PCC[i].Id">@PCC[i].Nome</option>
+                            }}
+
+                    </select>
+
+                    <input type="hidden" name="idColaborador" value="@ViewBag.idColaborador" />
+                </div>
+
+                <div class="field">
+                    <label for="Status">Status</label>
+
+                    <select name="Status" id="Status" required>
+
+                        <option value=" ">Satus do Atendimento</option>
+                        <option value="Atendido">Atendido</option>
+                        <option value="Agendado">Agendado</option>
+                        <option value="Reagendado">Reagendado</option>
+                        <option value="Cancelado">Cancelado</option>
+                        <option value="Outro">Outro</option>
+
+
+                    </select>
+
+                    <input type="hidden" name="Status" value="@ViewBag.Status" />
+                </div>
+
+            </div>
+
+            <div class="field-group">
+
+
+                <div class="field">
+                    <label for="Data">Data do Atendimento</label>
+                    <input type="datetime-local" name="data" value="@ViewBag.data" />
+                </div>
+            </div>
+
+            @*<div class="field">
             <label for="city">Atendimento</label>
             <select name="idAtentimento" id="idAtentimento" required>
 
@@ -120,54 +170,88 @@
             <label> "Esta opção é somente para Deletar e Atualizar"</label>
         </div>*@
 
-                <div>
+            <div class="field-group">
+                <div class="field">
+
                     <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
+                    <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
+
+
                 </div>
 
-                <br />
-                <br />
-                <br />
+                <div class="field">
+                    <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
+                    <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
 
-                <h2 id="balance">Lista de atendimentos</h2>
-                <br />          
-                <br />
-                @for (int i = 0; i < lista.Count; i++)
+                </div>
+
+            </div>
+
+            @{
+                if (Convert.ToString(ViewData["result"]) != "")
                 {
+                    if (Convert.ToString(ViewData["result"]).Contains("!"))
+                    {
+                        <label style="color:green;font-size:13px"> @ViewData["result"] </label>
+                    }
+                    else
+                    {
 
-                    Paciente pac = paciente.GetById(lista[i].Paciente);
-                    Colaborador col = colaborador.GetById(lista[i].Colaborador.Id);
+                        <label style="color:red;font-size:13px"> @ViewData["result"] </label>
+                    }
 
-
-
-                    <label> <b>ID:</b> @lista[i].Id</label> <label> <b>Paciente:</b> @pac.Nome</label> <label> <b>Colaborador:</b> @col.Nome</label> <br />
                 }
 
-            </form>
-        </main>
+            }
 
-        <script src="https://use.fontawesome.com/d09559d1bd.js"></script>
+            <br />
+            <br />
 
-        <!--===============================================================================================-->
-        <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
-        <!--===============================================================================================-->
-        <script src="~/vendor/animsition/js/animsition.min.js"></script>
-        <!--===============================================================================================-->
-        <script src="~/vendor/bootstrap/js/popper.js"></script>
-        <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
-        <!--===============================================================================================-->
-        <script src="~/vendor/select2/select2.min.js"></script>
-        <!--===============================================================================================-->
-        <script src="~/vendor/daterangepicker/moment.min.js"></script>
-        <script src="~/vendor/daterangepicker/daterangepicker.js"></script>
-        <!--===============================================================================================-->
-        <script src="~/vendor/countdowntime/countdowntime.js"></script>
-        <!--===============================================================================================-->
-        <script src="~/js/main.js"></script>
-        <script src="~/js/viacep.js"></script>
-        <script src="~/js/viacepJSandJson.js"></script>
-        <script src="~/js/endereco.js"></script>
+            <h2 id="balance">Lista de atendimentos</h2>
 
-    </body>
+            <br />
+
+            @for (int i = 0; i < lista.Count; i++)
+            {
+
+                Paciente pac = paciente.GetById(lista[i].Paciente);
+                Colaborador col = colaborador.GetById(lista[i].Colaborador.Id);
+
+
+                <input type="radio" name="idSelecionado" value="@lista[i].Id" /> <label> <b>ID:</b> @lista[i].Id</label> <label> <b>Paciente:</b> @pac.Nome</label> <label> <b>Colaborador:</b> @col.Nome </label> <label> <b>Horario:</b> @lista[i].DtAtendimento</label> <label> <b>Status:</b> @lista[i].Status </label> @* Rever oçãao de deletar  <img src="~/images/Lixeira.png" alt="logo" height="15" width="15" data-atf="1" onclick="deletar()" />*@ <br />
+
+            }
+            <br />
+            <br />
+            <input checked type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
+        </fieldset>
+        </form>
+    </main>
+
+    <script src="https://use.fontawesome.com/d09559d1bd.js"></script>
+
+    <!--===============================================================================================-->
+    <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/js/main.js"></script>
+    <script src="~/js/viacep.js"></script>
+    <script src="~/js/viacepJSandJson.js"></script>
+    <script src="~/js/endereco.js"></script>
+
+</body>
+</div>
 </html>
 
 

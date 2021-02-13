@@ -125,5 +125,10 @@ namespace BusinessLogicalLayer
         {
             return dal.GetAtendimentos(idProcedimento);
         }
+
+        public Procedimento GetProcedimentoIdTipo(int id)
+        {
+            return dal.GetProcedimentoIdTipo(id);
+        }
     }
 }

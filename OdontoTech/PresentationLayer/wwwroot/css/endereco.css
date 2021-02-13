@@ -75,7 +75,7 @@ form {
     /* preencimento */
     padding: 64px;
     border-radius: 8px;
-    max-width: 730px;
+ /*   max-width: 730px;*/
 }
 
     form h1 {
@@ -85,6 +85,7 @@ form {
     form fieldset {
         margin-top: 64px;
         border: 0;
+
     }
 
     form legend {
@@ -132,7 +133,7 @@ form {
     }
 
     form button {
-        width: 260px;
+      /*  width: 260px;*/
         height: 56px;
         background-color: #b721ff;
         border-radius: 8px;
