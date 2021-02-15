@@ -8,22 +8,11 @@ namespace Domain
         public int Id { get; set; }
         public Paciente Paciente { get; set; }
         public Colaborador Colaborador { get; set; }
-        public DateTime DataAtendimento { get; set; }
-        public int HoraInicioAtendimento { get; set; }
-        public int HoraFinalAtendimento { get; set; }
+        public DateTime DtInicioAtendimento { get; set; }
+        public DateTime DtFinalAtendimento { get; set; }
+        public string StatusAtendimento { get; set; }
 
         public List<Procedimento> Procedimentos = new List<Procedimento>();
-
-        public Atendimento(int id, Paciente paciente, Colaborador colaborador, DateTime dtAtendimento, int horaInicioAtendimento, int horaFinalAtendimento,List<Procedimento> procedimentos)
-        {
-            Id = id;
-            Paciente = paciente;
-            Colaborador = colaborador;
-            DataAtendimento = dtAtendimento;
-            HoraInicioAtendimento = horaInicioAtendimento;
-            HoraFinalAtendimento = horaFinalAtendimento;
-            Procedimentos = procedimentos;
-        }
 
         public Atendimento(int id, Paciente paciente, Colaborador colaborador)
         {
@@ -43,6 +32,17 @@ namespace Domain
         public Atendimento(int id)
         {
             Id = id;
+        }
+
+        public Atendimento(int id, Paciente paciente, Colaborador colaborador, DateTime dtInicioAtendimento, DateTime dtFinalAtendimento, string statusAtendimento, List<Procedimento> procedimentos)
+        {
+            Id = id;
+            Paciente = paciente;
+            Colaborador = colaborador;
+            DtInicioAtendimento = dtInicioAtendimento;
+            DtFinalAtendimento = dtFinalAtendimento;
+            StatusAtendimento = statusAtendimento;
+            Procedimentos = procedimentos;
         }
     }
 }
