@@ -111,7 +111,7 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Atendimento(int idPaciente, int idColaborador, string saveBtn, int idSelecionado, string saveBtn2, DateTime data,int idTipoProcedimento, string Status)
+        public IActionResult Atendimento(int idPaciente, int idColaborador, string saveBtn, int idSelecionado, string saveBtn2, DateTime dataInicial, DateTime dataFinal, int idTipoProcedimento, string status)
         {
 
 
@@ -126,6 +126,7 @@ namespace PresentationLayer.Controllers
 
                 return View();
             }
+
             if (idSelecionado != 0)
             {
                 AtendimentoBLL bll = new AtendimentoBLL();
@@ -143,15 +144,15 @@ namespace PresentationLayer.Controllers
                 a.Colaborador = new Colaborador();
 
                 a.Id = idSelecionado;
-                a.Status = Status;
-                a.DtAtendimento = data;
+                a.StatusAtendimento = status;
+                a.DtInicioAtendimento = dataInicial;
+                a.DtFinalAtendimento = dataFinal;
                 a.Paciente.Id = idPaciente;
                 a.Colaborador.Id = idColaborador;
 
                 ViewData["result"] = bll.Update(a);
                 return View();
             }
-
 
             if (saveBtn == "Salvar")
             {
@@ -161,8 +162,9 @@ namespace PresentationLayer.Controllers
                 
                 a.Paciente = new Paciente();
                 a.Colaborador = new Colaborador();
-                a.Status = Status;
-                a.DtAtendimento = data;
+                a.StatusAtendimento = status;
+                a.DtInicioAtendimento = dataInicial;
+                a.DtFinalAtendimento = dataFinal;
                 a.Paciente.Id = idPaciente;
                 a.Colaborador.Id = idColaborador;
 
@@ -349,7 +351,7 @@ namespace PresentationLayer.Controllers
 
 
 
-                ViewData["result"] = 
+                ViewData["result"] = bll.Insert(pagamento);
                 return View();
 
             }

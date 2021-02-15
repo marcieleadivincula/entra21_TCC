@@ -163,8 +163,8 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
-                    temp.Paciente = new Paciente();
-                    temp.Colaborador = new Colaborador();
+                    atendimento.Paciente = new Paciente();
+                    atendimento.Colaborador = new Colaborador();
                   
                     atendimento.Id = Convert.ToInt32(reader["idAtendimento"]);
                     atendimento.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
@@ -198,8 +198,8 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
-                    temp.Paciente = new Paciente();
-                    temp.Colaborador = new Colaborador();
+                    atendimento.Paciente = new Paciente();
+                    atendimento.Colaborador = new Colaborador();
                     atendimento.Id = Convert.ToInt32(reader["idAtendimento"]);
                     atendimento.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
                     atendimento.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
