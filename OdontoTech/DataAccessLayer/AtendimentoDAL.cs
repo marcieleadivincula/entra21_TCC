@@ -1,11 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
-using System.Data.SqlClient;
 using Domain;
 
 namespace DataAccessLayer
@@ -22,12 +17,13 @@ namespace DataAccessLayer
         public string Insert(Atendimento atendimento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO atendimento (idPaciente,idColaborador,dtAtendimento,statusAtendimento) values (@idPaciente,@idColaborador,@dtAtendimento,@statusAtendimento)";
+            cmd.CommandText = "INSERT INTO atendimento (idPaciente,idColaborador, dtInicioAtendimento, dtFinalAtendimento, statusAtendimento) values (@idPaciente,@idColaborador, @dtInicioAtendimento, @dtFinalAtendimento, @statusAtendimento)";
 
             cmd.Parameters.AddWithValue("@idPaciente", atendimento.Paciente.Id);
             cmd.Parameters.AddWithValue("@idColaborador", atendimento.Colaborador.Id);
-            cmd.Parameters.AddWithValue("@dtAtendimento", atendimento.DtAtendimento);
-            cmd.Parameters.AddWithValue("@statusAtendimento", atendimento.Status);
+            cmd.Parameters.AddWithValue("@dtInicioAtendimento", atendimento.DtInicioAtendimento);
+            cmd.Parameters.AddWithValue("@dtFinalAtendimento", atendimento.DtFinalAtendimento);
+            cmd.Parameters.AddWithValue("@statusAtendimento", atendimento.StatusAtendimento);
 
             try
             {
@@ -57,10 +53,12 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="Atendimento"></param>
         /// <returns></returns>
-        public string Delete(Atendimento Atendimento)
+        public string Delete(Atendimento atendimento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"DELETE FROM atendimento WHERE idAtendimento = {Atendimento.Id}";
+            cmd.CommandText = "DELETE FROM atendimento WHERE idAtendimento = @idAtendimento";
+            cmd.Parameters.AddWithValue("@idAtendimento", atendimento.Id);
+            //cmd.CommandText = $"DELETE FROM atendimento WHERE idAtendimento = {Atendimento.Id}"; //REVER
 
             try
             {
@@ -86,11 +84,13 @@ namespace DataAccessLayer
         public string Update(Atendimento atendimento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"UPDATE atendimento SET idPaciente = @idPaciente, idColaborador = @idColaborador, dtAtendimento = @dtAtendimento, statusAtendimento = @statusAtendimento WHERE idAtendimento = {atendimento.Id}";
+            cmd.CommandText = $"UPDATE atendimento SET idPaciente = @idPaciente, idColaborador = @idColaborador, dtInicioAtendimento = @dtInicioAtendimento, dtFinalAtendimento = @dtFinalAtendimento, statusAtendimento = @statusAtendimento WHERE idAtendimento = @idAtendimento";
             cmd.Parameters.AddWithValue("@idPaciente", atendimento.Paciente.Id);
             cmd.Parameters.AddWithValue("@idColaborador", atendimento.Colaborador.Id);
-            cmd.Parameters.AddWithValue("@dtAtendimento", atendimento.DtAtendimento);
-            cmd.Parameters.AddWithValue("@statusAtendimento", atendimento.Status);
+            cmd.Parameters.AddWithValue("@dtInicioAtendimento", atendimento.DtInicioAtendimento);
+            cmd.Parameters.AddWithValue("@dtFinalAtendimento", atendimento.DtFinalAtendimento);
+            cmd.Parameters.AddWithValue("@statusAtendimento", atendimento.StatusAtendimento);
+            cmd.Parameters.AddWithValue("@idAtendimento", atendimento.Id);
 
             try
             {
@@ -132,8 +132,9 @@ namespace DataAccessLayer
                     temp.Id = Convert.ToInt32(reader["idAtendimento"]);
                     temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
                     temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
-                    temp.DtAtendimento = Convert.ToDateTime(reader["dtAtendimento"]);
-                    temp.Status = Convert.ToString(reader["statusAtendimento"]);
+                    temp.DtInicioAtendimento = Convert.ToDateTime(reader["dtInicioAtendimento"]);
+                    temp.DtFinalAtendimento = Convert.ToDateTime(reader["dtFinalAtendimento"]);
+                    temp.StatusAtendimento = Convert.ToString(reader["statusAtendimento"]);
 
                     atendimentos.Add(temp);
                 }
@@ -162,18 +163,15 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
-                    Atendimento temp = new Atendimento();
-
                     temp.Paciente = new Paciente();
                     temp.Colaborador = new Colaborador();
-
-                    temp.Id = Convert.ToInt32(reader["idAtendimento"]);
-                    temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
-                    temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
-                    temp.DtAtendimento = Convert.ToDateTime(reader["dtAtendimento"]);
-                    temp.Status = Convert.ToString(reader["statusAtendimento"]);
-
-                    atendimento = temp;
+                  
+                    atendimento.Id = Convert.ToInt32(reader["idAtendimento"]);
+                    atendimento.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
+                    atendimento.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+                    atendimento.DtInicioAtendimento = Convert.ToDateTime(reader["dtInicioAtendimento"]);
+                    atendimento.DtFinalAtendimento = Convert.ToDateTime(reader["dtFinalAtendimento"]);
+                    atendimento.StatusAtendimento = Convert.ToString(reader["statusAtendimento"]);
                 }
 
                 return atendimento;
@@ -200,18 +198,14 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
-                    Atendimento temp = new Atendimento();
-
                     temp.Paciente = new Paciente();
                     temp.Colaborador = new Colaborador();
-
-                    temp.Id = Convert.ToInt32(reader["idAtendimento"]);
-                    temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
-                    temp.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
-                    temp.DtAtendimento = Convert.ToDateTime(reader["dtAtendimento"]);
-                    temp.Status = Convert.ToString(reader["statusAtendimento"]);
-
-                    atendimento = temp;
+                    atendimento.Id = Convert.ToInt32(reader["idAtendimento"]);
+                    atendimento.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
+                    atendimento.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
+                    atendimento.DtInicioAtendimento = Convert.ToDateTime(reader["dtInicioAtendimento"]);
+                    atendimento.DtFinalAtendimento = Convert.ToDateTime(reader["dtFinalAtendimento"]);
+                    atendimento.StatusAtendimento = Convert.ToString(reader["statusAtendimento"]);
                 }
 
                 return atendimento;
@@ -251,6 +245,7 @@ namespace DataAccessLayer
 
                     procedimentos.Add(temp);
                 }
+
                 return procedimentos;
             }
             catch (Exception)

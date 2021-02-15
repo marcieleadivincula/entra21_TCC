@@ -1,10 +1,7 @@
 ﻿using DataAccessLayer;
 using Domain;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
@@ -20,6 +17,11 @@ namespace BusinessLogicalLayer
             if (pagamento.DataPagamento == null || pagamento.DataPagamento.Equals("")) 
             {
                 erros.AppendLine("A data do pagamento deve ser informado.");
+            }
+
+            if (pagamento.ValorPagamento <= 0)
+            {
+                erros.AppendLine("A valor do pagamento deve ser informado.");
             }
 
             if (erros.Length != 0)
@@ -45,6 +47,11 @@ namespace BusinessLogicalLayer
             if (pagamento.DataPagamento == null || pagamento.DataPagamento.Equals("")) // rever a data
             {
                 erros.AppendLine("A data do pagamento deve ser informado.");
+            }
+
+            if (pagamento.ValorPagamento <= 0)
+            {
+                erros.AppendLine("A valor do pagamento deve ser informado.");
             }
 
             if (erros.Length != 0)

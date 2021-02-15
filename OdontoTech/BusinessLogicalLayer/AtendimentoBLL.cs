@@ -1,10 +1,7 @@
 ﻿using DataAccessLayer;
 using Domain;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
@@ -21,6 +18,7 @@ namespace BusinessLogicalLayer
             {
                 erros.AppendLine("O Paciente deve ser informado.");
             }
+
             if (atendimento.Colaborador.Id == 0 || atendimento.Colaborador.Id < 0)
             {
                 erros.AppendLine("O Colaborador deve ser informado.");
@@ -30,10 +28,26 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("A data deve ser informada.");
             }
 
-            if (string.IsNullOrWhiteSpace(atendimento.Status))
+            if (atendimento.DtInicioAtendimento == null || atendimento.DtInicioAtendimento.Equals(""))
             {
-                erros.AppendLine("O Status deve ser informado.");
+                erros.AppendLine("A data de início do atendimento deve ser informado.");
             }
+
+            if (atendimento.DtFinalAtendimento == null || atendimento.DtFinalAtendimento.Equals(""))
+            {
+                erros.AppendLine("A data do fim do atendimento deve ser informado.");
+            }
+
+            if (string.IsNullOrWhiteSpace(atendimento.StatusAtendimento))
+            {
+                erros.AppendLine("O status do atendimento deve ser informado.");
+            }
+
+            if (atendimento.StatusAtendimento.Length > 60)
+            {
+                erros.AppendLine("O status do atendimento não pode conter mais que 60 caracteres.");
+            }
+
             if (erros.Length != 0)
             {
                 return erros.ToString();
@@ -87,6 +101,26 @@ namespace BusinessLogicalLayer
             if (string.IsNullOrWhiteSpace(atendimento.Status))
             {
                 erros.AppendLine("O Status deve ser informado.");
+            }
+
+            if (atendimento.DtInicioAtendimento == null || atendimento.DtInicioAtendimento.Equals(""))
+            {
+                erros.AppendLine("A data de início do atendimento deve ser informado.");
+            }
+
+            if (atendimento.DtFinalAtendimento == null || atendimento.DtFinalAtendimento.Equals(""))
+            {
+                erros.AppendLine("A data do fim do atendimento deve ser informado.");
+            }
+
+            if (string.IsNullOrWhiteSpace(atendimento.StatusAtendimento))
+            {
+                erros.AppendLine("O status do atendimento deve ser informado.");
+            }
+
+            if (atendimento.StatusAtendimento.Length > 60)
+            {
+                erros.AppendLine("O status do atendimento  não pode conter mais que 60 caracteres.");
             }
 
             if (erros.Length != 0)

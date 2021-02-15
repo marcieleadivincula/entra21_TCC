@@ -12,9 +12,11 @@ namespace DataAccessLayer
         public string Insert(Pagamento pagamento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO pagamento(dtPagamento,idTipoPagamento) values(@dtPagamento, @idTipoPagamento)";
+            cmd.CommandText = "INSERT INTO pagamento(dtPagamento, valorPagamento, idTipoPagamento, idPaciente) values(@dtPagamento, @valorPagamento, @idTipoPagamento, @idPaciente)";
             cmd.Parameters.AddWithValue("@dtPagamento", pagamento.DataPagamento);
+            cmd.Parameters.AddWithValue("@valorPagamento", pagamento.ValorPagamento);
             cmd.Parameters.AddWithValue("@idTipoPagamento", pagamento.TipoPagamento.Id);
+            cmd.Parameters.AddWithValue("@idPaciente", pagamento.Paciente.Id);
 
             try
             {
@@ -68,9 +70,11 @@ namespace DataAccessLayer
         public string Update(Pagamento pagamento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE pagamento SET dtPagamento = @dtPagamento, idTipoPagamento = @idTipoPagamento WHERE idPagamento = @idPagamento";
+            cmd.CommandText = "UPDATE pagamento SET dtPagamento = @dtPagamento, valorPagamento = @valorPagamento, idTipoPagamento = @idTipoPagamento, idPaciente = @idPaciente WHERE idPagamento = @idPagamento";
             cmd.Parameters.AddWithValue("@dtPagamento", pagamento.DataPagamento);
+            cmd.Parameters.AddWithValue("@valorPagamento", pagamento.ValorPagamento);
             cmd.Parameters.AddWithValue("@idTipoPagamento", pagamento.TipoPagamento.Id);
+            cmd.Parameters.AddWithValue("@idPaciente", pagamento.Paciente.Id);
             cmd.Parameters.AddWithValue("@idPagamento", pagamento.Id);
 
             try
@@ -106,7 +110,9 @@ namespace DataAccessLayer
 
                     temp.Id = Convert.ToInt32(reader["idPagamento"]);
                     temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
+                    temp.ValorPagamento = Convert.ToDouble(reader["valorPagamento"]);
                     temp.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
+                    temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
 
                     pagamentos.Add(temp);
                 }
@@ -140,7 +146,9 @@ namespace DataAccessLayer
 
                     pagamento.Id = Convert.ToInt32(reader["idPagamento"]);
                     pagamento.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
+                    pagamento.ValorPagamento = Convert.ToDouble(reader["valorPagamento"]);
                     pagamento.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
+                    pagamento.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
                 }
 
                 return pagamento;
@@ -171,7 +179,9 @@ namespace DataAccessLayer
 
                     pagamento.Id = Convert.ToInt32(reader["idPagamento"]);
                     pagamento.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
+                    pagamento.ValorPagamento = Convert.ToDouble(reader["valorPagamento"]);
                     pagamento.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
+                    pagamento.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
                 }
 
                 return pagamento;
@@ -204,7 +214,9 @@ namespace DataAccessLayer
 ;
                     temp.Id = Convert.ToInt32(reader["idPagamento"]);
                     temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
+                    temp.ValorPagamento = Convert.ToDouble(reader["valorPagamento"]);
                     temp.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
+                    temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
 
                     pagamentos.Add(temp);
                 }

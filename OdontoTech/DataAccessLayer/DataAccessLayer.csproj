@@ -110,7 +110,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgendaDAL.cs" />
     <Compile Include="AtendimentoDAL.cs" />
+    <Compile Include="AtendimentoProcedimentosDAL.cs" />
     <Compile Include="BairroDAL.cs" />
     <Compile Include="CidadeDAL.cs" />
     <Compile Include="ClinicaDAL.cs" />
@@ -135,11 +137,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="sorrisempreDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>sorrisempreDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="TipoEmbalagemDAL.cs" />
     <Compile Include="TipoPagamentoDAL.cs" />
     <Compile Include="TipoProcedimentoDAL.cs" />
@@ -151,17 +148,6 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="sorrisempreDataSet.xsc">
-      <DependentUpon>sorrisempreDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="sorrisempreDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>sorrisempreDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="sorrisempreDataSet.xss">
-      <DependentUpon>sorrisempreDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
