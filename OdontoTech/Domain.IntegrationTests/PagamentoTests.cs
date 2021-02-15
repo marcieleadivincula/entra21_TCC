@@ -10,6 +10,8 @@ namespace Domain.IntegrationTests
         private string str;
         private TipoPagamento tipoPagamento;
         private DateTime dataPagamento;
+        private double valorPagamento;
+        private Paciente paciente;
 
         [SetUp]
         public void Setup()
@@ -17,8 +19,11 @@ namespace Domain.IntegrationTests
             bll = new PagamentoBLL();
             tipoPagamento = new TipoPagamento();
             dataPagamento = DateTime.Now;
+            valorPagamento = 478.55;
+            paciente = new Paciente();
 
             tipoPagamento.Id = 1;
+            paciente.Id = 1;
 
             str = string.Empty;
         }
@@ -32,7 +37,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarInsertPagamento()
         {
-            Pagamento test = new Pagamento(1, dataPagamento,tipoPagamento);
+            Pagamento test = new Pagamento(1, dataPagamento, valorPagamento, tipoPagamento, paciente);
 
             str = bll.Insert(test);
 
@@ -42,7 +47,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarAtualizarPagamento()
         {
-            Pagamento test = new Pagamento(1, dataPagamento, tipoPagamento);
+            Pagamento test = new Pagamento(1, dataPagamento, valorPagamento, tipoPagamento, paciente);
 
             str = bll.Update(test);
 
@@ -52,7 +57,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarAtualizarPagamentoVazio()
         {
-            Pagamento test = new Pagamento(1, dataPagamento, tipoPagamento);
+            Pagamento test = new Pagamento(1, dataPagamento, valorPagamento, tipoPagamento, paciente);
 
 
             str = bll.Update(test);
@@ -63,11 +68,11 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarDeletarPagamento()
         {
-            Pagamento test2 = new Pagamento(1, dataPagamento, tipoPagamento);
+            Pagamento test2 = new Pagamento(1, dataPagamento, valorPagamento, tipoPagamento, paciente);
 
             str = bll.Insert(test2);
 
-            Pagamento test = new Pagamento(1, dataPagamento, tipoPagamento);
+            Pagamento test = new Pagamento(1, dataPagamento, valorPagamento, tipoPagamento, paciente);
             str = bll.Delete(test);
             Assert.AreEqual(str, "Pagamento deletado com êxito!");
         }
