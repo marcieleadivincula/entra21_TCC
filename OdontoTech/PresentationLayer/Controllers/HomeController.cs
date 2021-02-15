@@ -335,11 +335,13 @@ namespace PresentationLayer.Controllers
             }
             if (idSelecionado != 0)
             {
+                pagamento.TipoPagamento = new TipoPagamento();
+                pagamento.Paciente = new Paciente();
                 pagamento.Id = idSelecionado;
                 pagamento.TipoPagamento.Id = idTipoPagamento;
-
-                //pagamento.TipoPagamento.
-
+                pagamento.ValorPagamento = valor;
+                pagamento.DataPagamento = data;
+                pagamento.Paciente.Id = IdPaciente;
 
                 ViewData["result"] = bll.Update(pagamento);
                 return View();
@@ -349,7 +351,12 @@ namespace PresentationLayer.Controllers
             if (saveBtn == "Salvar")
             {
 
-
+                pagamento.TipoPagamento = new TipoPagamento(); 
+                pagamento.Paciente = new Paciente(); 
+                pagamento.TipoPagamento.Id = idTipoPagamento;
+                pagamento.ValorPagamento = valor;
+                pagamento.DataPagamento = data;
+                pagamento.Paciente.Id = IdPaciente;
 
                 ViewData["result"] = bll.Insert(pagamento);
                 return View();
