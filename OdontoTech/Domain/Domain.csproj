@@ -110,7 +110,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agenda.cs" />
     <Compile Include="Atendimento.cs" />
+    <Compile Include="AtendimentoProcedimentos.cs" />
     <Compile Include="Bairro.cs" />
     <Compile Include="Calendar.cs" />
     <Compile Include="CalendarEvent.cs" />
