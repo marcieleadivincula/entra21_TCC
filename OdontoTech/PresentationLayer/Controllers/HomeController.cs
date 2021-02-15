@@ -316,8 +316,44 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Pagamento()
+        public IActionResult Pagamento(double valor, int idSelecionado, DateTime data, int IdPaciente, string saveBtn, string saveBtn2, int idTipoPagamento)
         {
+
+            PagamentoBLL bll = new PagamentoBLL();
+            Pagamento pagamento = new Pagamento();
+
+
+            if (saveBtn2 == "Deletar")
+            {
+
+                pagamento.Id = idSelecionado;
+                ViewData["result"] = bll.Delete(pagamento);
+
+                return View();
+            }
+            if (idSelecionado != 0)
+            {
+                pagamento.Id = idSelecionado;
+                pagamento.TipoPagamento.Id = idTipoPagamento;
+
+                //pagamento.TipoPagamento.
+
+
+                ViewData["result"] = bll.Update(pagamento);
+                return View();
+            }
+
+
+            if (saveBtn == "Salvar")
+            {
+
+
+
+                ViewData["result"] = 
+                return View();
+
+            }
+
             return View();
         }
 

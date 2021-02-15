@@ -38,7 +38,6 @@ namespace BusinessLogicalLayer
             if (bairro.Id == 0 || bairro.Id < 0)
             {
                 erros.AppendLine("O bairro deve ser informada.");
-                erros.AppendLine("O nome do bairro não pode conter mais que 50 caracteres.");
             }
 
             if (erros.Length != 0)

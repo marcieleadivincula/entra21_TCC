@@ -102,6 +102,8 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Pagamento temp = new Pagamento();
+                    temp.TipoPagamento = new TipoPagamento();
+
                     temp.Id = Convert.ToInt32(reader["idPagamento"]);
                     temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
                     temp.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
@@ -134,6 +136,8 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    pagamento.TipoPagamento = new TipoPagamento();
+
                     pagamento.Id = Convert.ToInt32(reader["idPagamento"]);
                     pagamento.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
                     pagamento.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
@@ -163,6 +167,8 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    pagamento.TipoPagamento = new TipoPagamento();
+
                     pagamento.Id = Convert.ToInt32(reader["idPagamento"]);
                     pagamento.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
                     pagamento.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
@@ -194,6 +200,8 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Pagamento temp = new Pagamento();
+                                            temp.TipoPagamento = new TipoPagamento();
+;
                     temp.Id = Convert.ToInt32(reader["idPagamento"]);
                     temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
                     temp.TipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
