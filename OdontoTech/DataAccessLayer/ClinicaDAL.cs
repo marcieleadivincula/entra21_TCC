@@ -36,6 +36,7 @@ namespace DataAccessLayer
                 }
                 else
                 {
+                    Console.WriteLine(ex);
                     return "Erro no Banco de dados. Contate o administrador.";
                 }
             }

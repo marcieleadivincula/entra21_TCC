@@ -29,17 +29,17 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Atendimento cadastrado com sucesso";
+                return "Atendimento cadastrado com sucesso!";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("Duplicate"))
                 {
-                    return ("Atendimento já cadastrado.");
+                    return "Atendimento já cadastrado.";
                 }
                 else
                 {
-                    return ("Erro no Banco de dados. Contate o administrador.");
+                    return "Erro no Banco de dados. Contate o administrador.";
                 }
             }
             finally
@@ -58,6 +58,7 @@ namespace DataAccessLayer
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM atendimento WHERE idAtendimento = @idAtendimento";
             cmd.Parameters.AddWithValue("@idAtendimento", atendimento.Id);
+            //cmd.CommandText = $"DELETE FROM atendimento WHERE idAtendimento = {Atendimento.Id}"; //REVER
 
             try
             {
@@ -83,7 +84,7 @@ namespace DataAccessLayer
         public string Update(Atendimento atendimento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE atendimento SET idPaciente = @idPaciente, idColaborador = @idColaborador, dtInicioAtendimento = @dtInicioAtendimento, dtFinalAtendimento = @dtFinalAtendimento, statusAtendimento = @statusAtendimento WHERE idAtendimento = @idAtendimento";
+            cmd.CommandText = $"UPDATE atendimento SET idPaciente = @idPaciente, idColaborador = @idColaborador, dtInicioAtendimento = @dtInicioAtendimento, dtFinalAtendimento = @dtFinalAtendimento, statusAtendimento = @statusAtendimento WHERE idAtendimento = @idAtendimento";
             cmd.Parameters.AddWithValue("@idPaciente", atendimento.Paciente.Id);
             cmd.Parameters.AddWithValue("@idColaborador", atendimento.Colaborador.Id);
             cmd.Parameters.AddWithValue("@dtInicioAtendimento", atendimento.DtInicioAtendimento);
@@ -97,9 +98,9 @@ namespace DataAccessLayer
                 cmd.ExecuteNonQuery();
                 return "Atendimento atualizado com êxito!";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return "Erro no Banco de dados.Contate o administrador.";
+                return ex + "Erro no Banco de dados.Contate o administrador.";
             }
             finally
             {
@@ -124,6 +125,9 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Atendimento temp = new Atendimento();
+
+                    temp.Paciente = new Paciente();
+                    temp.Colaborador = new Colaborador();
 
                     temp.Id = Convert.ToInt32(reader["idAtendimento"]);
                     temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
@@ -159,6 +163,9 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    temp.Paciente = new Paciente();
+                    temp.Colaborador = new Colaborador();
+                  
                     atendimento.Id = Convert.ToInt32(reader["idAtendimento"]);
                     atendimento.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
                     atendimento.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
@@ -191,6 +198,8 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    temp.Paciente = new Paciente();
+                    temp.Colaborador = new Colaborador();
                     atendimento.Id = Convert.ToInt32(reader["idAtendimento"]);
                     atendimento.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
                     atendimento.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
@@ -225,6 +234,9 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Procedimento temp = new Procedimento();
+
+                    temp.TipoProcedimento = new TipoProcedimento();
+         
 
                     temp.Id = Convert.ToInt32(reader["idProcedimento"]);
                     temp.Nome = Convert.ToString(reader["nomeProcedimento"]);

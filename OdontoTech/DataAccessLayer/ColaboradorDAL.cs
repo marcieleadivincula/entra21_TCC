@@ -140,6 +140,11 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Colaborador temp = new Colaborador();
+
+                    temp.Funcao = new Funcao();
+                    temp.Endereco = new Endereco();
+                    temp.Clinica = new Clinica();
+
                     temp.Id = Convert.ToInt32(reader["idColaborador"]);
                     temp.Nome = Convert.ToString(reader["nome"]);
                     temp.Funcao.Id = Convert.ToInt32(reader["idFuncao"]);
@@ -169,8 +174,8 @@ namespace DataAccessLayer
         public Colaborador GetByID(int idColaborador)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM colaborador WHERE idColaborador = @idColaborador";
-            cmd.Parameters.AddWithValue("@idColaborador", idColaborador);
+            
+            cmd.CommandText = $"SELECT * FROM colaborador WHERE idColaborador = {idColaborador}";
 
             try
             {
@@ -180,6 +185,10 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    colaborador.Funcao = new Funcao();
+                    colaborador.Endereco = new Endereco();
+                    colaborador.Clinica = new Clinica();
+
                     colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
                     colaborador.Nome = Convert.ToString(reader["nome"]);
                     colaborador.Funcao.Id = Convert.ToInt32(reader["idFuncao"]);
@@ -219,6 +228,10 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    colaborador.Funcao = new Funcao();
+                    colaborador.Endereco = new Endereco();
+                    colaborador.Clinica = new Clinica();
+
                     colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
                     colaborador.Nome = Convert.ToString(reader["nome"]);
                     colaborador.Funcao.Id = Convert.ToInt32(reader["idFuncao"]);

@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>Paciente</title>
+    <title>Cadastro Paciente</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -48,35 +48,35 @@
                     </span>
 
                     <label style="color:dimgrey;font-size:13px"> Dados pessoais. </label>
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    <div class="wrap-input100 validate-input" data-validate="O nome deve ser informado">
 
                         <input class="input100" type="text" name="firstName" value="@ViewBag.firstName">
 
                         <span class="focus-input100" data-placeholder="Nome"></span>
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    <div class="wrap-input100 validate-input" data-validate="O sobrenome deve ser informado">
 
                         <input class="input100" type="text" name="lastName" value="@ViewBag.lastName">
 
                         <span class="focus-input100" data-placeholder="Sobrenome"></span>
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    <div class="wrap-input100 validate-input" data-validate="O CPF deve ser informado">
 
                         <input class="input100" type="text" name="cpf" value="@ViewBag.cpf">
 
                         <span class="focus-input100" data-placeholder="CPF"></span>
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    <div class="wrap-input100 validate-input" data-validate="O RG deve ser informado">
 
                         <input class="input100" type="text" name="rg" value="@ViewBag.rg">
 
                         <span class="focus-input100" data-placeholder="RG"></span>
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    <div class="wrap-input100 validate-input" data-validate="A nome deve ser informada">
                         <label style="color:darkgray; font-size:15px; margin-left:5px;">Data de Nascimento</label>
                         <input class="input100" type="date" name="dtNascimento" value="@ViewBag.dtNascimento">
 
@@ -84,7 +84,7 @@
                     </div>
 
                     <label style="color:dimgrey;font-size:13px"> Dados de moradia. </label>
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    <div class="wrap-input100 validate-input" data-validate="O Pais deve ser informado">
 
                         <input class="input100" type="text" name="pais" value="@ViewBag.pais">
 
@@ -92,7 +92,7 @@
                         @* Trazer a lista de países *@
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    <div class="wrap-input100 validate-input" data-validate="O Estado deve ser informado">
 
                         <input class="input100" type="text" name="estado" value="@ViewBag.estado">
 
@@ -100,7 +100,7 @@
                         @* Trazer a lista de estados *@
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    <div class="wrap-input100 validate-input" data-validate="O Cidade deve ser informado">
 
                         <input class="input100" type="text" name="cidade" value="@ViewBag.cidade">
 
@@ -108,7 +108,7 @@
                         @* Trazer a lista de cidades *@
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    <div class="wrap-input100 validate-input" data-validate="O Bairro deve ser informado">
 
                         <input class="input100" type="text" name="bairro" value="@ViewBag.bairro">
 
@@ -116,7 +116,7 @@
                         @* Trazer a lista de bairros *@
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    <div class="wrap-input100 validate-input" data-validate="O Logradouro deve ser informado">
 
                         <input class="input100" type="text" name="logradouro" value="@ViewBag.logradouro">
 
@@ -125,7 +125,7 @@
                         @* Trazer a lista de logradouros *@
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    <div class="wrap-input100 validate-input" data-validate="O CEP deve ser informado">
 
                         <input class="input100" type="text" name="cep" value="@ViewBag.cep">
 
@@ -133,7 +133,7 @@
                         @* Trazer a lista de CEP *@
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    <div class="wrap-input100 validate-input" data-validate="O Numero da Casa deve ser informado">
 
                         <input class="input100" type="text" name="numeroCasa" value="@ViewBag.numeroCasa">
 
@@ -153,20 +153,21 @@
                   Criar um botão que leve para a página de contatos *@
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                    <div class="wrap-input100 validate-input" data-validate="">
 
                         <input class="input100" type="text" name="observacoes" value="@ViewBag.observacoes">
 
                         <span class="focus-input100" data-placeholder="Observações"></span>
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+
+                    <div class="wrap-input100 validate-input" data-validate="">
 
                         <input class="input100" type="text" name="idPaciente" value="@ViewBag.idPaciente">
 
-                        <label style="color:dimgrey;font-size:13px"> Somente para deletar e atualizar. </label>
 
                         <span class="focus-input100" data-placeholder="idPaciente"></span>
+                        <label style="color:dimgrey;font-size:13px"> Somente para deletar e atualizar. </label>
                     </div>
 
                     @{
@@ -243,7 +244,7 @@
     <!--===============================================================================================-->
     <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
     <!--===============================================================================================-->
-    <script src="~/vendor/animsition/js/animsition.min.js"></script>
+    <script src="~/vendor/animsition/js/animsitionCRUD.min.js"></script>
     <!--===============================================================================================-->
     <script src="~/vendor/bootstrap/js/popper.js"></script>
     <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>

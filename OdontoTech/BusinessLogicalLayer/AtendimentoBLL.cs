@@ -14,19 +14,18 @@ namespace BusinessLogicalLayer
         {
             StringBuilder erros = new StringBuilder();
 
-            if (atendimento.Id == 0 || atendimento.Id < 0)
-            {
-                erros.AppendLine("O ID de atendimento deve ser informado.");
-            }
-
             if (atendimento.Paciente.Id == 0 || atendimento.Paciente.Id < 0)
             {
-                erros.AppendLine("O ID de Paciente deve ser informado.");
+                erros.AppendLine("O Paciente deve ser informado.");
             }
 
             if (atendimento.Colaborador.Id == 0 || atendimento.Colaborador.Id < 0)
             {
-                erros.AppendLine("O ID de Colaborador deve ser informado.");
+                erros.AppendLine("O Colaborador deve ser informado.");
+            }
+            if (atendimento.DtAtendimento == null || atendimento.DtAtendimento.Equals(""))
+            {
+                erros.AppendLine("A data deve ser informada.");
             }
 
             if (atendimento.DtInicioAtendimento == null || atendimento.DtInicioAtendimento.Equals(""))
@@ -46,7 +45,7 @@ namespace BusinessLogicalLayer
 
             if (atendimento.StatusAtendimento.Length > 60)
             {
-                erros.AppendLine("O status do atendimento  não pode conter mais que 60 caracteres.");
+                erros.AppendLine("O status do atendimento não pode conter mais que 60 caracteres.");
             }
 
             if (erros.Length != 0)
@@ -93,6 +92,15 @@ namespace BusinessLogicalLayer
             if (atendimento.Colaborador.Id == 0 || atendimento.Colaborador.Id < 0)
             {
                 erros.AppendLine("O ID de Colaborador deve ser informado.");
+            }
+            if (atendimento.DtAtendimento == null || atendimento.DtAtendimento.Equals(""))
+            {
+                erros.AppendLine("A data deve ser informada.");
+            }
+
+            if (string.IsNullOrWhiteSpace(atendimento.Status))
+            {
+                erros.AppendLine("O Status deve ser informado.");
             }
 
             if (atendimento.DtInicioAtendimento == null || atendimento.DtInicioAtendimento.Equals(""))

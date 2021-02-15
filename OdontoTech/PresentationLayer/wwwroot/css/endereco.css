@@ -1,6 +1,6 @@
 :root {
-    --title-color: #322153;
-    --primary-color: #34cb79;
+    --title-color: #808080;
+    --primary-color: #21d4fd;
 }
 
 * {
@@ -29,12 +29,12 @@ h4,
 h5,
 h6 {
     font-family: 'Ubuntu', sans-serif;
-    color: var(--title-color);
+    color: #4c4c4c;
 }
 
 /* BOX MODEL
 Toda caixa tem: 
-largura (width), altura(height), comprimento, preenchimento, bordas (border), cor (color), fundo (background), maneira que é vista pelo HTML(display)
+largura (width), altura(height), comprimento, preenchimento, bordas (border), cor (color), fundo (background), maneira que Ã© vista pelo HTML(display)
 */
 
 
@@ -75,7 +75,7 @@ form {
     /* preencimento */
     padding: 64px;
     border-radius: 8px;
-    max-width: 730px;
+ /*   max-width: 730px;*/
 }
 
     form h1 {
@@ -85,6 +85,7 @@ form {
     form fieldset {
         margin-top: 64px;
         border: 0;
+
     }
 
     form legend {
@@ -131,8 +132,24 @@ form {
         margin-left: 24px;
     }
 
+    form button {
+      /*  width: 260px;*/
+        height: 56px;
+        background-color: #b721ff;
+        border-radius: 8px;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        border: 0;
+        margin-top: 40px;
+        transition: background-color 400ms;
+    }
 
-/* grid é multidimensional */
+        form button:hover {
+            background-color: #21d4fd;
+        }
+
+/* grid Ã© multidimensional */
 .items-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -162,7 +179,7 @@ form {
             color: var(--title-color);
         }
 
-        /* Não coloque espaço entre o li e a classe .selected, pois a classe pertence ao li. O espaço é apenas quando temos elementos dentro de elementos */
+        /* NÃ£o coloque espaÃ§o entre o li e a classe .selected, pois a classe pertence ao li. O espaÃ§o Ã© apenas quando temos elementos dentro de elementos */
         .items-grid li.selected {
             background: #e1faec;
             border: 2px solid #34cb79;

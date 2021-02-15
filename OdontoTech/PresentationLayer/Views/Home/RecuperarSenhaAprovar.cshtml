@@ -46,7 +46,7 @@
 
                     <div>
                         <samp>
-                            <label style="color:darkgrey;font-size:13px"> Um email com o codigo de segurança foi enviado para @ViewBag.Email  <input class="input100" type="hidden" style="color:dimgrey" name="email" value="@ViewBag.Email"> </label>
+                            <label style="color:darkgrey;font-size:13px"> Um email com o codigo de segurança foi enviado para @ViewBag.Email <br /> <br /> <input class="input100" type="hidden" style="color:dimgrey" name="email" value="@ViewBag.Email"> </label>
 
                         </samp>
                     </div>
@@ -66,7 +66,7 @@
                     @if (Convert.ToBoolean(ViewData["msgcodigo"]) == true)
                     {
 
-                        <label style="color:red;font-size:13px">O codigo inserido esta incorreto, Tente Novamente !</label>
+                        <label style="color:red;font-size:13px;position:center">O codigo inserido esta incorreto, Tente Novamente !</label>
 
                     }
 
