@@ -7,170 +7,170 @@
 }
 
 
+
+@using BusinessLogicalLayer;
+@using Domain;
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>Produto</title>
+    <title>Estado</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="./css/main.css">
-    <link rel="stylesheet" type="text/css" href="./css/util.css">
+    <link href="~/css/endereco.css" rel="stylesheet" />
     <!--===============================================================================================-->
+    <!-- Adicionando JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
 </head>
 <body>
+    <main id="page-create-point">
+        <header>
+            <img src="~/images/icons/OdontoTechV2.png" alt="logo" height="70" width="70" data-atf="1" />
 
+            <a href="/Home/Dashboard">
+                <span></span>
+                Voltar para home
+            </a>
+        </header>
 
-    <div class="limiter">
+        <form action="/Home/Produto" method="post">
 
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form class="login100-form validate-form" action="/Home/Produto" method="post">
-                    <span class="login100-form-title p-b-26">
-                        Produto
-                    </span>
+            <h2 id="balance">  <img src="~/images/shopping-status-produtos.png" alt="logo" height="50" width="50" data-atf="1" /> Cadastro Produto </h2>
+            @{
+                ProdutoBLL bll = new ProdutoBLL();
+                TipoEmbalagemBLL TPD = new TipoEmbalagemBLL();
+                List<TipoEmbalagem> LISTATIPO = TPD.GetAll();
+                List<Produto> lista = bll.GetAll();
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+            }
+            <fieldset>
+                <div class="field-group">
+                    <div class="field">
+                        <label for="nomeProduto">Nome do Produto</label>
 
-                        <input class="input100" type="text" name="produto" value="@ViewBag.produto">
+                        <input type="text" name="nomeProduto" value="@ViewBag.nomeProduto" />
 
-                        <span class="focus-input100" data-placeholder="Nome do produto"></span>
+                    </div>
+                    <div class="field">
+                        <label for="precoProduto"> <img src="/images/f5488f7af15452c26a5cd481f3501dfe.png" sheight="10" width="10" alt="Alternate Text" />Preço do Produto</label>
+
+                        <input type="number" name="precoProduto" value="@ViewBag.precoProduto" />
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <label style="color:darkgray; font-size:15px; margin-left:5px;">Tipo de embalagem</label>
-                        <input class="input100" type="text" name="embalagem" value="@ViewBag.embalagem">
+                </div>
 
-                        <span class="focus-input100" data-placeholder=""></span>
+                <div class="field-group">
 
-                        @*@{
+                    <div class="field">
+                        <label for="tipoembalaid">Embalagem</label>
+                        <select name="tipoembalaid" id="tipoembalaid" required>
+                            <option value=" ">Selecione o Tipo de Embalagem</option>
 
+                            @{ for (int i = 0; i < LISTATIPO.Count; i++)
+                                {
+                                    <option value="@LISTATIPO[i].Id">@LISTATIPO[i].Descricao</option>
+                                }}
 
-           for (int i = 0; i < Model.GetAll().Count; i++)
-           {
-               <select>
-                         <option value="">@Model.GetAll()[i].TipoEmbalagem.Descricao</option>
-               </select>
-
-           }
-        }*@
-
-
-                        @* Trazer a lista de embalagem *@
+                        </select>
+                        <a style="color:blue;font-size:13px" href="/Home/TipoEmbalagem">♻ Gerenciar Tipos de Embalagem</a>
+                        <input type="hidden" name="tipoembalaid" value="@ViewBag.tipoembalaid" />
                     </div>
 
+                   
+                    <div class="field">
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <label style="color:darkgray; font-size:15px; margin-left:5px;">Data de compra</label>
-                        <input class="input100" type="datetime-local" name="dtCompra" value="@ViewBag.dtCompra">
+                        <label for="dtcompra">Data de Compra</label>
 
-                        <span class="focus-input100" data-placeholder=""></span>
+                        <input type="datetime-local" name="dtcompra" value="@ViewBag.dtcompra" />
+
+                    </div>
+                </div>
+
+
+
+
+                <div class="field-group">
+                    <div class="field">
+
+                        <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
+                        <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
+
+
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <label style="color:darkgray; font-size:15px; margin-left:5px;">Preço</label>
-                        <input class="input100" type="number" name="preco" value="@ViewBag.preco">
+                    <div class="field">
+                        <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
+                        <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
 
-                        <span class="focus-input100" data-placeholder=""></span>
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
+                </div>
 
-                        <label style="color:darkgray; font-size:15px; margin-left:5px;">ID do Produto</label>
-                        <input class="input100" type="number" name="idProduto" value="@ViewBag.idProduto">
-
-                        <span class="focus-input100" data-placeholder=""></span>
-                        <label style="color:dimgrey;font-size:13px">Obs: Somente para deletar e atualizar. </label>
-                    </div>
-
-                    @{
-                        if (Convert.ToString(ViewData["result"]) != "")
+                @{
+                    if (Convert.ToString(ViewData["result"]) != "")
+                    {
+                        if (Convert.ToString(ViewData["result"]).Contains("!"))
                         {
-                            if (Convert.ToString(ViewData["result"]).Contains("!"))
-                            {
-                                <label style="color:green"> @ViewData["result"] </label>
-                            }
-                            else
-                            {
+                            <label style="color:green;font-size:13px"> @ViewData["result"] </label>
+                        }
+                        else
+                        {
 
-                              <label style="color:red;font-size:13px"> @ViewData["result"] </label>
-                            }
-
+                            <label style="color:red;font-size:13px"> @ViewData["result"] </label>
                         }
 
                     }
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" name="funcao" type="submit" value="Salvar" onclick=" @{
+                }
 
-                                ViewData["btn"] = "Salvar";
+                <br />
+                <br />
 
-                            }">
-                                Salvar
-                            </button>
-                        </div>
-                    </div>
+                <h2 id="balance">Lista de Produto</h2>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" name="funcao" type="submit" value="Atualizar" onclick=" @{
+                <br />
 
-                                ViewData["btn"] = "Atualizar";
+                @for (int i = 0; i < lista.Count; i++)
+                {
 
-                            }">
-                                Atualizar
-                            </button>
-                        </div>
-                    </div>
+                    TipoEmbalagem tipo = new TipoEmbalagem();
+                    tipo.Id = lista[i].TipoEmbalagem.Id;
+                    tipo = TPD.GetById(tipo);
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" name="funcao" type="submit" value="Deletar" onclick=" @{
+                    <input type="radio" name="idSelecionado" value="@lista[i].Id" /> <label> <b>ID:</b> @lista[i].Id</label> <label> <b>Produto:</b> @lista[i].Nome</label>
+                    <label> <b>Preço:</b> @lista[i].Preco</label> <label> <b>Data de compra:</b> @lista[i].DataCompra </label>
+                    <label> <b>Embalagem:</b> @tipo.Descricao</label> <br />
+                }
 
-                                ViewData["btn"] = "Deletar";
+                <br />
+                <br />
+                <input checked type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
+            </fieldset>
+        </form>
+    </main>
 
-                            }">
-                                Deletar
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="text-center p-t-115">
-                        <span class="login100-form-title p-b-26">
-                            Lista De Produtos
-                        </span>
-                        @* Trazer a lista de Produtos com id, produto, embalagem, dtCompra e preço *@
-                    </div>
-
-                </form>
-            </div>
-        </div>
-
-    </div>
-
-    <div id="dropDownSelect1"></div>
+    <script src="https://use.fontawesome.com/d09559d1bd.js"></script>
 
     <!--===============================================================================================-->
     <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -187,7 +187,14 @@
     <!--===============================================================================================-->
     <script src="~/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
-    <script src="./js/main.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/viacep.js"></script>
+    <script src="~/js/viacepJSandJson.js"></script>
+    <script src="~/js/endereco.js"></script>
 
 </body>
 </html>
+
+
+
+
