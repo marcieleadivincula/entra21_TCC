@@ -321,35 +321,45 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Produto(string produto, string embalagem, DateTime dtCompra, double preco, int idProduto, string funcao)
+        public IActionResult Produto(string nomeProduto, double precoProduto, int tipoembalaid, DateTime dtcompra, int idSelecionado, string saveBtn2, string saveBtn)
         {
-
             ProdutoBLL bll = new ProdutoBLL();
+            var produto = new Produto();
 
-            if (funcao == "Deletar")
+
+            if (saveBtn2 == "Deletar")
             {
-                Produto x = new Produto();
+                produto.Id = idSelecionado;
 
-                x.Id = idProduto;
-                ViewData["result"] = bll.Delete(x);
+                ViewData["result"] = bll.Delete(produto);
+                return View();
+            }
+            if (idSelecionado != 0)
+            {
+                produto.Id = idSelecionado;
+                produto.Nome = nomeProduto;
+                produto.DataCompra = dtcompra;
+                produto.TipoEmbalagem = new TipoEmbalagem();
+                produto.TipoEmbalagem.Id = tipoembalaid;
+                produto.Preco = precoProduto;
+
+                ViewData["result"] = bll.Update(produto);
                 return View();
             }
 
-            TipoEmbalagemBLL embalagembll = new TipoEmbalagemBLL();
 
-
-            Produto temp = new Produto(idProduto, produto, embalagembll.ValidaTipoEmbalagem(embalagem), preco, dtCompra);
-
-            ViewData["result"] = "";
-            if (funcao == "Atualizar")
+            if (saveBtn == "Salvar")
             {
-                ViewData["result"] = bll.Update(temp);
-            }
-            else if (funcao == "Salvar")
-            {
-                ViewData["result"] = bll.Insert(temp);
-            }
+                produto.Nome = nomeProduto;
+                produto.DataCompra = dtcompra;
+                produto.TipoEmbalagem = new TipoEmbalagem();
+                produto.TipoEmbalagem.Id = tipoembalaid;
+                produto.Preco = precoProduto;
 
+                ViewData["result"] = bll.Insert(produto);
+                return View();
+
+            }
 
             return View();
         }
@@ -392,9 +402,39 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult TipoEmbalagem()
+        public IActionResult TipoEmbalagem(string descricao,int idSelecionado, string saveBtn, string saveBtn2)
         {
+               TipoEmbalagemBLL bll = new TipoEmbalagemBLL();
+            TipoEmbalagem procedimento = new TipoEmbalagem();
+   
+            if (saveBtn2 == "Deletar")
+            {
+                procedimento.Id = idSelecionado;
+                ViewData["result"] = bll.Delete(procedimento);
+                return View();
+            }
+            if (idSelecionado != 0)
+            {
+                procedimento.Id = idSelecionado;
+                procedimento.Descricao = descricao;
+     
+
+                ViewData["result"] = bll.Update(procedimento);
+                return View();
+            }
+
+
+            if (saveBtn == "Salvar")
+            {
+
+                procedimento.Descricao = descricao;
+
+                ViewData["result"] = bll.Insert(procedimento);
+                return View();
+
+            }
             return View();
+
         }
 
         public IActionResult TipoPagamento()

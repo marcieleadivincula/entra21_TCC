@@ -29,7 +29,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Tipo de embalagem cadastrado com sucesso";
+                return "Tipo de embalagem cadastrado com sucesso!";
             }
             catch (Exception ex)
             {
@@ -56,7 +56,7 @@ namespace DataAccessLayer
         {
             if (tipoEmbalagem.Id == 0)
             {
-                return "Tipo de embalagem informada inválida!";
+                return "Tipo de embalagem informada inválida.";
             }
 
             cmd.Connection = conn;
@@ -146,8 +146,8 @@ namespace DataAccessLayer
         public TipoEmbalagem GetById(int idTipoEmbalagem)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM tipoembalagem WHERE idTipoEmbalagem = @idTipoEmbalagem";
-            cmd.Parameters.AddWithValue("@idTipoEmbalagem", idTipoEmbalagem);
+            cmd.CommandText = $"SELECT * FROM tipoembalagem WHERE idTipoEmbalagem = {idTipoEmbalagem}";
+
 
             try
             {
