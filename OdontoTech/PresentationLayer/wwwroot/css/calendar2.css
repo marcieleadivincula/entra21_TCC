@@ -6,8 +6,10 @@
 }
 
 .calendar-base {
-    width: 900px;
-    height: 500px;
+    /*   width: 900px;
+    height: 500px;*/
+    width: 88.25vw;
+    height: 63.371356147021544vh;
     border-radius: 20px;
     background-color: white;
     position: relative;
@@ -68,16 +70,22 @@
 .months {
     color: #AAAAAA;
     position: relative;
-    left: 350px;
+    left: 33.875vw;
+    top: 8.406844vh;
+    word-spacing: 1.520912547528517vh;
+    /*   left: 350px;
     top: 90px;
-    word-spacing: 10px;
+    word-spacing: 10px;*/
 }
 
 .month-line {
     border-color: #E8E8E8;
     position: relative;
-    top: 85px;
+    /*top: 85px;
     width: 57%;
+    left: 178px;*/
+    top: 72px;
+    width: 75%;
     left: 178px;
 }
 
@@ -88,6 +96,10 @@
     left: 355px;
     top: 80px;
     word-spacing: 35px;
+    /*font-size: 18px;
+    left: 355px;
+    top: 80px;
+    word-spacing: 35px;*/
     font-weight: 600;
 }
 
@@ -164,8 +176,10 @@
 }
 
 .calendar-left {
-    width: 300px;
-    height: 500px;
+    /*    width: 300px;
+    height: 500px;*/
+    width: 28.75vw;
+    height: 63.371356147021544vh;
     border-radius: 20px 0px 0px 20px;
     background-color: #2ECC71;
     position: relative;
