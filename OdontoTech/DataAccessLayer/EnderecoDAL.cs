@@ -151,8 +151,7 @@ namespace DataAccessLayer
         public Endereco GetById(int idEndereco)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM endereco WHERE idEndereco = @idEndereco";
-            cmd.Parameters.AddWithValue("@idEndereco", idEndereco);
+            cmd.CommandText = $"SELECT * FROM endereco WHERE idEndereco = {idEndereco}";
 
             try
             {

@@ -149,8 +149,7 @@ namespace DataAccessLayer
         public Produto GetById(int idProduto)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM produto WHERE idProduto = @idProduto";
-            cmd.Parameters.AddWithValue("@idProduto", idProduto);
+            cmd.CommandText = $"SELECT * FROM produto WHERE idProduto = {idProduto}";
 
             try
             {
