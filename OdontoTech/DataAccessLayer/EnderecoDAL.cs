@@ -152,7 +152,6 @@ namespace DataAccessLayer
         {
             cmd.Connection = conn;
             cmd.CommandText = $"SELECT * FROM endereco WHERE idEndereco = {idEndereco}";
-
             try
             {
                 conn.Open();

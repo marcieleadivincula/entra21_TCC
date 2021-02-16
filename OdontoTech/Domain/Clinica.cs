@@ -8,14 +8,8 @@ namespace Domain
         public string Nome { get; set; }
         public DateTime DataInauguracao { get; set; } //verificar qual usar para apenas DATA
         public Endereco Endereco { get; set; }
-
-        public Clinica(int id, string nome, DateTime dataInauguracao, Endereco endereco)
-        {
-            Id = id;
-            Nome = nome;
-            DataInauguracao = dataInauguracao;
-            Endereco = endereco;
-        }
+        public Estoque Estoque { get; set; }
+     
         /// <summary>
         /// construtor DAL.
         /// </summary>
@@ -27,6 +21,15 @@ namespace Domain
         public Clinica(int id)
         {
             Id = id;
+        }
+
+        public Clinica(int id, string nome, DateTime dataInauguracao, Endereco endereco, Estoque estoque)
+        {
+            Id = id;
+            Nome = nome;
+            DataInauguracao = dataInauguracao;
+            Endereco = endereco;
+            Estoque = estoque;
         }
     }
 }

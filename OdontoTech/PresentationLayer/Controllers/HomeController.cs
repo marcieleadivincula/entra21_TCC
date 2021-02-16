@@ -135,9 +135,9 @@ namespace PresentationLayer.Controllers
                 Procedimento procedimento = new Procedimento();
 
                 //procedimento.TipoProcedimento = new TipoProcedimento();
-   
+
                 //procedimento = pbll.GetProcedimentoIdTipo(idTipoProcedimento);
-           
+
                 //pbll.Insert(procedimento);
 
                 a.Paciente = new Paciente();
@@ -159,7 +159,7 @@ namespace PresentationLayer.Controllers
                 AtendimentoBLL bll = new AtendimentoBLL();
                 Atendimento a = new Atendimento();
 
-                
+
                 a.Paciente = new Paciente();
                 a.Colaborador = new Colaborador();
                 a.StatusAtendimento = status;
@@ -222,8 +222,48 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Clinica()
+        public IActionResult Clinica(string saveBtn2, DateTime inauguracao, string saveBtn, string nomeClinica,  string state, string city, string bairro, string logradouro, string cep, int numeroCasa, int idSelecionado)
         {
+
+            if (saveBtn2 == "Deletar")
+            {
+                ClinicaBLL bll = new ClinicaBLL();
+                Clinica clinica = new Clinica();
+                Endereco endereco = new Endereco();
+
+                clinica.Id = idSelecionado;
+
+                ViewData["result"] = bll.Delete(clinica);
+
+                return View();
+            }
+
+            if (idSelecionado != 0)
+            {
+                ClinicaBLL bll = new ClinicaBLL();
+                Estoque estoque = new Estoque();
+                EnderecoBLL enderecoBLL = new EnderecoBLL();
+                estoque.Id = 2;
+
+                Clinica clinica = new Clinica(idSelecionado, nomeClinica, inauguracao, enderecoBLL.EnderecoConstruido("Brasil", state, city, bairro, logradouro, numeroCasa, cep), estoque);
+
+                ViewData["result"] = bll.Update(clinica);
+                return View();
+            }
+
+            if (saveBtn == "Salvar")
+            {
+                ClinicaBLL bll = new ClinicaBLL();
+                Estoque estoque = new Estoque();
+                EnderecoBLL enderecoBLL = new EnderecoBLL();
+                estoque.Id = 2;
+
+                Clinica clinica = new Clinica(idSelecionado, nomeClinica, inauguracao, enderecoBLL.EnderecoConstruido("Brasil", state, city, bairro, logradouro, numeroCasa, cep), estoque);
+
+                ViewData["result"] = bll.Insert(clinica);
+                return View();
+
+            }
             return View();
         }
 
@@ -237,7 +277,7 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Estoque(int IDproduto, int qtdProduto, DateTime dataentrada, DateTime datasaida, string saveBtn, string saveBtn2,int idSelecionado)
+        public IActionResult Estoque(int IDproduto, int qtdProduto, DateTime dataentrada, DateTime datasaida, string saveBtn, string saveBtn2, int idSelecionado)
         {
             EstoqueBLL bll = new EstoqueBLL();
             Estoque estoque = new Estoque();
@@ -261,7 +301,7 @@ namespace PresentationLayer.Controllers
                 estoque.DataEntrada = dataentrada;
                 estoque.DataSaida = datasaida;
                 estoque.QtdProduto = qtdProduto;
-               
+
                 ViewData["result"] = bll.Update(estoque);
                 return View();
             }
@@ -335,11 +375,13 @@ namespace PresentationLayer.Controllers
             }
             if (idSelecionado != 0)
             {
+                pagamento.TipoPagamento = new TipoPagamento();
+                pagamento.Paciente = new Paciente();
                 pagamento.Id = idSelecionado;
                 pagamento.TipoPagamento.Id = idTipoPagamento;
-
-                //pagamento.TipoPagamento.
-
+                pagamento.ValorPagamento = valor;
+                pagamento.DataPagamento = data;
+                pagamento.Paciente.Id = IdPaciente;
 
                 ViewData["result"] = bll.Update(pagamento);
                 return View();
@@ -349,7 +391,12 @@ namespace PresentationLayer.Controllers
             if (saveBtn == "Salvar")
             {
 
-
+                pagamento.TipoPagamento = new TipoPagamento();
+                pagamento.Paciente = new Paciente();
+                pagamento.TipoPagamento.Id = idTipoPagamento;
+                pagamento.ValorPagamento = valor;
+                pagamento.DataPagamento = data;
+                pagamento.Paciente.Id = IdPaciente;
 
                 ViewData["result"] = bll.Insert(pagamento);
                 return View();
@@ -402,7 +449,7 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Procedimento(string nomeProcedimento,string dsProcedimento, int idTipoProcedimento,int idSelecionado, string saveBtn , string saveBtn2)
+        public IActionResult Procedimento(string nomeProcedimento, string dsProcedimento, int idTipoProcedimento, int idSelecionado, string saveBtn, string saveBtn2)
         {
             ProcedimentoBLL bll = new ProcedimentoBLL();
             Procedimento procedimento = new Procedimento();
@@ -484,7 +531,7 @@ namespace PresentationLayer.Controllers
         {
             TipoProcedimentoBLL bll = new TipoProcedimentoBLL();
             TipoProcedimento procedimento = new TipoProcedimento();
-      
+
             if (saveBtn2 == "Deletar")
             {
                 procedimento.Id = idSelecionado;
@@ -496,7 +543,7 @@ namespace PresentationLayer.Controllers
                 procedimento.Nome = nomeTipoProcedimento;
                 procedimento.Valor = valorProcedimento;
                 procedimento.Id = idSelecionado;
-                    
+
 
                 ViewData["result"] = bll.Update(procedimento);
                 return View();

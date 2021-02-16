@@ -106,6 +106,8 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     TipoPagamento temp = new TipoPagamento();
+
+                    
                     temp.Id = Convert.ToInt32(reader["idTipoPagamento"]);
                     temp.Tipo = Convert.ToString(reader["tipoPagamento"]);
 
@@ -114,8 +116,9 @@ namespace DataAccessLayer
 
                 return tipoPagamentos;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex);
                 throw new Exception("Erro no Banco de dados.Contate o administrador.");
             }
             finally
