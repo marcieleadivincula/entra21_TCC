@@ -147,8 +147,7 @@ namespace DataAccessLayer
         public Procedimento GetById(int id)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM procedimento WHERE idProcedimento = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.CommandText = $"SELECT * FROM procedimento WHERE idProcedimento = {id}";
 
             try
             {

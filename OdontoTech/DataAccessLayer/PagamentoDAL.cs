@@ -133,8 +133,7 @@ namespace DataAccessLayer
         public Pagamento GetById(int idPagamento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM pagamento WHERE idPagamento = @idPagamento";
-            cmd.Parameters.AddWithValue("@idPagamento", idPagamento);
+            cmd.CommandText = $"SELECT * FROM pagamento WHERE idPagamento = {idPagamento}";
 
             try
             {

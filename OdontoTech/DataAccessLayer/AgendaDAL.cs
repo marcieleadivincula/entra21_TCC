@@ -131,8 +131,7 @@ namespace DataAccessLayer
         public Agenda GetById(int idAgenda)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM agenda WHERE idAgenda = @idAgenda";
-            cmd.Parameters.AddWithValue("@idAgenda", idAgenda);
+            cmd.CommandText = $"SELECT * FROM agenda WHERE idAgenda = {idAgenda}";
 
             try
             {

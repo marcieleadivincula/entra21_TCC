@@ -149,8 +149,7 @@ namespace DataAccessLayer
         public Estado GetById(int idEstado)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM estado WHERE idEstado = @ID";
-            cmd.Parameters.AddWithValue("@ID", idEstado);
+            cmd.CommandText = $"SELECT * FROM estado WHERE idEstado = {idEstado}";
 
             try
             {
