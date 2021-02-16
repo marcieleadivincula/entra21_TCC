@@ -20,11 +20,11 @@ namespace PresentationLayer.Controllers
 {
     public class HomeController : Controller
     {
-        public List<CalendarEvent> GoogleEvents = new List<CalendarEvent>();
-        // If modifying these scopes, delete your previously saved credentials
-        // at ~/.credentials/calendar-dotnet-quickstart.json
-        static string[] Scopes = { CalendarService.Scope.CalendarReadonly };
-        static string ApplicationName = "Google Calendar API .NET Quickstart";
+        //public List<CalendarEvent> GoogleEvents = new List<CalendarEvent>();
+        //// If modifying these scopes, delete your previously saved credentials
+        //// at ~/.credentials/calendar-dotnet-quickstart.json
+        //static string[] Scopes = { CalendarService.Scope.CalendarReadonly };
+        //static string ApplicationName = "Google Calendar API .NET Quickstart";
 
         private readonly ILogger<HomeController> _logger;
 
@@ -34,59 +34,59 @@ namespace PresentationLayer.Controllers
 
         }
 
-        public void CalendarEvents()
-        {
-            UserCredential credential;
-            //string path = Server.MapPath("credentials.json");
+        //public void CalendarEvents()
+        //{
+        //    UserCredential credential;
+        //    //string path = Server.MapPath("credentials.json");
 
-            using (var stream =
-                new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
-            {
-                // The file token.json stores the user's access and refresh tokens, and is created
-                // automatically when the authorization flow completes for the first time.
-                string credPath = "token.json";
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-            }
+        //    using (var stream =
+        //        new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+        //    {
+        //        // The file token.json stores the user's access and refresh tokens, and is created
+        //        // automatically when the authorization flow completes for the first time.
+        //        string credPath = "token.json";
+        //        credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+        //            GoogleClientSecrets.Load(stream).Secrets,
+        //            Scopes,
+        //            "user",
+        //            CancellationToken.None,
+        //            new FileDataStore(credPath, true)).Result;
+        //    }
 
-            // Create Google Calendar API service.
-            var service = new CalendarService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
+        //    // Create Google Calendar API service.
+        //    var service = new CalendarService(new BaseClientService.Initializer()
+        //    {
+        //        HttpClientInitializer = credential,
+        //        ApplicationName = ApplicationName,
+        //    });
 
-            // Define parameters of request.
-            EventsResource.ListRequest request = service.Events.List("primary");
-            request.TimeMin = DateTime.Now;
-            request.ShowDeleted = false;
-            request.SingleEvents = true;
-            request.MaxResults = 10;
-            request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+        //    // Define parameters of request.
+        //    EventsResource.ListRequest request = service.Events.List("primary");
+        //    request.TimeMin = DateTime.Now;
+        //    request.ShowDeleted = false;
+        //    request.SingleEvents = true;
+        //    request.MaxResults = 10;
+        //    request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
 
-            // List events.
-            Events events = request.Execute();
-            Console.WriteLine("Upcoming events:");
-            if (events.Items != null && events.Items.Count > 0)
-            {
-                foreach (var eventItem in events.Items)
-                {
-                    var calendarEvent = new CalendarEvent();
-                    calendarEvent.Summay = eventItem.Summary;
-                    calendarEvent.Organizer = eventItem.Organizer.Email;
-                    calendarEvent.Description = eventItem.Description;
-                    calendarEvent.StartTime = eventItem.Start.DateTime.ToString();
-                    calendarEvent.EndTime = eventItem.End.DateTime.ToString();
+        //    // List events.
+        //    Events events = request.Execute();
+        //    Console.WriteLine("Upcoming events:");
+        //    if (events.Items != null && events.Items.Count > 0)
+        //    {
+        //        foreach (var eventItem in events.Items)
+        //        {
+        //            var calendarEvent = new CalendarEvent();
+        //            calendarEvent.Summay = eventItem.Summary;
+        //            calendarEvent.Organizer = eventItem.Organizer.Email;
+        //            calendarEvent.Description = eventItem.Description;
+        //            calendarEvent.StartTime = eventItem.Start.DateTime.ToString();
+        //            calendarEvent.EndTime = eventItem.End.DateTime.ToString();
 
-                    GoogleEvents.Add(calendarEvent);
-                    //GoogleEvents.Add(eventItem.Summary);
-                }
-            }
-        }
+        //            GoogleEvents.Add(calendarEvent);
+        //            //GoogleEvents.Add(eventItem.Summary);
+        //        }
+        //    }
+        //}
 
         public IActionResult Index()
         {
@@ -519,8 +519,8 @@ namespace PresentationLayer.Controllers
 
         public IActionResult Dashboard()
         {
-            CalendarEvents();
-            ViewBag.EventList = GoogleEvents;
+            //CalendarEvents();
+            //ViewBag.EventList = GoogleEvents;
 
             return View();
         }
