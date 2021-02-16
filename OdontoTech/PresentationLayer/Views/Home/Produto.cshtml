@@ -64,109 +64,191 @@
                 List<Produto> lista = bll.GetAll();
 
             }
-            <fieldset>
-                <div class="field-group">
-                    <div class="field">
-                        <label for="nomeProduto">Nome do Produto</label>
+        <fieldset>
+            <div class="field-group">
+                <div class="field">
+                    <label for="nomeProduto">Nome do Produto</label>
 
-                        <input type="text" name="nomeProduto" value="@ViewBag.nomeProduto" />
-
-                    </div>
-                    <div class="field">
-                        <label for="precoProduto"> <img src="/images/f5488f7af15452c26a5cd481f3501dfe.png" sheight="10" width="10" alt="Alternate Text" />Preço do Produto</label>
-
-                        <input type="number" name="precoProduto" value="@ViewBag.precoProduto" />
-                    </div>
+                    <input type="text" name="nomeProduto" value="@ViewBag.nomeProduto" />
 
                 </div>
+                <div class="field">
+                    <label for="precoProduto"> <img src="/images/f5488f7af15452c26a5cd481f3501dfe.png" sheight="10" width="10" alt="Alternate Text" />Preço do Produto</label>
 
-                <div class="field-group">
+                    <input type="number" name="precoProduto" value="@ViewBag.precoProduto" />
+                </div>
 
-                    <div class="field">
-                        <label for="tipoembalaid">Embalagem</label>
-                        <select name="tipoembalaid" id="tipoembalaid" required>
-                            <option value=" ">Selecione o Tipo de Embalagem</option>
+            </div>
 
-                            @{ for (int i = 0; i < LISTATIPO.Count; i++)
-                                {
-                                    <option value="@LISTATIPO[i].Id">@LISTATIPO[i].Descricao</option>
-                                }}
+            <div class="field-group">
 
-                        </select>
-                        <a style="color:blue;font-size:13px" href="/Home/TipoEmbalagem">♻ Gerenciar Tipos de Embalagem</a>
-                        <input type="hidden" name="tipoembalaid" value="@ViewBag.tipoembalaid" />
-                    </div>
+                <div class="field">
+                    <label for="tipoembalaid">Embalagem</label>
+                    <select name="tipoembalaid" id="tipoembalaid" required>
+                        <option value=" ">Selecione o Tipo de Embalagem</option>
 
-                   
-                    <div class="field">
+                        @{ for (int i = 0; i < LISTATIPO.Count; i++)
+                            {
+                                <option value="@LISTATIPO[i].Id">@LISTATIPO[i].Descricao</option>
+                            }}
 
-                        <label for="dtcompra">Data de Compra</label>
-
-                        <input type="datetime-local" name="dtcompra" value="@ViewBag.dtcompra" />
-
-                    </div>
+                    </select>
+                    <a style="color:blue;font-size:13px" href="/Home/TipoEmbalagem">♻ Gerenciar Tipos de Embalagem</a>
+                    <input type="hidden" name="tipoembalaid" value="@ViewBag.tipoembalaid" />
                 </div>
 
 
+                <div class="field">
+
+                    <label for="dtcompra">Data de Compra</label>
+
+                    <input type="datetime-local" name="dtcompra" value="@ViewBag.dtcompra" />
+
+                </div>
+            </div>
 
 
-                <div class="field-group">
-                    <div class="field">
-
-                        <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
-                        <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
 
 
-                    </div>
+            <div class="field-group">
+                <div class="field">
 
-                    <div class="field">
-                        <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
-                        <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
+                    <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
+                    <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
 
-                    </div>
 
                 </div>
 
-                @{
-                    if (Convert.ToString(ViewData["result"]) != "")
+                <div class="field">
+                    <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
+                    <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
+
+                </div>
+
+            </div>
+
+            @{
+                if (Convert.ToString(ViewData["result"]) != "")
+                {
+                    if (Convert.ToString(ViewData["result"]).Contains("!"))
                     {
-                        if (Convert.ToString(ViewData["result"]).Contains("!"))
-                        {
-                            <label style="color:green;font-size:13px"> @ViewData["result"] </label>
-                        }
-                        else
-                        {
+                        <label style="color:green;font-size:13px"> @ViewData["result"] </label>
+                    }
+                    else
+                    {
 
-                            <label style="color:red;font-size:13px"> @ViewData["result"] </label>
-                        }
-
+                        <label style="color:red;font-size:13px"> @ViewData["result"] </label>
                     }
 
                 }
 
-                <br />
-                <br />
+            }
 
-                <h2 id="balance">Lista de Produto</h2>
 
-                <br />
+            <div class="limiter">
+              
+                    <div class="wrap-table100">
 
-                @for (int i = 0; i < lista.Count; i++)
-                {
 
-                    TipoEmbalagem tipo = new TipoEmbalagem();
-                    tipo.Id = lista[i].TipoEmbalagem.Id;
-                    tipo = TPD.GetById(tipo);
+            <h2 id="balance">Lista de Produto</h2>
 
-                    <input type="radio" name="idSelecionado" value="@lista[i].Id" /> <label> <b>ID:</b> @lista[i].Id</label> <label> <b>Produto:</b> @lista[i].Nome</label>
-                    <label> <b>Preço:</b> @lista[i].Preco</label> <label> <b>Data de compra:</b> @lista[i].DataCompra </label>
-                    <label> <b>Embalagem:</b> @tipo.Descricao</label> <br />
-                }
 
-                <br />
-                <br />
-                <input checked type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
-            </fieldset>
+
+            <br />
+
+
+
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <!--===============================================================================================-->
+            <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+            <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="~/VENDORTABLE/vendor/bootstrap/css/bootstrap.min.css">
+            <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="~/FONTTABLE/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+            <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="~/VENDORTABLE/vendor/animate/animate.css">
+            <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="~/VENDORTABLE/vendor/select2/select2.min.css">
+            <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="~/VENDORTABLE/vendor/perfect-scrollbar/perfect-scrollbar.css">
+            <!--===============================================================================================-->
+            <link href="~/CSSTABLE/css/main.css" rel="stylesheet" />
+            <link href="~/CSSTABLE/css/util.css" rel="stylesheet" />
+            <!--===============================================================================================-->
+                        <div class="table">
+
+                            <div class="row header">
+                                <div class="cell">
+                                    ID
+                                </div>
+                                <div class="cell">
+                                    Produto
+                                </div>
+                                <div class="cell">
+                                    Preço
+                                </div>
+                                <div class="cell">
+                                    Embalagem
+                                </div>
+                                <div class="cell">
+                                    Data de Compra
+                                </div>
+                            </div>
+
+                            @for (int i = 0; i < lista.Count; i++)
+                            {
+
+                                TipoEmbalagemBLL tipbll = new TipoEmbalagemBLL();
+
+                                lista[i].TipoEmbalagem = tipbll.GetById(lista[i].TipoEmbalagem);
+
+                                <div class="row">
+                                    <div class="cell" data-title="ID">
+
+                                        <input checked type="radio" name="idSelecionado" value="@lista[i].Id" />   @lista[i].Id
+                                    </div>
+                                    <div class="cell" data-title="Produto">
+                                        @lista[i].Nome
+                                    </div>
+                                    <div class="cell" data-title="Preço">
+                                        @lista[i].Preco
+                                    </div>
+                                    <div class="cell" data-title="Embalagem">
+                                        @lista[i].TipoEmbalagem.Descricao
+                                    </div>
+                                    <div class="cell" data-title="D ata de Compra">
+                                        @lista[i].DataCompra
+                                    </div>
+                                </div>
+
+                            }
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            <!--===============================================================================================-->
+            <script src="~/VENDORTABLE/vendor/jquery/jquery-3.2.1.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="~/VENDORTABLE/vendor/bootstrap/js/popper.js"></script>
+            <script src="~/VENDORTABLE/vendor/bootstrap/js/bootstrap.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="~/VENDORTABLE/vendor/select2/select2.min.js"></script>
+            <!--===============================================================================================-->
+
+
+
+
+            <br />
+            <br />
+            <input checked hidden type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
+        </fieldset>
         </form>
     </main>
 

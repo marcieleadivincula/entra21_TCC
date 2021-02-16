@@ -177,44 +177,37 @@ namespace PresentationLayer.Controllers
 
 
 
-        public IActionResult Paciente(string firstName, string lastName, string cpf, string rg, DateTime dtNascimento, string pais, string estado, string cidade, string bairro, string logradouro, string cep, int numeroCasa, string contatos, string observacoes, int idPaciente, string funcao)
+        public IActionResult Paciente(string firstName, string lastName, string cpf, string rg, DateTime dtNascimento, string pais, string estado, string cidade, string bairro, string logradouro, string cep, int numeroCasa, string contatos, string observacoes, int idPaciente, string saveBtn, string saveBtn2, int idSelecionado)
         {
-            if (funcao != null)
-            {
                 PacienteBLL bll = new PacienteBLL();
-
-                if (funcao == "Deletar")
-                {
-                    Paciente temp1 = new Paciente();
-                    temp1.Id = idPaciente;
-                    ViewData["result"] = bll.Delete(temp1);
-                    return View();
-                }
-
-                if (pais == null || estado == null || cidade == null || logradouro == null)
-                {
-                    ViewData["result"] = "Algum dado de moradia não foi preenchido.";
-                    return View();
-                }
-
                 EnderecoBLL bllmoradia = new EnderecoBLL();
 
-                Paciente temp = new Paciente(idPaciente, firstName, lastName, rg, cpf, dtNascimento, observacoes, bllmoradia.EnderecoConstruido(pais, estado, cidade, bairro, logradouro, numeroCasa, cep));
+                Paciente temp = new Paciente(idSelecionado, firstName, lastName, rg, cpf, dtNascimento, observacoes, bllmoradia.EnderecoConstruido(pais, estado, cidade, bairro, logradouro, numeroCasa, cep));
+      
+            if (saveBtn2 == "Deletar")
+            {
 
-                ViewData["result"] = "";
 
-                if (funcao == "Atualizar")
-                {
-                    ViewData["result"] = bll.Update(temp);
-                }
+                ViewData["result"] = bll.Delete(temp);
 
-                else if (funcao == "Salvar")
-                {
-                    ViewData["result"] = bll.Insert(temp);
-                }
+                return View();
+            }
+
+            if (idSelecionado != 0)
+            {
+      
+                ViewData["result"] = bll.Update(temp);
+                return View();
+            }
+
+            if (saveBtn == "Salvar")
+            {
+
+                ViewData["result"] = bll.Insert(temp);
+                return View();
+
             }
             return View();
-
         }
 
         public IActionResult Funcao()

@@ -4,247 +4,290 @@
 @{
     ViewData["Title"] = "Paciente";
 }
+@using DataAccessLayer;
+@using Domain;
+@using BusinessLogicalLayer;
+
 
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>Cadastro Paciente</title>
+    <title>Estado</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="./css/util.css">
-    <link rel="stylesheet" type="text/css" href="./css/main.css">
+    <link href="~/css/endereco.css" rel="stylesheet" />
+
+    <link href="~/css/paciente.css" rel="stylesheet" />
+
     <!--===============================================================================================-->
+    <!-- Adicionando JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
 </head>
 <body>
+    <main id="page-create-point">
+        <header>
+            <img src="~/images/icons/OdontoTechV2.png" alt="logo" height="70" width="70" data-atf="1" />
+
+            <a href="/Home/Dashboard">
+                <span></span>
+                Voltar para home
+            </a>
+        </header>
+
+        <form action="/Home/Paciente" method="post">
+
+            <h2 id="balance"> <img src="~/images/paciente e deintista.jpg" alt="logo" height="50" width="50" data-atf="1" />Cadastro Paciente</h2>
+            @{
+                PacienteBLL bll = new PacienteBLL();
+                List<Paciente> lista = bll.GetAll();
 
 
-    <div class="limiter">
+            }
+        <fieldset>
+            <label style="font-size:17px" for="dados">Dados Pessoais</label>
+            <br />
+            <br />
+            <div class="field-group">
 
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form class="login100-form validate-form">
-                    <span class="login100-form-title p-b-26">
-                        Paciente
-                    </span>
+                <div class="field">
+                    <label for="firstName">Nome</label>
+                    <input type="text" name="firstName" value="@ViewBag.firstName">
+                </div>
 
-                    <label style="color:dimgrey;font-size:13px"> Dados pessoais. </label>
-                    <div class="wrap-input100 validate-input" data-validate="O nome deve ser informado">
+                <div class="field">
+                    <label for="lastName">Sobrenome</label>
+                    <input type="text" name="lastName" value="@ViewBag.lastName">
 
-                        <input class="input100" type="text" name="firstName" value="@ViewBag.firstName">
+                </div>
+                <div class="field">
 
-                        <span class="focus-input100" data-placeholder="Nome"></span>
+                    <label for="cpf">CPF</label>
+
+                    <input type="text" name="cpf" value="@ViewBag.cpf">
+
+
+                </div>
+
+            </div>
+
+            <div class="field-group">
+
+
+                <div class="field">
+                    <label for="rg">Registro Geral</label>
+
+                    <input type="text" name="rg" value="@ViewBag.rg">
+
+
+                </div>
+
+
+
+
+                <div class="field">
+                    <label for="dtNascimento">Data de Nascimento</label>
+                    <input type="date" name="dtNascimento" value="@ViewBag.dtNascimento">
+
+
+                </div>
+                <div class="field">
+                    <label for="observacoes">Observações</label>
+                    <input type="text" name="observacoes" value="@ViewBag.observacoes">
+
+
+                </div>
+
+            </div>
+            <br />     <br />
+
+            <label style="font-size:17px" for="dados">Dados de Endereço</label>
+            <br />
+            <br />
+            <div class="field-group">
+                <div class="field">
+                    <label for="state">Estado</label>
+                    <select name="uf" id="state">
+                        <option value="@ViewBag.uf">Selecione o estado</option>
+                    </select>
+
+                    <input type="hidden" name="state" />
+                </div>
+
+                <div class="field">
+                    <label for="city">Cidade</label>
+                    <select name="city" id="city">
+                        <option value="@ViewBag.city">Selecione a cidade</option>
+
+                    </select>
+                    <input type="hidden" name="city" />
+                </div>
+
+                <div class="field">
+                    <label for="Bairro">Bairro</label>
+                    <input type="text" name="bairro" value="@ViewBag.bairro">
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="field-group">
+
+                <div class="field-group">
+                    <div class="field">
+                        <label for="logradouro">Logradouro</label>
+                        <input type="text" name="logradouro" value="@ViewBag.logradouro">
+
+                    </div>
+                    <div class="field">
+                        <label for="cep">CEP</label>
+                        <input type="text" name="cep" value="@ViewBag.cep">
+
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="O sobrenome deve ser informado">
+                    <div class="field">
+                        <label for="numeroCasa">Numero da Casa</label>
+                        <input type="text" name="numeroCasa" value="@ViewBag.numeroCasa">
 
-                        <input class="input100" type="text" name="lastName" value="@ViewBag.lastName">
-
-                        <span class="focus-input100" data-placeholder="Sobrenome"></span>
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="O CPF deve ser informado">
-
-                        <input class="input100" type="text" name="cpf" value="@ViewBag.cpf">
-
-                        <span class="focus-input100" data-placeholder="CPF"></span>
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="O RG deve ser informado">
-
-                        <input class="input100" type="text" name="rg" value="@ViewBag.rg">
-
-                        <span class="focus-input100" data-placeholder="RG"></span>
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="A nome deve ser informada">
-                        <label style="color:darkgray; font-size:15px; margin-left:5px;">Data de Nascimento</label>
-                        <input class="input100" type="date" name="dtNascimento" value="@ViewBag.dtNascimento">
-
-                        <span class="focus-input100" data-placeholder=""></span>
-                    </div>
-
-                    <label style="color:dimgrey;font-size:13px"> Dados de moradia. </label>
-                    <div class="wrap-input100 validate-input" data-validate="O Pais deve ser informado">
-
-                        <input class="input100" type="text" name="pais" value="@ViewBag.pais">
-
-                        <span class="focus-input100" data-placeholder="Pais"></span>
-                        @* Trazer a lista de países *@
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="O Estado deve ser informado">
-
-                        <input class="input100" type="text" name="estado" value="@ViewBag.estado">
-
-                        <span class="focus-input100" data-placeholder="Estado"></span>
-                        @* Trazer a lista de estados *@
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="O Cidade deve ser informado">
-
-                        <input class="input100" type="text" name="cidade" value="@ViewBag.cidade">
-
-                        <span class="focus-input100" data-placeholder="Cidade"></span>
-                        @* Trazer a lista de cidades *@
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="O Bairro deve ser informado">
-
-                        <input class="input100" type="text" name="bairro" value="@ViewBag.bairro">
-
-                        <span class="focus-input100" data-placeholder="Bairro"></span>
-                        @* Trazer a lista de bairros *@
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="O Logradouro deve ser informado">
-
-                        <input class="input100" type="text" name="logradouro" value="@ViewBag.logradouro">
-
-                        <span class="focus-input100" data-placeholder="Logradouro">
-                        </span>
-                        @* Trazer a lista de logradouros *@
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="O CEP deve ser informado">
-
-                        <input class="input100" type="text" name="cep" value="@ViewBag.cep">
-
-                        <span class="focus-input100" data-placeholder="CEP"></span>
-                        @* Trazer a lista de CEP *@
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="O Numero da Casa deve ser informado">
-
-                        <input class="input100" type="text" name="numeroCasa" value="@ViewBag.numeroCasa">
-
-                        <span class="focus-input100" data-placeholder="Número"></span>
-                        @* Trazer a lista de número *@
-                    </div>
-                    <label style="color:dimgrey;font-size:13px"> Dados extras </label>
-
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-
-                        <input class="input100" type="button" name="contatos" value="Meus contatos">
-
-
-                        @*
-            <input class="input100" type="button" name="contatos" value="Meus contatos">
-
-                  Criar um botão que leve para a página de contatos *@
-                    </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="">
-
-                        <input class="input100" type="text" name="observacoes" value="@ViewBag.observacoes">
-
-                        <span class="focus-input100" data-placeholder="Observações"></span>
                     </div>
 
 
-                    <div class="wrap-input100 validate-input" data-validate="">
-
-                        <input class="input100" type="text" name="idPaciente" value="@ViewBag.idPaciente">
 
 
-                        <span class="focus-input100" data-placeholder="idPaciente"></span>
-                        <label style="color:dimgrey;font-size:13px"> Somente para deletar e atualizar. </label>
-                    </div>
+                </div>
+            </div>
 
-                    @{
-                        if (Convert.ToString(ViewData["result"]) != "")
-                        {
-                            if (Convert.ToString(ViewData["result"]).Contains("!"))
-                            {
-                                <label style="color:green;font-size:13px"> @ViewData["result"] </label>
-                            }
-                            else
-                            {
+            <div class="field-group">
+                <div class="field">
 
-                                <label style="color:red;font-size:13px"> @ViewData["result"] </label>
-                            }
+                    <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
+                    <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
 
-                        }
 
+                </div>
+
+                <div class="field">
+                    <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
+                    <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
+
+                </div>
+
+            </div>
+            @{
+                if (Convert.ToString(ViewData["result"]) != "")
+                {
+                    if (Convert.ToString(ViewData["result"]).Contains("!"))
+                    {
+                        <label style="color:green;font-size:13px"> @ViewData["result"] </label>
+                    }
+                    else
+                    {
+
+                        <label style="color:red;font-size:13px"> @ViewData["result"] </label>
                     }
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" name="funcao" type="submit" value="Salvar" onclick=" @{
+                }
 
-                                ViewData["btn"] = "Salvar";
+            }
 
-                            }">
-                                Salvar
-                            </button>
-                        </div>
-                    </div>
+            <br />
+            <br />
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" name="funcao" type="submit" value="Atualizar" onclick=" @{
+            <h2 id="balance">Lista de Pacientes</h2>
 
-                                ViewData["btn"] = "Atualizar";
+            <br />
 
-                            }">
-                                Atualizar
-                            </button>
-                        </div>
-                    </div>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" name="funcao" type="submit" value="Deletar" onclick=" @{
+            <section id="transaction">
+                <table id="data-table">
+                    <thead>
 
-                                ViewData["btn"] = "Deletar";
+                        <tr>
+                            @*<th class="description">#</th>*@
+                            <th>ID</th>
+                            <th>Nome Completo</th>
+                            <th>RG</th>
+                            <th>CPF</th>
+                            <th>Data de nascimento</th>
+                            <th>Observações</th>
+                        </tr>
 
-                            }">
-                                Deletar
-                            </button>
-                        </div>
-                    </div>
+                    </thead>
 
-                    <div class="text-center p-t-115">
-                        <span class="login100-form-title p-b-26">
-                            Lista de pacientes
-                        </span>
-                        @* Trazer a lista de pacientes com id, nome,sobrenome, cpf, rg, observações,dtNascimento, cep, número,nome do logradouro, bairro, cidade, estado e país *@
-                    </div>
+                    <tbody>
+                        @foreach (var item in lista)
+                        {
+                        <tr>
 
-                </form>
-            </div>
-        </div>
+                            <td>
+                                @item.Id
+                            </td>
 
-    </div>
+                            <td>
+                                @item.Nome  + @item.Sobrenome
+                            </td>
 
-    <div id="dropDownSelect1"></div>
+                            <td>
+                                @item.Rg
+                            </td>
+
+                            <td>
+                                @item.Cpf
+                            </td>
+                            <td>
+                                @item.DataNascimento
+                            </td>
+                            <td>
+                                @item.Observacao
+                            </td>
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </section>
+
+
+
+
+
+
+            <br />
+            <br />
+            <input checked type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
+        </fieldset>
+        </form>
+    </main>
+
+    <script src="https://use.fontawesome.com/d09559d1bd.js"></script>
 
     <!--===============================================================================================-->
     <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
     <!--===============================================================================================-->
-    <script src="~/vendor/animsition/js/animsitionCRUD.min.js"></script>
+    <script src="~/vendor/animsition/js/animsition.min.js"></script>
     <!--===============================================================================================-->
     <script src="~/vendor/bootstrap/js/popper.js"></script>
     <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -256,7 +299,15 @@
     <!--===============================================================================================-->
     <script src="~/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
-    <script src="./js/main.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/viacep.js"></script>
+    <script src="~/js/viacepJSandJson.js"></script>
+    <script src="~/js/endereco.js"></script>
 
 </body>
+
 </html>
+
+
+
+

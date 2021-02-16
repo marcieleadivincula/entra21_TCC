@@ -1,6 +1,9 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using DataAccessLayer;
+@using Domain;
+@using BusinessLogicalLayer;
 @{
     ViewData["Title"] = "Finances";
 }
@@ -66,13 +69,50 @@
             <table id="data-table">
                 <thead>
                     <tr>
-                        <th class="description">Descrição</th>
+                        <th class="description">#</th>
+                        <th>Data do pagamento</th>
                         <th>Valor</th>
-                        <th>Data</th>
+                        <th>Tipo de pagamento</th>
+                        <th>Paciente</th>
+                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
+                    @{
+                        PagamentoBLL bll = new PagamentoBLL();
+                        List<Pagamento> lista = bll.GetAll();
+
+                        TipoPagamentoBLL tipoPagamentoBLL = new TipoPagamentoBLL();
+                        List<TipoPagamento> tipos = tipoPagamentoBLL.GetAll();
+
+                        PacienteBLL pacientebll = new PacienteBLL();
+                        List<Paciente> pacientes = pacientebll.GetAll();
+                    }
+                    @foreach (var item in lista)
+                    {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.DataPagamento</td>
+                        <td>@item.ValorPagamento</td>
+                        @foreach (var tip in tipos)
+                        {
+                            <td>@tip.Tipo</td>
+                        }
+
+                        @foreach (var pac in pacientes)
+                        {
+                            <td>@pac.Nome</td>
+                        }
+                        <td>
+                            <img onclick="Transaction.remove(${index})" src="~/images/assets/plus.svg" alt="Atualizar estado" />
+                        </td>
+                        <td>
+                            <img onclick="Transaction.remove(${index})" src="~/images/assets/minus.svg" alt="Remover estado" />
+                        </td>
+                    </tr>
+                    }
+
                 </tbody>
             </table>
         </section>
