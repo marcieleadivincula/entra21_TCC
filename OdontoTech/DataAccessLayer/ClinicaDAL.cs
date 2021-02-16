@@ -144,8 +144,7 @@ namespace DataAccessLayer
         public Clinica GetById(int idClinica)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM clinica WHERE idClinica = @idClinica";
-            cmd.Parameters.AddWithValue("@idClinica", idClinica);
+            cmd.CommandText = $"SELECT * FROM clinica WHERE idClinica = {idClinica}";
 
             try
             {

@@ -133,8 +133,7 @@ namespace DataAccessLayer
         public Estoque GetById(int idEstoque)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM estoque WHERE idEstoque = @idEstoque";
-            cmd.Parameters.AddWithValue("@idEstoque", idEstoque);
+            cmd.CommandText = $"SELECT * FROM estoque WHERE idEstoque = {idEstoque}";
 
             try
             {
