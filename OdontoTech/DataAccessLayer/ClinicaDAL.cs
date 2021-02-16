@@ -17,16 +17,17 @@ namespace DataAccessLayer
         public string Insert(Clinica clinica)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO clinica (nomeClinica, dtInauguracao, idEndereco) values (@nomeClinica, @dtInauguracao, @idEndereco)";
+            cmd.CommandText = "INSERT INTO clinica (nomeClinica, dtInauguracao, idEndereco, idEstoque) values (@nomeClinica, @dtInauguracao, @idEndereco, @idEstoque)";
             cmd.Parameters.AddWithValue("@nomeClinica", clinica.Nome);
             cmd.Parameters.AddWithValue("@dtInauguracao", clinica.DataInauguracao);
             cmd.Parameters.AddWithValue("@idEndereco", clinica.Endereco.Id);
+            cmd.Parameters.AddWithValue("@idEstoque", clinica.Estoque.Id);
 
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Clínica cadastrada com sucesso";
+                return "Clínica cadastrada com sucesso!";
             }
             catch (Exception ex)
             {
@@ -84,10 +85,11 @@ namespace DataAccessLayer
         public string Update(Clinica clinica)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE clinica SET nomeClinica = @nomeClinica, dtInauguracao = @dtInauguracao, idEndereco = @idEndereco WHERE idClinica = @idClinica";
+            cmd.CommandText = "UPDATE clinica SET nomeClinica = @nomeClinica, dtInauguracao = @dtInauguracao, idEndereco = @idEndereco, idEstoque = @idEstoque WHERE idClinica = @idClinica";
             cmd.Parameters.AddWithValue("@nomeClinica", clinica.Nome);
             cmd.Parameters.AddWithValue("@dtInauguracao", clinica.DataInauguracao);
             cmd.Parameters.AddWithValue("@idEndereco", clinica.Endereco.Id);
+            cmd.Parameters.AddWithValue("@idEstoque", clinica.Estoque.Id);
             cmd.Parameters.AddWithValue("@idClinica", clinica.Id);
 
             try
@@ -122,10 +124,14 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Clinica temp = new Clinica();
+                    temp.Endereco = new Endereco();
+                    temp.Estoque = new Estoque();
+
                     temp.Id = Convert.ToInt32(reader["idClinica"]);
                     temp.Nome = Convert.ToString(reader["nomeClinica"]);
                     temp.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
                     temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
+                    temp.Estoque.Id = Convert.ToInt32(reader["idEstoque"]);
 
                     clinicas.Add(temp);
                 }
@@ -159,6 +165,7 @@ namespace DataAccessLayer
                     clinica.Nome = Convert.ToString(reader["nomeClinica"]);
                     clinica.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
                     clinica.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
+                    clinica.Estoque.Id = Convert.ToInt32(reader["idEstoque"]);
                 }
 
                 return clinica;
@@ -191,6 +198,7 @@ namespace DataAccessLayer
                     clinica.Nome = Convert.ToString(reader["nomeClinica"]);
                     clinica.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
                     clinica.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
+                    clinica.Estoque.Id = Convert.ToInt32(reader["idEstoque"]);
                 }
 
                 return clinica;
@@ -224,6 +232,7 @@ namespace DataAccessLayer
                     temp.Nome = Convert.ToString(reader["nomeClinica"]);
                     temp.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
                     temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
+                    temp.Estoque.Id = Convert.ToInt32(reader["idEstoque"]);
 
                     clinicas.Add(temp);
                 }
