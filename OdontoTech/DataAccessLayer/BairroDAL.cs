@@ -126,8 +126,8 @@ namespace DataAccessLayer
         public Bairro GetById(int idBairro)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM bairro WHERE idBairro = @idBairro";
-            cmd.Parameters.AddWithValue("@idBairro", idBairro);
+            cmd.CommandText = $"SELECT * FROM bairro WHERE idBairro = {idBairro}";
+
 
             try
             {

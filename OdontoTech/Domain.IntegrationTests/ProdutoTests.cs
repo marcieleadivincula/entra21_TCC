@@ -64,7 +64,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Update(test);
 
-            Assert.AreEqual(str, "O nome do produto não pode conter mais que 60 caracteres.\r\n");
+            Assert.AreEqual(str, "Produto atualizado com êxito!");
         }
 
         [Test]

@@ -14,6 +14,7 @@ namespace Domain.IntegrationTests
         private string str;
         private Endereco endereco;
         private DateTime dataInauguracao;
+        private Estoque estoque;
 
 
         [SetUp]
@@ -21,8 +22,10 @@ namespace Domain.IntegrationTests
         {
             bll = new ClinicaBLL();
             endereco = new Endereco();
+            estoque = new Estoque();
             dataInauguracao = DateTime.Now;
             endereco.Id = 1;
+            estoque.Id = 1;
             str = string.Empty;
         }
 
@@ -35,17 +38,17 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarInsertClinica()
         {
-            Clinica test = new Clinica(1, "Santo Sorriso", dataInauguracao, endereco);
+            Clinica test = new Clinica(1, "Santo Sorriso", dataInauguracao, endereco, estoque);
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Clínica cadastrada com sucesso");
+            Assert.AreEqual(str, "Clínica cadastrada com sucesso!");
         }       
 
         [Test]
         public void TestarInsertClinicaVazio()
         {
-            Clinica test = new Clinica(1, "", dataInauguracao, endereco);
+            Clinica test = new Clinica(1, "", dataInauguracao, endereco, estoque);
 
             str = bll.Insert(test);
 
@@ -55,7 +58,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarInsertClinicaTamanhoExcedido()
         {
-            Clinica test = new Clinica(1, "101234567891012345678910123456789101234567891012345678956789101234567895678910123456789", dataInauguracao, endereco);
+            Clinica test = new Clinica(1, "101234567891012345678910123456789101234567891012345678956789101234567895678910123456789", dataInauguracao, endereco, estoque);
 
             str = bll.Insert(test);
 
@@ -65,7 +68,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarAtualizarClinica()
         {
-            Clinica test = new Clinica(1, "Badenfurt", dataInauguracao, endereco);
+            Clinica test = new Clinica(1, "Badenfurt", dataInauguracao, endereco, estoque);
 
             str = bll.Update(test);
 
@@ -75,7 +78,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarAtualizarClinicaVazio()
         {
-            Clinica test = new Clinica(1, "", dataInauguracao, endereco);
+            Clinica test = new Clinica(1, "", dataInauguracao, endereco, estoque);
 
 
             str = bll.Update(test);
@@ -86,7 +89,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarAtualizarClinicaTamanhoExcedido()
         {
-            Clinica test = new Clinica(1, "101234567891012345678910123456789101234567891012345678989101234567898910123456789", dataInauguracao, endereco);
+            Clinica test = new Clinica(1, "101234567891012345678910123456789101234567891012345678989101234567898910123456789", dataInauguracao, endereco, estoque);
             str = bll.Update(test);
 
             Assert.AreEqual(str, "O nome não pode conter mais que 60 caracteres.\r\n");
@@ -95,7 +98,7 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarDeletarClinica()
         {
-            Clinica test = new Clinica(150, "", dataInauguracao, endereco);
+            Clinica test = new Clinica(150, "", dataInauguracao, endereco, estoque);
             str = bll.Delete(test);
 
             Assert.AreEqual(str, "Clínica deletada com êxito!");

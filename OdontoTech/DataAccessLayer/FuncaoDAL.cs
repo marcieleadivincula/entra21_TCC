@@ -26,7 +26,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Função cadastrada com sucesso";
+                return "Função cadastrada com sucesso!";
             }
             catch (Exception ex)
             {
@@ -135,8 +135,7 @@ namespace DataAccessLayer
         public Funcao GetById(int idFuncao)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM funcao WHERE idFuncao = @idFuncao";
-            cmd.Parameters.AddWithValue("@idFuncao", idFuncao);
+            cmd.CommandText = $"SELECT * FROM funcao WHERE idFuncao = {idFuncao}";
 
             try
             {

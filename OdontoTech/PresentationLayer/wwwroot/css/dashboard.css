@@ -242,9 +242,11 @@ td.expense {
 
 input {
     border: 1px solid #363f5f;
+    /*border: none;*/
     border-radius: 0.2rem;
     padding: 0.8rem;
     /*width: 100%;*/
+
 }
 
 .input-group {

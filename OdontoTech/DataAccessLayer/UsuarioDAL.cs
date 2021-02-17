@@ -196,8 +196,7 @@ namespace DataAccessLayer
         public Usuario GetById(int idUsuario)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM usuario WHERE idUsuario = @idUsuario";
-            cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+            cmd.CommandText = $"SELECT * FROM usuario WHERE idUsuario = {idUsuario}";
 
             try
             {

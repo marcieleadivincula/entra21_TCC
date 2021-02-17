@@ -123,8 +123,7 @@ namespace DataAccessLayer
         public FoneTipo GetById(int idFoneTipo)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM foneTipo WHERE idFoneTipo = @idFoneTipo";
-            cmd.Parameters.AddWithValue("@idFoneTipo", idFoneTipo);
+            cmd.CommandText = $"SELECT * FROM foneTipo WHERE idFoneTipo = {idFoneTipo}";
 
             try
             {

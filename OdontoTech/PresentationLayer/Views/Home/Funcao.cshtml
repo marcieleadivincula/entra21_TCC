@@ -1,6 +1,10 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+@using BusinessLogicalLayer;
+@using Domain;
+
 @{
     ViewData["Title"] = "Funcao";
 }
@@ -8,100 +12,144 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>Funções</title>
+    <title>Funcão</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="./css/main.css">
-    <link rel="stylesheet" type="text/css" href="./css/util.css">
+    <link href="~/css/endereco.css" rel="stylesheet" />
     <!--===============================================================================================-->
+    <!-- Adicionando JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
 </head>
 <body>
+    <main id="page-create-point">
+        <header>
+            <img src="~/images/icons/OdontoTechV2.png" alt="logo" height="70" width="70" data-atf="1" />
 
+            <a href="/Home/Dashboard">
+                <span></span>
+                Voltar para home
+            </a>
+        </header>
 
-    <div class="limiter">
+        <form action="/Home/Funcao" method="post">
 
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form class="login100-form validate-form">
-                    <span class="login100-form-title p-b-26">
-                        Funções
-                    </span>
+            <h2 id="balance">Cadastro Função <img src="~/images/iconfinder_m-14_4230554.png" alt="logo" height="50" width="50" data-atf="1" /></h2>
+            @{
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="funcao">
-                        <span class="focus-input100" data-placeholder="Nome da função"></span>
+                FuncaoBLL funcaoBLL = new FuncaoBLL();
+                var listaFuncao = funcaoBLL.GetAll();
+
+            }
+            <fieldset>
+                <div class="field-group">
+
+                    @* nomeFuncao *@
+                    <div class="field">
+                        <label for="valor">Nome da Função</label>
+                        <input type="text" name="nomeFuncao" value="@ViewBag.nomeFuncao" />
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="number" name="salario">
-                        <span class="focus-input100" data-placeholder="Salário"></span>
+                </div>
+
+                <div class="field-group">
+                    @* salario *@
+                    <div class="field">
+                        <label for="salario">Salário</label>
+                        <input type="number" name="salario" value="@ViewBag.salario" />
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="number" name="comissao">
-                        <span class="focus-input100" data-placeholder="Comissão"></span>
+                    @* comissao *@
+
+                    <div class="field">
+                        <label for="comissao">Comissão</label>
+                        <select name="comissao" id="comissao">
+                            <option value="0">0%</option>
+                            <option value="0,1">10%</option>
+                            <option value="0,2">20%</option>
+                            <option value="0,3">30%</option>
+                            <option value="0,4">40%</option>
+                            <option value="0,5">50%</option>
+                            <option value="0,6">60%</option>
+                        </select>
+                        <input type="hidden" name="comissao" />
                     </div>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Salvar
-                            </button>
-                        </div>
+                </div>
+
+                <div class="field-group">
+                    <div class="field">
+
+                        <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
+                        <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
                     </div>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Atualizar
-                            </button>
-                        </div>
+                    <div class="field">
+                        <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
+                        <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
                     </div>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Deletar
-                            </button>
-                        </div>
-                    </div>
+                </div>
 
-                    <div class="text-center p-t-115">
-                        <span class="login100-form-title p-b-26">
-                            Lista do funções
-                        </span>
-                        @* Trazer a lista de funções com id, função, salário e comissão *@
-                    </div>
+                @{
+                    if (Convert.ToString(ViewData["result"]) != "")
+                    {
+                        if (Convert.ToString(ViewData["result"]).Contains("!"))
+                        {
+                            <label style="color:green;font-size:13px"> @ViewData["result"] </label>
+                        }
+                        else
+                        {
 
-                </form>
-            </div>
-        </div>
+                            <label style="color:red;font-size:13px"> @ViewData["result"] </label>
+                        }
 
-    </div>
+                    }
 
-    <div id="dropDownSelect1"></div>
+                }
+
+                <br />
+
+                <h2 id="balance">Lista de Clínicas</h2>
+                <br />
+
+                @for (int i = 0; i < listaFuncao.Count; i++)
+                {
+                    <input type="radio" name="idSelecionado" value="@listaFuncao[i].Id" />
+
+                    <label> <b>ID:</b> @listaFuncao[i].Id</label>
+                    <label> <b>Nome:</b> @listaFuncao[i].Nome</label>
+                    <label> <b>Salário:</b> @listaFuncao[i].Salario</label>
+                    string comissao = @listaFuncao[i].Comissao * 100 + "%";
+                    <label> <b>Comissão:</b> @comissao</label> <br />
+                }
+                <br />
+                <br />
+                <input checked type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
+            </fieldset>
+        </form>
+    </main>
+
+    <script src="https://use.fontawesome.com/d09559d1bd.js"></script>
 
     <!--===============================================================================================-->
     <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -118,7 +166,10 @@
     <!--===============================================================================================-->
     <script src="~/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
-    <script src="./js/main.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/viacep.js"></script>
+    <script src="~/js/viacepJSandJson.js"></script>
+    <script src="~/js/endereco.js"></script>
 
 </body>
 </html>
