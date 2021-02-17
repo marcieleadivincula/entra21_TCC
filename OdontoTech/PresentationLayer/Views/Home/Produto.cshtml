@@ -38,6 +38,7 @@
     <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
     <!--===============================================================================================-->
     <link href="~/css/endereco.css" rel="stylesheet" />
+    <link href="~/css/paciente.css" rel="stylesheet" />
     <!--===============================================================================================-->
     <!-- Adicionando JQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -145,110 +146,87 @@
             }
 
 
-            <div class="limiter">
-              
-                    <div class="wrap-table100">
 
-
-            <h2 id="balance">Lista de Produto</h2>
+                    <h2 id="balance">Lista de Produto</h2>
 
 
 
-            <br />
+                    <br />
 
 
 
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <!--===============================================================================================-->
-            <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
-            <!--===============================================================================================-->
-            <link rel="stylesheet" type="text/css" href="~/VENDORTABLE/vendor/bootstrap/css/bootstrap.min.css">
-            <!--===============================================================================================-->
-            <link rel="stylesheet" type="text/css" href="~/FONTTABLE/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-            <!--===============================================================================================-->
-            <link rel="stylesheet" type="text/css" href="~/VENDORTABLE/vendor/animate/animate.css">
-            <!--===============================================================================================-->
-            <link rel="stylesheet" type="text/css" href="~/VENDORTABLE/vendor/select2/select2.min.css">
-            <!--===============================================================================================-->
-            <link rel="stylesheet" type="text/css" href="~/VENDORTABLE/vendor/perfect-scrollbar/perfect-scrollbar.css">
-            <!--===============================================================================================-->
-            <link href="~/CSSTABLE/css/main.css" rel="stylesheet" />
-            <link href="~/CSSTABLE/css/util.css" rel="stylesheet" />
-            <!--===============================================================================================-->
-                        <div class="table">
+                    <section id="transaction">
+                        <table id="data-table">
+                            <thead>
 
-                            <div class="row header">
-                                <div class="cell">
-                                    ID
-                                </div>
-                                <div class="cell">
-                                    Produto
-                                </div>
-                                <div class="cell">
-                                    Preço
-                                </div>
-                                <div class="cell">
-                                    Embalagem
-                                </div>
-                                <div class="cell">
-                                    Data de Compra
-                                </div>
-                            </div>
-
-                            @for (int i = 0; i < lista.Count; i++)
-                            {
-
-                                TipoEmbalagemBLL tipbll = new TipoEmbalagemBLL();
-
-                                lista[i].TipoEmbalagem = tipbll.GetById(lista[i].TipoEmbalagem);
-
-                                <div class="row">
-                                    <div class="cell" data-title="ID">
-
-                                        <input checked type="radio" name="idSelecionado" value="@lista[i].Id" />   @lista[i].Id
-                                    </div>
-                                    <div class="cell" data-title="Produto">
-                                        @lista[i].Nome
-                                    </div>
-                                    <div class="cell" data-title="Preço">
-                                        @lista[i].Preco
-                                    </div>
-                                    <div class="cell" data-title="Embalagem">
-                                        @lista[i].TipoEmbalagem.Descricao
-                                    </div>
-                                    <div class="cell" data-title="D ata de Compra">
-                                        @lista[i].DataCompra
-                                    </div>
-                                </div>
-
-                            }
+                                <tr>
+                                    @*<th class="description">#</th>*@
+                                    <th>ID</th>
+                                    <th>Produto</th>
+                                    <th>Preço</th>
+                                    <th>Embalagem</th>
+                                    <th>Data da compra</th>
+                          
+                    
 
 
+                                </tr>
 
-                        </div>
-                    </div>
-                </div>
+                            </thead>
+
+                            <tbody>
+                                @for (int i = 0; i < lista.Count; i++)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            <input type="radio" name="idSelecionado" value="@lista[i].Id" />
+                                            @lista[i].Id
+                                        </td>
+
+                                        <td>
+                                            @lista[i].Nome
+                                        </td>
+
+                                        <td>
+                                            @lista[i].Preco
+                                        </td>
+
+                                        <td>
+                                            @lista[i].DataCompra
+                                        </td>
+                                        <td>
+                                            @{TipoEmbalagemBLL embalagem = new TipoEmbalagemBLL();
+                                            lista[i].TipoEmbalagem = embalagem.GetById(lista[i].TipoEmbalagem);}
+                                            @lista[i].TipoEmbalagem.Descricao
+                                        </td>
+                                       
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </section>
 
 
 
 
-            <!--===============================================================================================-->
-            <script src="~/VENDORTABLE/vendor/jquery/jquery-3.2.1.min.js"></script>
-            <!--===============================================================================================-->
-            <script src="~/VENDORTABLE/vendor/bootstrap/js/popper.js"></script>
-            <script src="~/VENDORTABLE/vendor/bootstrap/js/bootstrap.min.js"></script>
-            <!--===============================================================================================-->
-            <script src="~/VENDORTABLE/vendor/select2/select2.min.js"></script>
-            <!--===============================================================================================-->
+                    <!--===============================================================================================-->
+                    <script src="~/VENDORTABLE/vendor/jquery/jquery-3.2.1.min.js"></script>
+                    <!--===============================================================================================-->
+                    <script src="~/VENDORTABLE/vendor/bootstrap/js/popper.js"></script>
+                    <script src="~/VENDORTABLE/vendor/bootstrap/js/bootstrap.min.js"></script>
+                    <!--===============================================================================================-->
+                    <script src="~/VENDORTABLE/vendor/select2/select2.min.js"></script>
+                    <!--===============================================================================================-->
 
 
 
 
-            <br />
-            <br />
-            <input checked hidden type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
-        </fieldset>
+                    <br />
+                    <br />
+                    <input checked  type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
+</fieldset>
         </form>
     </main>
 

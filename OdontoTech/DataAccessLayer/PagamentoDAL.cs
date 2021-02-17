@@ -107,6 +107,7 @@ namespace DataAccessLayer
                 {
                     Pagamento temp = new Pagamento();
                     temp.TipoPagamento = new TipoPagamento();
+                    temp.Paciente = new Paciente();
 
                     temp.Id = Convert.ToInt32(reader["idPagamento"]);
                     temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
@@ -143,7 +144,7 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     pagamento.TipoPagamento = new TipoPagamento();
-
+                    pagamento.Paciente = new Paciente();
                     pagamento.Id = Convert.ToInt32(reader["idPagamento"]);
                     pagamento.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
                     pagamento.ValorPagamento = Convert.ToDouble(reader["valorPagamento"]);
@@ -176,7 +177,7 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     pagamento.TipoPagamento = new TipoPagamento();
-
+                    pagamento.Paciente = new Paciente();
                     pagamento.Id = Convert.ToInt32(reader["idPagamento"]);
                     pagamento.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
                     pagamento.ValorPagamento = Convert.ToDouble(reader["valorPagamento"]);
@@ -211,7 +212,7 @@ namespace DataAccessLayer
                 {
                     Pagamento temp = new Pagamento();
                                             temp.TipoPagamento = new TipoPagamento();
-;
+                     temp.Paciente = new Paciente();
                     temp.Id = Convert.ToInt32(reader["idPagamento"]);
                     temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
                     temp.ValorPagamento = Convert.ToDouble(reader["valorPagamento"]);

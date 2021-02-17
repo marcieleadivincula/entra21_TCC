@@ -60,225 +60,241 @@
             <h2 id="balance"> <img src="~/images/paciente e deintista.jpg" alt="logo" height="50" width="50" data-atf="1" />Cadastro Paciente</h2>
             @{
                 PacienteBLL bll = new PacienteBLL();
-                List<Paciente> lista = bll.GetAll();
+                List<Paciente> item = bll.GetAll();
 
 
             }
-        <fieldset>
-            <label style="font-size:17px" for="dados">Dados Pessoais</label>
-            <br />
-            <br />
-            <div class="field-group">
+            <fieldset>
+                <label style="font-size:17px" for="dados">Dados Pessoais</label>
+                <br />
+                <br />
+                <div class="field-group">
 
-                <div class="field">
-                    <label for="firstName">Nome</label>
-                    <input type="text" name="firstName" value="@ViewBag.firstName">
-                </div>
+                    <div class="field">
+                        <label for="firstName">Nome</label>
+                        <input type="text" name="firstName" value="@ViewBag.firstName">
+                    </div>
 
-                <div class="field">
-                    <label for="lastName">Sobrenome</label>
-                    <input type="text" name="lastName" value="@ViewBag.lastName">
+                    <div class="field">
+                        <label for="lastName">Sobrenome</label>
+                        <input type="text" name="lastName" value="@ViewBag.lastName">
 
-                </div>
-                <div class="field">
+                    </div>
+                    <div class="field">
 
-                    <label for="cpf">CPF</label>
+                        <label for="cpf">CPF</label>
 
-                    <input type="text" name="cpf" value="@ViewBag.cpf">
-
-
-                </div>
-
-            </div>
-
-            <div class="field-group">
+                        <input type="text" name="cpf" value="@ViewBag.cpf">
 
 
-                <div class="field">
-                    <label for="rg">Registro Geral</label>
-
-                    <input type="text" name="rg" value="@ViewBag.rg">
-
+                    </div>
 
                 </div>
 
+                <div class="field-group">
+
+
+                    <div class="field">
+                        <label for="rg">Registro Geral</label>
+
+                        <input type="text" name="rg" value="@ViewBag.rg">
+
+
+                    </div>
 
 
 
-                <div class="field">
-                    <label for="dtNascimento">Data de Nascimento</label>
-                    <input type="date" name="dtNascimento" value="@ViewBag.dtNascimento">
+
+                    <div class="field">
+                        <label for="dtNascimento">Data de Nascimento</label>
+                        <input type="date" name="dtNascimento" value="@ViewBag.dtNascimento">
+
+
+                    </div>
+                    <div class="field">
+                        <label for="observacoes">Observações</label>
+                        <input type="text" name="observacoes" value="@ViewBag.observacoes">
+
+
+                    </div>
+
+                </div>
+                <br />     <br />
+
+                <label style="font-size:17px" for="dados">Dados de Endereço</label>
+                <br />
+                <br />
+                <div class="field-group">
+                    <div class="field">
+                        <label for="state">Estado</label>
+                        <select name="uf" id="state">
+                            <option value="@ViewBag.uf">Selecione o estado</option>
+                        </select>
+
+                        <input type="hidden" name="state" />
+                    </div>
+
+                    <div class="field">
+                        <label for="city">Cidade</label>
+                        <select name="city" id="city">
+                            <option value="@ViewBag.city">Selecione a cidade</option>
+
+                        </select>
+                        <input type="hidden" name="city" />
+                    </div>
+
+                    <div class="field">
+                        <label for="Bairro">Bairro</label>
+                        <input type="text" name="bairro" value="@ViewBag.bairro">
+
+                    </div>
 
 
                 </div>
-                <div class="field">
-                    <label for="observacoes">Observações</label>
-                    <input type="text" name="observacoes" value="@ViewBag.observacoes">
 
 
+
+                <div class="field-group">
+
+                    <div class="field-group">
+                        <div class="field">
+                            <label for="logradouro">Logradouro</label>
+                            <input type="text" name="logradouro" value="@ViewBag.logradouro">
+
+                        </div>
+                        <div class="field">
+                            <label for="cep">CEP</label>
+                            <input type="text" name="cep" value="@ViewBag.cep">
+
+                        </div>
+
+                        <div class="field">
+                            <label for="numeroCasa">Numero da Casa</label>
+                            <input type="text" name="numeroCasa" value="@ViewBag.numeroCasa">
+
+                        </div>
+
+
+
+
+                    </div>
                 </div>
-
-            </div>
-            <br />     <br />
-
-            <label style="font-size:17px" for="dados">Dados de Endereço</label>
-            <br />
-            <br />
-            <div class="field-group">
-                <div class="field">
-                    <label for="state">Estado</label>
-                    <select name="uf" id="state">
-                        <option value="@ViewBag.uf">Selecione o estado</option>
-                    </select>
-
-                    <input type="hidden" name="state" />
-                </div>
-
-                <div class="field">
-                    <label for="city">Cidade</label>
-                    <select name="city" id="city">
-                        <option value="@ViewBag.city">Selecione a cidade</option>
-
-                    </select>
-                    <input type="hidden" name="city" />
-                </div>
-
-                <div class="field">
-                    <label for="Bairro">Bairro</label>
-                    <input type="text" name="bairro" value="@ViewBag.bairro">
-
-                </div>
-
-
-            </div>
-
-
-
-            <div class="field-group">
 
                 <div class="field-group">
                     <div class="field">
-                        <label for="logradouro">Logradouro</label>
-                        <input type="text" name="logradouro" value="@ViewBag.logradouro">
 
-                    </div>
-                    <div class="field">
-                        <label for="cep">CEP</label>
-                        <input type="text" name="cep" value="@ViewBag.cep">
+                        <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
+                        <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
+
 
                     </div>
 
                     <div class="field">
-                        <label for="numeroCasa">Numero da Casa</label>
-                        <input type="text" name="numeroCasa" value="@ViewBag.numeroCasa">
+                        <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
+                        <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
 
                     </div>
 
-
-
-
                 </div>
-            </div>
-
-            <div class="field-group">
-                <div class="field">
-
-                    <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
-                    <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
-
-
-                </div>
-
-                <div class="field">
-                    <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
-                    <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
-
-                </div>
-
-            </div>
-            @{
-                if (Convert.ToString(ViewData["result"]) != "")
-                {
-                    if (Convert.ToString(ViewData["result"]).Contains("!"))
+                @{
+                    if (Convert.ToString(ViewData["result"]) != "")
                     {
-                        <label style="color:green;font-size:13px"> @ViewData["result"] </label>
-                    }
-                    else
-                    {
+                        if (Convert.ToString(ViewData["result"]).Contains("!"))
+                        {
+                            <label style="color:green;font-size:13px"> @ViewData["result"] </label>
+                        }
+                        else
+                        {
 
-                        <label style="color:red;font-size:13px"> @ViewData["result"] </label>
+                            <label style="color:red;font-size:13px"> @ViewData["result"] </label>
+                        }
+
                     }
 
                 }
 
-            }
+                <br />
+                <br />
 
-            <br />
-            <br />
+                <h2 id="balance">Lista de Pacientes</h2>
 
-            <h2 id="balance">Lista de Pacientes</h2>
-
-            <br />
+                <br />
 
 
-            <section id="transaction">
-                <table id="data-table">
-                    <thead>
+                <section id="transaction">
+                    <table id="data-table">
+                        <thead>
 
-                        <tr>
-                            @*<th class="description">#</th>*@
-                            <th>ID</th>
-                            <th>Nome Completo</th>
-                            <th>RG</th>
-                            <th>CPF</th>
-                            <th>Data de nascimento</th>
-                            <th>Observações</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-                        @foreach (var item in lista)
-                        {
-                        <tr>
-
-                            <td>
-                                @item.Id
-                            </td>
-
-                            <td>
-                                @item.Nome  + @item.Sobrenome
-                            </td>
-
-                            <td>
-                                @item.Rg
-                            </td>
-
-                            <td>
-                                @item.Cpf
-                            </td>
-                            <td>
-                                @item.DataNascimento
-                            </td>
-                            <td>
-                                @item.Observacao
-                            </td>
-                        </tr>
-                        }
-
-                    </tbody>
-                </table>
-            </section>
+                            <tr>
+                                @*<th class="description">#</th>*@
+                                <th>ID</th>
+                                <th>Nome Completo</th>
+                                <th>RG</th>
+                                <th>CPF</th>
+                                <th>Data de nascimento</th>
+                                <th>Observações</th>
+                                <th>CEP</th>
 
 
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+                            @for (int i = 0; i < item.Count; i++)
+                            {
+                                <tr>
+
+                                    <td>
+                                        <input type="radio" name="idSelecionado" value="@item[i].Id" />
+                                        @item[i].Id
+                                    </td>
+
+                                    <td>
+                                        @item[i].Nome @item[i].Sobrenome
+                                    </td>
+
+                                    <td>
+                                        @item[i].Rg
+                                    </td>
+
+                                    <td>
+                                        @item[i].Cpf
+                                    </td>
+                                    <td>
+                                        @item[i].DataNascimento
+                                    </td>
+                                    <td>
+                                        @item[i].Observacao
+                                    </td>
+                                        @{
+                                            EnderecoBLL endereco = new EnderecoBLL();
+                                            LogradouroBLL logradouro = new LogradouroBLL();
+                                            item[i].Endereco = endereco.GetById(item[i].Endereco);
+                                            item[i].Endereco.Logradouro = logradouro.GetById(item[i].Endereco.Logradouro);
+                                       
+
+                                           }
+                                <td>
+                                    @item[i].Endereco.Logradouro.Nome, @item[i].Endereco.Cep
+
+                                </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </section>
 
 
 
 
-            <br />
-            <br />
-            <input checked type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
-        </fieldset>
+
+
+                <br />
+                <br />
+                <input checked type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
+            </fieldset>
         </form>
     </main>
 

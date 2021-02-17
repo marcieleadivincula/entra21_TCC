@@ -131,8 +131,8 @@ namespace DataAccessLayer
         public Logradouro GetByID(int idLogradouro)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM logradouro WHERE idLogradouro = @ID";
-            cmd.Parameters.AddWithValue("@ID", idLogradouro);
+            cmd.CommandText = $"SELECT * FROM logradouro WHERE idLogradouro = {idLogradouro}";
+
 
             try
             {

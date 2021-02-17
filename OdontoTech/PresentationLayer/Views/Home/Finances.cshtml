@@ -8,6 +8,8 @@
     ViewData["Title"] = "Finances";
 }
 
+<link href="~/css/paciente.css" rel="stylesheet" />
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -21,19 +23,35 @@
           rel="stylesheet" />
 
     <title>Finances | OdontoTech</title>
+
+    @{
+        DispesaBLL dispesaBLL = new DispesaBLL();
+        List<Dispesa> dispesas = dispesaBLL.GetAll();
+
+
+        PagamentoBLL PagamentoBLL = new PagamentoBLL();
+        List<Pagamento> pgmt = PagamentoBLL.GetAll();
+    }
+
+
 </head>
 
 <body>
-    <header id="page-create-point">
-        @*<h1 id="logo">Finanças|OdontoTech</h1>*@
-        @*<img src="~/images/assets/logo.svg" alt="Logo OdontoTech" />*@
-        <img src="#" alt="Logo da OdontoTech" />
 
-        <a href="/index.html">
-            <span></span>
-            Voltar para home
-        </a>
-    </header>
+
+
+
+    <center>
+        <img style="width:250px;left:250px;margin:0px auto" src="~/images/icons/OdontoTechV2.png" alt="Logo da OdontoTech" />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+    </center>
 
     <main class="container">
         <section id="balance">
@@ -43,7 +61,7 @@
                     <span>Entradas</span>
                     <img src="~/images/assets/income.svg" alt="Imagem de entradas" />
                 </h3>
-                <p id="incomeDisplay"></p>
+                <label style="font-family:Poppins-Regular;color:black;font-size:2rem"> 00,00</label>
             </div>
 
             <div class="card">
@@ -51,117 +69,223 @@
                     <span>Saídas</span>
                     <img src="~/images/assets/expense.svg" alt="Imagem de saídas" />
                 </h3>
-                <p id="expenseDisplay"></p>
+                <label style="font-family:Poppins-Regular;color:black;font-size:2rem"> 00,00</label>
             </div>
 
             <div class="card total">
                 <h3>
-                    <span>Total</span>
+                    <span style="color:white">Total</span>
                     <img src="~/images/assets/total.svg" alt="Imagem do total" />
                 </h3>
-                <p id="totalDisplay"></p>
+                <label style="font-family:Poppins-Regular;color:white;font-size:2rem"> 00,00</label>
             </div>
         </section>
 
+
+
+
+    </main>
+
+    @*<div class="modal-overlay">
+            <div class="modal">
+                <div class="form">
+                    <h2>Nova Transação</h2>
+                    <form action="" onsubmit="Form.submit(event)">
+                        <div class="input-group">
+                            <label class="sr-only" for="description">Descrição</label>
+                            <input type="text"
+                                   id="description"
+                                   name="description"
+                                   placeholder="Descrição" />
+                        </div>
+
+                        <div class="input-group">
+                            <label class="sr-only" for="amount">Valor</label>
+                            <input type="number"
+                                   step="0.01"
+                                   id="amount"
+                                   name="amount"
+                                   placeholder="0,00" />
+                            <small class="help">
+                                Use o sinal - (negativo) para despesas e , (vírgula) para casas
+                                decimais
+                            </small>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="sr-only" for="date">Data</label>
+                            <input type="date" id="date" name="date" />
+                        </div>
+
+                        <div class="input-group actions">
+                            <a href="#" class="button cancel" id="cancel-trans">Cancelar</a>
+                            <button>Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>*@
+    <main class="container">
         <section id="transaction">
-            <h2 class="sr-only">Transações</h2>
-            <a href="#" class="button new" id="new-transaction">+ Nova Transação</a>
             <table id="data-table">
                 <thead>
                     <tr>
-                        <th class="description">#</th>
-                        <th>Data do pagamento</th>
+
+                        <th>ID</th>
+                        <th>Data</th>
                         <th>Valor</th>
-                        <th>Tipo de pagamento</th>
-                        <th>Paciente</th>
-                        <th></th>
-                        <th></th>
+                        <th>Descrição</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @{
-                        PagamentoBLL bll = new PagamentoBLL();
-                        List<Pagamento> lista = bll.GetAll();
 
-                        TipoPagamentoBLL tipoPagamentoBLL = new TipoPagamentoBLL();
-                        List<TipoPagamento> tipos = tipoPagamentoBLL.GetAll();
-
-                        PacienteBLL pacientebll = new PacienteBLL();
-                        List<Paciente> pacientes = pacientebll.GetAll();
-                    }
-                    @foreach (var item in lista)
+                    @for (int i = 0; i < dispesas.Count; i++)
                     {
-                    <tr>
-                        <th scope="row">@item.Id</th>
-                        <td>@item.DataPagamento</td>
-                        <td>@item.ValorPagamento</td>
-                        @foreach (var tip in tipos)
-                        {
-                            <td>@tip.Tipo</td>
-                        }
 
-                        @foreach (var pac in pacientes)
-                        {
-                            <td>@pac.Nome</td>
-                        }
-                        <td>
-                            <img onclick="Transaction.remove(${index})" src="~/images/assets/plus.svg" alt="Atualizar estado" />
-                        </td>
-                        <td>
-                            <img onclick="Transaction.remove(${index})" src="~/images/assets/minus.svg" alt="Remover estado" />
-                        </td>
-                    </tr>
+                        <tr>
+
+                            <td>
+                                @dispesas[i].idMovimentacaofinanceira
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <td>
+                                @dispesas[i].Data
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <td>
+                                @dispesas[i].Valor
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <td>
+                                @dispesas[i].Descricao
+                            </td>
+
+                        </tr>
                     }
 
                 </tbody>
             </table>
         </section>
-    </main>
+        <section id="transaction">
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Data</th>
+                        <th>Valor</th>
+                        <th>Paciente</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-    <div class="modal-overlay">
-        <div class="modal">
-            <div class="form">
-                <h2>Nova Transação</h2>
-                <form action="" onsubmit="Form.submit(event)">
-                    <div class="input-group">
-                        <label class="sr-only" for="description">Descrição</label>
-                        <input type="text"
-                               id="description"
-                               name="description"
-                               placeholder="Descrição" />
-                    </div>
+                    @for (int i = 0; i < pgmt.Count; i++)
+                    {
 
-                    <div class="input-group">
-                        <label class="sr-only" for="amount">Valor</label>
-                        <input type="number"
-                               step="0.01"
-                               id="amount"
-                               name="amount"
-                               placeholder="0,00" />
-                        <small class="help">
-                            Use o sinal - (negativo) para despesas e , (vírgula) para casas
-                            decimais
-                        </small>
-                    </div>
+                        PacienteBLL PacienteBLL = new PacienteBLL();
+                        pgmt[i].Paciente = PacienteBLL.GetById(pgmt[i].Paciente);
 
-                    <div class="input-group">
-                        <label class="sr-only" for="date">Data</label>
-                        <input type="date" id="date" name="date" />
-                    </div>
 
-                    <div class="input-group actions">
-                        <a href="#" class="button cancel" id="cancel-trans">Cancelar</a>
-                        <button>Salvar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+                        <tr>
 
-    <footer>
-        <p>@DateTime.Now.Year - OdontoTech</p>
-    </footer>
+                            <td>
+                                @pgmt[i].Id
+                            </td>
 
-    <script src="~/js/finances.js"></script>
+                        </tr>
+                        <tr>
+
+                            <td>
+                                @pgmt[i].DataPagamento
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <td>
+                                @pgmt[i].ValorPagamento
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <td>
+                                @dispesas[i].Descricao
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </section>
+
+        </main>
+        <footer>
+            <p>@DateTime.Now.Year - OdontoTech</p>
+        </footer>
+
+        <script src="~/js/finances.js"></script>
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Data</th>
+                    <th>Valor</th>
+                    <th>Paciente</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @for (int i = 0; i < pgmt.Count; i++)
+                {
+
+                    PacienteBLL PacienteBLL = new PacienteBLL();
+                    pgmt[i].Paciente = PacienteBLL.GetById(pgmt[i].Paciente);
+
+
+                    <tr>
+
+                        <td>
+                            @pgmt[i].Id
+                        </td>
+
+                    </tr>
+                    <tr>
+
+                        <td>
+                            @pgmt[i].DataPagamento
+                        </td>
+
+                    </tr>
+                    <tr>
+
+                        <td>
+                            @pgmt[i].ValorPagamento
+                        </td>
+
+                    </tr>
+                    <tr>
+
+                        <td>
+                            @dispesas[i].Descricao
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
 </body>
+
 </html>
