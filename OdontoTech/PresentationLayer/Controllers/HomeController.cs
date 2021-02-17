@@ -20,11 +20,11 @@ namespace PresentationLayer.Controllers
 {
     public class HomeController : Controller
     {
-        public List<CalendarEvent> GoogleEvents = new List<CalendarEvent>();
-        // If modifying these scopes, delete your previously saved credentials
-        // at ~/.credentials/calendar-dotnet-quickstart.json
-        static string[] Scopes = { CalendarService.Scope.CalendarReadonly };
-        static string ApplicationName = "Google Calendar API .NET Quickstart";
+        //public List<CalendarEvent> GoogleEvents = new List<CalendarEvent>();
+        //// If modifying these scopes, delete your previously saved credentials
+        //// at ~/.credentials/calendar-dotnet-quickstart.json
+        //static string[] Scopes = { CalendarService.Scope.CalendarReadonly };
+        //static string ApplicationName = "Google Calendar API .NET Quickstart";
 
         private readonly ILogger<HomeController> _logger;
 
@@ -34,59 +34,59 @@ namespace PresentationLayer.Controllers
 
         }
 
-        public void CalendarEvents()
-        {
-            UserCredential credential;
-            //string path = Server.MapPath("credentials.json");
+        //public void CalendarEvents()
+        //{
+        //    UserCredential credential;
+        //    //string path = Server.MapPath("credentials.json");
 
-            using (var stream =
-                new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
-            {
-                // The file token.json stores the user's access and refresh tokens, and is created
-                // automatically when the authorization flow completes for the first time.
-                string credPath = "token.json";
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-            }
+        //    using (var stream =
+        //        new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+        //    {
+        //        // The file token.json stores the user's access and refresh tokens, and is created
+        //        // automatically when the authorization flow completes for the first time.
+        //        string credPath = "token.json";
+        //        credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+        //            GoogleClientSecrets.Load(stream).Secrets,
+        //            Scopes,
+        //            "user",
+        //            CancellationToken.None,
+        //            new FileDataStore(credPath, true)).Result;
+        //    }
 
-            // Create Google Calendar API service.
-            var service = new CalendarService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
+        //    // Create Google Calendar API service.
+        //    var service = new CalendarService(new BaseClientService.Initializer()
+        //    {
+        //        HttpClientInitializer = credential,
+        //        ApplicationName = ApplicationName,
+        //    });
 
-            // Define parameters of request.
-            EventsResource.ListRequest request = service.Events.List("primary");
-            request.TimeMin = DateTime.Now;
-            request.ShowDeleted = false;
-            request.SingleEvents = true;
-            request.MaxResults = 10;
-            request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+        //    // Define parameters of request.
+        //    EventsResource.ListRequest request = service.Events.List("primary");
+        //    request.TimeMin = DateTime.Now;
+        //    request.ShowDeleted = false;
+        //    request.SingleEvents = true;
+        //    request.MaxResults = 10;
+        //    request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
 
-            // List events.
-            Events events = request.Execute();
-            Console.WriteLine("Upcoming events:");
-            if (events.Items != null && events.Items.Count > 0)
-            {
-                foreach (var eventItem in events.Items)
-                {
-                    var calendarEvent = new CalendarEvent();
-                    calendarEvent.Summay = eventItem.Summary;
-                    calendarEvent.Organizer = eventItem.Organizer.Email;
-                    calendarEvent.Description = eventItem.Description;
-                    calendarEvent.StartTime = eventItem.Start.DateTime.ToString();
-                    calendarEvent.EndTime = eventItem.End.DateTime.ToString();
+        //    // List events.
+        //    Events events = request.Execute();
+        //    Console.WriteLine("Upcoming events:");
+        //    if (events.Items != null && events.Items.Count > 0)
+        //    {
+        //        foreach (var eventItem in events.Items)
+        //        {
+        //            var calendarEvent = new CalendarEvent();
+        //            calendarEvent.Summay = eventItem.Summary;
+        //            calendarEvent.Organizer = eventItem.Organizer.Email;
+        //            calendarEvent.Description = eventItem.Description;
+        //            calendarEvent.StartTime = eventItem.Start.DateTime.ToString();
+        //            calendarEvent.EndTime = eventItem.End.DateTime.ToString();
 
-                    GoogleEvents.Add(calendarEvent);
-                    //GoogleEvents.Add(eventItem.Summary);
-                }
-            }
-        }
+        //            GoogleEvents.Add(calendarEvent);
+        //            //GoogleEvents.Add(eventItem.Summary);
+        //        }
+        //    }
+        //}
 
         public IActionResult Index()
         {
@@ -210,13 +210,85 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Funcao()
+        public IActionResult Funcao(string saveBtn, string saveBtn2, int idSelecionado, string nomeFuncao, double salario, string comissao)
         {
+
+
+            if (saveBtn2 == "Deletar")
+            {
+                FuncaoBLL bll = new FuncaoBLL();
+                Funcao funcao = new Funcao();
+
+                funcao.Id = idSelecionado;
+
+                ViewData["result"] = bll.Delete(funcao);
+
+                return View();
+            }
+
+            if (idSelecionado != 0)
+            {
+                FuncaoBLL bll = new FuncaoBLL();
+                Funcao funcao = new Funcao(idSelecionado, nomeFuncao, salario, Convert.ToDouble(comissao));
+
+                ViewData["result"] = bll.Update(funcao);
+                return View();
+            }
+
+            if (saveBtn == "Salvar")
+            {
+                FuncaoBLL bll = new FuncaoBLL();
+                Funcao funcao = new Funcao(idSelecionado, nomeFuncao, salario, Convert.ToDouble(comissao));
+
+                ViewData["result"] = bll.Insert(funcao);
+                return View();
+
+            }
             return View();
         }
 
-        public IActionResult Clinica()
+        public IActionResult Clinica(string saveBtn2, DateTime inauguracao, string saveBtn, string nomeClinica, string state, string city, string bairro, string logradouro, string cep, int numeroCasa, int idSelecionado)
         {
+
+            if (saveBtn2 == "Deletar")
+            {
+                ClinicaBLL bll = new ClinicaBLL();
+                Clinica clinica = new Clinica();
+                Endereco endereco = new Endereco();
+
+                clinica.Id = idSelecionado;
+
+                ViewData["result"] = bll.Delete(clinica);
+
+                return View();
+            }
+
+            if (idSelecionado != 0)
+            {
+                ClinicaBLL bll = new ClinicaBLL();
+                Estoque estoque = new Estoque();
+                EnderecoBLL enderecoBLL = new EnderecoBLL();
+                estoque.Id = 2;
+
+                Clinica clinica = new Clinica(idSelecionado, nomeClinica, inauguracao, enderecoBLL.EnderecoConstruido("Brasil", state, city, bairro, logradouro, numeroCasa, cep), estoque);
+
+                ViewData["result"] = bll.Update(clinica);
+                return View();
+            }
+
+            if (saveBtn == "Salvar")
+            {
+                ClinicaBLL bll = new ClinicaBLL();
+                Estoque estoque = new Estoque();
+                EnderecoBLL enderecoBLL = new EnderecoBLL();
+                estoque.Id = 2;
+
+                Clinica clinica = new Clinica(idSelecionado, nomeClinica, inauguracao, enderecoBLL.EnderecoConstruido("Brasil", state, city, bairro, logradouro, numeroCasa, cep), estoque);
+
+                ViewData["result"] = bll.Insert(clinica);
+                return View();
+
+            }
             return View();
         }
 
@@ -328,11 +400,13 @@ namespace PresentationLayer.Controllers
             }
             if (idSelecionado != 0)
             {
+                pagamento.TipoPagamento = new TipoPagamento();
+                pagamento.Paciente = new Paciente();
                 pagamento.Id = idSelecionado;
                 pagamento.TipoPagamento.Id = idTipoPagamento;
-
-                //pagamento.TipoPagamento.
-
+                pagamento.ValorPagamento = valor;
+                pagamento.DataPagamento = data;
+                pagamento.Paciente.Id = IdPaciente;
 
                 ViewData["result"] = bll.Update(pagamento);
                 return View();
@@ -342,7 +416,12 @@ namespace PresentationLayer.Controllers
             if (saveBtn == "Salvar")
             {
 
-
+                pagamento.TipoPagamento = new TipoPagamento();
+                pagamento.Paciente = new Paciente();
+                pagamento.TipoPagamento.Id = idTipoPagamento;
+                pagamento.ValorPagamento = valor;
+                pagamento.DataPagamento = data;
+                pagamento.Paciente.Id = IdPaciente;
 
                 ViewData["result"] = bll.Insert(pagamento);
                 return View();
@@ -468,8 +547,41 @@ namespace PresentationLayer.Controllers
 
         }
 
-        public IActionResult TipoPagamento()
+        public IActionResult TipoPagamento(string saveBtn, string saveBtn2, int idSelecionado, string nometipoPagamento, int parcelas)
         {
+
+
+            if (saveBtn2 == "Deletar")
+            {
+                TipoPagamentoBLL bll = new TipoPagamentoBLL();
+                TipoPagamento tipoPagamento = new TipoPagamento();
+
+                tipoPagamento.Id = idSelecionado;
+
+                ViewData["result"] = bll.Delete(tipoPagamento);
+
+                return View();
+            }
+
+            if (idSelecionado != 0)
+            {
+                TipoPagamentoBLL bll = new TipoPagamentoBLL();
+                TipoPagamento tipoPagamento = new TipoPagamento(idSelecionado,nometipoPagamento,parcelas);
+
+                ViewData["result"] = bll.Update(tipoPagamento);
+                return View();
+            }
+
+            if (saveBtn == "Salvar")
+            {
+                TipoPagamentoBLL bll = new TipoPagamentoBLL();
+                TipoPagamento tipoPagamento = new TipoPagamento(idSelecionado, nometipoPagamento, parcelas);
+
+
+                ViewData["result"] = bll.Insert(tipoPagamento);
+                return View();
+
+            }
             return View();
         }
 
@@ -512,8 +624,8 @@ namespace PresentationLayer.Controllers
 
         public IActionResult Dashboard()
         {
-            CalendarEvents();
-            ViewBag.EventList = GoogleEvents;
+            //CalendarEvents();
+            //ViewBag.EventList = GoogleEvents;
 
             return View();
         }

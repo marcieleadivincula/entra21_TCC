@@ -16,12 +16,12 @@ const Modal = {
     open() {
         //Abrir modal
         //Adicionar a class active ao modal
-        document.querySelector(".modal-overlay-main").classList.add("active");
+        document.querySelector(".modal-overlay").classList.add("active");
     },
     close() {
         //Fechar modal
         //Remover a class active do modal
-        document.querySelector(".modal-overlay-main").classList.remove("active");
+        document.querySelector(".modal-overlay").classList.remove("active");
     },
 };
 
@@ -90,7 +90,7 @@ const DOM = {
       <td class="${CSSClass}">${amount}</td>
       <td class="date">${transaction.date}</td>
       <td>
-        <img onclick="Transaction.remove(${index})" src="../images/assets/minus.svg" alt="Remover transação" />
+        <img onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação" />
       </td>
     `;
 

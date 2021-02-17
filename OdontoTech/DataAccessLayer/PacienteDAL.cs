@@ -133,7 +133,7 @@ namespace DataAccessLayer
 
                 return pacientes;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw new Exception("Erro no Banco de dados.Contate o administrador.");
             }

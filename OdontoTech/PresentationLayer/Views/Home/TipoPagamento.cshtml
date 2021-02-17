@@ -1,6 +1,10 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+@using BusinessLogicalLayer;
+@using Domain;
+
 @{
     ViewData["Title"] = "Tipo de Pagamento";
 }
@@ -12,86 +16,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="./css/util.css">
-    <link rel="stylesheet" type="text/css" href="./css/main.css">
+    <link href="~/css/endereco.css" rel="stylesheet" />
     <!--===============================================================================================-->
+    <!-- Adicionando JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
 </head>
 <body>
+    <main id="page-create-point">
+        <header>
+            <img src="~/images/icons/OdontoTechV2.png" alt="logo" height="70" width="70" data-atf="1" />
 
+            <a href="/Home/Dashboard">
+                <span></span>
+                Voltar para home
+            </a>
+        </header>
 
-    <div class="limiter">
+        <form action="/Home/TipoPagamento" method="post">
 
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form class="login100-form validate-form">
-                    <span class="login100-form-title p-b-26">
-                        Tipo de Pagamento
-                    </span>
+            <h2 id="balance">Cadastro Tipo de Pagamento <img src="~/images/iconfinder_aiga_cashier_134157.png" alt="logo" height="50" width="50" data-atf="1" /></h2>
+            @{
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="tipoPagamento">
-                        <span class="focus-input100" data-placeholder="Tipo de pagamento"></span>
+                TipoPagamentoBLL tipoPagamentoBLL = new TipoPagamentoBLL();
+                var listaTipoPagamento = tipoPagamentoBLL.GetAll();
+
+            }
+            <fieldset>
+                <div class="field-group">
+
+                    @* nometipoPagamento *@
+                    <div class="field">
+                        <label for="nometipoPagamento">Tipo Pagamento</label>
+                        <input type="text" name="nometipoPagamento" value="@ViewBag.nometipoPagamento" />
                     </div>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Salvar
-                            </button>
-                        </div>
+                    @* parcelas *@
+                    <div class="field">
+                        <label for="parcelas">Quantidade de parcelas</label>
+                        <input type="number" name="parcelas" value="@ViewBag.parcelas" />
                     </div>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Atualizar
-                            </button>
-                        </div>
+                </div>
+
+                <div class="field-group">
+                    <div class="field">
+
+                        <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
+                        <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
                     </div>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Deletar
-                            </button>
-                        </div>
+                    <div class="field">
+                        <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
+                        <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
                     </div>
 
-                    <div class="text-center p-t-115">
-                        <span class="login100-form-title p-b-26">
-                            Lista dos tipos de pagamentos
-                        </span>
-                        @* Trazer a lista dos tipos de pagamentos com id e tipo de pagamento *@
-                    </div>
+                </div>
 
-                </form>
-            </div>
-        </div>
+                @{
+                    if (Convert.ToString(ViewData["result"]) != "")
+                    {
+                        if (Convert.ToString(ViewData["result"]).Contains("!"))
+                        {
+                            <label style="color:green;font-size:13px"> @ViewData["result"] </label>
+                        }
+                        else
+                        {
 
-    </div>
+                            <label style="color:red;font-size:13px"> @ViewData["result"] </label>
+                        }
 
-    <div id="dropDownSelect1"></div>
+                    }
+
+                }
+
+                <br />
+
+                <h2 id="balance">Lista de Tipos de Pagamentos</h2>
+                <br />
+
+                @for (int i = 0; i < listaTipoPagamento.Count; i++)
+                {
+                    <input type="radio" name="idSelecionado" value="@listaTipoPagamento[i].Id" />
+
+                    <label> <b>ID:</b> @listaTipoPagamento[i].Id</label>
+                    <label> <b>Tipo:</b> @listaTipoPagamento[i].Tipo</label>
+                    <label> <b>Parcelas:</b> @listaTipoPagamento[i].Parcelas</label><br />
+                }
+                <br />
+                <input checked type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
+            </fieldset>
+        </form>
+    </main>
+
+    <script src="https://use.fontawesome.com/d09559d1bd.js"></script>
 
     <!--===============================================================================================-->
     <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -108,7 +144,10 @@
     <!--===============================================================================================-->
     <script src="~/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
-    <script src="./js/main.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/viacep.js"></script>
+    <script src="~/js/viacepJSandJson.js"></script>
+    <script src="~/js/endereco.js"></script>
 
 </body>
 </html>

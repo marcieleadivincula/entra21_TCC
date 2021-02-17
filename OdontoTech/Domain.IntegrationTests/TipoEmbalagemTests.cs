@@ -30,7 +30,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Tipo de embalagem cadastrado com sucesso");
+            Assert.AreEqual(str, "Tipo de embalagem cadastrado com sucesso!");
         }
 
         [Test]

@@ -51,7 +51,7 @@ namespace DataAccessLayer
             cmd.Connection = conn;
             cmd.CommandText = "DELETE FROM pagamento WHERE idPagamento = @idPagamento";
             cmd.Parameters.AddWithValue("@idPagamento", pagamento.Id);
-                
+
             try
             {
                 conn.Open();
@@ -109,6 +109,7 @@ namespace DataAccessLayer
                     temp.TipoPagamento = new TipoPagamento();
                     temp.Paciente = new Paciente();
 
+
                     temp.Id = Convert.ToInt32(reader["idPagamento"]);
                     temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
                     temp.ValorPagamento = Convert.ToDouble(reader["valorPagamento"]);
@@ -132,8 +133,7 @@ namespace DataAccessLayer
         public Pagamento GetById(int idPagamento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM pagamento WHERE idPagamento = @idPagamento";
-            cmd.Parameters.AddWithValue("@idPagamento", idPagamento);
+            cmd.CommandText = $"SELECT * FROM pagamento WHERE idPagamento = {idPagamento}";
 
             try
             {
@@ -211,8 +211,11 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Pagamento temp = new Pagamento();
+
                                             temp.TipoPagamento = new TipoPagamento();
                      temp.Paciente = new Paciente();
+
+
                     temp.Id = Convert.ToInt32(reader["idPagamento"]);
                     temp.DataPagamento = Convert.ToDateTime(reader["dtPagamento"]);
                     temp.ValorPagamento = Convert.ToDouble(reader["valorPagamento"]);

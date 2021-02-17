@@ -37,7 +37,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Procedimento cadastrado com sucesso");
+            Assert.AreEqual(str, "Procedimento cadastrado com sucesso!");
         }
 
         [Test]

@@ -28,7 +28,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Tipo de procedimento cadastrado com sucesso";
+                return "Tipo de procedimento cadastrado com sucesso!";
             }
             catch (Exception ex)
             {

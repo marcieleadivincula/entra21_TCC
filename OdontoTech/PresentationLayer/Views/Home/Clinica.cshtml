@@ -1,8 +1,12 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+@using BusinessLogicalLayer;
+@using Domain;
+
 @{
-    ViewData["Title"] = "Clinica";
+    ViewData["Title"] = "Clínica";
 }
 
 <!DOCTYPE html>
@@ -12,134 +16,201 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="./css/main.css">
-    <link rel="stylesheet" type="text/css" href="./css/util.css">
+    <link href="~/css/endereco.css" rel="stylesheet" />
     <!--===============================================================================================-->
+    <!-- Adicionando JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
 </head>
 <body>
+    <main id="page-create-point">
+        <header>
+            <img src="~/images/icons/OdontoTechV2.png" alt="logo" height="70" width="70" data-atf="1" />
+
+            <a href="/Home/Dashboard">
+                <span></span>
+                Voltar para home
+            </a>
+        </header>
+
+        <form action="/Home/Clinica" method="post">
+
+            <h2 id="balance">Cadastro Clínica <img src="~/images/iconfinder_Dental_-_Tooth_-_Dentist_-_Dentistry_04_2185086.png" alt="logo" height="50" width="50" data-atf="1" /></h2>
+            @{
+
+                EnderecoBLL enderecoBLL = new EnderecoBLL();
+                EstoqueBLL estoqueBLL = new EstoqueBLL();
+                PacienteBLL pacienteBLL = new PacienteBLL();
+                ClinicaBLL clinicaBLL = new ClinicaBLL();
+                LogradouroBLL logradouroBLL = new LogradouroBLL();
+
+                var listaEnderecos = enderecoBLL.GetAll();
+
+                var listaEstoque = estoqueBLL.GetAll();
+                var listaPacientes = pacienteBLL.GetAll();
+                var listaLogradouros = logradouroBLL.GetAll();
+                var listaClinicas = clinicaBLL.GetAll();
 
 
-    <div class="limiter">
+            }
+            <fieldset>
+                <div class="field-group">
 
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form class="login100-form validate-form">
-                    <span class="login100-form-title p-b-26">
-                        Clínica
-                    </span>
-
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="fullname">
-                        <span class="focus-input100" data-placeholder="Nome da clínica"></span>
+                    @* nomeClinica *@
+                    <div class="field">
+                        <label for="valor">Nome da Clínica</label>
+                        <input type="text" name="nomeClinica" value="@ViewBag.nomeClinica" />
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <label  style="color:darkgray; font-size:15px; margin-left:5px;">Data de inauguração</label>
-                        <input class="input100" type="date" name="dtInauguracao">
-                        <span class="focus-input100" data-placeholder=""></span>
-                    </div>
+                    @* data *@
+                    <div class="field">
+                        <label for="data">Data da Inauguração</label>
+                        <input type="date" name="inauguracao" value="@ViewBag.data" />
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="pais">
-                        <span class="focus-input100" data-placeholder="Pais"></span>
-                        @* Trazer a lista de países *@
                     </div>
+                </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="estado">
-                        <span class="focus-input100" data-placeholder="Estado"></span>
-                        @* Trazer a lista de estados *@
-                    </div>
+                <div class="field-group">                    
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="cidade">
-                        <span class="focus-input100" data-placeholder="Cidade"></span>
-                        @* Trazer a lista de cidades *@
-                    </div>
+                    @* Endereço  *@
+                    <div class="field">
+                        <label style="font-size:17px" for="dados">Dados de Endereço</label>
+                        <br />
+                        <div class="field-group">
+                            <div class="field">
+                                <label for="state">Estado</label>
+                                <select name="uf" id="state" >
+                                    <option value="@ViewBag.uf">Selecione o estado</option>
+                                </select>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="bairro">
-                        <span class="focus-input100" data-placeholder="Bairro"></span>
-                        @* Trazer a lista de bairros *@
-                    </div>
+                                <input type="hidden" name="state" />
+                            </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="logradouro">
-                        <span class="focus-input100" data-placeholder="Logradouro"></span>
-                        @* Trazer a lista de logradouros *@
-                    </div>
+                            <div class="field">
+                                <label for="city">Cidade</label>
+                                <select name="city" id="city"  >
+                                    <option value="@ViewBag.city">Selecione a cidade</option>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="cep">
-                        <span class="focus-input100" data-placeholder="CEP"></span>
-                        @* Trazer a lista de CEP *@
-                    </div>
+                                </select>
+                                <input type="hidden" name="city" />
+                            </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="numeroCasa">
-                        <span class="focus-input100" data-placeholder="Número"></span>
-                        @* Trazer a lista de número *@
-                    </div>
+                            <div class="field">
+                                <label for="Bairro">Bairro</label>
+                                <input type="text" name="bairro" value="@ViewBag.bairro">
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Salvar
-                            </button>
+                            </div>
+
+
+                        </div>
+
+                        <div class="field-group">
+
+                            <div class="field-group">
+                                <div class="field">
+                                    <label for="logradouro">Logradouro</label>
+                                    <input type="text" name="logradouro" value="@ViewBag.logradouro">
+
+                                </div>
+                                <div class="field">
+                                    <label for="cep">CEP</label>
+                                    <input type="text" name="cep" value="@ViewBag.cep">
+
+                                </div>
+
+                                <div class="field">
+                                    <label for="numeroCasa">Numero da Casa</label>
+                                    <input type="number" name="numeroCasa" value="@ViewBag.numeroCasa">
+
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Atualizar
-                            </button>
-                        </div>
+                </div>
+
+                <div class="field-group">
+                    <div class="field">
+
+                        <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
+                        <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
+
+
                     </div>
 
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Deletar
-                            </button>
-                        </div>
+                    <div class="field">
+                        <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
+                        <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
+
                     </div>
 
-                    <div class="text-center p-t-115">
-                        <span class="login100-form-title p-b-26">
-                            Lista de clínicas
-                        </span>
-                        @* Trazer a lista de clínicas com id, nome, dtInauguração, cep, número,nome do logradouro, bairro, cidade, estado e país *@
-                    </div>
+                </div>
 
-                </form>
-            </div>
-        </div>
+                @{
+                    if (Convert.ToString(ViewData["result"]) != "")
+                    {
+                        if (Convert.ToString(ViewData["result"]).Contains("!"))
+                        {
+                            <label style="color:green;font-size:13px"> @ViewData["result"] </label>
+                        }
+                        else
+                        {
 
-    </div>
+                            <label style="color:red;font-size:13px"> @ViewData["result"] </label>
+                        }
 
-    <div id="dropDownSelect1"></div>
+                    }
+
+                }
+
+                <br />
+
+                <h2 id="balance">Lista de Clínicas</h2>
+
+                <br />
+
+                @for (int i = 0; i < listaClinicas.Count; i++)
+                {
+
+                    Endereco e = enderecoBLL.GetById(listaClinicas[i].Endereco);
+                    
+                    
+                    <input  type="radio" name="idSelecionado" value="@listaClinicas[i].Id" /> 
+
+                    <label> <b>ID:</b> @listaClinicas[i].Id</label>           
+                    <label> <b>Valor:</b> @listaClinicas[i].Nome</label> 
+                    <label> <b> Endereço:</b> @listaLogradouros[i].Nome - @e.NumeroCasa</label>
+                    <label> <b>Data:</b> @listaClinicas[i].DataInauguracao</label> <br />
+
+
+
+                }
+                <br />
+                <br />
+                <input checked type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
+            </fieldset>
+        </form>
+    </main>
+
+    <script src="https://use.fontawesome.com/d09559d1bd.js"></script>
 
     <!--===============================================================================================-->
     <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -156,7 +227,10 @@
     <!--===============================================================================================-->
     <script src="~/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
-    <script src="./js/main.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/viacep.js"></script>
+    <script src="~/js/viacepJSandJson.js"></script>
+    <script src="~/js/endereco.js"></script>
 
 </body>
 </html>

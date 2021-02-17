@@ -167,9 +167,9 @@
                     listaPagamentos[i].TipoPagamento = tipoPagamentoBLL.GetById(listaPagamentos[i].TipoPagamento);
                     //listaPagamentos[i]. = .GetById(listaPagamentos[i].);
 
-
+                     Paciente p = pacienteBLL.GetById(listaPagamentos[i].Paciente);
                     <input type="radio" name="idSelecionado" value="@listaPagamentos[i].Id" /> <label> <b>ID:</b> @listaPagamentos[i].Id</label>
-                    <label> <b>Valor:</b> @listaPagamentos[i]</label> <label> <b>Paciente:</b> @listaPagamentos[i] </label>
+                    <label> <b>Valor:</b> @listaPagamentos[i].ValorPagamento</label> <label> <b>Paciente:</b> @p.Nome </label>
                     <label> <b>Data:</b> @listaPagamentos[i].DataPagamento</label> <br />
 
 

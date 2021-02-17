@@ -1,4 +1,4 @@
-ï»¿
+
 const Storage = {
     get() {
         return JSON.parse(localStorage.getItem("dev.finances:transactions")) || [];
@@ -11,17 +11,17 @@ const Storage = {
     },
 };
 
-//TODO mudar para funÃ§Ã£o TOGGLE (liga/desliga), removendo essas duas existentes
+//TODO mudar para função TOGGLE (liga/desliga), removendo essas duas existentes
 const Modal = {
     open() {
         //Abrir modal
         //Adicionar a class active ao modal
-        document.querySelector(".modal-overlay-main").classList.add("active");
+        document.querySelector(".modal-overlay").classList.add("active");
     },
     close() {
         //Fechar modal
         //Remover a class active do modal
-        document.querySelector(".modal-overlay-main").classList.remove("active");
+        document.querySelector(".modal-overlay").classList.remove("active");
     },
 };
 
@@ -41,9 +41,9 @@ const Transaction = {
         let income = 0;
         //pegar todas as transactions, para cada transaction
         Transaction.all.forEach((transaction) => {
-            //verificar se a transaction Ã© maior que zero
+            //verificar se a transaction é maior que zero
             if (transaction.amount > 0) {
-                //Se for maior que zero, somar a uma variÃ¡vel e retornar a variÃ¡vel
+                //Se for maior que zero, somar a uma variável e retornar a variável
                 income += transaction.amount;
             }
         });
@@ -54,9 +54,9 @@ const Transaction = {
         let expense = 0;
         //pegar todas as transactions, para cada transaction
         Transaction.all.forEach((transaction) => {
-            //verificar se a transaction Ã© menor que zero
+            //verificar se a transaction é menor que zero
             if (transaction.amount < 0) {
-                //Se for maior que zero, subtrair a uma variÃ¡vel e retornar a variÃ¡vel
+                //Se for maior que zero, subtrair a uma variável e retornar a variável
                 expense += transaction.amount;
             }
         });
@@ -64,7 +64,7 @@ const Transaction = {
         return expense;
     },
     total() {
-        //total = Entradas - saÃ­das
+        //total = Entradas - saídas
         let total = Transaction.incomes() + Transaction.expenses();
         return total;
     },
@@ -90,7 +90,7 @@ const DOM = {
       <td class="${CSSClass}">${amount}</td>
       <td class="date">${transaction.date}</td>
       <td>
-        <img onclick="Transaction.remove(${index})" src="../images/assets/minus.svg" alt="Remover transaÃ§Ã£o" />
+        <img onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação" />
       </td>
     `;
 
@@ -114,7 +114,7 @@ const DOM = {
 
 const Utils = {
     formatAmount(value) {
-        //value = Number(value.replace(/\,\./g, "")) * 100; //remove vÃ­rgula e ponto, depois multiplica por 100
+        //value = Number(value.replace(/\,\./g, "")) * 100; //remove vírgula e ponto, depois multiplica por 100
         value = Number(value) * 100;
 
         return value;
@@ -127,7 +127,7 @@ const Utils = {
     formatCurrency(value) {
         const signal = Number(value) < 0 ? "-" : "";
 
-        value = String(value).replace(/\D/g, ""); //troca apenas a primeira ocorrÃªncia
+        value = String(value).replace(/\D/g, ""); //troca apenas a primeira ocorrência
 
         value = Number(value / 100);
 
@@ -189,7 +189,7 @@ const Form = {
         event.preventDefault();
 
         try {
-            //verificar se todas as informaÃ§Ãµes foram preenchidas
+            //verificar se todas as informações foram preenchidas
             Form.validateFields();
 
             //Formatar os dados para Salvar
@@ -198,7 +198,7 @@ const Form = {
             //Salvar
             Transaction.add(transaction);
 
-            //Limpar os campos do formulÃ¡rio
+            //Limpar os campos do formulário
             Form.clearFields();
 
             //Modal feche
