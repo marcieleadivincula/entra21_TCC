@@ -149,10 +149,10 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Atendimento GetById(int id)
+        public Atendimento GetById(int idAtendimento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"SELECT * FROM atendimento WHERE idAtendimento = {id}";
+            cmd.CommandText = $"SELECT * FROM atendimento WHERE idAtendimento = {idAtendimento}";
 
             try
             {
@@ -199,6 +199,7 @@ namespace DataAccessLayer
                 {
                     atendimento.Paciente = new Paciente();
                     atendimento.Colaborador = new Colaborador();
+
                     atendimento.Id = Convert.ToInt32(reader["idAtendimento"]);
                     atendimento.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
                     atendimento.Colaborador.Id = Convert.ToInt32(reader["idColaborador"]);
@@ -221,8 +222,7 @@ namespace DataAccessLayer
         public List<Procedimento> GetProcedimentos(int idAtendimento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM atendimentoprocedimentos ap INNER JOIN procedimento p ON ap.idProcedimento = p.idProcedimento WHERE ap.idAtendimento = @ID";
-            cmd.Parameters.AddWithValue("@ID", idAtendimento);
+            cmd.CommandText = $"SELECT * FROM atendimentoprocedimentos ap INNER JOIN procedimento p ON ap.idProcedimento = p.idProcedimento WHERE ap.idAtendimento = {idAtendimento}";
 
             try
             {
