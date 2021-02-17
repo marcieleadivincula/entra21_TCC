@@ -7,7 +7,8 @@
 @{
     ViewData["Title"] = "Finances";
 }
-
+<link href="~/css/endereco.css" rel="stylesheet" />
+<link href="~/css/paciente.css" rel="stylesheet" />
 <link href="~/css/paciente.css" rel="stylesheet" />
 
 <!DOCTYPE html>
@@ -24,14 +25,6 @@
 
     <title>Finances | OdontoTech</title>
 
-    @{
-        DispesaBLL dispesaBLL = new DispesaBLL();
-        List<Dispesa> dispesas = dispesaBLL.GetAll();
-
-
-        PagamentoBLL PagamentoBLL = new PagamentoBLL();
-        List<Pagamento> pgmt = PagamentoBLL.GetAll();
-    }
 
 
 </head>
@@ -53,6 +46,56 @@
 
     </center>
 
+    @{
+        DispesaBLL dispesaBLL = new DispesaBLL();
+        List<Dispesa> dispesas = dispesaBLL.GetAll();
+
+
+        PagamentoBLL PagamentoBLL = new PagamentoBLL();
+        List<Pagamento> pgmt = PagamentoBLL.GetAll();
+
+        double saida = 0;
+        double entrada = 0;
+
+        for (int i = 0; i < dispesas.Count; i++)
+        {
+
+            saida += dispesas[i].Valor;
+        }
+        for (int i = 0; i < pgmt.Count; i++)
+        {
+
+            entrada += pgmt[i].ValorPagamento;
+        }
+
+        double total = entrada - saida;
+
+        string totalstring = Convert.ToString(total);
+
+        int contrador = 0;
+        bool achoudecimal = false;
+
+        string valorx = "";
+
+        for (int i = 0; i < totalstring.Length; i++)
+        {
+            valorx += totalstring[i];
+            if (achoudecimal)
+            {
+                contrador++;
+                if (contrador == 2)
+                {
+
+                    break;
+                }
+            }
+            if (totalstring[i] == ',')
+            {
+                achoudecimal = true;
+            }
+        }
+        total = Convert.ToDouble(valorx);
+    }
     <main class="container">
         <section id="balance">
             <h2 class="sr-only">Balanço</h2>
@@ -61,7 +104,7 @@
                     <span>Entradas</span>
                     <img src="~/images/assets/income.svg" alt="Imagem de entradas" />
                 </h3>
-                <label style="font-family:Poppins-Regular;color:black;font-size:2rem"> 00,00</label>
+                <label style="font-family:Poppins-Regular;color:black;font-size:2rem"> R$ @entrada</label>
             </div>
 
             <div class="card">
@@ -69,7 +112,7 @@
                     <span>Saídas</span>
                     <img src="~/images/assets/expense.svg" alt="Imagem de saídas" />
                 </h3>
-                <label style="font-family:Poppins-Regular;color:black;font-size:2rem"> 00,00</label>
+                <label style="font-family:Poppins-Regular;color:black;font-size:2rem"> R$ @saida</label>
             </div>
 
             <div class="card total">
@@ -77,7 +120,7 @@
                     <span style="color:white">Total</span>
                     <img src="~/images/assets/total.svg" alt="Imagem do total" />
                 </h3>
-                <label style="font-family:Poppins-Regular;color:white;font-size:2rem"> 00,00</label>
+                <label style="font-family:Poppins-Regular;color:white;font-size:2rem"> R$ @total </label>
             </div>
         </section>
 
@@ -125,12 +168,14 @@
                 </div>
             </div>
         </div>*@
+
     <main class="container">
+        <label style="font-size:20px"> Dispesas </label>
         <section id="transaction">
             <table id="data-table">
                 <thead>
                     <tr>
-
+                        <th></th>
                         <th>ID</th>
                         <th>Data</th>
                         <th>Valor</th>
@@ -143,27 +188,25 @@
                     {
 
                         <tr>
+                            <td>
 
+                                <input type="radio" name="idSelecionado" value="@dispesas[i].idMovimentacaofinanceira" />
+                            </td>
                             <td>
                                 @dispesas[i].idMovimentacaofinanceira
                             </td>
 
-                        </tr>
-                        <tr>
+
 
                             <td>
                                 @dispesas[i].Data
                             </td>
 
-                        </tr>
-                        <tr>
 
-                            <td>
+                            <td style="color:red">
                                 @dispesas[i].Valor
                             </td>
 
-                        </tr>
-                        <tr>
 
                             <td>
                                 @dispesas[i].Descricao
@@ -174,118 +217,102 @@
 
                 </tbody>
             </table>
+            @{
+                <fieldset>
+                    <div class="field-group">
+                        <div class="field">
+                            <button style="background-color:transparent" type="submit"> 🗑️ </button>
+
+                        </div>
+                        <div class="field">
+                            <button style="background-color:transparent" type="submit"> ➕ </button>
+
+                        </div>
+
+                    </div>
+                </fieldset>
+            }
         </section>
+        <label style="font-size:20px"> Pagamnetos </label>
         <section id="transaction">
             <table id="data-table">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>ID</th>
                         <th>Data</th>
                         <th>Valor</th>
                         <th>Paciente</th>
-                        <th>Descrição</th>
+
                     </tr>
                 </thead>
                 <tbody>
+                    @{
+                        for (int i = 0; i < pgmt.Count; i++)
+                        {
 
-                    @for (int i = 0; i < pgmt.Count; i++)
-                    {
-
-                        PacienteBLL PacienteBLL = new PacienteBLL();
-                        pgmt[i].Paciente = PacienteBLL.GetById(pgmt[i].Paciente);
+                            PacienteBLL pacienteBLL = new PacienteBLL();
+                            pgmt[i].Paciente = pacienteBLL.GetById(pgmt[i].Paciente);
 
 
-                        <tr>
+                            <tr>
+                                <td>
 
-                            <td>
-                                @pgmt[i].Id
-                            </td>
+                                    <input type="radio" name="idSelecionado" value="@dispesas[i].idMovimentacaofinanceira" />
+                                </td>
+                                <td>
 
-                        </tr>
-                        <tr>
+                                    @pgmt[i].Id
+                                </td>
 
-                            <td>
-                                @pgmt[i].DataPagamento
-                            </td>
 
-                        </tr>
-                        <tr>
 
-                            <td>
-                                @pgmt[i].ValorPagamento
-                            </td>
 
-                        </tr>
-                        <tr>
 
-                            <td>
-                                @dispesas[i].Descricao
-                            </td>
+                                <td>
+                                    @pgmt[i].DataPagamento
+                                </td>
 
-                        </tr>
+
+
+                                <td style="color:lawngreen">
+                                    @pgmt[i].ValorPagamento
+                                </td>
+
+                                <td>
+                                    @pgmt[i].Paciente.Nome
+                                </td>
+
+                            </tr>
+
+                        }
                     }
-
                 </tbody>
             </table>
+            @{
+                <fieldset>
+                    <div class="field-group">
+                        <div class="field">
+                            <button style="background-color:transparent" type="submit"> 🗑️ </button>
+
+                        </div>
+                        <div class="field">
+                            <button style="background-color:transparent" type="submit"> ➕ </button>
+
+                        </div>
+
+                    </div>
+                </fieldset>
+            }
         </section>
 
-        </main>
-        <footer>
-            <p>@DateTime.Now.Year - OdontoTech</p>
-        </footer>
+    </main>
+    <footer>
+        <p>@DateTime.Now.Year - OdontoTech</p>
+    </footer>
 
-        <script src="~/js/finances.js"></script>
-        <table id="data-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Data</th>
-                    <th>Valor</th>
-                    <th>Paciente</th>
-                    <th>Descrição</th>
-                </tr>
-            </thead>
-            <tbody>
+    <script src="~/js/finances.js"></script>
 
-                @for (int i = 0; i < pgmt.Count; i++)
-                {
-
-                    PacienteBLL PacienteBLL = new PacienteBLL();
-                    pgmt[i].Paciente = PacienteBLL.GetById(pgmt[i].Paciente);
-
-
-                    <tr>
-
-                        <td>
-                            @pgmt[i].Id
-                        </td>
-
-                    </tr>
-                    <tr>
-
-                        <td>
-                            @pgmt[i].DataPagamento
-                        </td>
-
-                    </tr>
-                    <tr>
-
-                        <td>
-                            @pgmt[i].ValorPagamento
-                        </td>
-
-                    </tr>
-                    <tr>
-
-                        <td>
-                            @dispesas[i].Descricao
-                        </td>
-
-                    </tr>
-                }
-
-            </tbody>
-        </table>
 </body>
 
 </html>
