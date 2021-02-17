@@ -144,11 +144,15 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Procedimento GetById(int id)
+        public Procedimento GetById(int idProcedimento)
         {
             cmd.Connection = conn;
+<<<<<<< Updated upstream
             cmd.CommandText = "SELECT * FROM procedimento WHERE idProcedimento = @ID";
             cmd.Parameters.AddWithValue("@ID", id);
+=======
+            cmd.CommandText = $"SELECT * FROM procedimento WHERE idProcedimento = {idProcedimento}";
+>>>>>>> Stashed changes
 
             try
             {
@@ -216,7 +220,7 @@ namespace DataAccessLayer
         public List<Atendimento> GetAtendimentos(int idProcedimento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM atendimentoprocedimentos ap INNER JOIN atendimento a ON ap.idAtendimento = a.idAtendimento WHERE ap.idProcedimento = @ID";
+            cmd.CommandText = $"SELECT * FROM atendimentoprocedimentos ap INNER JOIN atendimento a ON ap.idAtendimento = a.idAtendimento WHERE ap.idProcedimento = {idProcedimento}";
             cmd.Parameters.AddWithValue("@ID", idProcedimento);
 
             try
@@ -229,6 +233,7 @@ namespace DataAccessLayer
                 {
                     Atendimento temp = new Atendimento();
                     temp.Colaborador = new Colaborador();
+
                     temp.Paciente = new Paciente();
                     temp.Id = Convert.ToInt32(reader["idAtendimento"]);
                     temp.Paciente.Id = Convert.ToInt32(reader["idPaciente"]);
@@ -247,11 +252,11 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public Procedimento GetProcedimentoIdTipo(int id)
+        public Procedimento GetProcedimentoIdTipo(int idTipoProcedimento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM procedimento WHERE idTipoProcedimento = @ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.CommandText = $"SELECT * FROM procedimento WHERE idTipoProcedimento = {idTipoProcedimento}";
+            cmd.Parameters.AddWithValue("@ID", idTipoProcedimento);
 
             try
             {
