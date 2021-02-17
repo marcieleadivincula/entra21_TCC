@@ -16,7 +16,7 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@idProduto", estoque.Produto.Id);
             cmd.Parameters.AddWithValue("@qtdProduto", estoque.QtdProduto);
             cmd.Parameters.AddWithValue("@dtEntrada", estoque.DataEntrada);
-            cmd.Parameters.AddWithValue("@dtSaida", estoque.DataSaida); 
+            cmd.Parameters.AddWithValue("@dtSaida", estoque.DataSaida);
 
             try
             {
@@ -59,8 +59,9 @@ namespace DataAccessLayer
                 cmd.ExecuteNonQuery();
                 return "Estoque deletado com êxito!";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return "Erro no Banco de dados. Contate o administrador.";
             }
             finally

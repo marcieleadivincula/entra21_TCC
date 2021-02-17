@@ -42,7 +42,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Clínica cadastrada com sucesso");
+            Assert.AreEqual(str, "Clínica cadastrada com sucesso!");
         }       
 
         [Test]

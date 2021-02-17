@@ -31,7 +31,7 @@ namespace Domain.IntegrationTests
         public void TestarInsertEstado()
         {
 
-            Estado test = new Estado(1, "Bahia", pais);
+            Estado test = new Estado(1, "TEST", pais);
 
             str = bll.Insert(test);
 

@@ -37,7 +37,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Estoque cadastrado com sucesso");
+            Assert.AreEqual(str, "Estoque cadastrado com sucesso!");
         }
 
         [Test]
@@ -63,11 +63,11 @@ namespace Domain.IntegrationTests
         [Test]
         public void TestarDeletarEstoque()
         {
-            Estoque test2 = new Estoque(1, produto, 1, DataEntrada, DataSaida);
+            Estoque test2 = new Estoque(1000, produto, 1000, DataEntrada, DataSaida);
 
             str = bll.Insert(test2);
 
-            Estoque test = new Estoque(1, produto, 1, DataEntrada, DataSaida);
+            Estoque test = new Estoque(1000, produto, 1000, DataEntrada, DataSaida);
             str = bll.Delete(test);
 
             Assert.AreEqual(str, "Estoque deletado com êxito!");

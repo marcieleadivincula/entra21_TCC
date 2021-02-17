@@ -27,7 +27,7 @@ namespace Domain.IntegrationTests
             Funcao test = new Funcao(1, "Barman",1500,0.5);
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Função cadastrada com sucesso");
+            Assert.AreEqual(str, "Função cadastrada com sucesso!");
         }
 
         [Test]
