@@ -217,12 +217,44 @@ namespace PresentationLayer.Controllers
 
         }
 
-        public IActionResult Funcao()
+        public IActionResult Funcao(string saveBtn, string saveBtn2, int idSelecionado, string nomeFuncao, double salario, string comissao)
         {
+
+
+            if (saveBtn2 == "Deletar")
+            {
+                FuncaoBLL bll = new FuncaoBLL();
+                Funcao funcao = new Funcao();
+
+                funcao.Id = idSelecionado;
+
+                ViewData["result"] = bll.Delete(funcao);
+
+                return View();
+            }
+
+            if (idSelecionado != 0)
+            {
+                FuncaoBLL bll = new FuncaoBLL();
+                Funcao funcao = new Funcao(idSelecionado, nomeFuncao, salario, Convert.ToDouble(comissao));
+
+                ViewData["result"] = bll.Update(funcao);
+                return View();
+            }
+
+            if (saveBtn == "Salvar")
+            {
+                FuncaoBLL bll = new FuncaoBLL();
+                Funcao funcao = new Funcao(idSelecionado, nomeFuncao, salario, Convert.ToDouble(comissao));
+
+                ViewData["result"] = bll.Insert(funcao);
+                return View();
+
+            }
             return View();
         }
 
-        public IActionResult Clinica(string saveBtn2, DateTime inauguracao, string saveBtn, string nomeClinica,  string state, string city, string bairro, string logradouro, string cep, int numeroCasa, int idSelecionado)
+        public IActionResult Clinica(string saveBtn2, DateTime inauguracao, string saveBtn, string nomeClinica, string state, string city, string bairro, string logradouro, string cep, int numeroCasa, int idSelecionado)
         {
 
             if (saveBtn2 == "Deletar")

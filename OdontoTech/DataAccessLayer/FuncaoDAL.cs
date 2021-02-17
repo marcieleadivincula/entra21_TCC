@@ -26,7 +26,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Função cadastrada com sucesso";
+                return "Função cadastrada com sucesso!";
             }
             catch (Exception ex)
             {
