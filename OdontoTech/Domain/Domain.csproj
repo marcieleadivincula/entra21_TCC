@@ -120,6 +120,7 @@
     <Compile Include="Clinica.cs" />
     <Compile Include="Colaborador.cs" />
     <Compile Include="Contato.cs" />
+    <Compile Include="Despesa.cs" />
     <Compile Include="Endereco.cs" />
     <Compile Include="Estado.cs" />
     <Compile Include="Estoque.cs" />

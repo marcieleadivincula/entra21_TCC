@@ -36,6 +36,9 @@
     <link rel="stylesheet" type="text/css" href="~/css/main.css">
     <link rel="stylesheet" type="text/css" href="~/css/util.css">
     <link type="text/css" href="~/css/endereco.css" rel="stylesheet" />
+
+    <link href="~/css/finances.css" rel="stylesheet" />
+
     <!--===============================================================================================-->
 </head>
 <body>
@@ -68,15 +71,15 @@
                         <select name="city" id="city" disabled required>
                             <option value="@ViewBag.city">Selecione a cidade</option>
 
-                            <input type="hidden" name="city" />
                         </select>
+                            <input type="hidden" name="city" />
                     </div>
                 </div>
 
                 <div class="field-group">
                     <div class="field">
                         <label for="bairro">Bairro</label>
-                        <select name="bairro" id="bairro" disabled required>
+                        <select name="bairro" id="bairro"  required>
                             <option value="@ViewBag.bairro">Selecione o bairro</option>
                         </select>
 
@@ -85,11 +88,11 @@
 
                     <div class="field">
                         <label for="logradouro">Logradouro</label>
-                        <select name="logradouro" id="logradouro" disabled required>
+                        <select name="logradouro" id="logradouro"  required>
                             <option value="@ViewBag.logradouro">Selecione a logradouro</option>
 
-                            <input type="hidden" name="logradouro" />
                         </select>
+                            <input type="hidden" name="logradouro" />
                     </div>
                 </div>
 
@@ -176,10 +179,10 @@
                                         <td>@est.Nome</td>
                                     }
                                     <td>
-                                        <img onclick="Transaction.remove(${index})" src="~/images/assets/plus.svg" alt="Atualizar estado" />
+                                        <img onclick="" src="~/images/assets/plus.svg" alt="Atualizar estado" />
                                     </td>
                                     <td>
-                                        <img onclick="Transaction.remove(${index})" src="~/images/assets/minus.svg" alt="Remover estado" />
+                                        <img onclick="" src="~/images/assets/minus.svg" alt="Remover estado" />
                                     </td>
                                 </tr>
                             }
