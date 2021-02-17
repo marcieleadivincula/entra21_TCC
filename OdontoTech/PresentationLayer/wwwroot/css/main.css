@@ -222,7 +222,7 @@ iframe {
 }
 
 .wrap-login100 {
-    /*width: 390px;*/
+    width: 390px;
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
@@ -301,10 +301,10 @@ iframe {
         -moz-transition: all 0.4s;
         transition: all 0.4s;
         background: #6a7dfe;
-        background: -webkit-linear-gradient(left, #21d4fd, #b721ff);
+        /*background: -webkit-linear-gradient(left, #21d4fd, #b721ff);
         background: -o-linear-gradient(left, #21d4fd, #b721ff);
         background: -moz-linear-gradient(left, #21d4fd, #b721ff);
-        background: linear-gradient(left, #21d4fd, #b721ff);
+        background: linear-gradient(left, #21d4fd, #b721ff);*/
     }
 
     .focus-input100::after {

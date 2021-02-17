@@ -1,6 +1,8 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Domain;
+@using BusinessLogicalLayer;
 @{
     ViewData["Title"] = "SignUp";
 }
@@ -40,30 +42,31 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
-                <form class="login100-form validate-form" action="/Home/" method="post">
+                <form class="login100-form validate-form" action="/Home/SignUp" method="post">
                     <span class="login100-form-title p-b-26">
                         Cadastro
                     </span>
 
-                    <!--<div class="wrap-input100 validate-input" data-validate="Formato invalido">
-                        <input class="input100" type="text" name="colaborador">
-                        <span class="focus-input100" data-placeholder="Colaborador">
-                        </span>
-
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Nome</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>-->
-                        @* Trazer a lista de colaborador *@
-                    <!--</div>-->
-
+                    @* email *@
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
                         <input class="input100" type="text" name="email">
                         <span class="focus-input100" data-placeholder="Email"></span>
                     </div>
 
+
+                    @{
+                        ColaboradorBLL colaboradorBLL = new ColaboradorBLL();
+                        List<Colaborador> listacolab = colaboradorBLL.GetAll();
+                    }
+
+
+
+
+
+
+
+
+                    @* pass *@
                     <div class="wrap-input100 validate-input" data-validate="Insira sua senha">
                         <span class="btn-show-pass">
                             <i class="zmdi zmdi-eye"></i>
@@ -72,18 +75,40 @@
                         <span class="focus-input100" data-placeholder="Senha"></span>
                     </div>
 
+
+
+
+
+                    @* passAgain *@
                     <div class="wrap-input100 validate-input" data-validate="Confirme sua senha">
                         <span class="btn-show-pass">
                             <i class="zmdi zmdi-eye"></i>
                         </span>
-                        <input class="input100" type="password" name="pass">
+                        <input class="input100" type="password" name="passAgain">
                         <span class="focus-input100" data-placeholder="Confirmar Senha"></span>
                     </div>
 
+                    <label style="color:#666666;font-size:13px">Colaborador:</label>
+                    <select style="background-color: #ffffff;" class="select-css" name="Colaborador">
+                        @for (int i = 0; i < listacolab.Count; i++)
+                        {
+
+                            <option value="@listacolab[i].Id">@listacolab[i].Nome</option>
+                        }
+                    </select>
+                    <input type="hidden" name="Colaborador" value="@ViewBag.Colaborador" />
+                    <br />
+
+
+                    @{ if (Convert.ToBoolean(ViewData["SEA"]))
+                        {
+                            <label style="color:red;font-size:13px">As senhas não são iguais.</label>
+                        }
+                    }
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" name="btn" value="1" type="submit">
                                 Cadastrar
                             </button>
                         </div>

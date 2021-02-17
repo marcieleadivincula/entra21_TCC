@@ -101,9 +101,33 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult SignUp()
+        public IActionResult SignUp(string email, string passAgain, string pass,string btn, int Colaborador)
         {
+
+            if (passAgain != pass)
+            {
+                ViewData["SEA"] = true;
             return View();
+            }
+            if (btn == "1")
+            {
+                ColaboradorBLL bllcolab = new ColaboradorBLL();
+                UsuarioBLL bll = new UsuarioBLL();
+                Usuario usuario = new Usuario();
+                usuario.Login = email;
+                usuario.Senha = pass;
+        
+                usuario.Colaborador = bllcolab.GetById(Colaborador);
+
+
+                TempData["Mensagem"] = bll.Insert(usuario);
+                return RedirectToAction("Home","Index");
+            }
+            else
+            {
+
+            return View();
+            }
         }
 
         public IActionResult Colaborador()
