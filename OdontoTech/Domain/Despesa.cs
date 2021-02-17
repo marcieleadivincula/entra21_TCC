@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Dispesa
+    public class Despesa
     {
-        public Dispesa(int idMovimentacaofinanceira, DateTime data, double valor, string descricao, string colaborador)
+        public Despesa(int idDespesa, DateTime data, double valor, string descricao, string colaborador)
         {
-            this.idMovimentacaofinanceira = idMovimentacaofinanceira;
+            this.idDespesa = idDespesa;
             Data = data;
             Valor = valor;
             Descricao = descricao;
             Colaborador = colaborador;
         }
 
-        public Dispesa()
+        public Despesa()
         {
         }
 
-        public int idMovimentacaofinanceira { get; set; }
+        public int idDespesa { get; set; }
         public DateTime Data { get; set; }
         public double Valor { get; set; }
         public string Descricao { get; set; }

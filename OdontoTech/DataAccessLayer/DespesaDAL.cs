@@ -5,18 +5,18 @@ using Domain;
 
 namespace DataAccessLayer
 {
-    public class DispesaDAL
+    public class DespesaDAL
     {
         MySqlConnection conn = new MySqlConnection(DBConfig.CONNECTION_STRING);
         MySqlCommand cmd = new MySqlCommand();
-        public string Insert(Dispesa dispesa)
+        public string Insert(Despesa despesa)
         {
             cmd.Connection = conn;
             cmd.CommandText = "INSERT INTO dispesa (Data, Valor, Descricao) values (@Data, @Valor, @Descricao)";
 
-            cmd.Parameters.AddWithValue("@Data", dispesa.Data);
-            cmd.Parameters.AddWithValue("@Valor", dispesa.Valor);
-            cmd.Parameters.AddWithValue("@Descricao", dispesa.Descricao);
+            cmd.Parameters.AddWithValue("@Data", despesa.Data);
+            cmd.Parameters.AddWithValue("@Valor", despesa.Valor);
+            cmd.Parameters.AddWithValue("@Descricao", despesa.Descricao);
 
 
             try
@@ -43,11 +43,11 @@ namespace DataAccessLayer
             }
         }
 
-        public string Delete(Dispesa dispesa)
+        public string Delete(Despesa dispesa)
         {
 
             cmd.Connection = conn;
-            cmd.CommandText = $"DELETE FROM dispesa WHERE idMovimentacaofinanceira = {dispesa.idMovimentacaofinanceira}";
+            cmd.CommandText = $"DELETE FROM dispesa WHERE idDespesa = {dispesa.idDespesa}";
 
 
             try
@@ -66,31 +66,31 @@ namespace DataAccessLayer
             }
         }
 
-        public List<Dispesa> GetAll()
+        public List<Despesa> GetAll()
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM dispesa";
+            cmd.CommandText = "SELECT * FROM despesa";
             try
             {
                 conn.Open();
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<Dispesa> dispesas = new List<Dispesa>();
+                List<Despesa> despesas = new List<Despesa>();
 
                 while (reader.Read())
                 {
-                    Dispesa temp = new Dispesa();
+                    Despesa temp = new Despesa();
 
            
-                    temp.idMovimentacaofinanceira = Convert.ToInt32(reader["idMovimentacaofinanceira"]);
+                    temp.idDespesa = Convert.ToInt32(reader["idDespesa"]);
                     temp.Data = Convert.ToDateTime(reader["Data"]);
                     temp.Descricao = Convert.ToString(reader["Descricao"]);
                     temp.Valor = Convert.ToDouble(reader["Valor"]);
-                 
 
-                    dispesas.Add(temp);
+
+                    despesas.Add(temp);
                 }
 
-                return dispesas;
+                return despesas;
             }
             catch (Exception)
             {

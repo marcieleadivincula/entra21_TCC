@@ -9,33 +9,33 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
-    public class DispesaBLL
+    public class DespesaBLL1
     {
-        DispesaDAL dal = new DispesaDAL();
+        DespesaDAL dal = new DespesaDAL();
 
-        public string Insert(Dispesa dispesa)
+        public string Insert(Despesa despesa)
         {
             StringBuilder erros = new StringBuilder();
 
-            if (string.IsNullOrWhiteSpace(dispesa.Descricao))
+            if (string.IsNullOrWhiteSpace(despesa.Descricao))
             {
                 erros.AppendLine("A descrição da dispesa deve ser informada.");
             }
 
 
-            if (dispesa.Data == null)
+            if (despesa.Data == null)
             {
                 erros.AppendLine("A data da dispesa deve ser informada.");
             }
 
-            if (dispesa.Valor == 0)
+            if (despesa.Valor == 0)
             {
                 erros.AppendLine("A descrição do procedimento deve ser informada.");
             }
 
-            if (!string.IsNullOrWhiteSpace(dispesa.Descricao))
+            if (!string.IsNullOrWhiteSpace(despesa.Descricao))
             {
-                if (dispesa.Descricao.Length > 45)
+                if (despesa.Descricao.Length > 45)
                 {
                     erros.AppendLine("A descrição da dispesa não pode conter mais que 45 caracteres.");
                 }
@@ -45,14 +45,14 @@ namespace BusinessLogicalLayer
                 return erros.ToString();
             }
 
-            string respostaDB = dal.Insert(dispesa);
+            string respostaDB = dal.Insert(despesa);
             return respostaDB;
         }
-        public string Delete(Dispesa dispesa)
+        public string Delete(Despesa despesa)
         {
             StringBuilder erros = new StringBuilder();
 
-            if (dispesa.idMovimentacaofinanceira == 0)
+            if (despesa.idDespesa == 0)
             {
                 erros.AppendLine("O ID deve ser informado.");
             }
@@ -62,11 +62,11 @@ namespace BusinessLogicalLayer
                 return erros.ToString();
             }
 
-            string respostaDB = dal.Delete(dispesa);
+            string respostaDB = dal.Delete(despesa);
             return respostaDB;
         }
 
-        public List<Dispesa> GetAll()
+        public List<Despesa> GetAll()
         {
             return dal.GetAll();
         }

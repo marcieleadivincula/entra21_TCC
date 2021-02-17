@@ -640,9 +640,9 @@ namespace PresentationLayer.Controllers
                 }
                 if (idSelecionadoDispesa != 0)
                 {
-                    DispesaBLL bll = new DispesaBLL();
-                    Dispesa dispesa = new Dispesa();
-                    dispesa.idMovimentacaofinanceira = idSelecionadoDispesa;
+                    DespesaBLL1 bll = new DespesaBLL1();
+                    Despesa dispesa = new Despesa();
+                    dispesa.idDespesa = idSelecionadoDispesa;
 
                    ViewData["resultA"]= bll.Delete(dispesa);
                 }
