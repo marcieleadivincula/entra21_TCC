@@ -514,8 +514,41 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult TipoPagamento()
+        public IActionResult TipoPagamento(string saveBtn, string saveBtn2, int idSelecionado, string nometipoPagamento, int parcelas)
         {
+
+
+            if (saveBtn2 == "Deletar")
+            {
+                TipoPagamentoBLL bll = new TipoPagamentoBLL();
+                TipoPagamento tipoPagamento = new TipoPagamento();
+
+                tipoPagamento.Id = idSelecionado;
+
+                ViewData["result"] = bll.Delete(tipoPagamento);
+
+                return View();
+            }
+
+            if (idSelecionado != 0)
+            {
+                TipoPagamentoBLL bll = new TipoPagamentoBLL();
+                TipoPagamento tipoPagamento = new TipoPagamento(idSelecionado,nometipoPagamento,parcelas);
+
+                ViewData["result"] = bll.Update(tipoPagamento);
+                return View();
+            }
+
+            if (saveBtn == "Salvar")
+            {
+                TipoPagamentoBLL bll = new TipoPagamentoBLL();
+                TipoPagamento tipoPagamento = new TipoPagamento(idSelecionado, nometipoPagamento, parcelas);
+
+
+                ViewData["result"] = bll.Insert(tipoPagamento);
+                return View();
+
+            }
             return View();
         }
 

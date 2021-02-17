@@ -18,14 +18,15 @@ namespace DataAccessLayer
         public string Insert(TipoPagamento tipoPagamento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO tipopagamento(tipoPagamento) values(@tipoPagamento)";
+            cmd.CommandText = "INSERT INTO tipopagamento(tipoPagamento,parcelas) values(@tipoPagamento,@parcelas)";
             cmd.Parameters.AddWithValue("@tipoPagamento", tipoPagamento.Tipo);
+            cmd.Parameters.AddWithValue("@parcelas", tipoPagamento.Parcelas);
 
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Tipo de pagamento cadastrado com sucesso";
+                return "Tipo de pagamento cadastrado com sucesso!";
             }
             catch (Exception ex)
             {
@@ -72,8 +73,9 @@ namespace DataAccessLayer
         public string Update(TipoPagamento tipoPagamento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE tipopagamento SET tipoPagamento = @tipoPagamento WHERE idTipoPagamento = @idTipoPagamento";
+            cmd.CommandText = "UPDATE tipopagamento SET tipoPagamento = @tipoPagamento, parcelas = @parcelas WHERE idTipoPagamento = @idTipoPagamento";
             cmd.Parameters.AddWithValue("@tipoPagamento", tipoPagamento.Tipo);
+            cmd.Parameters.AddWithValue("@parcelas", tipoPagamento.Parcelas);
             cmd.Parameters.AddWithValue("@idTipoPagamento", tipoPagamento.Id);
 
             try
@@ -110,6 +112,7 @@ namespace DataAccessLayer
                     
                     temp.Id = Convert.ToInt32(reader["idTipoPagamento"]);
                     temp.Tipo = Convert.ToString(reader["tipoPagamento"]);
+                    temp.Parcelas = Convert.ToInt32(reader["parcelas"]);
 
                     tipoPagamentos.Add(temp);
                 }
@@ -141,6 +144,7 @@ namespace DataAccessLayer
                 {
                     tipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
                     tipoPagamento.Tipo = Convert.ToString(reader["tipoPagamento"]);
+                    tipoPagamento.Parcelas = Convert.ToInt32(reader["parcelas"]);
                 }
 
                 return tipoPagamento;
@@ -171,6 +175,7 @@ namespace DataAccessLayer
                 {
                     tipoPagamento.Id = Convert.ToInt32(reader["idTipoPagamento"]);
                     tipoPagamento.Tipo = Convert.ToString(reader["tipoPagamento"]);
+                    tipoPagamento.Parcelas = Convert.ToInt32(reader["parcelas"]);
                 }
 
                 return tipoPagamento;
