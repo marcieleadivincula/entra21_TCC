@@ -54,7 +54,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Dispesa deletado com êxito!";
+                return "Dispesa deletada com êxito!";
             }
             catch (Exception)
             {

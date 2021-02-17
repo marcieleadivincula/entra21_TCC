@@ -129,182 +129,178 @@
 
     </main>
 
-    @*<div class="modal-overlay">
-            <div class="modal">
-                <div class="form">
-                    <h2>Nova Transação</h2>
-                    <form action="" onsubmit="Form.submit(event)">
-                        <div class="input-group">
-                            <label class="sr-only" for="description">Descrição</label>
-                            <input type="text"
-                                   id="description"
-                                   name="description"
-                                   placeholder="Descrição" />
-                        </div>
 
-                        <div class="input-group">
-                            <label class="sr-only" for="amount">Valor</label>
-                            <input type="number"
-                                   step="0.01"
-                                   id="amount"
-                                   name="amount"
-                                   placeholder="0,00" />
-                            <small class="help">
-                                Use o sinal - (negativo) para despesas e , (vírgula) para casas
-                                decimais
-                            </small>
-                        </div>
-
-                        <div class="input-group">
-                            <label class="sr-only" for="date">Data</label>
-                            <input type="date" id="date" name="date" />
-                        </div>
-
-                        <div class="input-group actions">
-                            <a href="#" class="button cancel" id="cancel-trans">Cancelar</a>
-                            <button>Salvar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>*@
 
     <main class="container">
-        <label style="font-size:20px"> Dispesas </label>
-        <section id="transaction">
-            <table id="data-table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>ID</th>
-                        <th>Data</th>
-                        <th>Valor</th>
-                        <th>Descrição</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <form action="/Home/Finances" method="post">
 
-                    @for (int i = 0; i < dispesas.Count; i++)
-                    {
-
+            <label style="font-size:20px"> Dispesas <a href="#">Adicionar Dispesas</a></label>
+            <section id="transaction">
+                <table id="data-table">
+                    <thead>
                         <tr>
-                            <td>
-
-                                <input type="radio" name="idSelecionado" value="@dispesas[i].idMovimentacaofinanceira" />
-                            </td>
-                            <td>
-                                @dispesas[i].idMovimentacaofinanceira
-                            </td>
-
-
-
-                            <td>
-                                @dispesas[i].Data
-                            </td>
-
-
-                            <td style="color:red">
-                                @dispesas[i].Valor
-                            </td>
-
-
-                            <td>
-                                @dispesas[i].Descricao
-                            </td>
-
+                            <th></th>
+                            <th>ID</th>
+                            <th>Data</th>
+                            <th>Valor</th>
+                            <th>Descrição</th>
                         </tr>
-                    }
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
-            @{
-                <fieldset>
-                    <div class="field-group">
-                        <div class="field">
-                            <button style="background-color:transparent" type="submit"> 🗑️ </button>
-
-                        </div>
-                        <div class="field">
-                            <button style="background-color:transparent" type="submit"> ➕ </button>
-
-                        </div>
-
-                    </div>
-                </fieldset>
-            }
-        </section>
-        <label style="font-size:20px"> Pagamnetos </label>
-        <section id="transaction">
-            <table id="data-table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>ID</th>
-                        <th>Data</th>
-                        <th>Valor</th>
-                        <th>Paciente</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        for (int i = 0; i < pgmt.Count; i++)
+                        @for (int i = 0; i < dispesas.Count; i++)
                         {
-
-                            PacienteBLL pacienteBLL = new PacienteBLL();
-                            pgmt[i].Paciente = pacienteBLL.GetById(pgmt[i].Paciente);
-
 
                             <tr>
                                 <td>
 
-                                    <input type="radio" name="idSelecionado" value="@dispesas[i].idMovimentacaofinanceira" />
+                                    <input type="radio" name="idSelecionadoDispesa" value="@dispesas[i].idMovimentacaofinanceira" />
                                 </td>
                                 <td>
-
-                                    @pgmt[i].Id
+                                    @dispesas[i].idMovimentacaofinanceira
                                 </td>
-
-
 
 
 
                                 <td>
-                                    @pgmt[i].DataPagamento
+                                    @dispesas[i].Data
                                 </td>
 
 
-
-                                <td style="color:lawngreen">
-                                    @pgmt[i].ValorPagamento
+                                <td style="color:red">
+                                    @dispesas[i].Valor
                                 </td>
+
 
                                 <td>
-                                    @pgmt[i].Paciente.Nome
+                                    @dispesas[i].Descricao
                                 </td>
 
                             </tr>
-
                         }
+
+                    </tbody>
+                </table>
+                @{
+                    <fieldset>
+                        <div class="field-group">
+                            <div class="field">
+                                <center>
+
+                                    <label>Nenhum</label> <input checked type="radio" name="idSelecionadoDispesa" value="0" /> <button name="saveBtn2" value="Deletar" style="background-color:transparent" type="submit"> 🗑️ </button>
+                                </center>
+
+                            </div>
+
+
+                        </div>
+                    </fieldset>
+                }
+                @{
+                    if (Convert.ToString(ViewData["resultA"]) != "")
+                    {
+                        if (Convert.ToString(ViewData["resultA"]).Contains("!"))
+                        {
+                            <label style="color:green;font-size:13px"> @ViewData["resultA"] </label>
+                        }
+                        else
+                        {
+
+                            <label style="color:red;font-size:13px"> @ViewData["resultA"] </label>
+                        }
+
                     }
-                </tbody>
-            </table>
+
+                }
+            </section>
+            <label style="font-size:20px"> Pagamentos  <a href="#">Adicionar Pagamentos</a></label>
+            <section id="transaction">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Data</th>
+                            <th>Valor</th>
+                            <th>Paciente</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            for (int i = 0; i < pgmt.Count; i++)
+                            {
+
+                                PacienteBLL pacienteBLL = new PacienteBLL();
+                                pgmt[i].Paciente = pacienteBLL.GetById(pgmt[i].Paciente);
+
+
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="idSelecionado" value="@dispesas[i].idMovimentacaofinanceira" />
+                                    </td>
+                                    <td>
+
+                                        @pgmt[i].Id
+                                    </td>
+
+
+
+
+
+                                    <td>
+                                        @pgmt[i].DataPagamento
+                                    </td>
+
+
+
+                                    <td style="color:lawngreen">
+                                        @pgmt[i].ValorPagamento
+                                    </td>
+
+                                    <td>
+                                        @pgmt[i].Paciente.Nome
+                                    </td>
+
+                                </tr>
+
+                            }
+                        }
+                    </tbody>
+                </table>
+                @{
+                    <fieldset>
+                        <div class="field-group">
+                            <div class="field">
+                                <center>
+
+                                    <label>Nenhum</label> <input checked type="radio" name="idSelecionado" value="0" /> <button name="saveBtn2" value="Deletar" style="background-color:transparent" type="submit"> 🗑️ </button>
+                                </center>
+
+                            </div>
+
+
+                        </div>
+                    </fieldset>
+                }
+            </section>
             @{
-                <fieldset>
-                    <div class="field-group">
-                        <div class="field">
-                            <button style="background-color:transparent" type="submit"> 🗑️ </button>
+                if (Convert.ToString(ViewData["resultB"]) != "")
+                {
+                    if (Convert.ToString(ViewData["resultB"]).Contains("!"))
+                    {
+                        <label style="color:green;font-size:13px"> @ViewData["resultB"] </label>
+                    }
+                    else
+                    {
 
-                        </div>
-                        <div class="field">
-                            <button style="background-color:transparent" type="submit"> ➕ </button>
+                        <label style="color:red;font-size:13px"> @ViewData["resultB"] </label>
+                    }
 
-                        </div>
+                }
 
-                    </div>
-                </fieldset>
             }
-        </section>
+        </form>
 
     </main>
     <footer>
