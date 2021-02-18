@@ -662,7 +662,7 @@ namespace PresentationLayer.Controllers
         }
         public IActionResult Despesa(double valor, int idSelecionado, DateTime data, string descricao, string saveBtn, string saveBtn2)
         {
-            DespesaBLL1 bll = new DespesaBLL1();
+            DespesaBLL bll = new DespesaBLL();
             Despesa despesa = new Despesa();
 
             if (saveBtn2 == "Deletar")
@@ -816,7 +816,7 @@ namespace PresentationLayer.Controllers
                 }
                 if (idSelecionadoDispesa != 0)
                 {
-                    DespesaBLL1 bll = new DespesaBLL1();
+                    DespesaBLL bll = new DespesaBLL();
                     Despesa dispesa = new Despesa();
                     dispesa.idDespesa = idSelecionadoDispesa;
 

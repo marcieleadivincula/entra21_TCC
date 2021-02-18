@@ -52,17 +52,16 @@ namespace DataAccessLayer
             }
 
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM tipopagamento WHERE idTipoPagamento = @idTipoPagamento";
-            cmd.Parameters.AddWithValue("@idTipoPagamento", tipoPagamento.Id);
-
+            cmd.CommandText = $"DELETE FROM tipopagamento WHERE idTipoPagamento = {tipoPagamento.Id}";
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 return "Tipo de pagamento deletado com êxito!";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return "Erro no Banco de dados.Contate o administrador.";
             }
             finally

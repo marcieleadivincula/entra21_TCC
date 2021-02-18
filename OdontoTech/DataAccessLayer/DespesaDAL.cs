@@ -12,7 +12,7 @@ namespace DataAccessLayer
         public string Insert(Despesa despesa)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO despesa (DtDespesa,Valor,Descricao) values (@DtDespesa,@Valor,@Descricao)";
+            cmd.CommandText = $"INSERT INTO despesa (dtDespesa,valor,descricao) values (@DtDespesa,@Valor,@Descricao)";
 
             cmd.Parameters.AddWithValue("@DtDespesa", despesa.Data);
             cmd.Parameters.AddWithValue("@Valor", despesa.Valor);
@@ -23,13 +23,13 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Despesa cadastrada com sucesso !";
+                return "Despesa cadastrada com sucesso!";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("Duplicate"))
                 {
-                    return ("Dispesa já cadastrado.");
+                    return ("Despesa já cadastrado.");
                 }
                 else
                 {
@@ -45,10 +45,10 @@ namespace DataAccessLayer
         public string Update(Despesa despesa)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "UPDATE despesa SET DtDespesa = @DtDespesa, Valor = @Valor, Descricao = @Descricao WHERE idDespesa = @idDespesa";
-            cmd.Parameters.AddWithValue("@DtDespesa", despesa.Data);
-            cmd.Parameters.AddWithValue("@Valor", despesa.Valor);
-            cmd.Parameters.AddWithValue("@Descricao", despesa.Descricao);
+            cmd.CommandText = $"UPDATE despesa SET dtDespesa = @dtDespesa, valor = @valor, descricao = @descricao WHERE idDespesa = {despesa.idDespesa}";
+            cmd.Parameters.AddWithValue("@dtDespesa", despesa.Data);
+            cmd.Parameters.AddWithValue("@valor", despesa.Valor);
+            cmd.Parameters.AddWithValue("@descricao", despesa.Descricao);
             cmd.Parameters.AddWithValue("@idDespesa", despesa.idDespesa);
 
 
@@ -56,7 +56,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Despesa atualizado com êxito!";
+                return "Despesa atualizada com êxito!";
             }
             catch (Exception)
             {
@@ -67,18 +67,18 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-        public string Delete(Despesa dispesa)
+        public string Delete(Despesa despesa)
         {
 
             cmd.Connection = conn;
-            cmd.CommandText = $"DELETE FROM despesa WHERE idDespesa = {dispesa.idDespesa}";
+            cmd.CommandText = $"DELETE FROM despesa WHERE idDespesa = {despesa.idDespesa}";
 
 
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Dispesa deletada com êxito!";
+                return "Despesa deletada com êxito!";
             }
             catch (Exception)
             {
@@ -106,9 +106,9 @@ namespace DataAccessLayer
 
            
                     temp.idDespesa = Convert.ToInt32(reader["idDespesa"]);
-                    temp.Data = Convert.ToDateTime(reader["DtDespesa"]);
-                    temp.Descricao = Convert.ToString(reader["Descricao"]);
-                    temp.Valor = Convert.ToDouble(reader["Valor"]);
+                    temp.Data = Convert.ToDateTime(reader["dtDespesa"]);
+                    temp.Descricao = Convert.ToString(reader["descricao"]);
+                    temp.Valor = Convert.ToDouble(reader["valor"]);
 
 
                     despesas.Add(temp);

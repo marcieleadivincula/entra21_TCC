@@ -24,6 +24,11 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O tipo de pagamento não pode conter mais que 60 caracteres.");
             }
 
+            if (tipoPagamento.Parcelas <= 0)
+            {
+                erros.AppendLine("O número de parcelas não pode ser menor ou igual a zero.");
+            }
+
             if (erros.Length != 0)
             {
                 return erros.ToString();
@@ -52,6 +57,11 @@ namespace BusinessLogicalLayer
             if (tipoPagamento.Tipo.Length > 60)
             {
                 erros.AppendLine("O tipo de pagamento não pode conter mais que 60 caracteres.");
+            }
+
+            if (tipoPagamento.Parcelas <= 0)
+            {
+                erros.AppendLine("O número de parcelas não pode ser menor ou igual a zero.");
             }
 
             if (erros.Length != 0)

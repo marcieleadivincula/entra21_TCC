@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
-    public class DespesaBLL1
+    public class DespesaBLL
     {
         DespesaDAL dal = new DespesaDAL();
 
@@ -19,25 +19,25 @@ namespace BusinessLogicalLayer
 
             if (string.IsNullOrWhiteSpace(despesa.Descricao))
             {
-                erros.AppendLine("A descrição da dispesa deve ser informada.");
+                erros.AppendLine("A descrição da despesa deve ser informada.");
             }
 
 
             if (despesa.Data == null)
             {
-                erros.AppendLine("A data da dispesa deve ser informada.");
+                erros.AppendLine("A data da despesa deve ser informada.");
             }
 
-            if (despesa.Valor == 0)
+            if (despesa.Valor <= 0)
             {
-                erros.AppendLine("A descrição do procedimento deve ser informada.");
+                erros.AppendLine("O valor da despesa não pode ser negativo ou zero.");
             }
 
             if (!string.IsNullOrWhiteSpace(despesa.Descricao))
             {
                 if (despesa.Descricao.Length > 45)
                 {
-                    erros.AppendLine("A descrição da dispesa não pode conter mais que 45 caracteres.");
+                    erros.AppendLine("A descrição da despesa não pode conter mais que 45 caracteres.");
                 }
             }
             if (erros.Length != 0)
@@ -55,30 +55,31 @@ namespace BusinessLogicalLayer
 
             if (string.IsNullOrWhiteSpace(despesa.Descricao))
             {
-                erros.AppendLine("A descrição da dispesa deve ser informada.");
+                erros.AppendLine("A descrição da despesa deve ser informada.");
             }
 
 
             if (despesa.Data == null)
             {
-                erros.AppendLine("A data da dispesa deve ser informada.");
+                erros.AppendLine("A data da despesa deve ser informada.");
             }
 
-            if (despesa.Valor == 0)
+            if (despesa.Valor <= 0)
             {
-                erros.AppendLine("A descrição do procedimento deve ser informada.");
+                erros.AppendLine("O valor da despesa não pode ser negativo ou zero.");
             }
 
             if (!string.IsNullOrWhiteSpace(despesa.Descricao))
             {
                 if (despesa.Descricao.Length > 45)
                 {
-                    erros.AppendLine("A descrição da dispesa não pode conter mais que 45 caracteres.");
+                    erros.AppendLine("A descrição da despesa não pode conter mais que 45 caracteres.");
                 }
             }
-            if(despesa.idDespesa == 0)
+
+            if (erros.Length != 0)
             {
-                erros.AppendLine("A ID da despesa deve ser informado.");
+                return erros.ToString();
             }
 
             string respostaDB = dal.Update(despesa);

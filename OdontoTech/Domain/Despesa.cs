@@ -8,13 +8,12 @@ namespace Domain
 {
     public class Despesa
     {
-        public Despesa(int idDespesa, DateTime data, double valor, string descricao, string colaborador)
+        public Despesa(int idDespesa, DateTime data, double valor, string descricao)
         {
             this.idDespesa = idDespesa;
             Data = data;
             Valor = valor;
             Descricao = descricao;
-            Colaborador = colaborador;
         }
 
         public Despesa()
@@ -25,6 +24,5 @@ namespace Domain
         public DateTime Data { get; set; }
         public double Valor { get; set; }
         public string Descricao { get; set; }
-        public string Colaborador { get; set; }
     }
 }
