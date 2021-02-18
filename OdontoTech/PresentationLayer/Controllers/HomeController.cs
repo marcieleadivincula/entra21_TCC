@@ -629,7 +629,7 @@ namespace PresentationLayer.Controllers
 
             return View();
         }
-        public IActionResult Dispesas()
+        public IActionResult Despesa()
         {
             
             return View();
