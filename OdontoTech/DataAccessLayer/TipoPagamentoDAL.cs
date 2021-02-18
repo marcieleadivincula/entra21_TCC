@@ -119,7 +119,7 @@ namespace DataAccessLayer
 
                 return tipoPagamentos;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Erro no Banco de dados.Contate o administrador.");
             }

@@ -29,7 +29,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Tipo de procedimento cadastrado com sucesso");
+            Assert.AreEqual(str, "Tipo de procedimento cadastrado com sucesso!");
         }
 
         [Test]

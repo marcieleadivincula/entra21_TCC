@@ -74,11 +74,77 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        public IActionResult Colaborador()
+        public IActionResult Colaborador(int idSelecionado, string saveBtn, string saveBtn2, string nomeColaborador, int funcao, string cro, string croEstado, int clinica, DateTime dataDemissao, DateTime dataAdmissao, string state, string city, string bairro, string logradouro, string cep, int numeroCasa, Boolean ferias, Boolean demitido)
         {
+            ColaboradorBLL bll = new ColaboradorBLL();
+
+            EnderecoBLL enderecoBLL = new EnderecoBLL();
+            Colaborador colaborador = new Colaborador();
+
+            colaborador.Funcao = new Funcao();
+            colaborador.Clinica = new Clinica();
+
+            if (saveBtn2 == "Deletar")
+            {
+
+                colaborador.Id = idSelecionado;
+
+                ViewData["result"] = bll.Delete(colaborador);
+
+                return View();
+            }
+
+            if (idSelecionado != 0)
+            {
+                if (state == null || city == null || logradouro == null || numeroCasa == 0 || cep == null)
+                {
+                    ViewData["result"] = "Algum dado de Endereco não foi preenchido.";
+                    return View();
+                }
+
+                colaborador.Endereco = enderecoBLL.EnderecoConstruido("Brasil", state, city, bairro, logradouro, numeroCasa, cep);
+
+                colaborador.Id = idSelecionado;
+                colaborador.Nome = nomeColaborador;
+                colaborador.Funcao.Id = funcao;
+                colaborador.Cro = cro;
+                colaborador.CroEstado = croEstado;
+                colaborador.Clinica.Id = clinica;
+                colaborador.DataAdmissao = dataAdmissao;
+                colaborador.DataDemissao = dataDemissao;
+                colaborador.Demitido = demitido;
+                colaborador.Ferias = ferias;
+
+                ViewData["result"] = bll.Update(colaborador);
+                return View();
+            }
+
+            if (saveBtn == "Salvar")
+            {
+                if (state == null || city == null || logradouro == null || numeroCasa == 0 || cep == null)
+                {
+                    ViewData["result"] = "Algum dado de Endereco não foi preenchido.";
+                    return View();
+                }
+                colaborador.Nome = nomeColaborador;
+                colaborador.Funcao.Id = funcao;
+                colaborador.Cro = cro;
+                colaborador.CroEstado = croEstado;
+                colaborador.Clinica.Id = clinica;
+                colaborador.DataAdmissao = dataAdmissao;
+                colaborador.DataDemissao = dataDemissao;
+                colaborador.Demitido = demitido;
+                colaborador.Ferias = ferias;
+
+                colaborador.Endereco = enderecoBLL.EnderecoConstruido("Brasil", state, city, bairro, logradouro, numeroCasa, cep);
+
+
+                ViewData["result"] = bll.Insert(colaborador);
+                return View();
+
+            }
             return View();
         }
-
         public IActionResult Atendimento(int idPaciente, int idColaborador, string saveBtn, int idSelecionado, string saveBtn2, DateTime dataInicial, DateTime dataFinal, int idTipoProcedimento, string status, int qtdpro)
         {
             if (saveBtn2 == "Deletar")
@@ -109,12 +175,9 @@ namespace PresentationLayer.Controllers
                 AtendimentoBLL bll = new AtendimentoBLL();
                 Atendimento a = new Atendimento();
                 ProcedimentoBLL pbll = new ProcedimentoBLL();
-
                 Procedimento procedimento = new Procedimento();
-
                 AtendimentoProcedimentosBLL bllap = new AtendimentoProcedimentosBLL();
                 AtendimentoProcedimentos ap = new AtendimentoProcedimentos();
-
 
                 a.Paciente = new Paciente();
                 a.Colaborador = new Colaborador();
