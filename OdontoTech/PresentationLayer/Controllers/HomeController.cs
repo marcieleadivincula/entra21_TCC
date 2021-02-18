@@ -20,12 +20,6 @@ namespace PresentationLayer.Controllers
 {
     public class HomeController : Controller
     {
-        //public List<CalendarEvent> GoogleEvents = new List<CalendarEvent>();
-        //// If modifying these scopes, delete your previously saved credentials
-        //// at ~/.credentials/calendar-dotnet-quickstart.json
-        //static string[] Scopes = { CalendarService.Scope.CalendarReadonly };
-        //static string ApplicationName = "Google Calendar API .NET Quickstart";
-
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -34,8 +28,6 @@ namespace PresentationLayer.Controllers
 
         }
 
-
-
         public IActionResult Index()
         {
             ViewBag.name = "";
@@ -43,8 +35,6 @@ namespace PresentationLayer.Controllers
 
             return View();
         }
-
-
 
         public IActionResult SignUp(string email, string passAgain, string pass, string btn, int Colaborador)
         {
@@ -196,9 +186,6 @@ namespace PresentationLayer.Controllers
             }
             return View();
         }
-
-
-
 
         public IActionResult Paciente(string firstName, string lastName, string cpf, string rg, DateTime dtNascimento, string pais, string estado, string cidade, string bairro, string logradouro, string cep, int numeroCasa, string contatos, string observacoes, int idPaciente, string saveBtn, string saveBtn2, int idSelecionado)
         {
@@ -608,9 +595,6 @@ namespace PresentationLayer.Controllers
 
         public IActionResult Dashboard()
         {
-            //CalendarEvents();
-            //ViewBag.EventList = GoogleEvents;
-
             return View();
         }
         public IActionResult Despesa(double valor, int idSelecionado, DateTime data, string descricao, string saveBtn, string saveBtn2)
