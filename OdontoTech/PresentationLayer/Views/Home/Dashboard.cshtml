@@ -67,7 +67,7 @@
 
                 <div class="current-month">
 
-            @{ string nomemes = System.Globalization.DateTimeFormatInfo.CurrentInfo.GetMonthName(DateTime.Now.Month); } @nomemes/ @DateTime.Now.Year
+                    @{ string nomemes = System.Globalization.DateTimeFormatInfo.CurrentInfo.GetMonthName(DateTime.Now.Month); } @nomemes/ @DateTime.Now.Year
 
                 </div>
 
@@ -671,25 +671,15 @@
                     <i class="menu__icon fa fa-home"></i>
                     <span class="menu__text">início</span>
                 </a>
+
                 <a class="menu__item" href="/Home/Atendimento">
                     @*<i class="menu__icon fas fa-notes-medical"></i>*@
                     <span class="menu__text"> atendimentos</span>
                 </a>
+
                 <a class="menu__item" href="/Home/Procedimento">
                     @*<i class="menu__icon fas fa-procedures"></i>*@
                     <span class="menu__text">procedimentos</span>
-                </a>
-                <a class="menu__item" href="/Home/Pagamento">
-                    @*<i class="menu__icon fas fa-dollar-sign"></i>*@
-                    <span class="menu__text">pagamentos</span>
-                </a>
-                <a class="menu__item" href="/Home/Clinica">
-                    @*<i class="menu__icon fas fa-tooth"></i>*@
-                    <span class="menu__text">clínicas</span>
-                </a>
-                <a class="menu__item" href="/Home/Estoque">
-                    @*<i class="menu__icon fas fa-boxes"></i>*@
-                    <span class="menu__text">estoque</span>
                 </a>
                 <a class="menu__item" href="/Home/Paciente">
                     @*<i class="menu__icon fas fa-users"></i>*@
@@ -699,6 +689,38 @@
                     @*<i class="menu__icon fas fa-hospital-user"></i>*@
                     <span class="menu__text">colaboradores</span>
                 </a>
+                <br />
+
+                <a class="menu__item" href="/Home/Finances"> 
+                <span class="menu__text">Finaças</span>
+                </a>
+                <br />
+                <a class="menu__item" href="/Home/Pagamento">
+                <span class="menu__text">Pagamentos</span>
+                </a>
+                <a class="menu__item" href="/Home/Despesa">
+                <span class="menu__text">Despesa</span>
+                </a>
+
+                <br />
+
+
+                <a class="menu__item" href="/Home/Clinica">
+                    @*<i class="menu__icon fas fa-tooth"></i>*@
+                    <span class="menu__text">clínicas</span>
+                </a>
+                <br />
+                <a class="menu__item" href="/Home/Estoque">
+                    @*<i class="menu__icon fas fa-boxes"></i>*@
+                    <span class="menu__text">estoque</span>
+                </a>
+                <a class="menu__item" href="/Home/Produto">
+                    @*<i class="menu__icon fas fa-boxes"></i>*@
+                    <span class="menu__text">produto</span>
+                </a>
+
+                <br />
+                <br/>
                 <a class="menu__item" href="/Home/Index">
                     @*<i class="menu__icon fas fa-sign-out-alt"></i>*@
                     <span class="menu__text">sair</span>

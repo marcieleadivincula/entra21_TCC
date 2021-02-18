@@ -773,28 +773,11 @@ namespace PresentationLayer.Controllers
 
             if (dal.VerificaLogin(email, pass))
             {
-                return View();
-            }
-            else
-            {
-                TempData.Add("Mensagem", "Senha ou Email invalido, verifique seus dados.");
-
-                return RedirectToAction("Index", "Home");
-            }
-        }
-
-        [HttpPost]
-        public IActionResult VerificarLogin(string login, string password)
-        {
-            UsuarioDAL dal = new UsuarioDAL();
-
-            if (dal.VerificaLogin(login, password))
-            {
                 return RedirectToAction("Dashboard", "Home");
             }
             else
             {
-                TempData.Add("Mensagem", "Login falhou, verifique seus dados.");
+                TempData.Add("loginfaild", "Senha ou Email invalido, verifique seus dados.");
 
                 return RedirectToAction("Index", "Home");
             }

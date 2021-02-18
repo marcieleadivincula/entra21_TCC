@@ -78,6 +78,9 @@
 
         double total = entrada - saida;
 
+
+        //String Format TOTAL
+
         string totalstring = Convert.ToString(total);
 
         int contrador = 0;
@@ -104,6 +107,69 @@
             }
         }
         total = Convert.ToDouble(valorx);
+
+
+        //String format Esntrada
+
+        totalstring = Convert.ToString(entrada);
+
+        contrador = 0;
+        achoudecimal = false;
+
+        valorx = "";
+
+        for (int i = 0; i < totalstring.Length; i++)
+        {
+            valorx += totalstring[i];
+            if (achoudecimal)
+            {
+                contrador++;
+                if (contrador == 2)
+                {
+
+
+                    break;
+                }
+            }
+            if (totalstring[i] == ',')
+            {
+                achoudecimal = true;
+            }
+        }
+        entrada = Convert.ToDouble(valorx);
+
+
+        // String format saida
+
+        totalstring = Convert.ToString(saida);
+
+        contrador = 0;
+        achoudecimal = false;
+
+        valorx = "";
+
+        for (int i = 0; i < totalstring.Length; i++)
+        {
+            valorx += totalstring[i];
+            if (achoudecimal)
+            {
+                contrador++;
+                if (contrador == 2)
+                {
+
+
+                    break;
+                }
+            }
+            if (totalstring[i] == ',')
+            {
+                achoudecimal = true;
+            }
+        }
+        saida = Convert.ToDouble(valorx);
+
+
+
     }
     <main class="container">
         <section id="balance">
@@ -144,7 +210,7 @@
     <main class="container">
         <form action="/Home/Finances" method="post">
 
-            <label style="font-size:20px"> Dispesas <a href="/Home/Despesa">Adicionar Dispesas</a></label>
+            <label style="font-size:20px"> Despesas <a href="/Home/Despesa">Adicionar Dispesas</a></label>
             <section id="transaction">
                 <table id="data-table">
                     <thead>
