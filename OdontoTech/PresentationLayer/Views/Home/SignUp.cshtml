@@ -47,6 +47,8 @@
                         Cadastro
                     </span>
 
+
+                    <br />
                     @* email *@
                     <div class="wrap-input100 validate-input" data-validate="Formato invalido">
                         <input class="input100" type="text" name="email">
@@ -58,7 +60,6 @@
                         ColaboradorBLL colaboradorBLL = new ColaboradorBLL();
                         List<Colaborador> listacolab = colaboradorBLL.GetAll();
                     }
-
 
 
 
@@ -88,8 +89,9 @@
                         <span class="focus-input100" data-placeholder="Confirmar Senha"></span>
                     </div>
 
-                    <label style="color:#666666;font-size:13px">Colaborador:</label>
-                    <select style="background-color: #ffffff;" class="select-css" name="Colaborador">
+                    @*<label style="font-size:13px">Colaborador</label>*@
+                    <select class="select-css" name="Colaborador">
+                        <option value=" ">Selecione o Colaborador</option>
                         @for (int i = 0; i < listacolab.Count; i++)
                         {
 
@@ -100,11 +102,30 @@
                     <br />
 
 
+                    @{
+                        if (Convert.ToString(ViewData["result"]) != "")
+                        {
+                            if (Convert.ToString(ViewData["result"]).Contains("!"))
+                            {
+                                <label style="color:green;font-size:13px"> @ViewData["result"] </label>
+                            }
+                            else
+                            {
+
+                                <label style="color:red;font-size:13px"> @ViewData["result"] </label>
+                            }
+
+                        }
+
+                    }
+
                     @{ if (Convert.ToBoolean(ViewData["SEA"]))
                         {
                             <label style="color:red;font-size:13px">As senhas não são iguais.</label>
                         }
                     }
+
+
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>

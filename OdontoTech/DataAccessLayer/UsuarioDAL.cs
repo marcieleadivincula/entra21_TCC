@@ -31,7 +31,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Usuário cadastrado com sucesso";
+                return "Usuário cadastrado com sucesso!";
             }
             catch (Exception ex)
             {

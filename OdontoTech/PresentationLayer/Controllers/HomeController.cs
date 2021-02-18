@@ -101,32 +101,41 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult SignUp(string email, string passAgain, string pass,string btn, int Colaborador)
+        public IActionResult SignUp(string email, string passAgain, string pass, string btn, int Colaborador)
         {
+
 
             if (passAgain != pass)
             {
                 ViewData["SEA"] = true;
-            return View();
+                return View();
             }
+
             if (btn == "1")
             {
+                if (Colaborador == 0)
+                {
+                    ViewData["result"] = "O colaborador deve ser selecionado.";
+                    return View();
+                }
+
                 ColaboradorBLL bllcolab = new ColaboradorBLL();
                 UsuarioBLL bll = new UsuarioBLL();
                 Usuario usuario = new Usuario();
                 usuario.Login = email;
                 usuario.Senha = pass;
-        
+
                 usuario.Colaborador = bllcolab.GetById(Colaborador);
 
+                TempData["result"] = bll.Insert(usuario);
 
-                TempData["Mensagem"] = bll.Insert(usuario);
-                return RedirectToAction("Home","Index");
+                return RedirectToAction("Index", "Home");
+
             }
             else
             {
 
-            return View();
+                return View();
             }
         }
 
@@ -156,13 +165,7 @@ namespace PresentationLayer.Controllers
                 AtendimentoBLL bll = new AtendimentoBLL();
                 Atendimento a = new Atendimento();
                 ProcedimentoBLL pbll = new ProcedimentoBLL();
-                Procedimento procedimento = new Procedimento();
-
-                //procedimento.TipoProcedimento = new TipoProcedimento();
-
-                //procedimento = pbll.GetProcedimentoIdTipo(idTipoProcedimento);
-
-                //pbll.Insert(procedimento);
+                Procedimento procedimento = new Procedimento();                
 
                 a.Paciente = new Paciente();
                 a.Colaborador = new Colaborador();
@@ -543,11 +546,11 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult TipoEmbalagem(string descricao,int idSelecionado, string saveBtn, string saveBtn2)
+        public IActionResult TipoEmbalagem(string descricao, int idSelecionado, string saveBtn, string saveBtn2)
         {
-               TipoEmbalagemBLL bll = new TipoEmbalagemBLL();
+            TipoEmbalagemBLL bll = new TipoEmbalagemBLL();
             TipoEmbalagem procedimento = new TipoEmbalagem();
-   
+
             if (saveBtn2 == "Deletar")
             {
                 procedimento.Id = idSelecionado;
@@ -558,7 +561,7 @@ namespace PresentationLayer.Controllers
             {
                 procedimento.Id = idSelecionado;
                 procedimento.Descricao = descricao;
-     
+
 
                 ViewData["result"] = bll.Update(procedimento);
                 return View();
@@ -597,7 +600,7 @@ namespace PresentationLayer.Controllers
             if (idSelecionado != 0)
             {
                 TipoPagamentoBLL bll = new TipoPagamentoBLL();
-                TipoPagamento tipoPagamento = new TipoPagamento(idSelecionado,nometipoPagamento,parcelas);
+                TipoPagamento tipoPagamento = new TipoPagamento(idSelecionado, nometipoPagamento, parcelas);
 
                 ViewData["result"] = bll.Update(tipoPagamento);
                 return View();

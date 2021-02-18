@@ -33,7 +33,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Usuário cadastrado com sucesso");
+            Assert.AreEqual(str, "Usuário cadastrado com sucesso!");
         }
 
         [Test]
