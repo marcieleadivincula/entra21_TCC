@@ -44,9 +44,44 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult SignUp()
+
+
+        public IActionResult SignUp(string email, string passAgain, string pass, string btn, int Colaborador)
         {
-            return View();
+
+
+            if (passAgain != pass)
+            {
+                ViewData["SEA"] = true;
+                return View();
+            }
+
+            if (btn == "1")
+            {
+                if (Colaborador == 0)
+                {
+                    ViewData["result"] = "O colaborador deve ser selecionado.";
+                    return View();
+                }
+
+                ColaboradorBLL bllcolab = new ColaboradorBLL();
+                UsuarioBLL bll = new UsuarioBLL();
+                Usuario usuario = new Usuario();
+                usuario.Login = email;
+                usuario.Senha = pass;
+
+                usuario.Colaborador = bllcolab.GetById(Colaborador);
+
+                TempData["result"] = bll.Insert(usuario);
+
+                return RedirectToAction("Index", "Home");
+
+            }
+            else
+            {
+
+                return View();
+            }
         }
 
         public IActionResult Colaborador()
@@ -84,10 +119,12 @@ namespace PresentationLayer.Controllers
                 AtendimentoBLL bll = new AtendimentoBLL();
                 Atendimento a = new Atendimento();
                 ProcedimentoBLL pbll = new ProcedimentoBLL();
+
                 Procedimento procedimento = new Procedimento();
 
                 AtendimentoProcedimentosBLL bllap = new AtendimentoProcedimentosBLL();
                 AtendimentoProcedimentos ap = new AtendimentoProcedimentos();
+
 
                 a.Paciente = new Paciente();
                 a.Colaborador = new Colaborador();

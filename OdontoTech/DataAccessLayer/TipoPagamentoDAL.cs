@@ -121,7 +121,6 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex);
                 throw new Exception("Erro no Banco de dados.Contate o administrador.");
             }
             finally

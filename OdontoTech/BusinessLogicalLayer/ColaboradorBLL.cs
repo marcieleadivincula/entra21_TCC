@@ -44,6 +44,11 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O estado do CRO deve ser informado.");
             }
 
+            if (colaborador.DataAdmissao == null)
+            {
+                erros.AppendLine("A data de admissão deve ser informada.");
+            }
+
             if (!string.IsNullOrWhiteSpace(colaborador.CroEstado))
             {
                 if (colaborador.CroEstado.Length > 2)
