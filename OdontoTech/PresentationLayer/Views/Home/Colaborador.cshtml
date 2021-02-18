@@ -163,17 +163,18 @@
 
                 <div class="field-group">
 
+                    @* dataAdmissao *@
+                    <div class="field">
+                        <label for="dataAdmissao">Data de Admissao</label>
+                        <input type="date" name="dataAdmissao" value="@ViewBag.dataAdmissao" />
+                    </div>
+
                     @* dataDemissao *@
                     <div class="field">
                         <label for="dataDemissao">Data de Demissão</label>
                         <input type="date" name="dataDemissao" value="@ViewBag.dataDemissao" />
                     </div>
 
-                    @* dataAdmissao *@
-                    <div class="field">
-                        <label for="dataAdmissao">Data de Admissao</label>
-                        <input type="date" name="dataAdmissao" value="@ViewBag.dataAdmissao" />
-                    </div>
 
                 </div>
 
@@ -303,10 +304,10 @@
                 @for (int i = 0; i < listaColaboradores.Count; i++)
                 {
 
-                    Endereco e = enderecoBLL.GetById(listaClinicas[i].Endereco);
+                    Endereco e = enderecoBLL.GetById(listaColaboradores[i].Endereco);
 
 
-                    <input type="radio" name="idSelecionado" value="@listaClinicas[i].Id" />
+                    <input type="radio" name="idSelecionado" value="@listaColaboradores[i].Id" />
 
                     <label> <b>ID:</b> @listaColaboradores[i].Id</label>
                     <label> <b>Nome:</b> @listaColaboradores[i].Nome</label>
@@ -316,17 +317,20 @@
                     <label> <b>Data Admissão:</b> @listaColaboradores[i].DataAdmissao</label> 
                     <label> <b>Data Demissão:</b> @listaColaboradores[i].DataDemissao</label> 
                     <label> <b>Endereço:</b> @listaLogradouros[i].Nome - @e.NumeroCasa</label>
-                    <label> <b>Clínica:</b> @listaClinicas[i].Nome</label>
+                    <label> <b>Clínica:</b> @listaColaboradores[i].Clinica.Nome</label>
                     <label> <b>Férias:</b> @listaColaboradores[i].Ferias</label>
 
-                    @if (listaColaboradores[i].Ferias == true)
+                    @if (listaColaboradores[i].Ferias)
                     {<img src="~/images/atendido.png" alt="logo" height="20" width="20" data-atf="1" /> }
                     else
                     {<img src="~/images/uncheck.png" alt="logo" height="20" width="20" data-atf="1" />}
                     
-                    <label> <b>Demitido:</b> @listaColaboradores[i].Ferias</label>
 
-                    @if (listaColaboradores[i].Demitido == true)
+
+
+                    <label> <b>Demitido:</b> @listaColaboradores[i].Demitido</label>
+
+                    @if (listaColaboradores[i].Demitido)
                     {<img src="~/images/atendido.png" alt="logo" height="20" width="20" data-atf="1" /> }
                     else
                     {<img src="~/images/uncheck.png" alt="logo" height="20" width="20" data-atf="1" />}

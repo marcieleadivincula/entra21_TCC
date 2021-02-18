@@ -34,7 +34,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Colaborador cadastrado com sucesso";
+                return "Colaborador cadastrado com sucesso!";
             }
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Colaborador deletada com êxito!";
+                return "Colaborador deletado com êxito!";
             }
             catch (Exception)
             {
@@ -155,7 +155,7 @@ namespace DataAccessLayer
                     temp.Endereco.Id = Convert.ToInt32(reader["idEndereco"]);
                     temp.Clinica.Id = Convert.ToInt32(reader["idClinica"]);
                     temp.Ferias = Convert.ToBoolean(reader["ferias"]);
-                    temp.Ferias = Convert.ToBoolean(reader["demitido"]);
+                    temp.Demitido = Convert.ToBoolean(reader["demitido"]);
 
                     colaboradores.Add(temp);
                 }

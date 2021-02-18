@@ -55,7 +55,7 @@ namespace Domain.IntegrationTests
 
             str = bll.Insert(test);
 
-            Assert.AreEqual(str, "Colaborador cadastrado com sucesso");
+            Assert.AreEqual(str, "Colaborador cadastrado com sucesso!");
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace Domain.IntegrationTests
         {
             Colaborador test = new Colaborador(150, "Alan Domingo", "12", "12", dataAdmissao, dataDemissao, endereco, funcao, clinica, ferias, demitido);
             str = bll.Delete(test);
-            Assert.AreEqual(str, "Colaborador deletada com êxito!");
+            Assert.AreEqual(str, "Colaborador deletado com êxito!");
         }
 
     }
