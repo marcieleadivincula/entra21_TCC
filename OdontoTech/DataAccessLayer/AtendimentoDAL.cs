@@ -56,8 +56,8 @@ namespace DataAccessLayer
         public string Delete(Atendimento atendimento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM atendimento WHERE idAtendimento = @idAtendimento";
-            cmd.Parameters.AddWithValue("@idAtendimento", atendimento.Id);
+            cmd.CommandText = $"DELETE FROM atendimento WHERE idAtendimento = {atendimento.Id}";
+
             //cmd.CommandText = $"DELETE FROM atendimento WHERE idAtendimento = {Atendimento.Id}"; //REVER
 
             try

@@ -25,7 +25,6 @@
     <title>Finances | OdontoTech</title>
 
 
-
 </head>
 
 <body style="margin:10%">
@@ -33,17 +32,27 @@
 
 
 
-    <center>
-        <img style="width:250px;left:250px;margin:0px auto" src="~/images/icons/OdontoTechV2.png" alt="Logo da OdontoTech" />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+    <header>
+   
+        <a style="position:relative" href="/Home/Dashboard">
+            <img style="position:relative" src="~/images/icons/OdontoTechV2.png" alt="logo" height="70" width="70" data-atf="1" /><br /> ⟲ Voltar para home
+        </a>
 
-    </center>
+            @*//Não consegui configurar no CSS, os <br /> estao funcionando*@
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+    </header>
+
+  
+
 
     @{
         DespesaBLL1 despesaBLL = new DespesaBLL1();
@@ -135,7 +144,7 @@
     <main class="container">
         <form action="/Home/Finances" method="post">
 
-            <label style="font-size:20px"> Dispesas <a href="#">Adicionar Dispesas</a></label>
+            <label style="font-size:20px"> Dispesas <a href="/Home/Despesa">Adicionar Dispesas</a></label>
             <section id="transaction">
                 <table id="data-table">
                     <thead>

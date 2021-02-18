@@ -48,6 +48,42 @@ namespace BusinessLogicalLayer
             string respostaDB = dal.Insert(despesa);
             return respostaDB;
         }
+
+        public string Update(Despesa despesa)
+        {
+            StringBuilder erros = new StringBuilder();
+
+            if (string.IsNullOrWhiteSpace(despesa.Descricao))
+            {
+                erros.AppendLine("A descrição da dispesa deve ser informada.");
+            }
+
+
+            if (despesa.Data == null)
+            {
+                erros.AppendLine("A data da dispesa deve ser informada.");
+            }
+
+            if (despesa.Valor == 0)
+            {
+                erros.AppendLine("A descrição do procedimento deve ser informada.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(despesa.Descricao))
+            {
+                if (despesa.Descricao.Length > 45)
+                {
+                    erros.AppendLine("A descrição da dispesa não pode conter mais que 45 caracteres.");
+                }
+            }
+            if(despesa.idDespesa == 0)
+            {
+                erros.AppendLine("A ID da despesa deve ser informado.");
+            }
+
+            string respostaDB = dal.Update(despesa);
+            return respostaDB;
+        }
         public string Delete(Despesa despesa)
         {
             StringBuilder erros = new StringBuilder();

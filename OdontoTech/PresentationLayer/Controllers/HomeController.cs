@@ -34,70 +34,13 @@ namespace PresentationLayer.Controllers
 
         }
 
-        //public void CalendarEvents()
-        //{
-        //    UserCredential credential;
-        //    //string path = Server.MapPath("credentials.json");
 
-        //    using (var stream =
-        //        new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
-        //    {
-        //        // The file token.json stores the user's access and refresh tokens, and is created
-        //        // automatically when the authorization flow completes for the first time.
-        //        string credPath = "token.json";
-        //        credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-        //            GoogleClientSecrets.Load(stream).Secrets,
-        //            Scopes,
-        //            "user",
-        //            CancellationToken.None,
-        //            new FileDataStore(credPath, true)).Result;
-        //    }
-
-        //    // Create Google Calendar API service.
-        //    var service = new CalendarService(new BaseClientService.Initializer()
-        //    {
-        //        HttpClientInitializer = credential,
-        //        ApplicationName = ApplicationName,
-        //    });
-
-        //    // Define parameters of request.
-        //    EventsResource.ListRequest request = service.Events.List("primary");
-        //    request.TimeMin = DateTime.Now;
-        //    request.ShowDeleted = false;
-        //    request.SingleEvents = true;
-        //    request.MaxResults = 10;
-        //    request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-
-        //    // List events.
-        //    Events events = request.Execute();
-        //    Console.WriteLine("Upcoming events:");
-        //    if (events.Items != null && events.Items.Count > 0)
-        //    {
-        //        foreach (var eventItem in events.Items)
-        //        {
-        //            var calendarEvent = new CalendarEvent();
-        //            calendarEvent.Summay = eventItem.Summary;
-        //            calendarEvent.Organizer = eventItem.Organizer.Email;
-        //            calendarEvent.Description = eventItem.Description;
-        //            calendarEvent.StartTime = eventItem.Start.DateTime.ToString();
-        //            calendarEvent.EndTime = eventItem.End.DateTime.ToString();
-
-        //            GoogleEvents.Add(calendarEvent);
-        //            //GoogleEvents.Add(eventItem.Summary);
-        //        }
-        //    }
-        //}
 
         public IActionResult Index()
         {
             ViewBag.name = "";
             ViewBag.pass = "";
 
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
             return View();
         }
 
@@ -111,20 +54,29 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Atendimento(int idPaciente, int idColaborador, string saveBtn, int idSelecionado, string saveBtn2, DateTime dataInicial, DateTime dataFinal, int idTipoProcedimento, string status)
+        public IActionResult Atendimento(int idPaciente, int idColaborador, string saveBtn, int idSelecionado, string saveBtn2, DateTime dataInicial, DateTime dataFinal, int idTipoProcedimento, string status, int qtdpro)
         {
-
-
             if (saveBtn2 == "Deletar")
             {
                 AtendimentoBLL bll = new AtendimentoBLL();
                 Atendimento a = new Atendimento();
+                AtendimentoProcedimentosBLL bllap = new AtendimentoProcedimentosBLL();
+                AtendimentoProcedimentos ap = new AtendimentoProcedimentos();
 
-                a.Id = idSelecionado;
+                ap.Id = idSelecionado;
+                ap = bllap.GetById(ap);
+                a = bll.GetById(ap.Atendimento);
 
-                ViewData["result"] = bll.Delete(a);
-
-                return View();
+                if (!bll.Delete(a).Contains("!"))
+                {
+                    ViewData["result"] = bll.Delete(a);
+                    return View();
+                }
+                else
+                {
+                    ViewData["result"] = bllap.Delete(ap);
+                    return View();
+                }
             }
 
             if (idSelecionado != 0)
@@ -134,46 +86,80 @@ namespace PresentationLayer.Controllers
                 ProcedimentoBLL pbll = new ProcedimentoBLL();
                 Procedimento procedimento = new Procedimento();
 
-                //procedimento.TipoProcedimento = new TipoProcedimento();
-
-                //procedimento = pbll.GetProcedimentoIdTipo(idTipoProcedimento);
-
-                //pbll.Insert(procedimento);
+                AtendimentoProcedimentosBLL bllap = new AtendimentoProcedimentosBLL();
+                AtendimentoProcedimentos ap = new AtendimentoProcedimentos();
 
                 a.Paciente = new Paciente();
                 a.Colaborador = new Colaborador();
 
-                a.Id = idSelecionado;
+                ap.Id = idSelecionado;
+
+                ap = bllap.GetById(ap);
+                a = bll.GetById(ap.Atendimento);
                 a.StatusAtendimento = status;
                 a.DtInicioAtendimento = dataInicial;
                 a.DtFinalAtendimento = dataFinal;
                 a.Paciente.Id = idPaciente;
                 a.Colaborador.Id = idColaborador;
 
-                ViewData["result"] = bll.Update(a);
-                return View();
-            }
 
+                if (!bll.Update(a).Contains("!"))
+                {
+                    ViewData["result"] = bll.Update(a);
+                    return View();
+                }
+                else
+                {
+                    ap.QtdProcedimento = qtdpro;
+                    ap.Atendimento = a;
+                    ap.Procedimento = new Procedimento();
+                    ap.Procedimento.Id = idTipoProcedimento;
+                    ap.Procedimento = pbll.GetById(ap.Procedimento);
+                    ViewData["result"] = bllap.Update(ap);
+                    return View();
+                }
+            }
             if (saveBtn == "Salvar")
             {
                 AtendimentoBLL bll = new AtendimentoBLL();
                 Atendimento a = new Atendimento();
+                ProcedimentoBLL pbll = new ProcedimentoBLL();
+                Procedimento procedimento = new Procedimento();
 
+                AtendimentoProcedimentosBLL bllap = new AtendimentoProcedimentosBLL();
+                AtendimentoProcedimentos ap = new AtendimentoProcedimentos();
 
                 a.Paciente = new Paciente();
                 a.Colaborador = new Colaborador();
+
+         
                 a.StatusAtendimento = status;
                 a.DtInicioAtendimento = dataInicial;
                 a.DtFinalAtendimento = dataFinal;
                 a.Paciente.Id = idPaciente;
                 a.Colaborador.Id = idColaborador;
 
-                ViewData["result"] = bll.Insert(a);
-                return View();
 
+                if (!bll.Insert(a).Contains("!"))
+                {
+                    ViewData["result"] = bll.Insert(a);
+                    return View();
+                }
+                else
+                {
+                    ap.QtdProcedimento = qtdpro;
+                    ap.Atendimento = bll.GetLastRegister();
+                    ap.Procedimento = new Procedimento();
+                    ap.Procedimento.Id = idTipoProcedimento;
+                    ap.Procedimento = pbll.GetById(ap.Procedimento);
+                    ViewData["result"] = bllap.Insert(ap);
+                    View();
+                }
+                return View();
             }
             return View();
         }
+
 
 
 
@@ -292,11 +278,6 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Contato()
-        {
-            return View();
-        }
-
         public IActionResult FoneTipo()
         {
             return View();
@@ -348,40 +329,6 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Endereco()
-        {
-            return View();
-        }
-
-        public IActionResult Logradouro()
-        {
-            return View();
-        }
-
-        public IActionResult Bairro()
-        {
-            return View();
-        }
-
-        public IActionResult Cidade()
-        {
-            return View();
-        }
-
-        public IActionResult Estado()
-        {
-            return View();
-        }
-
-        public IActionResult Pais()
-        {
-            PaisBLL paisBll = new PaisBLL();
-
-            ViewBag.Id = paisBll.GetAll();
-            ViewBag.Nome = paisBll.GetAll();
-
-            return View();
-        }
 
         public IActionResult Pagamento(double valor, int idSelecionado, DateTime data, int IdPaciente, string saveBtn, string saveBtn2, int idTipoPagamento)
         {
@@ -566,7 +513,7 @@ namespace PresentationLayer.Controllers
             if (idSelecionado != 0)
             {
                 TipoPagamentoBLL bll = new TipoPagamentoBLL();
-                TipoPagamento tipoPagamento = new TipoPagamento(idSelecionado,nometipoPagamento,parcelas);
+                TipoPagamento tipoPagamento = new TipoPagamento(idSelecionado, nometipoPagamento, parcelas);
 
                 ViewData["result"] = bll.Update(tipoPagamento);
                 return View();
@@ -629,9 +576,38 @@ namespace PresentationLayer.Controllers
 
             return View();
         }
-        public IActionResult Dispesas()
+        public IActionResult Despesa(double valor, int idSelecionado, DateTime data, string descricao, string saveBtn, string saveBtn2)
         {
-            
+            DespesaBLL1 bll = new DespesaBLL1();
+            Despesa despesa = new Despesa();
+
+            if (saveBtn2 == "Deletar")
+            {
+                despesa.idDespesa = idSelecionado;
+                ViewData["result"] = bll.Delete(despesa);
+                return View();
+            }
+            if (idSelecionado != 0)
+            {
+                despesa.idDespesa = idSelecionado;
+                despesa.Data = data;
+                despesa.Valor = valor;
+                despesa.Descricao = descricao;
+
+                ViewData["result"] = bll.Update(despesa);
+                return View();
+            }
+
+
+            if (saveBtn == "Salvar")
+            {
+                despesa.Data = data;
+                despesa.Valor = valor;
+                despesa.Descricao = descricao;
+                ViewData["result"] = bll.Insert(despesa);
+                return View();
+
+            }
             return View();
         }
 
@@ -723,25 +699,25 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        //[HttpPost]
-        //public IActionResult VerificarLogin(string login, string password)
-        //{
-        //    UsuarioDAL dal = new UsuarioDAL();
+        [HttpPost]
+        public IActionResult VerificarLogin(string login, string password)
+        {
+            UsuarioDAL dal = new UsuarioDAL();
 
-        //    if (dal.Autenticar(login, password))
-        //    {
-        //        return View();
-        //    }
-        //    else
-        //    {
-        //        TempData.Add("Mensagem", "Login falhou, verifique seus dados.");
+            if (dal.VerificaLogin(login, password))
+            {
+                return RedirectToAction("Dashboard", "Home");
+            }
+            else
+            {
+                TempData.Add("Mensagem", "Login falhou, verifique seus dados.");
 
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //}
+                return RedirectToAction("Index", "Home");
+            }
+        }
 
         public IActionResult Finances(int idSelecionado, int idSelecionadoDispesa, string saveBtn2)
-        
+
         {
 
             if (saveBtn2 == "Deletar")
@@ -760,7 +736,7 @@ namespace PresentationLayer.Controllers
                     Despesa dispesa = new Despesa();
                     dispesa.idDespesa = idSelecionadoDispesa;
 
-                   ViewData["resultA"]= bll.Delete(dispesa);
+                    ViewData["resultA"] = bll.Delete(dispesa);
                 }
             }
             return View();
