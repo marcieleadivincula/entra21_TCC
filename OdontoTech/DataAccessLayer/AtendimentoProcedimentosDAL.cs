@@ -26,13 +26,13 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Registro cadastrado com sucesso";
+                return "Atendimento cadastrado com sucesso!";
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("Duplicate"))
                 {
-                    return ("Registro já cadastrado.");
+                    return ("Atendimento já cadastrado.");
                 }
                 else
                 {
@@ -60,7 +60,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Registro deletado com êxito!";
+                return "Atendimento deletado com êxito!";
             }
             catch (Exception)
             {
@@ -90,7 +90,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Registro atualizado com êxito!";
+                return "Atendimento atualizado com êxito!";
             }
             catch (Exception)
             {

@@ -26,9 +26,11 @@
 
     <title>Home</title>
 </head>
-<body>
+<body style="margin:0">
     @{
         var currentDay = DateTime.Now.Day;
+        var currentMonth = DateTime.Now.Month;
+        var currentYear = DateTime.Now.Year;
 
         AtendimentoProcedimentosBLL atendimentoProcedimentosBLL = new AtendimentoProcedimentosBLL();
 
@@ -63,7 +65,13 @@
                     <div class="toggle__option toggle__option--selected">mês</div>
                 </div>
 
-                <div class="current-month">@DateTime.Now.Month / @DateTime.Now.Year</div>
+                <div class="current-month">
+<<<<<<< HEAD
+                  @{ string nomemes = System.Globalization.DateTimeFormatInfo.CurrentInfo.GetMonthName(DateTime.Now.Month); } @nomemes/ @DateTime.Now.Year
+=======
+                    @DateTime.Now.Month @{ string nomemes = System.Globalization.DateTimeFormatInfo.CurrentInfo.GetMonthName(DateTime.Now.Month); } @nomemes/ @DateTime.Now.Year
+>>>>>>> 7486c0336730700b81d739cad95f6f7d8faf52ca
+                </div>
 
                 <div class="search-input">
                     <a href="/Home/Atendimento" class="btn btn-outline-success button new" id="new-transaction">+ Agendar atendimento</a>
@@ -83,7 +91,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(1))
                         {
-                            <label style="color:green;font-size:13px">1</label>
+                            <label style="        color: #ab2fff;
+        font-size: 13px">1</label>
                         }
                         else
                         {
@@ -93,7 +102,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(2))
                         {
-                            <label style="color:green;font-size:13px">2</label>
+                            <label style="        color: #ab2fff;
+        font-size: 13px">2</label>
                         }
                         else
                         {
@@ -103,7 +113,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(3))
                         {
-                            <label style="color: #3dd705; font-weight:600">3</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">3</label>
                         }
                         else
                         {
@@ -113,7 +124,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(4))
                         {
-                            <label style="color: #3dd705; font-weight:600">4</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">4</label>
                         }
                         else
                         {
@@ -123,7 +135,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(5))
                         {
-                            <label style="color: #3dd705; font-weight:600">5</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">5</label>
                         }
                         else
                         {
@@ -133,7 +146,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(6))
                         {
-                            <label style="color: #3dd705; font-weight:600">6</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">6</label>
                         }
                         else
                         {
@@ -143,7 +157,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(7))
                         {
-                            <label style="color: #3dd705; font-weight:600">7</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">7</label>
                         }
                         else
                         {
@@ -155,7 +170,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(8))
                         {
-                            <label style="color: #3dd705; font-weight:600">8</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">8</label>
                         }
                         else
                         {
@@ -165,7 +181,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(9))
                         {
-                            <label style="color: #3dd705; font-weight:600">9</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">9</label>
                         }
                         else
                         {
@@ -175,7 +192,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(10))
                         {
-                            <label style="color: #3dd705; font-weight:600">10</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">10</label>
                         }
                         else
                         {
@@ -185,7 +203,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(11))
                         {
-                            <label style="color: #3dd705; font-weight:600">11</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">11</label>
                         }
                         else
                         {
@@ -195,7 +214,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(12))
                         {
-                            <label style="color: #3dd705; font-weight:600">12</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">12</label>
                         }
                         else
                         {
@@ -205,7 +225,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(13))
                         {
-                            <label style="color: #3dd705; font-weight:600">13</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">13</label>
                         }
                         else
                         {
@@ -215,7 +236,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(14))
                         {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">14</label>
                         }
                         else
                         {
@@ -227,7 +249,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(15))
                         {
-                            <label style="color: #3dd705; font-weight:600">15</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">15</label>
                         }
                         else
                         {
@@ -237,7 +260,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(16))
                         {
-                            <label style="color: #3dd705; font-weight:600">16</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">16</label>
                         }
                         else
                         {
@@ -247,7 +271,8 @@
                     <div class="calendar__day day">
                         @if (currentDay.Equals(17))
                         {
-                            <label style="color: #3dd705; font-weight:600">17</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">17</label>
                         }
                         else
                         {
@@ -258,18 +283,9 @@
 
                         @if (currentDay.Equals(18))
                         {
-                            <label style="color: #3dd705; font-weight:600">18</label>
-                            @foreach (var item in atendimentoProcedimentos)
-                            {
-                                @{item.Procedimento.TipoProcedimento = tipoProcedimentoBLL.GetById(item.Procedimento.TipoProcedimento); }
-                                @{item.Atendimento.Colaborador = colaboradorBLL.GetById(item.Atendimento.Colaborador.Id);}
+                            <label style="        color: #ab2fff;
+        font-weight: 600">18</label>
 
-                                @if (currentDay.Equals(item.Atendimento.DtInicioAtendimento.Day))
-                                {
-                                    <p>@item.Procedimento.TipoProcedimento.Nome</p>
-                                    <p>@item.Atendimento.Colaborador.Nome</p>
-                                }
-                            }
                         }
                         else
                         {
@@ -277,180 +293,325 @@
                         }
                     </div>
                     <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
+                        @if (currentDay.Equals(19))
                         {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">19</label>
                         }
                         else
                         {
-                            <label style="color:#A8B2B9;">14</label>
-                        }19
+                            <label style="color:#A8B2B9;">19</label>
+                        }
                     </div>
                     <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
+                        @if (currentDay.Equals(20))
                         {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">20</label>
                         }
                         else
                         {
-                            <label style="color:#A8B2B9;">14</label>
-                        }20
+                            <label style="color:#A8B2B9;">20</label>
+                        }
                     </div>
                     <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
+                        @if (currentDay.Equals(21))
                         {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">21</label>
                         }
                         else
                         {
-                            <label style="color:#A8B2B9;">14</label>
-                        }21
+                            <label style="color:#A8B2B9;">21</label>
+                        }
                     </div>
                 </div>
                 <div class="calendar__week">
                     <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
+                        @if (currentDay.Equals(22))
                         {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">22</label>
                         }
                         else
                         {
-                            <label style="color:#A8B2B9;">14</label>
-                        }22
+                            <label style="color:#A8B2B9;">22</label>
+                        }
                     </div>
                     <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
+                        @if (currentDay.Equals(23))
                         {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">23</label>
                         }
                         else
                         {
-                            <label style="color:#A8B2B9;">14</label>
-                        }23
+                            <label style="color:#A8B2B9;">23</label>
+                        }
                     </div>
                     <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
+                        @if (currentDay.Equals(24))
                         {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">24</label>
                         }
                         else
                         {
-                            <label style="color:#A8B2B9;">14</label>
-                        }24
+                            <label style="color:#A8B2B9;">24</label>
+                        }
                     </div>
                     <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
+                        @if (currentDay.Equals(25))
                         {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">25</label>
                         }
                         else
                         {
-                            <label style="color:#A8B2B9;">14</label>
-                        }25
+                            <label style="color:#A8B2B9;">25</label>
+                        }
                     </div>
                     <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
+                        @if (currentDay.Equals(26))
                         {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">26</label>
                         }
                         else
                         {
-                            <label style="color:#A8B2B9;">14</label>
-                        }26
+                            <label style="color:#A8B2B9;">26</label>
+                        }
                     </div>
                     <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
+                        @if (currentDay.Equals(27))
                         {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                            <label style="        color: #ab2fff;
+        font-weight: 600">27</label>
                         }
                         else
                         {
-                            <label style="color:#A8B2B9;">14</label>
-                        }27
+                            <label style="        color: #A8B2B9;">27</label>
+                        }
                     </div>
+                    @{DateTime dtatual = DateTime.Today;
+                        DateTime ultimodiadomes = new DateTime(dtatual.Year
+                            , dtatual.Month, DateTime.DaysInMonth(dtatual.Year, dtatual.Month));}
+
+
+
+
+
                     <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
+
+                        @if (currentDay.Equals(28))
                         {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                            <label style="color: #3dd705; font-weight:600">28</label>
                         }
                         else
                         {
-                            <label style="color:#A8B2B9;">14</label>
-                        }28
+                            <label style="color:#A8B2B9;">28</label>
+                        }
                     </div>
                 </div>
-                <div class="calendar__week">
-                    <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
-                        {
-                            <label style="color: #3dd705; font-weight:600">14</label>
-                        }
-                        else
-                        {
-                            <label style="color:#A8B2B9;">14</label>
-                        }29
+
+                @if (ultimodiadomes.Day == 28)
+                {
+                    <div class="calendar__week">
+                        <div class="calendar__day day">
+
+                            <label style="color:#A8B2B9;">1</label>
+
+                        </div>
+                        <div class="calendar__day day">
+
+                            <label style="color:#A8B2B9;">2</label>
+
+                        </div>
+                        <div class="calendar__day day">
+
+                            <label style="color:#A8B2B9;">3</label>
+
+                        </div>
+                        <div class="calendar__day day">
+
+                            <label style="color:#A8B2B9;">4</label>
+
+                        </div>
+                        <div class="calendar__day day">
+
+                            <label style="color:#A8B2B9;">5</label>
+
+                        </div>
+                        <div class="calendar__day day">
+
+                            <label style="color:#A8B2B9;">6</label>
+
+                        </div>
+                        <div class="calendar__day day">
+
+                            <label style="color:#A8B2B9;">7</label>
+
+                        </div>
+
                     </div>
-                    <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
+                }
+                else
+                {
+                    <div class="calendar__week">
+                        @if (ultimodiadomes.Day == 29)
                         {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                            <div class="calendar__day day">
+                                @if (currentDay.Equals(29))
+                                {
+                                    <label style="color: #3dd705; font-weight:600">29</label>
+                                }
+                                else
+                                {
+                                    <label style="color:#A8B2B9;">29</label>
+                                }
+                            </div>
+
+                            <div class="calendar__day day">
+
+                                <label style="color:#A8B2B9;">1</label>
+
+                            </div>
+                            <div class="calendar__day day">
+
+                                <label style="color:#A8B2B9;">2</label>
+
+                            </div>
+                            <div class="calendar__day day">
+
+                                <label style="color:#A8B2B9;">3</label>
+
+                            </div>
+                            <div class="calendar__day day">
+
+                                <label style="color:#A8B2B9;">4</label>
+
+                            </div>
+                            <div class="calendar__day day">
+
+                                <label style="color:#A8B2B9;">5</label>
+
+                            </div>
+                            <div class="calendar__day day">
+
+                                <label style="color:#A8B2B9;">6</label>
+
+                            </div>
                         }
-                        else
-                        {
-                            <label style="color:#A8B2B9;">14</label>
-                        }30
-                    </div>
-                    <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
-                        {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                        @{else if (ultimodiadomes.Day == 30)
+                            {
+                                <div class="calendar__day day">
+                                    @if (currentDay.Equals(29))
+                                    {
+                                        <label style="color: #3dd705; font-weight:600">29</label>
+                                    }
+                                    else
+                                    {
+                                        <label style="color:#A8B2B9;">29</label>
+                                    }
+                                </div>
+
+                                <div class="calendar__day day">
+                                    @if (currentDay.Equals(30))
+                                    {
+                                        <label style="color: #3dd705; font-weight:600">30</label>
+                                    }
+                                    else
+                                    {
+                                        <label style="color:#A8B2B9;">30</label>
+                                    }
+                                </div>
+                                <div class="calendar__day day">
+
+                                    <label style="color:#A8B2B9;">1</label>
+
+                                </div>
+                                <div class="calendar__day day">
+
+                                    <label style="color:#A8B2B9;">2</label>
+
+                                </div>
+                                <div class="calendar__day day">
+
+                                    <label style="color:#A8B2B9;">3</label>
+
+                                </div>
+                                <div class="calendar__day day">
+
+                                    <label style="color:#A8B2B9;">4</label>
+
+                                </div>
+                                <div class="calendar__day day">
+
+                                    <label style="color:#A8B2B9;">5</label>
+
+                                </div>
+                            }
                         }
-                        else
-                        {
-                            <label style="color:#A8B2B9;">14</label>
-                        }31
-                    </div>
-                    <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
-                        {
-                            <label style="color: #3dd705; font-weight:600">14</label>
+                        @{else if (ultimodiadomes.Day == 30)
+                            {
+                                <div class="calendar__day day">
+                                    @if (currentDay.Equals(29))
+                                    {
+                                        <label style="color: #3dd705; font-weight:600">29</label>
+                                    }
+                                    else
+                                    {
+                                        <label style="color:#A8B2B9;">29</label>
+                                    }
+                                </div>
+
+                                <div class="calendar__day day">
+                                    @if (currentDay.Equals(30))
+                                    {
+                                        <label style="color: #3dd705; font-weight:600">30</label>
+                                    }
+                                    else
+                                    {
+                                        <label style="color:#A8B2B9;">30</label>
+                                    }
+                                </div>
+
+                                <div class="calendar__day day">
+                                    @if (currentDay.Equals(31))
+                                    {
+                                        <label style="color: #3dd705; font-weight:600">31</label>
+                                    }
+                                    else
+                                    {
+                                        <label style="color:#A8B2B9;">31</label>
+                                    }
+                                </div>
+                                <div class="calendar__day day">
+
+                                    <label style="color:#A8B2B9;">1</label>
+
+                                </div>
+                                <div class="calendar__day day">
+
+                                    <label style="color:#A8B2B9;">2</label>
+
+                                </div>
+                                <div class="calendar__day day">
+
+                                    <label style="color:#A8B2B9;">3</label>
+
+                                </div>
+                                <div class="calendar__day day">
+
+                                    <label style="color:#A8B2B9;">4</label>
+
+                                </div>
+                            }
                         }
-                        else
-                        {
-                            <label style="color:#A8B2B9;">14</label>
-                        }1
+
+
                     </div>
-                    <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
-                        {
-                            <label style="color: #3dd705; font-weight:600">14</label>
-                        }
-                        else
-                        {
-                            <label style="color:#A8B2B9;">14</label>
-                        }2
-                    </div>
-                    <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
-                        {
-                            <label style="color: #3dd705; font-weight:600">14</label>
-                        }
-                        else
-                        {
-                            <label style="color:#A8B2B9;">14</label>
-                        }3
-                    </div>
-                    <div class="calendar__day day">
-                        @if (currentDay.Equals(14))
-                        {
-                            <label style="color: #3dd705; font-weight:600">14</label>
-                        }
-                        else
-                        {
-                            <label style="color:#A8B2B9;">14</label>
-                        }4
-                    </div>
-                </div>
+                }
             </div>
 
             <h2>Atendimentos de hoje:</h2>
@@ -498,6 +659,7 @@
             </table>
         </section>
 
+
         <aside class="sidebar">
             <div class="logo">OdontoTech</div>
             <div class="avatar">
@@ -512,41 +674,43 @@
                     <span class="menu__text">início</span>
                 </a>
                 <a class="menu__item" href="/Home/Atendimento">
-                    <i class="menu__icon fas fa-notes-medical"></i>
-                    <span class="menu__text">atendimentos</span>
+                    @*<i class="menu__icon fas fa-notes-medical"></i>*@
+                    <span class="menu__text"> atendimentos</span>
                 </a>
                 <a class="menu__item" href="/Home/Procedimento">
-                    <i class="menu__icon fas fa-procedures"></i>
+                    @*<i class="menu__icon fas fa-procedures"></i>*@
                     <span class="menu__text">procedimentos</span>
                 </a>
                 <a class="menu__item" href="/Home/Pagamento">
-                    <i class="menu__icon fas fa-dollar-sign"></i>
+                    @*<i class="menu__icon fas fa-dollar-sign"></i>*@
                     <span class="menu__text">pagamentos</span>
                 </a>
                 <a class="menu__item" href="/Home/Clinica">
-                    <i class="menu__icon fas fa-tooth"></i>
+                    @*<i class="menu__icon fas fa-tooth"></i>*@
                     <span class="menu__text">clínicas</span>
                 </a>
                 <a class="menu__item" href="/Home/Estoque">
-                    <i class="menu__icon fas fa-boxes"></i>
+                    @*<i class="menu__icon fas fa-boxes"></i>*@
                     <span class="menu__text">estoque</span>
                 </a>
                 <a class="menu__item" href="/Home/Paciente">
-                    <i class="menu__icon fas fa-users"></i>
+                    @*<i class="menu__icon fas fa-users"></i>*@
                     <span class="menu__text">pacientes</span>
                 </a>
                 <a class="menu__item" href="/Home/Colaborador">
-                    <i class="menu__icon fas fa-hospital-user"></i>
+                    @*<i class="menu__icon fas fa-hospital-user"></i>*@
                     <span class="menu__text">colaboradores</span>
                 </a>
                 <a class="menu__item" href="/Home/Index">
-                    <i class="menu__icon fas fa-sign-out-alt"></i>
+                    @*<i class="menu__icon fas fa-sign-out-alt"></i>*@
                     <span class="menu__text">sair</span>
                 </a>
             </nav>
 
             <div class="copyright">copyright &copy; @DateTime.Now.Year</div>
         </aside>
+
+
 
     </main>
 
