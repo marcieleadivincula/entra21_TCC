@@ -12,9 +12,9 @@ namespace DataAccessLayer
     {
         //public const string CONNECTION_STRING = @"server=localhost;user id=root;database=sorrisempre";
 
-        //public const string CONNECTION_STRING = @"server=localhost;user id=root;persistsecurityinfo=True;database=odontotech;pwd=Lookaa123";
+        public const string CONNECTION_STRING = @"server=localhost;user id=root;persistsecurityinfo=True;database=odontotech;pwd=Lookaa123";
 
-        public const string CONNECTION_STRING = @"server=localhost;user id=root;persistsecurityinfo=True;database=odontotech;pwd=";
+        //public const string CONNECTION_STRING = @"server=localhost;user id=root;persistsecurityinfo=True;database=odontotech;pwd=";
 
         //public const string CONNECTION_STRING = @"server=localhost;user id=root;persistsecurityinfo=True;database=sorrisempre;pwd=";
 
