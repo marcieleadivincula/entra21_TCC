@@ -76,6 +76,7 @@
     <Compile Include="CodsegurancaBLL.cs" />
     <Compile Include="ColaboradorBLL.cs" />
     <Compile Include="ContatoBLL.cs" />
+    <Compile Include="DespesaBLL1.cs" />
     <Compile Include="EnderecoBLL.cs" />
     <Compile Include="EstadoBLL.cs" />
     <Compile Include="EstoqueBLL.cs" />

@@ -103,9 +103,14 @@ button {
 /* Header ============================ */
 
 header {
-    background: #2d4a22;
-    padding: 2rem 0 10rem;
-    text-align: center;
+/*    background: #2d4a22;*/
+/*    padding: 2rem 0 10rem;
+*/    text-align: center;
+}
+d{
+    /*    background: #2d4a22;*/
+        padding: 0rem 0 8rem;
+ text-align: center;
 }
 
 #logo {
@@ -124,6 +129,11 @@ header {
 }
 
 /* CARDS ============================ */
+
+.icone{
+
+    margin:auto;
+}
 .card {
     background: white;
     padding: 1.5rem 2rem;
@@ -161,7 +171,7 @@ header {
 #data-table {
     width: 100%;
     border-spacing: 0 0.5rem;
-    color: #969cb3;
+    color: #000000;
 }
 
 table thead tr th:first-child,

@@ -1,9 +1,15 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using DataAccessLayer;
+@using Domain;
+@using BusinessLogicalLayer;
 @{
     ViewData["Title"] = "Finances";
 }
+<link href="~/css/endereco.css" rel="stylesheet" />
+<link href="~/css/paciente.css" rel="stylesheet" />
+<link href="~/css/paciente.css" rel="stylesheet" />
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -16,21 +22,89 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap" rel="stylesheet" />
 
-    <title>Financeiro | OdontoTech</title>
+    <title>Finances | OdontoTech</title>
+
+
 </head>
 
-<body>
-    <header id="page-create-point">
-        @*<h1 id="logo">Finanças|OdontoTech</h1>*@
-        @*<img src="~/images/assets/logo.svg" alt="Logo OdontoTech" />*@
-        <img src="https://media.discordapp.net/attachments/796085546358800414/806672131295150080/OdontoTechV1.png" alt="Logo da OdontoTech" height="70" width="70" data-atf="1">
+<body style="margin:10%">
 
-        @*<a href="/index.html">
-            <span></span>
-            Voltar para home
-        </a>*@
+
+
+
+    <header>
+   
+        <a style="position:relative" href="/Home/Dashboard">
+            <img style="position:relative" src="~/images/icons/OdontoTechV2.png" alt="logo" height="70" width="70" data-atf="1" /><br /> ⟲ Voltar para home
+        </a>
+
+            @*//Não consegui configurar no CSS, os <br /> estao funcionando*@
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
     </header>
 
+  
+
+
+    @{
+        DespesaBLL1 despesaBLL = new DespesaBLL1();
+        List<Despesa> despesas = despesaBLL.GetAll();
+
+
+        PagamentoBLL PagamentoBLL = new PagamentoBLL();
+        List<Pagamento> pgmt = PagamentoBLL.GetAll();
+
+        double saida = 0;
+        double entrada = 0;
+
+        for (int i = 0; i < despesas.Count; i++)
+        {
+
+            saida += despesas[i].Valor;
+        }
+        for (int i = 0; i < pgmt.Count; i++)
+        {
+
+            entrada += pgmt[i].ValorPagamento;
+        }
+
+        double total = entrada - saida;
+
+        string totalstring = Convert.ToString(total);
+
+        int contrador = 0;
+        bool achoudecimal = false;
+
+        string valorx = "";
+
+        for (int i = 0; i < totalstring.Length; i++)
+        {
+            valorx += totalstring[i];
+            if (achoudecimal)
+            {
+                contrador++;
+                if (contrador == 2)
+                {
+
+
+                    break;
+                }
+            }
+            if (totalstring[i] == ',')
+            {
+                achoudecimal = true;
+            }
+        }
+        total = Convert.ToDouble(valorx);
+    }
     <main class="container">
         <section id="balance">
             <h2 class="sr-only">Balanço</h2>
@@ -39,7 +113,7 @@
                     <span>Entradas</span>
                     <img src="~/images/assets/income.svg" alt="Imagem de entradas" />
                 </h3>
-                <p id="incomeDisplay"></p>
+                <label style="font-family:Poppins-Regular;color:black;font-size:2rem"> R$ @entrada</label>
             </div>
 
             <div class="card">
@@ -47,73 +121,204 @@
                     <span>Saídas</span>
                     <img src="~/images/assets/expense.svg" alt="Imagem de saídas" />
                 </h3>
-                <p id="expenseDisplay"></p>
+                <label style="font-family:Poppins-Regular;color:black;font-size:2rem"> R$ @saida</label>
             </div>
 
             <div class="card total">
                 <h3>
-                    <span>Total</span>
+                    <span style="color:white">Total</span>
                     <img src="~/images/assets/total.svg" alt="Imagem do total" />
                 </h3>
-                <p id="totalDisplay"></p>
+                <label style="font-family:Poppins-Regular;color:white;font-size:2rem"> R$ @total </label>
             </div>
         </section>
 
-        <section id="transaction">
-            <h2 class="sr-only">Transações</h2>
-            <a href="#" class="button new" id="new-transaction">+ Nova Transação</a>
-            <table id="data-table">
-                <thead>
-                    <tr>
-                        <th class="description">Descrição</th>
-                        <th>Valor</th>
-                        <th>Data</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </section>
+
+
+
     </main>
 
-    <div class="modal-overlay">
-        <div class="modal">
-            <div class="form">
-                <h2>Nova Transação</h2>
-                <form action="" onsubmit="Form.submit(event)">
-                    <div class="input-group">
-                        <label class="sr-only" for="description">Descrição</label>
-                        <input type="text" id="description" name="description" placeholder="Descrição" />
-                    </div>
 
-                    <div class="input-group">
-                        <label class="sr-only" for="amount">Valor</label>
-                        <input type="number" step="0.01" id="amount" name="amount" placeholder="0,00" />
-                        <small class="help">
-                            Use o sinal - (negativo) para despesas e , (vírgula) para casas
-                            decimais
-                        </small>
-                    </div>
 
-                    <div class="input-group">
-                        <label class="sr-only" for="date">Data</label>
-                        <input type="date" id="date" name="date" />
-                    </div>
 
-                    <div class="input-group actions">
-                        <a href="#" class="button cancel" id="cancel-trans">Cancelar</a>
-                        <button>Salvar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <main class="container">
+        <form action="/Home/Finances" method="post">
 
+            <label style="font-size:20px"> Dispesas <a href="/Home/Despesa">Adicionar Dispesas</a></label>
+            <section id="transaction">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Data</th>
+                            <th>Valor</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @for (int i = 0; i < despesas.Count; i++)
+                        {
+
+                            <tr>
+                                <td>
+
+                                    <input type="radio" name="idSelecionadoDispesa" value="@despesas[i].idDespesa" />
+                                </td>
+                                <td>
+                                    @despesas[i].idDespesa
+                                </td>
+
+
+
+                                <td>
+                                    @despesas[i].Data
+                                </td>
+
+
+                                <td style="color:red">
+                                    @despesas[i].Valor
+                                </td>
+
+
+                                <td>
+                                    @despesas[i].Descricao
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                @{
+                    <fieldset>
+                        <div class="field-group">
+                            <div class="field">
+                                <center>
+
+                                    <label>Nenhum</label> <input checked type="radio" name="idSelecionadoDispesa" value="0" /> <button name="saveBtn2" value="Deletar" style="background-color:transparent" type="submit"> 🗑️ </button>
+                                </center>
+
+                            </div>
+
+
+                        </div>
+                    </fieldset>
+                }
+                @{
+                    if (Convert.ToString(ViewData["resultA"]) != "")
+                    {
+                        if (Convert.ToString(ViewData["resultA"]).Contains("!"))
+                        {
+                            <label style="color:green;font-size:13px"> @ViewData["resultA"] </label>
+                        }
+                        else
+                        {
+
+                            <label style="color:red;font-size:13px"> @ViewData["resultA"] </label>
+                        }
+
+                    }
+
+                }
+            </section>
+            <label style="font-size:20px"> Pagamentos  <a href="/Home/Pagamento">Adicionar Pagamentos</a></label>
+            <section id="transaction">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Data</th>
+                            <th>Valor</th>
+                            <th>Paciente</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            for (int i = 0; i < pgmt.Count; i++)
+                            {
+
+                                PacienteBLL pacienteBLL = new PacienteBLL();
+                                pgmt[i].Paciente = pacienteBLL.GetById(pgmt[i].Paciente);
+
+
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="idSelecionado" value="@pgmt[i].Id" />
+                                    </td>
+                                    <td>
+
+                                        @pgmt[i].Id
+                                    </td>
+
+
+
+
+
+                                    <td>
+                                        @pgmt[i].DataPagamento
+                                    </td>
+
+
+
+                                    <td style="color:lawngreen">
+                                        @pgmt[i].ValorPagamento
+                                    </td>
+
+                                    <td>
+                                        @pgmt[i].Paciente.Nome
+                                    </td>
+
+                                </tr>
+
+                            }
+                        }
+                    </tbody>
+                </table>
+                @{
+                    <fieldset>
+                        <div class="field-group">
+                            <div class="field">
+                                <center>
+
+                                    <label>Nenhum</label> <input checked type="radio" name="idSelecionado" value="0" /> <button name="saveBtn2" value="Deletar" style="background-color:transparent" type="submit"> 🗑️ </button>
+                                </center>
+
+                            </div>
+
+
+                        </div>
+                    </fieldset>
+                }
+            </section>
+            @{
+                if (Convert.ToString(ViewData["resultB"]) != "")
+                {
+                    if (Convert.ToString(ViewData["resultB"]).Contains("!"))
+                    {
+                        <label style="color:green;font-size:13px"> @ViewData["resultB"] </label>
+                    }
+                    else
+                    {
+
+                        <label style="color:red;font-size:13px"> @ViewData["resultB"] </label>
+                    }
+
+                }
+
+            }
+        </form>
+
+    </main>
     <footer>
         <p>@DateTime.Now.Year - OdontoTech</p>
     </footer>
 
     <script src="~/js/finances.js"></script>
+
 </body>
+
 </html>

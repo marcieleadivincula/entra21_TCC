@@ -39,9 +39,13 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O status do atendimento deve ser informado.");
             }
 
-            if (atendimento.StatusAtendimento.Length > 60)
+            if (!string.IsNullOrWhiteSpace(atendimento.StatusAtendimento))
             {
-                erros.AppendLine("O status do atendimento não pode conter mais que 60 caracteres.");
+
+                if (atendimento.StatusAtendimento.Length > 60)
+                {
+                    erros.AppendLine("O status do atendimento  não pode conter mais que 60 caracteres.");
+                }
             }
 
             if (erros.Length != 0)
@@ -107,9 +111,13 @@ namespace BusinessLogicalLayer
                 erros.AppendLine("O status do atendimento deve ser informado.");
             }
 
+            if (!string.IsNullOrWhiteSpace(atendimento.StatusAtendimento))
+            {
+               
             if (atendimento.StatusAtendimento.Length > 60)
             {
                 erros.AppendLine("O status do atendimento  não pode conter mais que 60 caracteres.");
+            }
             }
 
             if (erros.Length != 0)

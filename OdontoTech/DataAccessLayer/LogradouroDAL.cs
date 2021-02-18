@@ -133,6 +133,7 @@ namespace DataAccessLayer
             cmd.Connection = conn;
             cmd.CommandText = $"SELECT * FROM logradouro WHERE idLogradouro = {idLogradouro}";
 
+
             try
             {
                 conn.Open();
