@@ -125,6 +125,11 @@ section {
 }
 
 .calendar {
+    /*border-radius: 20px;*/
+  /*  background-color: white;
+    position: relative;
+    z-index: -1;
+    color: black;*/
 }
 
 .calendar__week,
@@ -153,12 +158,14 @@ section {
 
 :root {
     --red: #ED5454;
+    --green: #49aa26;
 }
 
 body {
     font-family: Montserrat;
     font-weight: 100;
     color: #A8B2B9;
+    margin-top: 0;
 }
 
 .sidebar {
@@ -166,9 +173,9 @@ body {
     box-shadow: 5px 0px 20px rgba(0, 0, 0, 0.2);
 }
 
-main {
+/*main {
     background-color: #FCFBFC;
-}
+}*/
 
 .avatar__name {
     font-size: 0.8rem;
@@ -273,10 +280,37 @@ main {
     box-shadow: 1px 2px 30px -5px var(--red);
 }
 
-ul a{
+ul a {
     text-decoration: none;
 }
 
 ul li {
     list-style-type: none;
 }
+
+.active-day {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #2ECC71;
+    position: relative;
+    top: 295px;
+    left: 661px;
+}
+
+.event-indicator {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #2980B9;
+    position: relative;
+    top: 304px;
+    left: 695px;
+}
+
+.two {
+    position: relative;
+    top: 168px;
+    left: 535px;
+}
+
