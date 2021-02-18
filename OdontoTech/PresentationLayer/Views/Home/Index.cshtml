@@ -66,22 +66,28 @@
                             </button>
                         </div>
                     </div>
+                    <center>
 
-                    @{
-                        if (TempData["Mensagem"] != null)
-                        {
-                            if (Convert.ToString(TempData["Mensagem"]).Contains("Alterada"))
-                            {
-                                <label style="color:green;font-size: 13px;"> @TempData["Mensagem"] </label>
-                            }
-                            else
-                            {
-                            <label style="color:red;font-size: 13px;"> @TempData["Mensagem"] </label>
 
+                        @{
+                            if (TempData["result"] != null)
+                            {
+                                if (Convert.ToString(TempData["result"]).Contains("!"))
+                                {
+                                    <label style="color:green;font-size: 13px;"> @TempData["result"] </label>
+                                }
+                                else if (Convert.ToString(TempData["result"]).Contains("Alterada"))
+                                {
+                                    <label style="color:green;font-size: 13px;"> @TempData["result"] </label>
+                                }
+                                else
+                                {
+                                    <label style="color:red;font-size: 13px;"> @TempData["result"] </label>
+
+                                }
                             }
                         }
-                    }
-
+                    </center>
 
                     <div class="text-center p-t-115">
                         <span class="txt1">
