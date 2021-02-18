@@ -139,11 +139,47 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        public IActionResult Colaborador()
+        public IActionResult Colaborador(int idSelecionado,string saveBtn, string saveBtn2,string nomeColaborador, int funcao, string cro, string croEstado, int clinica,string dataDemissao,string dataAdmissao, string state, string city,string bairro,string logradouro, string cep, int numeroCasa,bool ferias,bool demitido)
         {
+            ColaboradorBLL bll = new ColaboradorBLL();
+
+                EnderecoBLL enderecoBLL = new EnderecoBLL();
+                Colaborador a = new Colaborador();
+
+
+
+            if ( state == null || city == null || logradouro == null || numeroCasa == 0 || cep == null)
+            {
+                ViewData["result"] = "Algum dado de Endereco não foi preenchido.";
+                return View();
+            }
+
+            if (saveBtn2 == "Deletar")
+            {
+
+                a.Id = idSelecionado;
+
+                ViewData["result"] = bll.Delete(a);
+
+                return View();
+            }
+
+            if (idSelecionado != 0)
+            {
+                a.Endereco = enderecoBLL.EnderecoConstruido("Brasil",state,city,bairro,logradouro,numeroCasa,cep);
+                ViewData["result"] = bll.Update(a);
+                return View();
+            }
+
+            if (saveBtn == "Salvar")
+            {
+                a.Endereco = enderecoBLL.EnderecoConstruido("Brasil", state, city, bairro, logradouro, numeroCasa, cep);
+                ViewData["result"] = bll.Insert(a);
+                return View();
+
+            }
             return View();
         }
-
         public IActionResult Atendimento(int idPaciente, int idColaborador, string saveBtn, int idSelecionado, string saveBtn2, DateTime dataInicial, DateTime dataFinal, int idTipoProcedimento, string status)
         {
 
