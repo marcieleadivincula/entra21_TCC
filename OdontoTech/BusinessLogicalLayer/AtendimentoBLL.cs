@@ -113,11 +113,10 @@ namespace BusinessLogicalLayer
 
             if (!string.IsNullOrWhiteSpace(atendimento.StatusAtendimento))
             {
-               
-            if (atendimento.StatusAtendimento.Length > 60)
-            {
-                erros.AppendLine("O status do atendimento  não pode conter mais que 60 caracteres.");
-            }
+                if (atendimento.StatusAtendimento.Length > 60)
+                {
+                    erros.AppendLine("O status do atendimento  não pode conter mais que 60 caracteres.");
+                }
             }
 
             if (erros.Length != 0)

@@ -39,6 +39,15 @@ namespace Domain.IntegrationTests
             Assert.AreEqual(str, "O nome da função deve ser informado.\r\n");
         }
 
+        [Test]
+        public void TestarInsertComissaoTamanhoExcedido()
+        {
+            Funcao test = new Funcao(1, "Test", 1500, 0.7);
+            str = bll.Insert(test);
+
+            Assert.AreEqual(str, "A comissão não pode ser maior que 60%.\r\n");
+        }
+
 
         [Test]
         public void TestarInsertFuncaoTamanhoExcedido()
@@ -68,6 +77,15 @@ namespace Domain.IntegrationTests
             str = bll.Update(test);
 
             Assert.AreEqual(str, "O nome da função deve ser informado.\r\n");
+        }
+
+        [Test]
+        public void TestarAtualizarComissaoTamanhoExcedido()
+        {
+            Funcao test = new Funcao(1, "Test", 1500, 0.7);
+            str = bll.Update(test);
+
+            Assert.AreEqual(str, "A comissão não pode ser maior que 60%.\r\n");
         }
 
         [Test]
