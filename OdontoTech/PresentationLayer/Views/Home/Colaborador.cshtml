@@ -86,20 +86,20 @@
                     </div>
 
                     @* funcao *@
-                    <div class="field">
-                        <label for="state">Função</label>
-                        <select name="funcao" id="state">
-                            <option value="@ViewBag.funcao">Selecione a Função</option>
+                <div class="field">
+                    <label for="state">Função</label>
+                    <select name="funcao" id="state">
+                        <option value="@ViewBag.funcao">Selecione a Função</option>
 
-                            @{ for (int i = 0; i < listaFuncoes.Count; i++)
-                                {
-                                    <option value="@listaFuncoes[i].Id">@listaFuncoes[i].Nome</option>
-                                }}
+                        @{ for (int i = 0; i < listaFuncoes.Count; i++)
+                            {
+                                <option value="@listaFuncoes[i].Id">@listaFuncoes[i].Nome</option>
+                            }}
 
-                        </select>
-
-                        <input type="hidden" name="funcao" />
-                    </div>
+                    </select>
+                    <a style="color:blue;font-size:13px" href="/Home/Funcao">♻ Gerenciar Funções</a>
+                    <input type="hidden" name="funcao" />
+                </div>
 
 
                 </div>

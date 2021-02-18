@@ -69,6 +69,26 @@
                     <center>
 
 
+
+                        @{
+                            if (TempData["loginfaild"] != null)
+                            {
+                                if (Convert.ToString(TempData["loginfaild"]).Contains("!"))
+                                {
+                                    <label style="color:green;font-size: 13px;"> @TempData["loginfaild"] </label>
+                                }
+                                else if (Convert.ToString(TempData["loginfaild"]).Contains("Alterada"))
+                                {
+                                    <label style="color:green;font-size: 13px;"> @TempData["loginfaild"] </label>
+                                }
+                                else
+                                {
+                                    <label style="color:red;font-size: 13px;"> @TempData["loginfaild"] </label>
+
+                                }
+                            }
+                        }
+
                         @{
                             if (TempData["result"] != null)
                             {
