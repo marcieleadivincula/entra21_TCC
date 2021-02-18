@@ -199,8 +199,8 @@ namespace DataAccessLayer
         public List<Pagamento> GetByTipoPagamento(TipoPagamento tipoPagamento)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM pagamento WHERE idTipoPagamento = @idTipoPagamento";
-            cmd.Parameters.AddWithValue("@idTipoPagamento", tipoPagamento.Id);
+            cmd.CommandText = $"SELECT * FROM pagamento WHERE idTipoPagamento = {tipoPagamento.Id}";
+
 
             try
             {

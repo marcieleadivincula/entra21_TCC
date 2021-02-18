@@ -96,11 +96,6 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         public IActionResult SignUp()
         {
             return View();
@@ -292,11 +287,6 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Contato()
-        {
-            return View();
-        }
-
         public IActionResult FoneTipo()
         {
             return View();
@@ -348,40 +338,6 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        public IActionResult Endereco()
-        {
-            return View();
-        }
-
-        public IActionResult Logradouro()
-        {
-            return View();
-        }
-
-        public IActionResult Bairro()
-        {
-            return View();
-        }
-
-        public IActionResult Cidade()
-        {
-            return View();
-        }
-
-        public IActionResult Estado()
-        {
-            return View();
-        }
-
-        public IActionResult Pais()
-        {
-            PaisBLL paisBll = new PaisBLL();
-
-            ViewBag.Id = paisBll.GetAll();
-            ViewBag.Nome = paisBll.GetAll();
-
-            return View();
-        }
 
         public IActionResult Pagamento(double valor, int idSelecionado, DateTime data, int IdPaciente, string saveBtn, string saveBtn2, int idTipoPagamento)
         {
@@ -629,9 +585,38 @@ namespace PresentationLayer.Controllers
 
             return View();
         }
-        public IActionResult Despesa()
+        public IActionResult Despesa(double valor, int idSelecionado, DateTime data, string descricao, string saveBtn, string saveBtn2)
         {
-            
+            DespesaBLL1 bll = new DespesaBLL1();
+            Despesa despesa = new Despesa();
+
+            if (saveBtn2 == "Deletar")
+            {
+                despesa.idDespesa = idSelecionado;
+                ViewData["result"] = bll.Delete(despesa);
+                return View();
+            }
+            if (idSelecionado != 0)
+            {
+                despesa.idDespesa = idSelecionado;
+                despesa.Data = data;
+                despesa.Valor = valor;
+                despesa.Descricao = descricao;
+
+                ViewData["result"] = bll.Update(despesa);
+                return View();
+            }
+
+
+            if (saveBtn == "Salvar")
+            {
+                despesa.Data = data;
+                despesa.Valor = valor;
+                despesa.Descricao = descricao;
+                ViewData["result"] = bll.Insert(despesa);
+                return View();
+
+            }
             return View();
         }
 
@@ -723,22 +708,22 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        //[HttpPost]
-        //public IActionResult VerificarLogin(string login, string password)
-        //{
-        //    UsuarioDAL dal = new UsuarioDAL();
+        [HttpPost]
+        public IActionResult VerificarLogin(string login, string password)
+        {
+            UsuarioDAL dal = new UsuarioDAL();
 
-        //    if (dal.Autenticar(login, password))
-        //    {
-        //        return View();
-        //    }
-        //    else
-        //    {
-        //        TempData.Add("Mensagem", "Login falhou, verifique seus dados.");
+            if (dal.VerificaLogin(login, password))
+            {
+                return RedirectToAction("Dashboard","Home");
+            }
+            else
+            {
+                TempData.Add("Mensagem", "Login falhou, verifique seus dados.");
 
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //}
+                return RedirectToAction("Index", "Home");
+            }
+        }
 
         public IActionResult Finances(int idSelecionado, int idSelecionadoDispesa, string saveBtn2)
         

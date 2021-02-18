@@ -49,14 +49,19 @@
                 <span></span>
                 Voltar para home
             </a>
+
+            <center>
+                <a style="color:blue" href="/Home/Finances">Ir para finanças $</a>
+            </center>
         </header>
 
-        <form action="/Home/Pagamento" method="post">
+        <form action="/Home/Despesa" method="post">
 
             <h2 id="balance"><img src="~/images/iconfinder_wallet-money-credit_card-payment_method_4288572.png" alt="logo" height="50" width="50" data-atf="1" />Cadastro Despesa</h2>
             @{
 
                 DespesaBLL1 despesa = new DespesaBLL1();
+                List<Despesa> lista = despesa.GetAll();
 
 
             }
@@ -69,41 +74,21 @@
                     </div>
 
                     <div class="field">
-                        <label for="idTipoPagamento">Tipo de Pagamento</label>
-          
-                        <input type="text" name="idTipoPagamento" value="@ViewBag.idTipoPagamento" />
+                        <label for="descricao">Descrição</label>
+                        <input type="text" name="descricao" value="@ViewBag.descricao" />
                     </div>
 
-
-
-                </div>
-
-                <div class="field-group">
-
                     <div class="field">
-                        <label for="data">Data do Pagamento</label>
+                        <label for="idTipoPagamento">Data da Despesa</label>
+
                         <input type="datetime-local" name="data" value="@ViewBag.data" />
-
                     </div>
 
-                    <div class="field">
-                        <label for="IdPaciente">Paciente</label>
 
-                        <select name="IdPaciente" id="IdPaciente" required>
-
-                            <option value=" ">Selecione o Paciente </option>
-
-                            @{ for (int i = 0; i < listaPacientes.Count; i++)
-                                {
-                                    <option value="@listaPacientes[i].Id">@listaPacientes[i].Nome</option>
-                                }}
-
-                        </select>
-
-                        <input type="hidden" name="IdPaciente" value="@ViewBag.IdPaciente" />
-                    </div>
 
                 </div>
+
+              
 
                 <div class="field-group">
                     <div class="field">
@@ -146,16 +131,13 @@
 
                 <br />
 
-                @for (int i = 0; i < listaPagamentos.Count; i++)
+                @for (int i = 0; i < lista.Count; i++)
                 {
 
-                    listaPagamentos[i].TipoPagamento = tipoPagamentoBLL.GetById(listaPagamentos[i].TipoPagamento);
-                    //listaPagamentos[i]. = .GetById(listaPagamentos[i].);
-
-                    Paciente p = pacienteBLL.GetById(listaPagamentos[i].Paciente);
-                    <input type="radio" name="idSelecionado" value="@listaPagamentos[i].Id" /> <label> <b>ID:</b> @listaPagamentos[i].Id</label>
-                    <label> <b>Valor:</b> @listaPagamentos[i].ValorPagamento</label> <label> <b>Paciente:</b> @p.Nome </label>
-                    <label> <b>Data:</b> @listaPagamentos[i].DataPagamento</label> <br />
+                 
+                    <input type="radio" name="idSelecionado" value="@lista[i].idDespesa" /> <label> <b>ID:</b> @lista[i].idDespesa</label>
+                    <label> <b>Valor:</b> @lista[i].Valor</label> <label> <b>Descrição:</b> @lista[i].Descricao </label>
+                    <label> <b>Data:</b> @lista[i].Data</label> <br />
 
 
 

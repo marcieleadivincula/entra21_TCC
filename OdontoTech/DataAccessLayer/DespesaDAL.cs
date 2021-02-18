@@ -12,9 +12,9 @@ namespace DataAccessLayer
         public string Insert(Despesa despesa)
         {
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO dispesa (Data, Valor, Descricao) values (@Data, @Valor, @Descricao)";
+            cmd.CommandText = $"INSERT INTO despesa (DtDespesa,Valor,Descricao) values (@DtDespesa,@Valor,@Descricao)";
 
-            cmd.Parameters.AddWithValue("@Data", despesa.Data);
+            cmd.Parameters.AddWithValue("@DtDespesa", despesa.Data);
             cmd.Parameters.AddWithValue("@Valor", despesa.Valor);
             cmd.Parameters.AddWithValue("@Descricao", despesa.Descricao);
 
@@ -23,7 +23,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                return "Dispesa cadastrada com sucesso !";
+                return "Despesa cadastrada com sucesso !";
             }
             catch (Exception ex)
             {
@@ -42,12 +42,36 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
+        public string Update(Despesa despesa)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = "UPDATE despesa SET DtDespesa = @DtDespesa, Valor = @Valor, Descricao = @Descricao WHERE idDespesa = @idDespesa";
+            cmd.Parameters.AddWithValue("@DtDespesa", despesa.Data);
+            cmd.Parameters.AddWithValue("@Valor", despesa.Valor);
+            cmd.Parameters.AddWithValue("@Descricao", despesa.Descricao);
+            cmd.Parameters.AddWithValue("@idDespesa", despesa.idDespesa);
 
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return "Despesa atualizado com êxito!";
+            }
+            catch (Exception)
+            {
+                return "Erro no Banco de dados.Contate o administrador.";
+            }
+            finally
+            {
+                conn.Dispose();
+            }
+        }
         public string Delete(Despesa dispesa)
         {
 
             cmd.Connection = conn;
-            cmd.CommandText = $"DELETE FROM dispesa WHERE idDespesa = {dispesa.idDespesa}";
+            cmd.CommandText = $"DELETE FROM despesa WHERE idDespesa = {dispesa.idDespesa}";
 
 
             try
@@ -82,7 +106,7 @@ namespace DataAccessLayer
 
            
                     temp.idDespesa = Convert.ToInt32(reader["idDespesa"]);
-                    temp.Data = Convert.ToDateTime(reader["Data"]);
+                    temp.Data = Convert.ToDateTime(reader["DtDespesa"]);
                     temp.Descricao = Convert.ToString(reader["Descricao"]);
                     temp.Valor = Convert.ToDouble(reader["Valor"]);
 

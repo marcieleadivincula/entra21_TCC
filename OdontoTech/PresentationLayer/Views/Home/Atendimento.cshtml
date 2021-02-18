@@ -53,7 +53,7 @@
 
         <form action="" method="post">
 
-            <h2 id="balance">Cadastro Atendimento <img src="~/images/atendimento-ao-cliente-e-suporte-conceito-de-call-center_18591-20397.jpg" alt="logo" height="50" width="50" data-atf="1" /></h2>
+            <h2 id="balance"><img src="~/images/atendimento-ao-cliente-e-suporte-conceito-de-call-center_18591-20397.jpg" alt="logo" height="50" width="50" data-atf="1" /></h2>
             @{
                 AtendimentoBLL bll = new AtendimentoBLL();
                 List<Atendimento> lista = bll.GetAll();
@@ -95,12 +95,13 @@
 
                         <option value=" ">Selecione o Procedimento</option>
 
-                        @{ for (int i = 0; i < TIPO.Count; i++)
+                        @{ for (int i = 0; i < TPC.Count; i++)
                             {
-                                <option value="@TIPO[i].Id">@TIPO[i].Nome</option>
+                                <option value="@TPC[i].Id">@TPC[i].Nome</option>
                             }}
 
                     </select>
+                    <a style="color:blue;font-size:13px" href="/Home/Procedimento">♻ Gerenciar procedimentoS</a>
                     <input type="hidden" name="idTipoProcedimento" value="@ViewBag.idTipoProcedimento" />
                 </div>
             </div>
