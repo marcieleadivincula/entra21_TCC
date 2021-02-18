@@ -3,7 +3,7 @@
     --dark-blue: #363f5f;
     --green: #49aa26;
     --light-green: #3dd705;
-    --red: #e92929;
+    --red: #ab2fff;
     --blue: rgb(29, 207, 192);
 }
 
@@ -50,12 +50,14 @@ h2 {
 
 /* Links & Buttons ============================== */
 a {
-    color: var(--green);
+    /*color: var(--green);*/
+    color: #4ca0fe;
     text-decoration: none;
 }
 
     a:hover {
-        color: var(--light-green);
+        /*color: var(--light-green);*/
+        color: #27ccfd;
     }
 
 .button.new {
