@@ -126,6 +126,7 @@ namespace DataAccessLayer
             cmd.Connection = conn;
             cmd.CommandText = $"SELECT * FROM cidade WHERE idCidade = {idCidade}";
 
+
             try
             {
                 conn.Open();

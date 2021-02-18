@@ -120,6 +120,7 @@
     <Compile Include="ColaboradorDAL.cs" />
     <Compile Include="ContatoDAL.cs" />
     <Compile Include="DBConfig.cs" />
+    <Compile Include="DespesaDAL.cs" />
     <Compile Include="EnderecoDAL.cs" />
     <Compile Include="EstadoDAL.cs" />
     <Compile Include="EstoqueDAL.cs" />
