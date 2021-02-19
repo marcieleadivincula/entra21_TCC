@@ -10,7 +10,8 @@ namespace DataAccessLayer
 {
     public class DBConfig
     {
-        public const string CONNECTION_STRING = @"server=localhost;user id=root;persistsecurityinfo=True;database=odontotech;pwd=entra21c#";
+        //CONECTION STRING VM
+        public const string CONNECTION_STRING = @"server=localhost;user id=root;persistsecurityinfo=True;database=odontotech;pwd=bifrost";
 
         public static MySqlCommand Cmd;
         public static MySqlDataReader Reader;
