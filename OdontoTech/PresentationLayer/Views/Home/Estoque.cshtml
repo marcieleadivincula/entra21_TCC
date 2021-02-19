@@ -51,7 +51,8 @@
 
         <form action="/Home/Estoque" method="post">
 
-            <h2 id="balance">Adicionar no estoque <img src="~/images/estoque.png" alt="logo" height="50" width="50" data-atf="1" /></h2>
+            <h2 id="balance"> <img src="~/images/estoque.png" alt="logo" height="50" width="50" data-atf="1" />Adicionar no estoque
+            </h2>
             @{
                 EstoqueBLL bll = new EstoqueBLL();
                 List<Estoque> lista = bll.GetAll();
