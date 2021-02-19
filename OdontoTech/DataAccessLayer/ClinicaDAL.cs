@@ -160,6 +160,9 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    clinica.Endereco = new Endereco();
+                    clinica.Estoque = new Estoque();
+
                     clinica.Id = Convert.ToInt32(reader["idClinica"]);
                     clinica.Nome = Convert.ToString(reader["nomeClinica"]);
                     clinica.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
@@ -193,6 +196,9 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    clinica.Endereco = new Endereco();
+                    clinica.Estoque = new Estoque();
+
                     clinica.Id = Convert.ToInt32(reader["idClinica"]);
                     clinica.Nome = Convert.ToString(reader["nomeClinica"]);
                     clinica.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);
@@ -227,6 +233,10 @@ namespace DataAccessLayer
                 while (reader.Read())
                 {
                     Clinica temp = new Clinica();
+
+                    temp.Endereco = new Endereco();
+                    temp.Estoque = new Estoque();
+
                     temp.Id = Convert.ToInt32(reader["idClinica"]);
                     temp.Nome = Convert.ToString(reader["nomeClinica"]);
                     temp.DataInauguracao = Convert.ToDateTime(reader["dtInauguracao"]);

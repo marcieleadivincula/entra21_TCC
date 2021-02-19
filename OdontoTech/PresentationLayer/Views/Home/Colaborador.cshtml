@@ -75,17 +75,17 @@
 
 
             }
-            <fieldset>
+        <fieldset>
 
-                <div class="field-group">
+            <div class="field-group">
 
-                    @* nomeColaborador *@
-                    <div class="field">
-                        <label for="valor">Nome da Colaborador</label>
-                        <input type="text" name="nomeColaborador" value="@ViewBag.nomeColaborador" />
-                    </div>
+                @* nomeColaborador *@
+                <div class="field">
+                    <label for="valor">Nome da Colaborador</label>
+                    <input type="text" name="nomeColaborador" value="@ViewBag.nomeColaborador" />
+                </div>
 
-                    @* funcao *@
+                @* funcao *@
                 <div class="field">
                     <label for="state">Função</label>
                     <select name="funcao" id="state">
@@ -102,251 +102,257 @@
                 </div>
 
 
+            </div>
+
+            <div class="field-group">
+
+                @* cro *@
+                <div class="field">
+                    <label for="cro">CRO</label>
+                    <input type="text" name="cro" value="@ViewBag.cro" />
                 </div>
 
-                <div class="field-group">
+                @* croEstado *@
+                <div class="field">
+                    <label for="state">CRO Estado</label>
+                    <select name="croEstado" id="croEstado">
 
-                    @* cro *@
-                    <div class="field">
-                        <label for="cro">CRO</label>
-                        <input type="text" name="cro" value="@ViewBag.cro" />
-                    </div>
+                        <option value="@ViewBag.croEstado">Selecione o CRO Estado</option>
+                        <option value="AC">Acre (AC)</option>
+                        <option value="AL">Alagoas (AL)</option>
+                        <option value="AP">Amapá (AP)</option>
+                        <option value="BA">Bahia (BA)</option>
+                        <option value="CE">Ceará (CE)</option>
+                        <option value="ES">Espírito Santo (ES)</option>
+                        <option value="GO">Goiás (GO)</option>
+                        <option value="MA">Maranhão (MA)</option>
+                        <option value="MT">Mato Grosso (MT)</option>
+                        <option value="MG">Minas Gerais (MG)</option>
+                        <option value="PA">Pará (PA)</option>
+                        <option value="PE">Pernambuco (PE)</option>
+                        <option value="PI">Piauí (PI)</option>
+                        <option value="RJ">Rio de Janeiro (RJ)</option>
+                        <option value="RN">Rio Grande do Norte (RN)</option>
+                        <option value="RS">Rio Grande do Sul (RS)</option>
+                        <option value="SP">São Paulo (SP)</option>
+                        <option value="SE">Sergipe (SE)</option>
+                        <option value="TO">Tocantins (TO)</option>
+                        <option value="DF">Distrito Federal (DF)</option>
 
-                    @* croEstado *@
-                    <div class="field">
-                        <label for="state">CRO Estado</label>
-                        <select name="croEstado" id="croEstado">
-
-                            <option value="@ViewBag.croEstado">Selecione o CRO Estado</option>
-                            <option value="AC">Acre (AC)</option>
-                            <option value="AL">Alagoas (AL)</option>
-                            <option value="AP">Amapá (AP)</option>
-                            <option value="BA">Bahia (BA)</option>
-                            <option value="CE">Ceará (CE)</option>
-                            <option value="ES">Espírito Santo (ES)</option>
-                            <option value="GO">Goiás (GO)</option>
-                            <option value="MA">Maranhão (MA)</option>
-                            <option value="MT">Mato Grosso (MT)</option>
-                            <option value="MG">Minas Gerais (MG)</option>
-                            <option value="PA">Pará (PA)</option>
-                            <option value="PE">Pernambuco (PE)</option>
-                            <option value="PI">Piauí (PI)</option>
-                            <option value="RJ">Rio de Janeiro (RJ)</option>
-                            <option value="RN">Rio Grande do Norte (RN)</option>
-                            <option value="RS">Rio Grande do Sul (RS)</option>
-                            <option value="SP">São Paulo (SP)</option>
-                            <option value="SE">Sergipe (SE)</option>
-                            <option value="TO">Tocantins (TO)</option>
-                            <option value="DF">Distrito Federal (DF)</option>
-
-                        </select>
-                        <input type="hidden" name="croEstado" />
-                    </div>
-
-                    @* clinica *@
-                    <div class="field">
-                        <label for="clinica">Clínica</label>
-                        <select name="clinica" id="clinica">
-                            <option value="@ViewBag.funcao">Selecione a Clínica</option>
-
-                            @{ for (int i = 0; i < listaClinicas.Count; i++)
-                                {
-                                    <option value="@listaClinicas[i].Id">@listaClinicas[i].Nome</option>
-                                }}
-
-                        </select>
-
-                        <input type="hidden" name="clinica" />
-                    </div>
-
+                    </select>
+                    <input type="hidden" name="croEstado" />
                 </div>
 
-                <div class="field-group">
+                @* clinica *@
+                <div class="field">
+                    <label for="clinica">Clínica</label>
+                    <select name="clinica" id="clinica">
+                        <option value="@ViewBag.funcao">Selecione a Clínica</option>
 
-                    @* dataAdmissao *@
-                    <div class="field">
-                        <label for="dataAdmissao">Data de Admissao</label>
-                        <input type="date" name="dataAdmissao" value="@ViewBag.dataAdmissao" />
-                    </div>
+                        @{ for (int i = 0; i < listaClinicas.Count; i++)
+                            {
+                                <option value="@listaClinicas[i].Id">@listaClinicas[i].Nome</option>
+                            }}
 
-                    @* dataDemissao *@
-                    <div class="field">
-                        <label for="dataDemissao">Data de Demissão</label>
-                        <input type="date" name="dataDemissao" value="@ViewBag.dataDemissao" />
-                    </div>
+                    </select>
 
+                    <input type="hidden" name="clinica" />
+                </div>
 
+            </div>
+
+            <div class="field-group">
+
+                @* dataAdmissao *@
+                <div class="field">
+                    <label for="dataAdmissao">Data de Admissao</label>
+                    <input type="date" name="dataAdmissao" value="@ViewBag.dataAdmissao" />
+                </div>
+
+                @* dataDemissao *@
+                <div class="field">
+                    <label for="dataDemissao">Data de Demissão</label>
+                    <input type="date" name="dataDemissao" value="@ViewBag.dataDemissao" />
                 </div>
 
 
-                <div class="field-group">
+            </div>
 
-                    @* Endereço  *@
-                    <div class="field">
-                        <label style="font-size:17px" for="dados">Dados de Endereço</label>
-                        <br />
-                        <div class="field-group">
-                            <div class="field">
-                                <label for="state">Estado</label>
-                                <select name="uf" id="state">
-                                    <option value="@ViewBag.uf">Selecione o estado</option>
-                                </select>
 
-                                <input type="hidden" name="state" />
-                            </div>
+            <div class="field-group">
 
-                            <div class="field">
-                                <label for="city">Cidade</label>
-                                <select name="city" id="city">
-                                    <option value="@ViewBag.city">Selecione a cidade</option>
+                @* Endereço  *@
+                <div class="field">
+                    <label style="font-size:17px" for="dados">Dados de Endereço</label>
+                    <br />
+                    <div class="field-group">
+                        <div class="field">
+                            <label for="state">Estado</label>
+                            <select name="uf" id="state">
+                                <option value="@ViewBag.uf">Selecione o estado</option>
+                            </select>
 
-                                </select>
-                                <input type="hidden" name="city" />
-                            </div>
+                            <input type="hidden" name="state" />
+                        </div>
 
-                            <div class="field">
-                                <label for="Bairro">Bairro</label>
-                                <input type="text" name="bairro" value="@ViewBag.bairro">
+                        <div class="field">
+                            <label for="city">Cidade</label>
+                            <select name="city" id="city">
+                                <option value="@ViewBag.city">Selecione a cidade</option>
 
-                            </div>
+                            </select>
+                            <input type="hidden" name="city" />
+                        </div>
 
+                        <div class="field">
+                            <label for="Bairro">Bairro</label>
+                            <input type="text" name="bairro" value="@ViewBag.bairro">
 
                         </div>
 
 
-                        <div class="field-group">
-                            <div class="field">
-                                <label for="logradouro">Logradouro</label>
-                                <input type="text" name="logradouro" value="@ViewBag.logradouro">
+                    </div>
 
-                            </div>
-                            <div class="field">
-                                <label for="cep">CEP</label>
-                                <input type="text" name="cep" value="@ViewBag.cep">
 
-                            </div>
+                    <div class="field-group">
+                        <div class="field">
+                            <label for="logradouro">Logradouro</label>
+                            <input type="text" name="logradouro" value="@ViewBag.logradouro">
 
-                            <div class="field">
-                                <label for="numeroCasa">Numero da Casa</label>
-                                <input type="number" name="numeroCasa" value="@ViewBag.numeroCasa">
+                        </div>
+                        <div class="field">
+                            <label for="cep">CEP</label>
+                            <input type="text" name="cep" value="@ViewBag.cep">
 
-                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="numeroCasa">Numero da Casa</label>
+                            <input type="number" name="numeroCasa" value="@ViewBag.numeroCasa">
+
                         </div>
                     </div>
                 </div>
+            </div>
 
 
-                <div class="field-group">
+            <div class="field-group">
 
-                    @* ferias *@
-                    <div class="field">
-                        <label class="custom-checkbox" tab-index="0" aria-label="Another Label">
-                            <input type="checkbox" name="ferias" value="@ViewBag.ferias">
-                            <span class="checkmark"></span>
-                            <span class="label">Férias</span>
-                        </label>
-                    </div>
+                @* ferias *@
+                <div class="field">
+                    <label class="custom-checkbox" tab-index="0" aria-label="Another Label">
+                        <input type="checkbox" name="ferias" value="@ViewBag.ferias">
+                        <span class="checkmark"></span>
+                        <span class="label">Férias</span>
+                    </label>
+                </div>
 
-                    @* demitido *@
-                    <div class="field">
-                        <label class="custom-checkbox" tab-index="0" aria-label="Another Label">
-                            <input type="checkbox" name="demitido" value="@ViewBag.demitido">
-                            <span class="checkmark"></span>
-                            <span class="label">Demitido</span>
-                        </label>
-                    </div>
+                @* demitido *@
+                <div class="field">
+                    <label class="custom-checkbox" tab-index="0" aria-label="Another Label">
+                        <input type="checkbox" name="demitido" value="@ViewBag.demitido">
+                        <span class="checkmark"></span>
+                        <span class="label">Demitido</span>
+                    </label>
+                </div>
 
+
+
+            </div>
+
+
+            <div class="field-group">
+                <div class="field">
+
+                    <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
+                    <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
 
 
                 </div>
 
-
-                <div class="field-group">
-                    <div class="field">
-
-                        <button type="submit" id="newState" name="saveBtn" value="Salvar">Salvar</button>
-                        <input type="hidden" name="saveBtn" value="@ViewBag.saveBtn" />
-
-
-                    </div>
-
-                    <div class="field">
-                        <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
-                        <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
-
-                    </div>
+                <div class="field">
+                    <button type="submit" id="newState" name="saveBtn2" value="Deletar">Deletar</button>
+                    <input type="hidden" name="saveBtn2" value="@ViewBag.saveBtn2" />
 
                 </div>
 
-                @{
-                    if (Convert.ToString(ViewData["result"]) != "")
+            </div>
+
+            @{
+                if (Convert.ToString(ViewData["result"]) != "")
+                {
+                    if (Convert.ToString(ViewData["result"]).Contains("!"))
                     {
-                        if (Convert.ToString(ViewData["result"]).Contains("!"))
-                        {
-                            <label style="color:green;font-size:13px"> @ViewData["result"] </label>
-                        }
-                        else
-                        {
+                        <label style="color:green;font-size:13px"> @ViewData["result"] </label>
+                    }
+                    else
+                    {
 
-                            <label style="color:red;font-size:13px"> @ViewData["result"] </label>
-                        }
-
+                        <label style="color:red;font-size:13px"> @ViewData["result"] </label>
                     }
 
                 }
 
-                <br />
+            }
 
-                <h2 id="balance">Lista de Colaboradores</h2>
+            <br />
 
-                <br />
+            <h2 id="balance">Lista de Colaboradores</h2>
 
-                @for (int i = 0; i < listaColaboradores.Count; i++)
-                {
+            <br />
 
-                    Endereco e = enderecoBLL.GetById(listaColaboradores[i].Endereco);
+            @for (int i = 0; i < listaColaboradores.Count; i++)
+            {
 
+                Endereco e = enderecoBLL.GetById(listaColaboradores[i].Endereco);
 
-                    <input type="radio" name="idSelecionado" value="@listaColaboradores[i].Id" />
+                listaColaboradores[i].Funcao = funcaoBLL.GetById(listaColaboradores[i].Funcao);
+                listaColaboradores[i].Clinica = clinicaBLL.GetById(listaColaboradores[i].Clinica);
+                <input type="radio" name="idSelecionado" value="@listaColaboradores[i].Id" />
 
-                    <label> <b>ID:</b> @listaColaboradores[i].Id</label>
-                    <label> <b>Nome:</b> @listaColaboradores[i].Nome</label>
-                    <label> <b>Função:</b> @listaColaboradores[i].Funcao.Nome</label>
-                    <label> <b>CRO:</b> @listaColaboradores[i].Cro</label>
-                    <label> <b>CRO Estado:</b> @listaColaboradores[i].CroEstado</label>
-                    <label> <b>Data Admissão:</b> @listaColaboradores[i].DataAdmissao</label> 
-                    <label> <b>Data Demissão:</b> @listaColaboradores[i].DataDemissao</label> 
-                    <label> <b>Endereço:</b> @listaLogradouros[i].Nome - @e.NumeroCasa</label>
-                    <label> <b>Clínica:</b> @listaColaboradores[i].Clinica.Nome</label>
-                    <label> <b>Férias:</b> @listaColaboradores[i].Ferias</label>
-
-                    @if (listaColaboradores[i].Ferias)
-                    {<img src="~/images/atendido.png" alt="logo" height="20" width="20" data-atf="1" /> }
-                    else
-                    {<img src="~/images/uncheck.png" alt="logo" height="20" width="20" data-atf="1" />}
-                    
-
-
-
-                    <label> <b>Demitido:</b> @listaColaboradores[i].Demitido</label>
-
-                    @if (listaColaboradores[i].Demitido)
+                <label> <b>ID:</b> @listaColaboradores[i].Id</label>
+                <label> <b>Nome:</b> @listaColaboradores[i].Nome</label>
+                <label> <b>Função:</b> @listaColaboradores[i].Funcao.Nome</label>
+                <label> <b>CRO:</b> @listaColaboradores[i].Cro</label>
+                <label> <b>CRO Estado:</b> @listaColaboradores[i].CroEstado</label>
+                <label> <b>Data Admissão:</b> @listaColaboradores[i].DataAdmissao</label>
+                <label> <b>Data Demissão:</b> @listaColaboradores[i].DataDemissao</label>
+                <label> <b>Endereço:</b> @listaLogradouros[i].Nome - @e.NumeroCasa</label>
+                <label> <b>Clínica:</b> @listaColaboradores[i].Clinica.Nome</label>
+                <label>
+                    <b>Férias:</b>              @if (listaColaboradores[i].Ferias)
                     {<img src="~/images/atendido.png" alt="logo" height="20" width="20" data-atf="1" /> }
                     else
                     {<img src="~/images/uncheck.png" alt="logo" height="20" width="20" data-atf="1" />}
 
-                    <br />
+
+                </label>
 
 
-                }
 
 
+
+                <label>
+                    <b>Demitido:</b> @if (listaColaboradores[i].Demitido)
+                    {<img src="~/images/atendido.png" alt="logo" height="20" width="20" data-atf="1" /> }
+                    else
+                    {<img src="~/images/uncheck.png" alt="logo" height="20" width="20" data-atf="1" />}
+                </label>
 
 
                 <br />
                 <br />
-                <input checked type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
-            </fieldset>
+                <br />
+
+            }
+
+
+
+
+            <br />
+            <br />
+            <input checked type="radio" name="idSelecionado" value="" /> <label> Nenhum </label>
+        </fieldset>
         </form>
     </main>
 
