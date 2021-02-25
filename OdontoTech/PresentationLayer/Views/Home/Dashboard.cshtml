@@ -20,13 +20,15 @@
     @*<link href="~/css/style.css" rel="stylesheet" />*@
 
     <link href="~/css/endereco.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="~/css/main.css" />*@
 
     <link href="~/css/calendar-white.css" rel="stylesheet" />
     <link href="~/css/dashboard.css" rel="stylesheet" />
 
     <title>Home</title>
 </head>
-<body style="margin:0">
+<body>
+    
     @{
         var currentDay = DateTime.Now.Day;
         var currentMonth = DateTime.Now.Month;
@@ -665,7 +667,7 @@
                 <hr />
 
                 <a class="menu__item" href="/Home/Finances">
-                    <span class="menu__text">Finaças</span>
+                    <span class="menu__text">finanças</span>
                 </a>
 
                 <a class="menu__item" href="/Home/Pagamento">
@@ -676,7 +678,6 @@
                 </a>
 
                 <hr />
-
 
                 <a class="menu__item" href="/Home/Clinica">
                     @*<i class="menu__icon fas fa-tooth"></i>*@
@@ -705,8 +706,6 @@
 
             <div class="copyright">copyright &copy; @DateTime.Now.Year</div>
         </aside>
-
-
 
     </main>
 
