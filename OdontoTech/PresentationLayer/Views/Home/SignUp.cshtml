@@ -55,17 +55,10 @@
                         <span class="focus-input100" data-placeholder="Email"></span>
                     </div>
 
-
                     @{
                         ColaboradorBLL colaboradorBLL = new ColaboradorBLL();
                         List<Colaborador> listacolab = colaboradorBLL.GetAll();
                     }
-
-
-
-
-
-
 
                     @* pass *@
                     <div class="wrap-input100 validate-input" data-validate="Insira sua senha">
@@ -75,10 +68,6 @@
                         <input class="input100" type="password" name="pass">
                         <span class="focus-input100" data-placeholder="Senha"></span>
                     </div>
-
-
-
-
 
                     @* passAgain *@
                     <div class="wrap-input100 validate-input" data-validate="Confirme sua senha">

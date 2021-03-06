@@ -1,10 +1,7 @@
 ﻿using DataAccessLayer;
 using Domain;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
@@ -21,8 +18,6 @@ namespace BusinessLogicalLayer
             {
                 erros.AppendLine("O nome do procedimento deve ser informada.");
             }
-
-            
 
             if (string.IsNullOrWhiteSpace(procedimento.DescricaoProcedimento))
             {
@@ -73,6 +68,7 @@ namespace BusinessLogicalLayer
                     erros.AppendLine("A descrição do procedimento não pode conter mais que 60 caracteres.");
                 }
             }
+
             if (erros.Length != 0)
             {
                 return erros.ToString();

@@ -59,7 +59,6 @@ namespace PresentationLayer.Controllers
                 Usuario usuario = new Usuario();
                 usuario.Login = email;
                 usuario.Senha = pass;
-
                 usuario.Colaborador = bllcolab.GetById(Colaborador);
 
                 TempData["result"] = bll.Insert(usuario);

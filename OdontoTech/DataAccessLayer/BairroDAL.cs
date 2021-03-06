@@ -189,7 +189,6 @@ namespace DataAccessLayer
                 conn.Dispose();
             }
         }
-
         public List<Bairro> GetByCidade(Cidade cidade)
         {
             cmd.Connection = conn;

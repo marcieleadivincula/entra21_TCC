@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
-using System.Data.SqlClient;
 using Domain;
 using MySql.Data.MySqlClient;
+
 namespace DataAccessLayer
 {
     public class ProcedimentoDAL
@@ -48,7 +44,6 @@ namespace DataAccessLayer
             {
                 conn.Dispose();
             }
-
         }
         /// <summary>
         /// Tenta deletar, caso der certo retorna (Procedimento deletado com êxito!) se não (Erro no Banco de dados. Contate o administrador.)
@@ -196,7 +191,6 @@ namespace DataAccessLayer
                     temp.Nome = Convert.ToString(reader["nomeProcedimento"]);
                     temp.DescricaoProcedimento = Convert.ToString(reader["dsProcedimento"]);
                     temp.TipoProcedimento.Id = Convert.ToInt32(reader["idTipoProcedimento"]);
-
 
                     procedimento = temp;
                 }
